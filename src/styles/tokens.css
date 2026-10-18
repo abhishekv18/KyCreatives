@@ -1,0 +1,131 @@
+/*
+  KY Creatives design tokens
+  Source of truth: KY Creatives Brand Guidelines 2026.
+  Every colour, type size, radius and spacing value used by components
+  should come from this file.
+*/
+
+:root {
+  /* Brand palette (exact values from the guidelines) */
+  --ky-magenta: #e2418f;
+  --ky-orange: #ff9533;
+  --ky-violet: #7b4dd9;
+  --ky-cobalt: #4c8deb;
+  --ky-cyan: #6fe3f5;
+  --ky-ink: #17121f;
+  --ky-cloud: #f6f3fb;
+  --ky-white: #ffffff;
+
+  /* Supporting values named in the guidelines */
+  --ky-slate: #5b5668; /* secondary text */
+  --ky-success: #16a06b;
+  --ky-warning: #ff9533;
+  --ky-error: #d8334a;
+  --ky-info: #4c8deb;
+
+  /* Signature gradients (stops taken from the guideline PDF) */
+  --grad-flame: linear-gradient(90deg, var(--ky-magenta), var(--ky-orange));
+  --grad-dusk: linear-gradient(90deg, var(--ky-violet), var(--ky-cobalt));
+  --grad-aqua: linear-gradient(90deg, var(--ky-cyan), var(--ky-cobalt));
+
+  /* Semantic roles */
+  --surface: var(--ky-cloud);
+  --surface-raised: var(--ky-white);
+  --surface-dark: var(--ky-ink);
+  --text: var(--ky-ink);
+  --text-muted: var(--ky-slate);
+  --text-on-dark: var(--ky-white);
+  --text-on-dark-muted: rgb(255 255 255 / 0.68);
+  --action: var(--ky-violet);
+  --action-hover: #6a3cc8;
+  --link: var(--ky-violet);
+  --line: rgb(23 18 31 / 0.12);
+  --line-strong: rgb(23 18 31 / 0.24);
+  --line-on-dark: rgb(255 255 255 / 0.14);
+  --focus: var(--ky-violet);
+
+  /* Typography */
+  --font-display: "Libre Baskerville", "Baskerville", "Georgia", "Times New Roman", serif;
+  --font-sans: "DM Sans", "Helvetica Neue", "Arial", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", "Consolas", "Menlo", monospace;
+
+  /* Brand web scale 64 / 40 / 24 / 18, scaled fluidly for small screens.
+     Baskerville is never set below 24px. */
+  --fs-display: clamp(2.5rem, 1.6rem + 3.6vw, 4rem); /* 40 -> 64 */
+  --fs-display-xl: clamp(2.75rem, 1.2rem + 6vw, 5.5rem); /* hero statement */
+  --fs-h2: clamp(1.875rem, 1.45rem + 1.7vw, 2.5rem); /* 30 -> 40 */
+  --fs-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem); /* 20 -> 24 (DM Sans) */
+  --fs-body: clamp(1.0625rem, 1.03rem + 0.15vw, 1.125rem); /* 17 -> 18 */
+  --fs-small: 0.9375rem;
+  --fs-label: 1rem;
+  --fs-meta: 0.875rem; /* 14 */
+
+  --lh-display: 1.1;
+  --lh-h2: 1.15;
+  --lh-h3: 1.3;
+  --lh-body: 1.6;
+  --lh-meta: 1.5;
+
+  /* 8px spacing system */
+  --s-1: 0.5rem; /* 8 */
+  --s-2: 1rem; /* 16 */
+  --s-3: 1.5rem; /* 24 */
+  --s-4: 2rem; /* 32 */
+  --s-5: 2.5rem; /* 40 */
+  --s-6: 3rem; /* 48 */
+  --s-8: 4rem; /* 64 */
+  --s-10: 5rem; /* 80 */
+  --s-12: 6rem; /* 96 */
+  --s-16: 8rem; /* 128 */
+  --section-y: clamp(4.5rem, 3rem + 6vw, 9rem);
+
+  /* Layout: 12 columns at 1200px */
+  --container: 75rem; /* 1200 */
+  --container-wide: 90rem; /* 1440, used sparingly for image-led rows */
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --grid-gap: clamp(1rem, 0.6rem + 1.2vw, 1.5rem);
+  --measure: 65ch;
+
+  /* Shape */
+  --radius-card: 16px;
+  --radius-control: 12px;
+  --radius-pill: 999px;
+
+  /* Elevation: floating UI only */
+  --shadow-float: 0 1px 2px rgb(23 18 31 / 0.06), 0 12px 32px -8px rgb(23 18 31 / 0.16);
+  --shadow-float-lg: 0 2px 4px rgb(23 18 31 / 0.05), 0 32px 64px -24px rgb(23 18 31 / 0.28);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 640ms;
+
+  --header-h: 76px;
+
+  /* ---------- Colour roles (redesign) ----------
+     Ink       stage: hero, work, footer. Where imagery and gradients glow.
+     Cloud     reading surface for detailed information.
+     Violet    actions, and the Dusk field behind the process story.
+     Flame     heat: the closing CTA field, headline strokes, D2C energy.
+     Aqua      software: blueprint lines, web and mobile pages.
+     Cobalt    data and secondary UI, project stages.
+     Orange    highlights, metadata dots, marketing field.
+     Magenta   hero accent, selected project stages. */
+  --ink-2: #221a2e; /* Ink lifted for panels on Ink (derived, not a new hue) */
+  --ink-line: rgb(255 255 255 / 0.12);
+  --grad-flame-v: linear-gradient(160deg, var(--ky-magenta), var(--ky-orange));
+  --grad-dusk-v: linear-gradient(160deg, var(--ky-violet), var(--ky-cobalt));
+  --grad-aqua-v: linear-gradient(160deg, var(--ky-cyan), var(--ky-cobalt));
+
+  /* Oversized display type */
+  --fs-mega: clamp(3.25rem, 0.9rem + 9.4vw, 10rem);
+  --fs-hero: clamp(3rem, 0.8rem + 8.2vw, 8.75rem);
+  --fs-xl: clamp(2.5rem, 1.2rem + 5vw, 6rem);
+
+  --radius-stage: 16px;
+  --z-header: 50;
+  --z-menu: 80;
+  --z-loader: 200;
+}

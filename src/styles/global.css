@@ -1,0 +1,477 @@
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--ky-violet);
+  color: var(--ky-white);
+}
+
+/* The hidden attribute always wins over component display rules. */
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Focus ---------- */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.on-dark :focus-visible {
+  outline-color: var(--ky-cyan);
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+  padding: 12px 18px;
+  border-radius: var(--radius-control);
+  background: var(--ky-ink);
+  color: var(--ky-white);
+  font-weight: 700;
+  transform: translateY(-160%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Layout ---------- */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container--wide {
+  max-width: calc(var(--container-wide) + var(--gutter) * 2);
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+.on-dark {
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+}
+
+/* ---------- Type ---------- */
+.t-display {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: -0.02em;
+}
+
+.t-h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: -0.015em;
+}
+
+.t-h3 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.t-lead {
+  font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 58ch;
+}
+
+.on-dark .t-lead {
+  color: var(--text-on-dark-muted);
+}
+
+.t-body {
+  max-width: var(--measure);
+}
+
+.t-muted {
+  color: var(--text-muted);
+}
+
+.on-dark .t-muted {
+  color: var(--text-on-dark-muted);
+}
+
+/* Small uppercase label: DM Sans bold, per brand spec. Used sparingly. */
+.t-label {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.t-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-meta);
+  letter-spacing: 0;
+}
+
+.prose p + p {
+  margin-top: 1em;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  --btn-bg: var(--action);
+  --btn-fg: var(--ky-white);
+  --btn-border: transparent;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn .btn__icon {
+  flex: none;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.btn:hover .btn__icon {
+  transform: translateX(3px);
+}
+
+.btn--primary:hover {
+  --btn-bg: var(--action-hover);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--ky-ink);
+  --btn-border: var(--line-strong);
+}
+
+.btn--ghost:hover {
+  --btn-border: var(--ky-ink);
+  --btn-bg: var(--ky-white);
+}
+
+.on-dark .btn--ghost {
+  --btn-fg: var(--ky-white);
+  --btn-border: rgb(255 255 255 / 0.32);
+}
+
+.on-dark .btn--ghost:hover {
+  --btn-bg: rgb(255 255 255 / 0.08);
+  --btn-border: var(--ky-white);
+}
+
+/* Flame: reserved for the one most important action on dark and colour fields */
+.btn--flame {
+  --btn-fg: var(--ky-ink);
+  --btn-bg: transparent;
+  background: var(--grad-flame);
+}
+
+.btn--flame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ky-white);
+  transform: translateY(101%);
+  transition: transform 420ms var(--ease-out);
+}
+
+.btn--flame:hover::before {
+  transform: none;
+}
+
+.btn--ink {
+  --btn-bg: var(--ky-ink);
+  --btn-fg: var(--ky-white);
+}
+
+.btn--ink:hover {
+  --btn-bg: var(--ky-violet);
+}
+
+.btn--light {
+  --btn-bg: var(--ky-white);
+  --btn-fg: var(--ky-ink);
+}
+
+.btn--light:hover {
+  --btn-bg: var(--ky-cloud);
+}
+
+@media (max-width: 400px) {
+  .btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.25;
+    padding-block: 12px;
+  }
+}
+
+.btn--sm {
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 0.9375rem;
+}
+
+/* Text link with drawn underline */
+.link-u {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: var(--link);
+  min-height: 44px;
+}
+
+.on-dark .link-u {
+  color: var(--ky-cyan);
+}
+
+.link-u::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 9px;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transform: scaleX(0.35);
+  opacity: 0.6;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    opacity var(--dur-base) var(--ease-out);
+}
+
+.link-u:hover::after,
+.link-u:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+  opacity: 1;
+}
+
+.link-u svg {
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.link-u:hover svg {
+  transform: translateX(3px);
+}
+
+/* Gradient rule: the brand's thin accent line */
+.rule-flame,
+.rule-dusk,
+.rule-aqua {
+  display: block;
+  height: 2px;
+  width: 64px;
+  border-radius: 2px;
+}
+
+.rule-flame {
+  background: var(--grad-flame);
+}
+
+.rule-dusk {
+  background: var(--grad-dusk);
+}
+
+.rule-aqua {
+  background: var(--grad-aqua);
+}
+
+/* ---------- Motion initial states ----------
+   Only applied when JS has confirmed motion is allowed (html.motion-ok),
+   so content is always visible without JavaScript or with reduced motion. */
+html.motion-ok [data-reveal] {
+  opacity: 0;
+}
+
+html.motion-ok [data-reveal="clip"] {
+  opacity: 1;
+  clip-path: inset(100% 0 0 0);
+}
+
+html.motion-ok [data-reveal="wipe"] {
+  opacity: 1;
+  clip-path: inset(0 100% 0 0);
+}
+
+html.motion-ok [data-draw] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+html.motion-ok .split-line > span {
+  display: inline-block;
+  transform: translateY(105%);
+}
+
+.split-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.split-line > span {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
