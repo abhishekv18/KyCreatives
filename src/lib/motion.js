@@ -17,6 +17,10 @@ const readyPromise = new Promise((r) => (resolveReady = r));
 export const markReady = () => resolveReady();
 export const whenReady = () => readyPromise;
 
+/* heroPin.end: scroll position where a pinned hero sequence ends (0 when
+   there is none), so the header never hides during one. */
+export const heroPin = { end: 0 };
+
 /*
   Declarative scroll reveals, scoped to a container.
   Markup hooks:

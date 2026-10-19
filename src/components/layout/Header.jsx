@@ -10,21 +10,19 @@ import { lockScroll } from "../../lib/smooth";
 import { whenReady } from "../../lib/motion";
 
 /*
-  Scroll state: hides while reading down, returns on scroll up, and reads the
-  tone of the section under the header (sections declare data-tone="dark")
-  so links keep their contrast over Ink, colour fields and Cloud alike.
+  Scroll state. The header never hides: at the top of a page it sits open on
+  the page; once scrolled it condenses into a slim frosted bar. It also reads
+  the tone of the section beneath it (sections declare data-tone="dark") so it
+  keeps its contrast.
 */
-function useHeaderState(pathname) {
+function useHeaderState(pathname, headerRef) {
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [tone, setTone] = useState("light");
 
   useEffect(() => {
-    let last = window.scrollY;
     let ticking = false;
     const readTone = () => {
-      const y = 38;
-      const stack = document.elementsFromPoint(window.innerWidth / 2, y);
+      const stack = document.elementsFromPoint(window.innerWidth / 2, 32);
       const under = stack.find((el) => !el.closest(".site-header, .loader"));
       const zone = under?.closest("[data-tone]");
       setTone(zone?.dataset.tone === "dark" ? "dark" : "light");
@@ -32,9 +30,6 @@ function useHeaderState(pathname) {
     const update = () => {
       const y = window.scrollY;
       setScrolled(y > 24);
-      if (y > 480 && y > last + 4) setHidden(true);
-      else if (y < last - 4 || y <= 480) setHidden(false);
-      last = y;
       readTone();
       ticking = false;
     };
@@ -57,9 +52,44 @@ function useHeaderState(pathname) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [pathname]);
+  }, [pathname, headerRef]);
 
-  return { scrolled, hidden, tone };
+  return { scrolled, tone };
+}
+
+/* Studio local time: a small, true detail for an international studio. */
+const timeFormat = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit" });
+function StudioClock() {
+  const [now, setNow] = useState(() => timeFormat.format(new Date()));
+  useEffect(() => {
+    const id = setInterval(() => setNow(timeFormat.format(new Date())), 20000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <p className="site-header__clock t-meta">
+      <span className="site-header__clock-dot" aria-hidden="true" />
+      Gurugram <span className="site-header__clock-time">{now}</span> IST
+    </p>
+  );
+}
+
+/* A soft highlight that glides to whichever link is hovered or focused. */
+function useNavIndicator(listRef) {
+  const move = useCallback(
+    (e) => {
+      const list = listRef.current;
+      const item = e.target.closest?.(".nav__link");
+      if (!list || !item) return;
+      const l = list.getBoundingClientRect();
+      const r = item.getBoundingClientRect();
+      list.style.setProperty("--ix", `${r.left - l.left}px`);
+      list.style.setProperty("--iw", `${r.width}px`);
+      list.classList.add("has-indicator");
+    },
+    [listRef]
+  );
+  const hide = useCallback(() => listRef.current?.classList.remove("has-indicator"), [listRef]);
+  return { move, hide };
 }
 
 // One brand colour per service, used as a soft tint behind its icon.
@@ -168,9 +198,14 @@ function ServicesMenu() {
       </button>
       <div id="services-menu" className="svc-menu" hidden={!open} onKeyDown={onPanelKey}>
         <div className="svc-menu__inner">
-          <div className="svc-menu__head">
-            <p className="svc-menu__kicker t-meta">Services</p>
+          <div className="svc-menu__side">
+            <p className="svc-menu__kicker t-meta">Services / 06</p>
             <p className="svc-menu__lede">Design, engineering and growth, from one team.</p>
+            <p className="svc-menu__note">Not sure which one fits? We will help you choose.</p>
+            <Link to="/contact" className="svc-menu__cta" onClick={() => setOpen(false)}>
+              Tell us about the project
+              <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+            </Link>
           </div>
           <ul role="list" className="svc-menu__grid">
             {services.map((s, i) => {
@@ -183,31 +218,20 @@ function ServicesMenu() {
                     to={s.path}
                     onClick={() => setOpen(false)}
                   >
-                    <span className="svc-menu__icon" aria-hidden="true">
-                      <Icon size={20} strokeWidth={1.5} />
+                    <span className="svc-menu__top">
+                      <span className="svc-menu__num t-meta">{String(i + 1).padStart(2, "0")}</span>
+                      <Icon className="svc-menu__icon" size={18} strokeWidth={1.5} aria-hidden="true" />
                     </span>
-                    <span className="svc-menu__text">
-                      <span className="svc-menu__name">
-                        {s.name}
-                        {s.slug === "d2c" && <span className="svc-menu__focus t-meta">Focus area</span>}
-                      </span>
-                      <span className="svc-menu__desc">{s.short}</span>
+                    <span className="svc-menu__name">
+                      {s.name}
+                      {s.slug === "d2c" && <span className="svc-menu__focus t-meta">Focus</span>}
                     </span>
-                    <span className="svc-menu__num t-meta" aria-hidden="true">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+                    <span className="svc-menu__desc">{s.short}</span>
                   </Link>
                 </li>
               );
             })}
           </ul>
-          <div className="svc-menu__foot">
-            <span>Not sure which one fits? We will help you choose.</span>
-            <Link to="/contact" className="svc-menu__cta" onClick={() => setOpen(false)}>
-              Tell us about the project
-              <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-            </Link>
-          </div>
         </div>
       </div>
     </div>
@@ -327,7 +351,10 @@ function MobileMenu({ open, onClose }) {
 
 export default function Header() {
   const location = useLocation();
-  const { scrolled, hidden, tone } = useHeaderState(location.pathname);
+  const headerRef = useRef(null);
+  const listRef = useRef(null);
+  const { scrolled, tone } = useHeaderState(location.pathname, headerRef);
+  const { move, hide } = useNavIndicator(listRef);
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleRef = useRef(null);
 
@@ -344,13 +371,19 @@ export default function Header() {
 
   return (
     <>
-      <header
-        className={`site-header tone-${tone} ${scrolled ? "is-scrolled" : ""} ${hidden && !menuOpen ? "is-hidden" : ""}`}
-      >
+      <header ref={headerRef} className={`site-header tone-${tone} ${scrolled ? "is-scrolled" : ""}`}>
         <div className="container site-header__inner">
-          <Logo width={136} card className="site-header__logo" />
+          <Logo width={132} card className="site-header__logo" />
           <nav className="nav" aria-label="Main">
-            <ul role="list" className="nav__list">
+            <ul
+              role="list"
+              className="nav__list"
+              ref={listRef}
+              onPointerOver={move}
+              onFocus={move}
+              onPointerLeave={hide}
+              onBlur={hide}
+            >
               <li>
                 <NavLink to="/" end className="nav__link">
                   Home
@@ -369,13 +402,16 @@ export default function Header() {
                   Contact
                 </NavLink>
               </li>
+              <li className="nav__indicator" role="presentation" aria-hidden="true" />
             </ul>
           </nav>
           <div className="site-header__actions">
+            <StudioClock />
+            <span className="site-header__divider" aria-hidden="true" />
             <Link to="/contact" className="site-header__cta">
-              <span className="site-header__cta-label">Start a project</span>
+              <span>Start a project</span>
               <span className="site-header__cta-icon" aria-hidden="true">
-                <ArrowUpRight size={18} strokeWidth={1.75} />
+                <ArrowUpRight size={16} strokeWidth={2} />
               </span>
             </Link>
             <button

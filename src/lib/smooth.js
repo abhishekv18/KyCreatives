@@ -14,7 +14,7 @@ export function startSmoothScroll() {
   const finePointer = window.matchMedia("(pointer: fine)").matches;
   if (!finePointer || prefersReducedMotion()) return null;
 
-  lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, smoothWheel: true });
+  lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, smoothWheel: true });
   lenis.on("scroll", ScrollTrigger.update);
   const tick = (time) => lenis && lenis.raf(time * 1000);
   gsap.ticker.add(tick);

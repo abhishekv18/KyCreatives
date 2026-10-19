@@ -183,7 +183,7 @@
 }
 
 /* =========================================================
-   FOOTER (Ink sheet rising over the CTA)
+   FOOTER (Ink): invitation, index, wordmark, base
    ========================================================= */
 .footer {
   position: relative;
@@ -191,146 +191,165 @@
   margin-top: -32px;
   border-radius: 32px 32px 0 0;
   overflow: hidden;
-  padding-top: clamp(4.5rem, 3rem + 5vw, 8rem);
+  padding-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
   background: var(--ky-ink);
+  font-size: 0.9375rem;
 }
 
-.footer__art {
-  position: absolute;
-  inset: 0 0 auto auto;
-  width: min(1100px, 110vw);
-  height: 560px;
-  opacity: 0.85;
-  pointer-events: none;
-}
-
-.footer__art .art-ribbons {
-  width: 100%;
-  height: 100%;
-}
-
-.footer__inner {
-  position: relative;
-}
-
-.footer__lead {
+/* 1. Invitation row */
+.footer__invite {
   display: grid;
-  gap: var(--s-3);
+  gap: var(--s-4);
+  align-items: end;
+  padding-bottom: var(--s-6);
+  border-bottom: 1px solid var(--ink-line);
+}
+
+@media (min-width: 900px) {
+  .footer__invite {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+.footer__invite-copy {
+  display: grid;
+  gap: 10px;
   justify-items: start;
-  padding-bottom: var(--s-10);
 }
 
 .footer__kicker {
+  font-size: 0.75rem;
   color: var(--ky-cyan);
-  font-size: 0.8125rem;
+}
+
+.footer__line {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--ky-white);
 }
 
 .footer__mail {
-  position: relative;
-  display: inline-flex;
-  align-items: flex-start;
-  gap: 0.15em;
-  max-width: 100%;
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 0.9rem + 5.4vw, 6rem);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  color: var(--ky-white);
-  overflow-wrap: anywhere;
-}
-
-.footer__mail > span {
-  background: linear-gradient(var(--ky-white), var(--ky-white)) left 100% / 100% 2px no-repeat;
-  padding-bottom: 0.06em;
-  transition: background-size 500ms var(--ease-out);
-}
-
-.footer__mail:hover > span {
-  background-image: var(--grad-flame);
-  background-size: 100% 4px;
-}
-
-.footer__mail-icon {
-  flex: none;
-  width: 0.55em;
-  height: 0.55em;
-  margin-top: 0.12em;
-  color: var(--ky-cyan);
-  transition: transform 420ms var(--ease-out);
-}
-
-.footer__mail:hover .footer__mail-icon {
-  transform: translate(4px, -4px);
-}
-
-.footer__quick {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 28px;
-  align-items: center;
-  font-size: 1.0625rem;
-}
-
-.footer__quick a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   min-height: 44px;
+  font-size: 1.0625rem;
+  font-weight: 500;
   color: rgb(255 255 255 / 0.82);
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 8px) / 100% 1px no-repeat;
   transition: color var(--dur-fast) var(--ease-out);
 }
 
-.footer__quick a:hover {
+.footer__mail:hover {
   color: var(--ky-white);
 }
 
-.footer__start {
-  font-weight: 700;
-  color: var(--ky-orange) !important;
+.footer__mail svg {
+  color: var(--ky-cyan);
+  transition: transform 300ms var(--ease-out);
 }
 
+.footer__mail:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.footer__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 14px;
+  height: 56px;
+  padding: 0 8px 0 24px;
+  border-radius: 14px;
+  background: var(--ky-white);
+  color: var(--ky-ink);
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background-color 300ms var(--ease-out);
+}
+
+@media (min-width: 900px) {
+  .footer__cta {
+    justify-self: end;
+  }
+}
+
+.footer__cta-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--ky-violet);
+  color: var(--ky-white);
+  transition: transform 400ms var(--ease-out);
+}
+
+.footer__cta:hover {
+  background: var(--ky-cyan);
+}
+
+.footer__cta:hover .footer__cta-icon {
+  transform: translateX(3px);
+}
+
+/* 2. Index */
 .footer__grid {
   display: grid;
-  gap: var(--s-6) var(--grid-gap);
+  gap: var(--s-5) var(--grid-gap);
   padding-block: var(--s-6);
-  border-top: 1px solid var(--ink-line);
-}
-
-@media (min-width: 720px) {
-  .footer__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .footer__brand {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (min-width: 1080px) {
-  .footer__grid {
-    grid-template-columns: 1.5fr 0.8fr 1.1fr 1.1fr;
-  }
-  .footer__brand {
-    grid-column: auto;
-  }
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .footer__brand {
+  grid-column: 1 / -1;
   display: grid;
   align-content: start;
   justify-items: start;
-  gap: var(--s-3);
+  gap: var(--s-2);
+}
+
+@media (min-width: 1000px) {
+  .footer__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .footer__brand {
+    grid-column: 1 / span 4;
+  }
+  .footer__col--studio {
+    grid-column: 5 / span 2;
+  }
+  .footer__col--services {
+    grid-column: 7 / span 2;
+  }
+  .footer__col--contact {
+    grid-column: 9 / span 2;
+  }
+  .footer__col--social {
+    grid-column: 11 / span 2;
+  }
+}
+
+.footer__brand .logo-card {
+  padding: 6px 10px;
+  border-radius: 10px;
 }
 
 .footer__brand p {
-  max-width: 36ch;
-  font-size: var(--fs-small);
+  max-width: 34ch;
+  font-size: 0.875rem;
+  line-height: 1.6;
   color: var(--text-on-dark-muted);
 }
 
 .footer__h {
-  margin-bottom: var(--s-2);
-  font-size: 0.75rem;
-  color: var(--ky-cyan);
+  margin-bottom: 14px;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.5);
 }
 
 .footer__col ul {
@@ -341,86 +360,81 @@
 .footer__col a {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  min-height: 40px;
-  color: var(--ky-white);
-  transition:
-    color var(--dur-fast) var(--ease-out),
-    transform var(--dur-base) var(--ease-out);
+  gap: 6px;
+  min-height: 32px;
+  font-size: 0.9063rem;
+  color: rgb(255 255 255 / 0.86);
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out);
 }
 
 .footer__col a:hover {
-  color: var(--ky-orange);
-  transform: translateX(3px);
+  color: var(--ky-white);
 }
 
-.footer__col--svc a svg {
+.footer__col a svg {
   color: rgb(255 255 255 / 0.5);
 }
 
 .footer__address {
   display: grid;
+  margin-top: 12px;
   font-style: normal;
-  font-size: var(--fs-small);
+  font-size: 0.8125rem;
+  line-height: 1.6;
   color: var(--text-on-dark-muted);
 }
 
-.footer__social {
-  display: flex !important;
-  flex-wrap: wrap;
-  gap: 0 18px !important;
-  margin-top: var(--s-2);
-}
-
-.footer__social a {
-  font-size: var(--fs-small);
-}
-
-/* The tagline set at monumental size, cropped by the page edge */
+/* 3. Wordmark: the studio name as a quiet signature */
 .footer__mark {
-  display: grid;
   padding-inline: var(--gutter);
-  margin-top: var(--s-2);
-  margin-bottom: -0.2em;
+  /* letters stand exactly on the hairline of the base row (measured baseline offset) */
+  margin: var(--s-2) 0 -0.138em;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 0.6rem + 10.6vw, 12rem);
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  font-size: calc((100vw - 2 * var(--gutter)) / 6.15);
+  line-height: 1;
+  letter-spacing: -0.05em;
   white-space: nowrap;
-  background: linear-gradient(100deg, var(--ky-violet), var(--ky-cobalt) 45%, var(--ky-cyan));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  text-align: center;
+  color: rgb(255 255 255 / 0.12);
   user-select: none;
+  /* clip exactly at the hairline, so letters appear to rise out of it */
+  clip-path: inset(-0.4em 0 0.138em 0);
 }
 
-@media (max-width: 640px) {
+.footer__word {
+  display: inline-block;
+  will-change: transform;
+}
+
+@media (min-width: 1680px) {
   .footer__mark {
-    white-space: normal;
+    font-size: calc(1440px / 6.15);
   }
 }
 
-.footer__bottom {
+/* 4. Base */
+.footer__base {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px var(--s-4);
+  gap: 4px var(--s-4);
   padding-block: var(--s-3);
   border-top: 1px solid var(--ink-line);
   color: var(--text-on-dark-muted);
 }
 
-.footer__bottom .t-meta {
-  font-size: 0.8125rem;
+.footer__base .t-meta {
+  font-size: 0.75rem;
 }
 
 .footer__legal {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 20px;
-  font-size: var(--fs-small);
+  gap: 0 24px;
+  font-size: 0.8125rem;
 }
 
 .footer__legal a {

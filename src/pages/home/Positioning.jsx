@@ -30,19 +30,18 @@ export default function Positioning() {
   return (
     <section className="pos" data-tone="light" aria-labelledby="pos-title">
       <div className="container">
-        <p className="kicker t-meta">The studio</p>
+        <p className="kicker t-meta">How we think</p>
         <div id="pos-title" className="pos__statement">
           <SplitHeading
             as="h2"
-            lines={["Designers and engineers", "in one team, building", "for businesses everywhere."]}
+            lines={["Three things", "we build on."]}
           />
         </div>
 
         <div className="pos__grid">
           <div className="pos__body">
             <p className="t-lead" data-reveal="up">
-              We build software, web apps and mobile apps for businesses around the world, and high-performing websites
-              for D2C brands.
+              The same three principles shape every project, from a single landing page to a full platform.
             </p>
             <p className="t-muted" data-reveal="up" data-delay="0.08">
               Design decides how a product feels. Engineering decides whether it holds up. We do both in the same room,
@@ -58,7 +57,9 @@ export default function Positioning() {
             {PILLARS.map(({ icon: Icon, tone, title, body }, i) => (
               <li key={title} className={`pos__pillar pos__pillar--${tone}`}>
                 <span className="pos__pillar-top">
-                  <Icon size={26} strokeWidth={1.5} aria-hidden="true" />
+                  <span className="pos__icon" aria-hidden="true">
+                    <Icon size={20} strokeWidth={1.6} />
+                  </span>
                   <span className="t-meta">{String(i + 1).padStart(2, "0")}</span>
                 </span>
                 <h3 className="pos__pillar-title">{title}</h3>

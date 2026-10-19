@@ -1,12 +1,74 @@
-import { useId, useRef, useState } from "react";
-import { Mail, Phone, MessageCircle, MapPin, Info, CheckCircle2, AlertCircle, Copy, Check } from "lucide-react";
+import { useEffect, useId, useRef, useState } from "react";
+import { Mail, Phone, MessageCircle, MapPin, Info, CheckCircle2, AlertCircle, Copy, Check, ArrowUpRight, HelpCircle } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
+import HeroBackdrop from "../components/art/HeroBackdrop";
 import { services } from "../data/services";
-import { Arcs } from "../components/art/Art";
-import { company } from "../data/site";
+import { serviceIcons } from "../components/ui/serviceIcons";
+import { company, social, reviewLinks } from "../data/site";
 
 const SERVICE_OPTIONS = [...services.map((s) => s.name), "Not sure yet"];
+const SERVICE_ICON = Object.fromEntries(services.map((s) => [s.name, serviceIcons[s.slug]]));
+
+const clock = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit" });
+
+/* The quickest ways to reach the studio, with the studio's local time. */
+function ReachCard() {
+  const [now, setNow] = useState(() => clock.format(new Date()));
+  useEffect(() => {
+    const t = setInterval(() => setNow(clock.format(new Date())), 20000);
+    return () => clearInterval(t);
+  }, []);
+  const ways = [
+    { icon: Mail, label: "Email", value: company.email, href: `mailto:${company.email}` },
+    { icon: MessageCircle, label: "WhatsApp", value: "Message the studio", href: company.whatsapp, external: true },
+    { icon: Phone, label: "Call", value: company.phoneDisplay, href: company.phoneHref },
+  ];
+  return (
+    <div className="reach" data-reveal="up" data-delay="0.25">
+      <div className="reach__head">
+        <p className="reach__title">Quickest ways to reach us</p>
+        <p className="reach__time t-meta">
+          <span className="reach__dot" aria-hidden="true" />
+          Gurugram <strong>{now}</strong> IST
+        </p>
+      </div>
+      <ul role="list" className="reach__list">
+        {ways.map(({ icon: Icon, label, value, href, external }) => (
+          <li key={label}>
+            <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+              <span className="reach__icon" aria-hidden="true">
+                <Icon size={18} strokeWidth={1.6} />
+              </span>
+              <span className="reach__text">
+                <span className="reach__label t-meta">{label}</span>
+                <span className="reach__value">{value}</span>
+              </span>
+              <ArrowUpRight className="reach__arrow" size={18} strokeWidth={1.75} aria-hidden="true" />
+              {external && <span className="sr-only"> (opens in a new tab)</span>}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p className="reach__foot">We aim to reply within 24 hours on business days.</p>
+    </div>
+  );
+}
+
+const NEXT = [
+  {
+    title: "We read and reply",
+    body: "Within 24 hours on business days, with questions about your goals rather than a sales script.",
+  },
+  {
+    title: "A first conversation",
+    body: "A call or a written exchange, whichever suits you, to understand the business, the users and the timing.",
+  },
+  {
+    title: "A clear proposal",
+    body: "Scope, timeline and cost in writing, so you can decide with everything in front of you.",
+  },
+];
 
 const EMPTY = { name: "", email: "", company: "", service: "", budget: "", details: "" };
 
@@ -155,6 +217,10 @@ function EnquiryForm() {
 
   return (
     <form className="form" onSubmit={onSubmit} noValidate aria-describedby={`${base}-note`}>
+      <div className="form__head">
+        <p className="form__title">Project enquiry</p>
+        <p className="form__meta t-meta">Takes about 2 minutes</p>
+      </div>
       {submitted && errorList.length > 0 && (
         <div className="form-errors" ref={summaryRef} tabIndex={-1} role="alert">
           <p>
@@ -173,6 +239,10 @@ function EnquiryForm() {
         </div>
       )}
 
+      <fieldset className="form__set">
+        <legend className="form__legend">
+          <span className="t-meta">01</span> About you
+        </legend>
       <div className="form__row">
         <Field id={id("name")} label="Name" error={errors.name}>
           <input
@@ -200,7 +270,6 @@ function EnquiryForm() {
         </Field>
       </div>
 
-      <div className="form__row">
         <Field id={id("company")} label="Company or brand" optional>
           <input
             id={id("company")}
@@ -210,40 +279,58 @@ function EnquiryForm() {
             onChange={set("company")}
           />
         </Field>
-        <Field id={id("service")} label="Service" error={errors.service}>
-          <div className="select">
-            <select
-              id={id("service")}
-              name="service"
-              value={values.service}
-              onChange={set("service")}
-              aria-invalid={!!errors.service}
-              aria-describedby={describedBy("service")}
-            >
-              <option value="" disabled>
-                Choose a service
-              </option>
-              {SERVICE_OPTIONS.map((o) => (
-                <option key={o}>{o}</option>
-              ))}
-            </select>
-          </div>
-        </Field>
-      </div>
+      </fieldset>
 
-      <Field
-        id={id("budget")}
-        label="Budget"
-        optional
-        hint="A rough range in any currency helps us suggest the right scope."
-      >
+      <fieldset className="form__set">
+        <legend className="form__legend">
+          <span className="t-meta">02</span> Your project
+        </legend>
+      <fieldset className={`field choice ${errors.service ? "has-error" : ""}`}>
+        <legend className="field__label" id={`${id("service")}-label`}>
+          Service
+        </legend>
+        <div
+          id={id("service")}
+          role="radiogroup"
+          aria-labelledby={`${id("service")}-label`}
+          aria-invalid={!!errors.service}
+          aria-describedby={describedBy("service")}
+          tabIndex={-1}
+          className="choice__grid"
+        >
+          {SERVICE_OPTIONS.map((o) => {
+            const Icon = SERVICE_ICON[o] || HelpCircle;
+            return (
+              <label key={o} className="choice__item">
+                <input type="radio" name="service" value={o} checked={values.service === o} onChange={set("service")} />
+                <span className="choice__box">
+                  <span className="choice__icon" aria-hidden="true">
+                    <Icon size={18} strokeWidth={1.6} />
+                  </span>
+                  <span className="choice__name">{o}</span>
+                  <span className="choice__tick" aria-hidden="true">
+                    <Check size={14} strokeWidth={2.5} />
+                  </span>
+                </span>
+              </label>
+            );
+          })}
+        </div>
+        {errors.service && (
+          <p id={`${id("service")}-error`} className="field__error">
+            <AlertCircle size={16} strokeWidth={1.75} aria-hidden="true" />
+            {errors.service}
+          </p>
+        )}
+      </fieldset>
+      <Field id={id("budget")} label="Budget" optional>
         <input
           id={id("budget")}
           name="budget"
           value={values.budget}
           onChange={set("budget")}
-          placeholder="For example: USD 8,000 to 12,000"
-          aria-describedby={describedBy("budget", true)}
+          placeholder="e.g. USD 8,000 to 12,000"
+          aria-describedby={describedBy("budget")}
         />
       </Field>
 
@@ -263,19 +350,21 @@ function EnquiryForm() {
           aria-describedby={describedBy("details", true)}
         />
       </Field>
+      </fieldset>
 
-      <div className="form__note" id={`${base}-note`}>
-        <Info size={18} strokeWidth={1.75} aria-hidden="true" />
-        <p>
-          This form does not send anything by itself. When you continue, your email app opens with a message to{" "}
-          {company.email}, ready for you to review and send.
-        </p>
+      <div className="form__foot">
+        <div className="form__note" id={`${base}-note`}>
+          <Info size={16} strokeWidth={1.75} aria-hidden="true" />
+          <p>
+            Nothing is sent from this page. Continue opens your email app with a message to {company.email}, ready to
+            review and send.
+          </p>
+        </div>
+        <button type="submit" className="btn btn--primary form__submit" disabled={status === "opening"}>
+          <span>{status === "opening" ? "Opening your email app" : "Continue in your email app"}</span>
+          <Mail size={18} strokeWidth={1.75} aria-hidden="true" className="btn__icon" />
+        </button>
       </div>
-
-      <button type="submit" className="btn btn--primary form__submit" disabled={status === "opening"}>
-        <span>{status === "opening" ? "Opening your email app" : "Continue in your email app"}</span>
-        <Mail size={18} strokeWidth={1.75} aria-hidden="true" className="btn__icon" />
-      </button>
     </form>
   );
 }
@@ -290,60 +379,120 @@ export default function Contact() {
   return (
     <>
       <PageHero
-        theme="violet"
-        kickerTone="aqua"
-        art={<Arcs className="contact__arcs" />}
         kicker="Contact"
         lines={["Tell us what", "you want to build."]}
         lead="A few lines are enough to start. We will reply with questions, an honest view of what it takes, and the next step."
+        className="phero--contact"
+        art={<HeroBackdrop />}
+        aside={<ReachCard />}
       />
+
       <section className="contact section" data-tone="light" aria-label="Contact details and enquiry form">
         <div className="container contact__grid">
-          <aside className="contact__details on-dark" data-tone="dark" data-reveal="up">
-            <h2 className="contact__h">Reach us directly</h2>
-            <ul role="list" className="contact__list">
-              <li>
-                <Mail size={20} strokeWidth={1.5} aria-hidden="true" />
-                <div>
-                  <span className="t-meta">Email</span>
-                  <a href={`mailto:${company.email}`}>{company.email}</a>
-                </div>
-              </li>
-              <li>
-                <Phone size={20} strokeWidth={1.5} aria-hidden="true" />
-                <div>
-                  <span className="t-meta">Phone</span>
-                  <a href={company.phoneHref}>{company.phoneDisplay}</a>
-                </div>
-              </li>
-              <li>
-                <MessageCircle size={20} strokeWidth={1.5} aria-hidden="true" />
-                <div>
-                  <span className="t-meta">WhatsApp</span>
-                  <a href={company.whatsapp} target="_blank" rel="noopener noreferrer">
-                    Message us on WhatsApp<span className="sr-only"> (opens in a new tab)</span>
-                  </a>
-                </div>
-              </li>
-              <li>
-                <MapPin size={20} strokeWidth={1.5} aria-hidden="true" />
-                <div>
-                  <span className="t-meta">Studio</span>
-                  <address>
-                    {company.address.lines.map((l) => (
-                      <span key={l}>{l}</span>
-                    ))}
-                  </address>
-                </div>
-              </li>
-            </ul>
-            <p className="contact__note t-muted">
-              We aim to answer every enquiry within 24 hours on business days (India Standard Time).
-            </p>
+          <aside className="contact__details" data-reveal="up">
+            <div className="contact__block">
+              <h2 className="contact__h t-meta">Reach us directly</h2>
+              <ul role="list" className="contact__list">
+                <li>
+                  <span className="contact__icon" aria-hidden="true">
+                    <Mail size={18} strokeWidth={1.6} />
+                  </span>
+                  <div>
+                    <span className="contact__label">Email</span>
+                    <a href={`mailto:${company.email}`}>{company.email}</a>
+                  </div>
+                </li>
+                <li>
+                  <span className="contact__icon" aria-hidden="true">
+                    <Phone size={18} strokeWidth={1.6} />
+                  </span>
+                  <div>
+                    <span className="contact__label">Phone</span>
+                    <a href={company.phoneHref}>{company.phoneDisplay}</a>
+                  </div>
+                </li>
+                <li>
+                  <span className="contact__icon" aria-hidden="true">
+                    <MessageCircle size={18} strokeWidth={1.6} />
+                  </span>
+                  <div>
+                    <span className="contact__label">WhatsApp</span>
+                    <a href={company.whatsapp} target="_blank" rel="noopener noreferrer">
+                      Message us on WhatsApp<span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  </div>
+                </li>
+                <li>
+                  <span className="contact__icon" aria-hidden="true">
+                    <MapPin size={18} strokeWidth={1.6} />
+                  </span>
+                  <div>
+                    <span className="contact__label">Studio</span>
+                    <address>
+                      {company.address.lines.map((l) => (
+                        <span key={l}>{l}</span>
+                      ))}
+                    </address>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div className="contact__block">
+              <h2 className="contact__h t-meta">Follow the studio</h2>
+              <ul role="list" className="contact__social">
+                {social.map((s) => (
+                  <li key={s.label}>
+                    <a href={s.href} target="_blank" rel="noopener noreferrer">
+                      <span>{s.label}</span>
+                      <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="contact__block">
+              <h2 className="contact__h t-meta">Client reviews</h2>
+              <p className="contact__reviews">
+                <a href={reviewLinks.trustpilot} target="_blank" rel="noopener noreferrer">
+                  Trustpilot
+                  <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+                <a href={reviewLinks.google} target="_blank" rel="noopener noreferrer">
+                  Google
+                  <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </p>
+            </div>
           </aside>
+
           <div className="contact__form" data-reveal="up" data-delay="0.1">
             <EnquiryForm />
           </div>
+        </div>
+      </section>
+
+      <section className="cnext section on-dark grain" data-tone="dark" aria-labelledby="cnext-title">
+        <div className="container">
+          <div className="cnext__head">
+            <p className="kicker kicker--aqua t-meta">What happens next</p>
+            <h2 id="cnext-title" className="cnext__title">
+              From first message to a clear plan.
+            </h2>
+          </div>
+          <ol role="list" className="cnext__list" data-stagger="">
+            {NEXT.map((n, i) => (
+              <li key={n.title} className={`cnext__step cnext__step--${i}`}>
+                <span className="cnext__num t-meta">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="cnext__h">{n.title}</h3>
+                <p>{n.body}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
     </>

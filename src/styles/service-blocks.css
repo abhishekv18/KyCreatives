@@ -6,19 +6,23 @@
 .svcpage {
   --accent: var(--ky-violet);
   --accent-fg: var(--ky-white);
+  --accent-text: var(--ky-violet);
 }
 .svcpage--flame,
 .svcpage--orange {
   --accent: var(--ky-orange);
   --accent-fg: var(--ky-ink);
+  --accent-text: #b35c00;
 }
 .svcpage--cyan {
   --accent: var(--ky-cyan);
   --accent-fg: var(--ky-ink);
+  --accent-text: #0f7f90;
 }
 .svcpage--cobalt {
   --accent: var(--ky-cobalt);
   --accent-fg: var(--ky-ink);
+  --accent-text: #2f6cc4;
 }
 
 /* ---------- Offerings (numbered index) ---------- */
@@ -72,31 +76,54 @@
   border-bottom: 1px solid var(--line-strong);
 }
 
+/* Hover: a soft tint of the page accent behind the row... */
 .offer__row::before {
   content: "";
   position: absolute;
-  inset: -1px -20px;
+  inset: -1px calc(-1 * var(--s-3));
   z-index: -1;
   border-radius: 14px;
+  background: color-mix(in srgb, var(--accent) 16%, var(--ky-white));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+}
+
+/* ...and a thin accent bar that grows down its left edge */
+.offer__row::after {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--s-3));
+  top: var(--s-3);
+  bottom: var(--s-3);
+  width: 4px;
+  border-radius: 4px;
   background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 500ms var(--ease-out);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (hover: hover) {
   .offer__row:hover::before {
-    transform: scaleX(1);
+    opacity: 1;
   }
-  .offer__row:hover,
-  .offer__row:hover .offer__body {
-    color: var(--accent-fg);
+  .offer__row:hover::after {
+    transform: scaleY(1);
+  }
+  .offer__row:hover .offer__num {
+    color: var(--accent-text);
+  }
+  .offer__row:hover .offer__name {
+    transform: translateX(8px);
   }
 }
 
 .offer__num {
   padding-top: 0.5em;
   font-size: 0.75rem;
+  color: var(--ky-slate);
+  transition: color 600ms var(--ease-out);
 }
 
 .offer__name {
@@ -104,6 +131,7 @@
   font-size: clamp(1.5rem, 1.2rem + 1vw, 2.25rem);
   line-height: 1.15;
   letter-spacing: -0.02em;
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .offer__body {
@@ -113,7 +141,6 @@
   justify-items: start;
   color: var(--text-muted);
   max-width: 56ch;
-  transition: color 300ms var(--ease-out);
 }
 
 @media (min-width: 860px) {
@@ -123,6 +150,14 @@
   }
   .offer__body {
     grid-column: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offer__row::before,
+  .offer__row::after,
+  .offer__name {
+    transition: none;
   }
 }
 

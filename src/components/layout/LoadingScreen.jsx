@@ -2,26 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, markReady, prefersReducedMotion } from "../../lib/motion";
 import { lockScroll } from "../../lib/smooth";
 
-const SEEN_KEY = "ky-intro-seen";
 const MIN_MS = 650; // long enough to avoid a flash, short enough not to be a wait
 const MAX_MS = 3500; // hard ceiling: the visitor can never be stuck here
 
-function alreadySeen() {
-  // With reduced motion the intro is skipped entirely: content first, no theatre.
-  if (prefersReducedMotion()) return true;
-  try {
-    return sessionStorage.getItem(SEEN_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-
 /**
  * Branded first-load screen. Progress reflects real work: web fonts plus the
- * page's critical images (marked data-critical). Shown once per session.
+ * page's critical images (marked data-critical). Shown on every full load.
  */
 export default function LoadingScreen() {
-  const [show, setShow] = useState(() => !alreadySeen());
+  // Plays on every full page load or refresh; never during in-app navigation
+  // (the layout mounts once). Skipped entirely with reduced motion.
+  const [show, setShow] = useState(() => !prefersReducedMotion());
   const [logoFailed, setLogoFailed] = useState(false);
   const rootRef = useRef(null);
   const barRef = useRef(null);
@@ -72,11 +63,6 @@ export default function LoadingScreen() {
       if (finished) return;
       finished = true;
       setProgress(1);
-      try {
-        sessionStorage.setItem(SEEN_KEY, "1");
-      } catch {
-        /* storage may be unavailable; the intro will simply show again */
-      }
       const out = () => {
         lockScroll(false);
         markReady();
@@ -86,12 +72,26 @@ export default function LoadingScreen() {
         gsap.to(rootRef.current, { autoAlpha: 0, duration: 0.2, onComplete: out });
         return;
       }
+      // The Flame bar travels to the centre of the screen and collapses into a
+      // single point; the Cloud field then dissolves around it and the hero's
+      // orb grows out of that point.
+      const root = rootRef.current;
+      const track = root.querySelector(".loader__track");
+      const dot = root.querySelector(".loader__dot");
+      const r = track.getBoundingClientRect();
+      const dx = window.innerWidth / 2 - (r.left + r.width / 2);
+      const dy = window.innerHeight / 2 - (r.top + r.height / 2);
       gsap
-        .timeline({ delay: 0.25, onComplete: out })
-        .to(".loader__brand, .loader__meta", { autoAlpha: 0, y: -12, duration: 0.45, ease: "power2.in", stagger: 0.04 })
-        .to(rootRef.current, { yPercent: -100, duration: 0.85, ease: "power3.inOut" }, "-=0.1")
-        // Let the hero start rising underneath while the panel is still lifting.
-        .call(() => markReady(), null, "-=0.55");
+        .timeline({ delay: 0.2, onComplete: out })
+        .to(".loader__brand, .loader__labels", { opacity: 0, y: -10, duration: 0.45, ease: "power2.in", stagger: 0.05 })
+        .to(track, { x: dx, y: dy, backgroundColor: "rgba(23,18,31,0)", duration: 0.75, ease: "power3.inOut" }, 0.15)
+        .to(track, { scaleX: 0.025, duration: 0.45, ease: "power3.in" }, 0.6)
+        .fromTo(dot, { scale: 0, opacity: 1 }, { scale: 1, duration: 0.3, ease: "power2.out" }, 0.95)
+        .set(track, { opacity: 0 }, 1.0)
+        .set(root, { pointerEvents: "none" }, 1.05)
+        .call(() => markReady(), null, 1.05)
+        .to(root, { backgroundColor: "rgba(246,243,251,0)", duration: 0.5, ease: "power1.out" }, 1.05)
+        .to(dot, { opacity: 0, scale: 1.6, duration: 0.5, ease: "power2.out" }, 1.25);
     };
 
     const all = Promise.all(tasks).then(() => {
@@ -137,6 +137,7 @@ export default function LoadingScreen() {
           <span ref={pctRef}>0%</span>
         </div>
       </div>
+      <span className="loader__dot" aria-hidden="true" />
     </div>
   );
 }

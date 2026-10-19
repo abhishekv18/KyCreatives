@@ -1,11 +1,13 @@
 import { usePageMeta } from "../hooks/usePageMeta";
 import Hero from "./home/Hero";
+import Manifesto from "./home/Manifesto";
 import ClientBand from "./home/ClientBand";
 import Positioning from "./home/Positioning";
 import Work from "./home/Work";
 import ServicesIndex from "./home/ServicesIndex";
 import Process from "./home/Process";
 import Testimonials from "./home/Testimonials";
+import Partners from "./home/Partners";
 import ContactCTA from "../components/ui/ContactCTA";
 
 /*
@@ -22,13 +24,18 @@ export default function Home() {
 
   return (
     <>
-      <Hero />
+      {/* The hero holds still while the manifesto sheet slides over it. */}
+      <div className="opening">
+        <Hero />
+        <Manifesto />
+      </div>
       <ClientBand />
       <Positioning />
       <Work />
       <ServicesIndex />
       <Process />
       <Testimonials />
+      <Partners />
       <ContactCTA />
     </>
   );

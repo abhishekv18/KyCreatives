@@ -4,6 +4,8 @@ import { useGSAP } from "@gsap/react";
 import Header from "./Header";
 import Footer from "./Footer";
 import LoadingScreen from "./LoadingScreen";
+import WhatsAppButton from "../ui/WhatsAppButton";
+import Cursor from "../ui/Cursor";
 import { gsap, ScrollTrigger, initReveals, refreshOnImages, prefersReducedMotion } from "../../lib/motion";
 import { startSmoothScroll, stopSmoothScroll, scrollToTop, getLenis } from "../../lib/smooth";
 
@@ -16,7 +18,7 @@ function PageTransition({ children }) {
     () => {
       initReveals(ref.current);
       if (!prefersReducedMotion()) {
-        gsap.fromTo(ref.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
+        gsap.fromTo(ref.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", clearProps: "transform" });
       }
     },
     { scope: ref, dependencies: [pathname] }
@@ -79,6 +81,8 @@ export default function Layout() {
         </Suspense>
       </main>
       <Footer />
+      <WhatsAppButton />
+      <Cursor />
     </>
   );
 }

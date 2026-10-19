@@ -216,21 +216,47 @@ export default function About() {
         </div>
       </section>
 
-      <section className="aquote section" data-tone="light" aria-label="Client testimonial">
-        <div className="container">
+      <section className="aquote section" data-tone="light" aria-labelledby="aquote-title">
+        <div className="container aquote__grid">
+          <div className="aquote__side">
+            <h2 id="aquote-title" className="kicker kicker--dusk t-meta">
+              From a client
+            </h2>
+            <div className="aquote__by" data-reveal="up">
+              <span className="aquote__avatar" aria-hidden="true">
+                {quote.name
+                  .split(/\s+/)
+                  .map((w) => w[0])
+                  .join("")
+                  .slice(0, 2)}
+              </span>
+              <span className="aquote__who">
+                <span className="aquote__name">{quote.name}</span>
+                <span className="aquote__co t-meta">{quote.company}</span>
+              </span>
+            </div>
+          </div>
           <figure className="aquote__fig" data-reveal="up">
+            <span className="aquote__mark" aria-hidden="true">
+              &ldquo;
+            </span>
             <blockquote>
               <p>{quote.quote}</p>
             </blockquote>
-            <figcaption>
-              <span className="quotes__name">{quote.name}</span>
-              <span className="t-muted">{quote.company}</span>
+            <figcaption className="sr-only">
+              {quote.name}, {quote.company}
             </figcaption>
+            <div className="aquote__links">
+              <Link to="/#work" className="link-u">
+                See selected work
+                <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
+              </Link>
+              <Link to="/contact" className="link-u">
+                Start a project
+                <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
+              </Link>
+            </div>
           </figure>
-          <Link to="/#work" className="link-u" data-reveal="up">
-            See selected work
-            <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
-          </Link>
         </div>
       </section>
 

@@ -2,85 +2,110 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { ArrowRight, ArrowDown } from "lucide-react";
-import BrowserFrame from "../../components/ui/BrowserFrame";
-import { Waves, Stroke } from "../../components/art/Art";
 import { gsap, whenReady, prefersReducedMotion } from "../../lib/motion";
-import { shotSrc } from "../../data/projects";
 import { company } from "../../data/site";
 
+const CAPS = ["Software", "Web apps", "Mobile apps", "D2C websites"];
+const COLUMNS = 12;
+
 /*
-  Light editorial hero. Cloud field, Ink headline in Libre Baskerville, the
-  layered-wave artwork cresting from the right with its own space, and one
-  small live client card resting on the waves as quiet proof.
+  Centred typographic hero on Cloud. Behind it: two very soft brand lights
+  (Violet upper left, Flame lower right), a fine grain, and the site's own
+  12-column grid drawn as hairlines with corner marks, like a layout sheet.
+  The grid draws in once; everything is readable within about a second.
 */
 export default function Hero() {
   const ref = useRef(null);
 
   useGSAP(
     () => {
-      if (prefersReducedMotion()) return;
       const q = gsap.utils.selector(ref);
       const lines = q(".hero__title .split-line > span");
-      const waves = q("[data-wave]");
-      gsap.set(lines, { yPercent: 108, y: 0 });
-      gsap.set(q(".hero__fade"), { opacity: 0, y: 16 });
-      gsap.set(waves, { opacity: 0, y: 60 });
-      gsap.set(q(".hero__card"), { opacity: 0, y: 30 });
-      gsap.set(q(".hero__title [data-draw]"), { strokeDashoffset: 1 });
+      const fades = q(".hero__fade");
+      const word = q(".hero__word")[0];
+      const rules = q(".hero__col");
+      const marks = q(".hero__mark");
 
-      let cancelled = false;
+      if (prefersReducedMotion()) {
+        gsap.set(lines, { yPercent: 0, y: 0 });
+        return;
+      }
+
+      gsap.set(lines, { yPercent: 115, y: 0 });
+      gsap.set(fades, { opacity: 0, y: 12 });
+      gsap.set(word, { backgroundPosition: "100% 50%" });
+      gsap.set(rules, { scaleY: 0, transformOrigin: "50% 0%" });
+      gsap.set(marks, { opacity: 0, scale: 0.6 });
+
+      let alive = true;
       whenReady().then(() => {
-        if (cancelled) return;
+        if (!alive) return;
         gsap
           .timeline({ defaults: { ease: "power3.out" } })
-          // Sheets settle one after another, back to front.
-          .to(waves, { opacity: 1, y: 0, duration: 1.6, stagger: 0.09 }, 0)
-          .to(lines, { yPercent: 0, duration: 1.15, stagger: 0.12, ease: "power4.out" }, 0.15)
-          .to(q(".hero__title [data-draw]"), { strokeDashoffset: 0, duration: 1, ease: "power2.inOut" }, 0.85)
-          .to(q(".hero__fade"), { opacity: 1, y: 0, duration: 0.9, stagger: 0.07 }, 0.55)
-          .to(q(".hero__card"), { opacity: 1, y: 0, duration: 1.1 }, 1.0);
+          // The layout sheet draws first, from the centre column outwards...
+          .to(rules, { scaleY: 1, duration: 1.4, ease: "power2.inOut", stagger: { each: 0.05, from: "center" } }, 0)
+          .to(marks, { opacity: 1, scale: 1, duration: 0.6, stagger: 0.06 }, 0.6)
+          // ...then the type is set on it.
+          .to(lines, { yPercent: 0, duration: 1.1, stagger: 0.1, ease: "power4.out" }, 0.2)
+          .to(word, { backgroundPosition: "0% 50%", duration: 1.6, ease: "power2.inOut" }, 0.5)
+          .to(fades, { opacity: 1, y: 0, duration: 0.8, stagger: 0.06 }, 0.5);
       });
 
-      // Restrained scroll response: front sheets drift faster than back ones,
-      // giving depth without moving the type. Desktop only, transform only.
-      const mm = gsap.matchMedia();
-      mm.add("(min-width: 900px)", () => {
-        const st = { trigger: ref.current, start: "top top", end: "bottom top", scrub: 0.6 };
-        waves.forEach((w, i) => {
-          gsap.to(w, { y: -(10 + i * 14), ease: "none", scrollTrigger: st, immediateRender: false });
+      // As the manifesto sheet slides over, the opening steps back a little.
+      const sheet = document.querySelector(".manifesto");
+      if (sheet) {
+        gsap.to(q(".hero__inner"), {
+          scale: 0.95,
+          yPercent: -3,
+          opacity: 0.4,
+          ease: "none",
+          immediateRender: false,
+          scrollTrigger: { trigger: sheet, start: "top bottom", end: "top top", scrub: 0.5 },
         });
-        gsap.to(q(".hero__card"), { y: -70, ease: "none", scrollTrigger: st, immediateRender: false });
-      });
+      }
+
       return () => {
-        cancelled = true;
+        alive = false;
       };
     },
     { scope: ref }
   );
 
-  const site = shotSrc("thedecorshed", "wide");
-
   return (
     <section className="hero" ref={ref} data-tone="light" aria-labelledby="hero-title">
-      <div className="hero__art" aria-hidden="true">
-        <Waves />
+      {/* Background: brand light, grain, and the 12-column layout sheet */}
+      <div className="hero__bg" aria-hidden="true">
+        <span className="hero__light hero__light--violet" />
+        <span className="hero__light hero__light--flame" />
+        <span className="hero__grain" />
+        <div className="container hero__sheet">
+          {Array.from({ length: COLUMNS + 1 }, (_, i) => (
+            <i key={i} className="hero__col" style={{ "--i": i }} />
+          ))}
+          <span className="hero__mark hero__mark--tl" />
+          <span className="hero__mark hero__mark--tr" />
+          <span className="hero__mark hero__mark--bl" />
+          <span className="hero__mark hero__mark--br" />
+        </div>
       </div>
 
-      <div className="container hero__layout">
-        <div className="hero__copy">
-          <ul role="list" className="hero__meta t-meta hero__fade">
-            <li>Design-led studio</li>
-            <li>Est. {company.foundedYear}</li>
-            <li>{company.address.short} to worldwide</li>
-          </ul>
+      <div className="container hero__inner">
+        <div className="hero__center">
+          <p className="hero__top t-meta hero__fade">
+            <span className="hero__top-brand">
+              KY Creatives<span aria-hidden="true"> · </span>
+            </span>
+            Design-led studio<span aria-hidden="true"> · </span>Est. {company.foundedYear}
+          </p>
 
           <h1 id="hero-title" className="hero__title" aria-label="What we create is business." data-reveal-manual="">
             <span className="split-line" aria-hidden="true">
               <span>What we create</span>
             </span>
-            <span className="split-line hero__line-2" aria-hidden="true">
-              <span>is business.</span>
-              <Stroke className="hero__stroke" />
+            <span className="split-line" aria-hidden="true">
+              <span>
+                is <em className="hero__word">business.</em>
+              </span>
             </span>
           </h1>
 
@@ -101,29 +126,14 @@ export default function Hero() {
           </div>
         </div>
 
-        <figure className="hero__card">
-          <BrowserFrame
-            domain="thedecorshed.com"
-            {...site}
-            sizes="(min-width: 900px) 24vw, 70vw"
-            alt="The Decorshed online store home page"
-            loading="eager"
-            fetchPriority="high"
-            ratio="16 / 10"
-            imgProps={{ "data-critical": "" }}
-          />
-          <figcaption>
-            <span className="hero__live">Live</span>
-            <span>The Decorshed, D2C store by KY Creatives</span>
-          </figcaption>
-        </figure>
-
-        <ul role="list" className="hero__caps t-meta hero__fade">
-          <li>Software</li>
-          <li>Web apps</li>
-          <li>Mobile apps</li>
-          <li>D2C websites</li>
-        </ul>
+        <ol role="list" className="hero__caps hero__fade">
+          {CAPS.map((c, i) => (
+            <li key={c}>
+              <span className="t-meta">{String(i + 1).padStart(2, "0")}</span>
+              {c}
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

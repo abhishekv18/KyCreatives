@@ -14,6 +14,7 @@ const Marketing = lazy(() => import("./pages/services/Marketing"));
 const DesignGraphics = lazy(() => import("./pages/services/DesignGraphics"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const Terms = lazy(() => import("./pages/TermsAndConditions"));
+const Refunds = lazy(() => import("./pages/RefundsAndCancellation"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const router = createBrowserRouter([
@@ -21,17 +22,18 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/", element: <Home /> },
-      // { path: "/about", element: <About /> },
-      // { path: "/contact", element: <Contact /> },
-      // { path: "/services/d2c", element: <D2C /> },
-      // { path: "/services/web-apps-websites", element: <WebAppsWebsites /> },
-      // { path: "/services/mobile-apps", element: <MobileApps /> },
-      // { path: "/services/portals", element: <Portals /> },
-      // { path: "/services/marketing", element: <Marketing /> },
-      // { path: "/services/design-graphics", element: <DesignGraphics /> },
-      // { path: "/privacy-policy", element: <PrivacyPolicy /> },
-      // { path: "/terms-and-conditions", element: <Terms /> },
-      // { path: "*", element: <NotFound /> },
+      { path: "/about", element: <About /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "/services/d2c", element: <D2C /> },
+      { path: "/services/web-apps-websites", element: <WebAppsWebsites /> },
+      { path: "/services/mobile-apps", element: <MobileApps /> },
+      { path: "/services/portals", element: <Portals /> },
+      { path: "/services/marketing", element: <Marketing /> },
+      { path: "/services/design-graphics", element: <DesignGraphics /> },
+      { path: "/privacy-policy", element: <PrivacyPolicy /> },
+      { path: "/terms-and-conditions", element: <Terms /> },
+      { path: "/refunds-and-cancellation", element: <Refunds /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
