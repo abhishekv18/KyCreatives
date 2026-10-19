@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Mail, Phone, MessageCircle, MapPin, Info, CheckCircle2, AlertCircle, Copy, Check, ArrowUpRight, HelpCircle } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
-import HeroBackdrop from "../components/art/HeroBackdrop";
+import { Arcs } from "../components/art/Art";
 import { services } from "../data/services";
 import { serviceIcons } from "../components/ui/serviceIcons";
 import SocialIcon from "../components/ui/SocialIcon";
@@ -433,11 +433,13 @@ export default function Contact() {
   return (
     <>
       <PageHero
+        theme="dusk"
         kicker="Contact"
+        kickerTone="aqua"
         lines={["Tell us what", "you want to build."]}
         lead="A few lines are enough to start. We will reply with questions, an honest view of what it takes, and the next step."
         className="phero--contact"
-        art={<HeroBackdrop />}
+        art={<Arcs />}
         aside={<ReachCard />}
       />
 
@@ -533,10 +535,10 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="cnext section on-dark grain" data-tone="dark" aria-labelledby="cnext-title">
+      <section className="cnext section grain" data-tone="color" aria-labelledby="cnext-title">
         <div className="container">
           <div className="cnext__head">
-            <p className="kicker kicker--aqua t-meta">What happens next</p>
+            <p className="kicker kicker--ink t-meta">What happens next</p>
             <h2 id="cnext-title" className="cnext__title">
               From first message to a clear plan.
             </h2>

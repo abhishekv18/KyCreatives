@@ -26,6 +26,14 @@
   --ph-muted: var(--ky-white);
   background: radial-gradient(120% 100% at 100% 0%, var(--ky-violet) 0%, #6d43cc 50%, #5f3bbf 100%);
 }
+/* Dusk: the Violet to Cobalt gradient from the palette, used by Contact */
+.phero--dusk {
+  --ph-fg: var(--ky-white);
+  --ph-muted: rgb(255 255 255 / 0.86);
+  background:
+    radial-gradient(60% 80% at 85% 20%, rgb(111 227 245 / 0.22), transparent 70%),
+    linear-gradient(135deg, var(--ky-violet) 0%, #6a5fe0 50%, var(--ky-cobalt) 100%);
+}
 .phero--flame,
 .phero--cobalt {
   --ph-muted: var(--ky-ink);
@@ -713,6 +721,35 @@
 
 .phero--contact .phero__grid {
   align-items: center;
+}
+
+/* signal rings radiating from behind the reach card */
+.phero--contact .phero__art .art-arcs {
+  position: absolute;
+  top: 50%;
+  right: -12%;
+  width: min(980px, 80vw);
+  height: auto;
+  translate: 0 -50%;
+}
+
+@media (max-width: 959px) {
+  .phero--contact .phero__art .art-arcs {
+    top: auto;
+    bottom: -20%;
+    right: -40%;
+    width: 140vw;
+    translate: none;
+    opacity: 0.6;
+  }
+}
+
+.phero--dusk .reach {
+  background: var(--ky-white);
+  border-color: rgb(255 255 255 / 0.6);
+  box-shadow:
+    0 1px 2px rgb(23 18 31 / 0.06),
+    0 50px 90px -40px rgb(23 18 31 / 0.55);
 }
 
 /* Quick-reach card beside the hero title */
@@ -1717,43 +1754,37 @@
   border-color: rgb(216 51 74 / 0.45);
 }
 
-/* ---------- What happens next on a Violet field ---------- */
+/* ---------- What happens next on the Flame field ----------
+   Flame sits between the Dusk hero and the Ink footer, as the closing band
+   does on every other page. Ink text, as the guidelines pair it. */
 .cnext {
   position: relative;
-  background: radial-gradient(120% 100% at 100% 0%, var(--ky-violet) 0%, #6d43cc 50%, #5b37b8 100%);
+  background: linear-gradient(125deg, var(--ky-magenta) 0%, #f0607a 38%, var(--ky-orange) 100%);
+  color: var(--ky-ink);
 }
 
 .cnext .kicker,
 .cnext__num {
-  color: rgb(255 255 255 / 0.85);
+  color: rgb(23 18 31 / 0.72);
 }
 
-.cnext__title {
-  color: var(--ky-white);
+.cnext__title,
+.cnext__h {
+  color: var(--ky-ink);
 }
 
 .cnext__step {
-  border-top-color: rgb(255 255 255 / 0.28);
+  border-top-color: rgb(23 18 31 / 0.22);
 }
 
-.cnext__step::before {
-  background: var(--ky-cyan);
-}
-
-.cnext__step--1::before {
-  background: var(--ky-orange);
-}
-
+.cnext__step::before,
+.cnext__step--1::before,
 .cnext__step--2::before {
-  background: var(--ky-magenta);
-}
-
-.cnext__h {
-  color: var(--ky-white);
+  background: var(--ky-ink);
 }
 
 .cnext__step p {
-  color: var(--ky-white);
+  color: rgb(23 18 31 / 0.82);
 }
 
 /* Key facts summary at the top of a policy */

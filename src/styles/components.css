@@ -186,6 +186,11 @@
   background: var(--grad-aqua);
 }
 
+/* on Flame and other saturated light fields */
+.kicker--ink::before {
+  background: var(--ky-ink);
+}
+
 /* ---------- Status tag (always paired with a word) ---------- */
 .tag {
   display: inline-flex;

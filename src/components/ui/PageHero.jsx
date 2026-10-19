@@ -1,11 +1,11 @@
 import SplitHeading from "./SplitHeading";
 
-const DARK = new Set(["ink", "violet"]);
+const DARK = new Set(["ink", "violet", "dusk"]);
 
 /**
  * Opening section for inner pages. Each page chooses a colour field (theme)
  * and may add background artwork (art) and a centrepiece (aside).
- * Text colour follows the guideline pairings: White on Ink and Violet,
+ * Text colour follows the guideline pairings: White on Ink, Violet and Dusk,
  * Ink on Flame, Orange, Cyan, Cobalt and Cloud.
  */
 export default function PageHero({
