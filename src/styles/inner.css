@@ -164,6 +164,161 @@
   color: var(--ky-cyan);
 }
 
+/* About hero: one phone with a concept "About us" screen for the studio */
+.ahero {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--s-3);
+  margin: 0;
+}
+
+.ahero__glow {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 340px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(123 77 217 / 0.45), transparent);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.ahero__phone {
+  width: 240px;
+  /* shorter than a real phone screenshot, so the hero stays compact */
+  aspect-ratio: 9 / 17.5;
+  /* a light edge so the Ink phone reads on the Ink hero */
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.14),
+    0 60px 100px -30px rgb(0 0 0 / 0.75);
+}
+
+.ahero__screen {
+  gap: 10px;
+  padding: 12px 14px 14px;
+  background: var(--ky-white);
+}
+
+.ahero__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ky-slate);
+}
+
+.ahero__top img {
+  width: 24px;
+  height: 24px;
+}
+
+.ahero__title {
+  font-family: var(--font-display);
+  font-size: 21px;
+  line-height: 1.12;
+  color: var(--ky-ink);
+}
+
+.ahero__title em {
+  font-style: normal;
+  background: var(--grad-flame);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ahero__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 12px 4px;
+  border-radius: 14px;
+  background: var(--grad-dusk);
+  color: rgb(255 255 255 / 0.78);
+  font-size: 9.5px;
+  text-align: center;
+}
+
+.ahero__facts span {
+  display: grid;
+  gap: 2px;
+}
+
+.ahero__facts span + span {
+  border-left: 1px solid rgb(255 255 255 / 0.2);
+}
+
+.ahero__facts strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ky-white);
+}
+
+.ahero__list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ahero__list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--m-line);
+  font-size: 10.5px;
+  color: var(--ky-slate);
+}
+
+.ahero__list li:first-child {
+  border-top: 0;
+}
+
+.ahero__list i {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: rgb(123 77 217 / 0.1);
+  color: var(--ky-violet);
+}
+
+.ahero__list span {
+  display: grid;
+}
+
+.ahero__list b {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ky-ink);
+}
+
+.ahero__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  margin-top: auto;
+  border-radius: 12px;
+  background: var(--ky-violet);
+  color: var(--ky-white);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+
 .about__h {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
@@ -788,11 +943,12 @@
 }
 
 .contact__social a {
+  --brand: var(--ky-violet);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-height: 48px;
-  padding: 0 14px;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 14px 0 10px;
   border-radius: 12px;
   background: var(--ky-white);
   border: 1px solid var(--line);
@@ -801,21 +957,56 @@
   color: var(--ky-ink);
   transition:
     border-color var(--dur-fast) var(--ease-out),
-    color var(--dur-fast) var(--ease-out);
+    box-shadow var(--dur-fast) var(--ease-out);
 }
 
-.contact__social a svg {
+/* each network in its own colour */
+.contact__social a[data-network="linkedin"] {
+  --brand: #0a66c2;
+}
+.contact__social a[data-network="instagram"] {
+  --brand: #e1306c;
+}
+.contact__social a[data-network="facebook"] {
+  --brand: #0866ff;
+}
+.contact__social a[data-network="pinterest"] {
+  --brand: #e60023;
+}
+
+.contact__social-mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--ky-cloud);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.contact__social-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact__social-go {
+  flex: none;
   color: var(--ky-slate);
   transition: transform 300ms var(--ease-out), color 300ms var(--ease-out);
 }
 
 .contact__social a:hover {
-  border-color: var(--ky-violet);
-  color: var(--ky-violet);
+  border-color: var(--brand);
+  box-shadow: 0 10px 24px -16px color-mix(in srgb, var(--brand) 70%, transparent);
 }
 
-.contact__social a:hover svg {
-  color: var(--ky-violet);
+.contact__social a:hover .contact__social-mark {
+  background: color-mix(in srgb, var(--brand) 10%, var(--ky-white));
+}
+
+.contact__social a:hover .contact__social-go {
+  color: var(--brand);
   transform: translate(2px, -2px);
 }
 
@@ -1378,20 +1569,34 @@
 
 .choice .field__label {
   padding: 0;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
+}
+
+.choice__legend {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.choice__count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta-sm);
+  font-weight: 500;
+  color: var(--ky-violet);
+}
+
+.choice .field__hint {
+  margin-bottom: 10px;
 }
 
 .choice__grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Columns follow the form's own width, so labels never break word by word */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
   gap: 8px;
   border-radius: var(--radius-control);
-}
-
-@media (min-width: 640px) {
-  .choice__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 .choice__grid:focus {
@@ -1452,8 +1657,9 @@
   place-items: center;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid rgb(23 18 31 / 0.18);
+  border-radius: 6px;
+  border: 1.5px solid rgb(23 18 31 / 0.22);
+  background: var(--ky-white);
   color: transparent;
   transition:
     background-color 200ms var(--ease-out),
@@ -1461,8 +1667,24 @@
     color 200ms var(--ease-out);
 }
 
+.choice__tick svg {
+  scale: 0.4;
+  transition: scale 260ms var(--ease-out);
+}
+
 .choice__item:hover .choice__box {
-  border-color: rgb(23 18 31 / 0.24);
+  border-color: rgb(123 77 217 / 0.45);
+  background: var(--ky-white);
+}
+
+.choice__item:hover .choice__tick {
+  border-color: rgb(123 77 217 / 0.6);
+}
+
+/* "Not sure yet" reads as the opt-out, not a seventh service */
+.choice__item--alt .choice__box {
+  border-style: dashed;
+  background: transparent;
 }
 
 .choice__item input:focus-visible + .choice__box {
@@ -1485,6 +1707,10 @@
   background: var(--ky-violet);
   border-color: var(--ky-violet);
   color: var(--ky-white);
+}
+
+.choice__item input:checked + .choice__box .choice__tick svg {
+  scale: 1;
 }
 
 .choice.has-error .choice__box {

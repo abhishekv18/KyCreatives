@@ -25,7 +25,7 @@ export default function PageHero({
       className={`phero phero--${theme} ${dark ? "on-dark" : ""} ${theme !== "cloud" ? "grain" : ""} ${
         aside ? "phero--split" : ""
       } ${className}`}
-      data-tone={dark ? "dark" : "light"}
+      data-tone={dark ? "dark" : theme === "cloud" ? "light" : "color"}
     >
       {art && (
         <div className="phero__art" aria-hidden="true">

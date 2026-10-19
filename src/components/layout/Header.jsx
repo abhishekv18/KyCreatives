@@ -12,8 +12,8 @@ import { whenReady } from "../../lib/motion";
 /*
   Scroll state. The header never hides: at the top of a page it sits open on
   the page; once scrolled it condenses into a slim frosted bar. It also reads
-  the tone of the section beneath it (sections declare data-tone="dark") so it
-  keeps its contrast.
+  the tone of the section beneath it (sections declare data-tone="dark", or
+  "color" for saturated light fields) so it keeps its contrast.
 */
 function useHeaderState(pathname, headerRef) {
   const [scrolled, setScrolled] = useState(false);
@@ -25,7 +25,8 @@ function useHeaderState(pathname, headerRef) {
       const stack = document.elementsFromPoint(window.innerWidth / 2, 32);
       const under = stack.find((el) => !el.closest(".site-header, .loader"));
       const zone = under?.closest("[data-tone]");
-      setTone(zone?.dataset.tone === "dark" ? "dark" : "light");
+      const t = zone?.dataset.tone;
+      setTone(t === "dark" || t === "color" ? t : "light");
     };
     const update = () => {
       const y = window.scrollY;

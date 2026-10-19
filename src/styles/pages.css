@@ -1211,23 +1211,44 @@
 }
 
 .svcx__inline .sv--d2c {
-  padding: 8% 18% 16%;
+  /* Cap the phones on wide tablets so they stay inside the capped stage height */
+  padding: 8% max(18%, calc(50% - 150px)) 16%;
+}
+
+/* Inline mockups can fill the stage, so the caption sits on its own backing */
+.svcx__inline .sv__cap {
+  z-index: 2;
+  left: 12px;
+  bottom: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgb(23 18 31 / 0.6);
+  color: var(--ky-white);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* Phones are narrow enough that the interface mockups need a taller stage */
+@media (max-width: 479px) {
+  .svcx__inline {
+    aspect-ratio: var(--ratio-project);
+  }
 }
 
 .svcx__inline .sv--mobile .mock-phone {
-  width: 46%;
+  width: min(46%, 210px);
 }
 
 .svcx__inline .sv--web .sv__site {
   left: 6%;
   top: 8%;
-  width: 88%;
+  width: min(88%, 560px);
 }
 
 .svcx__inline .sv--web .sv__app {
   right: 5%;
   bottom: 14%;
-  width: 70%;
+  width: min(70%, 400px);
 }
 
 @media (min-width: 960px) {
@@ -1943,6 +1964,13 @@ html:not(.motion-ok) .proc__step > div {
   }
   .pcard {
     width: clamp(150px, calc((min(100vw - 2 * var(--gutter), 1200px) - 4 * var(--grid-gap)) / 5), 228px);
+  }
+  /* From tablet up all five cards of a row share one line, so none is left alone */
+  @media (min-width: 640px) {
+    .pcard {
+      width: min(228px, calc((100% - 4 * var(--grid-gap)) / 5));
+      padding-inline: 14px;
+    }
   }
   .partners__toggle {
     display: none;

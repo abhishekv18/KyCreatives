@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap, prefersReducedMotion } from "../../lib/motion";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import Logo from "../ui/Logo";
+import SocialIcon from "../ui/SocialIcon";
 import { services } from "../../data/services";
 import { company, social, legalNav } from "../../data/site";
 
@@ -128,9 +129,10 @@ export default function Footer() {
             <ul role="list">
               {social.map((s) => (
                 <li key={s.label}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer">
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="footer__social">
+                    <SocialIcon name={s.label} size={15} brand />
                     {s.label}
-                    <ArrowUpRight size={13} strokeWidth={1.75} aria-hidden="true" />
+                    <ArrowUpRight size={13} strokeWidth={1.75} aria-hidden="true" className="footer__social-go" />
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 </li>
@@ -146,12 +148,17 @@ export default function Footer() {
 
       <div className="container footer__base">
         <p className="t-meta">
-          &copy; {YEAR} {company.name}. All rights reserved.
+          &copy; {YEAR} {company.name}. <span className="footer__rights">All rights reserved.</span>
         </p>
         <ul role="list" className="footer__legal">
           {legalNav.map((l) => (
             <li key={l.to}>
-              <Link to={l.to}>{l.label}</Link>
+              <Link to={l.to}>
+                <span className="footer__legal-full">{l.label}</span>
+                <span className="footer__legal-short" aria-hidden="true">
+                  {l.short}
+                </span>
+              </Link>
             </li>
           ))}
         </ul>

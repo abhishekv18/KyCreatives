@@ -5,9 +5,11 @@ import PageHero from "../components/ui/PageHero";
 import HeroBackdrop from "../components/art/HeroBackdrop";
 import { services } from "../data/services";
 import { serviceIcons } from "../components/ui/serviceIcons";
+import SocialIcon from "../components/ui/SocialIcon";
 import { company, social, reviewLinks } from "../data/site";
 
-const SERVICE_OPTIONS = [...services.map((s) => s.name), "Not sure yet"];
+const NOT_SURE = "Not sure yet";
+const SERVICE_OPTIONS = [...services.map((s) => s.name), NOT_SURE];
 const SERVICE_ICON = Object.fromEntries(services.map((s) => [s.name, serviceIcons[s.slug]]));
 
 const clock = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit" });
@@ -70,7 +72,19 @@ const NEXT = [
   },
 ];
 
-const EMPTY = { name: "", email: "", company: "", service: "", budget: "", details: "" };
+const EMPTY = { name: "", email: "", company: "", phone: "", services: [], budget: "", details: "" };
+
+/* "Not sure yet" stands alone: picking it clears the services, picking a service clears it. */
+function toggleService(list, option) {
+  if (list.includes(option)) return list.filter((o) => o !== option);
+  if (option === NOT_SURE) return [NOT_SURE];
+  return SERVICE_OPTIONS.filter((o) => o !== NOT_SURE && (o === option || list.includes(o)));
+}
+
+function serviceSummary(list) {
+  if (list.length <= 2) return list.join(" and ");
+  return `${list[0]}, ${list[1]} and ${list.length - 2} more`;
+}
 
 function validate(v) {
   const e = {};
@@ -78,13 +92,18 @@ function validate(v) {
   if (!v.email.trim()) e.email = "Enter your email address so we can reply.";
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email.trim()))
     e.email = "Check the email address. It should look like name@company.com.";
-  if (!v.service) e.service = "Choose the service closest to what you need, or Not sure yet.";
+  // Phone is not required; when given it should look like a real number.
+  const phone = v.phone.trim();
+  const digits = phone.replace(/\D/g, "").length;
+  if (phone && (!/^[+\d\s().-]+$/.test(phone) || digits < 7 || digits > 15))
+    e.phone = "Check the phone number. Include the country code, for example +91 98765 43210.";
+  if (!v.services.length) e.services = "Choose at least one service, or Not sure yet.";
   if (v.details.trim().length < 20) e.details = "Tell us a little more about the project, at least a sentence or two.";
   return e;
 }
 
 function buildEmail(v) {
-  const subject = `Project enquiry: ${v.service}${v.company ? ` for ${v.company}` : ""}`;
+  const subject = `Project enquiry: ${serviceSummary(v.services)}${v.company ? ` for ${v.company}` : ""}`;
   const lines = [
     "Hello KY Creatives,",
     "",
@@ -94,7 +113,8 @@ function buildEmail(v) {
     `Name: ${v.name.trim()}`,
     `Email: ${v.email.trim()}`,
     v.company.trim() ? `Company or brand: ${v.company.trim()}` : null,
-    `Service: ${v.service}`,
+    v.phone.trim() ? `Phone: ${v.phone.trim()}` : null,
+    `${v.services.length > 1 ? "Services" : "Service"}: ${v.services.join(", ")}`,
     v.budget.trim() ? `Budget: ${v.budget.trim()}` : null,
   ].filter((l) => l !== null);
   const body = lines.join("\n");
@@ -138,6 +158,12 @@ function EnquiryForm() {
 
   const set = (k) => (e) => {
     const next = { ...values, [k]: e.target.value };
+    setValues(next);
+    if (submitted) setErrors(validate(next));
+  };
+
+  const toggle = (option) => {
+    const next = { ...values, services: toggleService(values.services, option) };
     setValues(next);
     if (submitted) setErrors(validate(next));
   };
@@ -270,6 +296,7 @@ function EnquiryForm() {
         </Field>
       </div>
 
+      <div className="form__row">
         <Field id={id("company")} label="Company or brand" optional>
           <input
             id={id("company")}
@@ -279,47 +306,74 @@ function EnquiryForm() {
             onChange={set("company")}
           />
         </Field>
+        <Field id={id("phone")} label="Phone" error={errors.phone}>
+          <input
+            id={id("phone")}
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            inputMode="tel"
+            placeholder="+91 98765 43210"
+            value={values.phone}
+            onChange={set("phone")}
+            aria-invalid={!!errors.phone}
+            aria-describedby={describedBy("phone")}
+          />
+        </Field>
+      </div>
       </fieldset>
 
       <fieldset className="form__set">
         <legend className="form__legend">
           <span className="t-meta">02</span> Your project
         </legend>
-      <fieldset className={`field choice ${errors.service ? "has-error" : ""}`}>
-        <legend className="field__label" id={`${id("service")}-label`}>
-          Service
+      <fieldset className={`field choice ${errors.services ? "has-error" : ""}`}>
+        <legend className="field__label choice__legend" id={`${id("services")}-label`}>
+          <span>Services</span>
+          <span className="choice__count" aria-live="polite">
+            {values.services.length > 0 && values.services[0] !== NOT_SURE ? `${values.services.length} selected` : ""}
+          </span>
         </legend>
+        <p id={`${id("services")}-hint`} className="field__hint">
+          Choose all that apply.
+        </p>
         <div
-          id={id("service")}
-          role="radiogroup"
-          aria-labelledby={`${id("service")}-label`}
-          aria-invalid={!!errors.service}
-          aria-describedby={describedBy("service")}
+          id={id("services")}
+          role="group"
+          aria-labelledby={`${id("services")}-label`}
+          aria-invalid={!!errors.services}
+          aria-describedby={describedBy("services", true)}
           tabIndex={-1}
           className="choice__grid"
         >
           {SERVICE_OPTIONS.map((o) => {
             const Icon = SERVICE_ICON[o] || HelpCircle;
             return (
-              <label key={o} className="choice__item">
-                <input type="radio" name="service" value={o} checked={values.service === o} onChange={set("service")} />
+              <label key={o} className={`choice__item ${o === NOT_SURE ? "choice__item--alt" : ""}`}>
+                <input
+                  type="checkbox"
+                  name="services"
+                  value={o}
+                  checked={values.services.includes(o)}
+                  onChange={() => toggle(o)}
+                />
                 <span className="choice__box">
                   <span className="choice__icon" aria-hidden="true">
                     <Icon size={18} strokeWidth={1.6} />
                   </span>
                   <span className="choice__name">{o}</span>
                   <span className="choice__tick" aria-hidden="true">
-                    <Check size={14} strokeWidth={2.5} />
+                    <Check size={13} strokeWidth={3} />
                   </span>
                 </span>
               </label>
             );
           })}
         </div>
-        {errors.service && (
-          <p id={`${id("service")}-error`} className="field__error">
+        {errors.services && (
+          <p id={`${id("services")}-error`} className="field__error">
             <AlertCircle size={16} strokeWidth={1.75} aria-hidden="true" />
-            {errors.service}
+            {errors.services}
           </p>
         )}
       </fieldset>
@@ -329,7 +383,7 @@ function EnquiryForm() {
           name="budget"
           value={values.budget}
           onChange={set("budget")}
-          placeholder="e.g. USD 8,000 to 12,000"
+          placeholder="e.g. INR 5,00,000 to 8,00,000"
           aria-describedby={describedBy("budget")}
         />
       </Field>
@@ -443,9 +497,12 @@ export default function Contact() {
               <ul role="list" className="contact__social">
                 {social.map((s) => (
                   <li key={s.label}>
-                    <a href={s.href} target="_blank" rel="noopener noreferrer">
-                      <span>{s.label}</span>
-                      <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" data-network={s.label.toLowerCase()}>
+                      <span className="contact__social-mark">
+                        <SocialIcon name={s.label} size={20} brand />
+                      </span>
+                      <span className="contact__social-name">{s.label}</span>
+                      <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" className="contact__social-go" />
                       <span className="sr-only"> (opens in a new tab)</span>
                     </a>
                   </li>

@@ -1,11 +1,12 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight, MessageSquareText, Users, MonitorCheck, Clock } from "lucide-react";
+import { ArrowRight, MessageSquareText, Users, MonitorCheck, Clock, PenTool, Code2, TrendingUp } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
 import SplitHeading from "../components/ui/SplitHeading";
 import ContactCTA from "../components/ui/ContactCTA";
+import { ConceptLabel } from "../components/visuals/Visuals";
 import { services } from "../data/services";
 import { projectBySlug } from "../data/projects";
 import { testimonials } from "../data/testimonials";
@@ -44,6 +45,67 @@ const WAYS = [
     body: "Written updates, shared boards and calls planned around your working hours, wherever you are.",
   },
 ];
+
+/* Hero centrepiece: a concept "About us" screen for the studio, on one phone */
+function HeroVisual() {
+  return (
+    <figure className="ahero">
+      <div className="ahero__glow" aria-hidden="true" />
+      <div className="mock mock-phone ahero__phone" aria-hidden="true" data-reveal="up">
+        <div className="mock-phone__notch" />
+        <div className="mock-phone__screen ahero__screen">
+          <div className="mock-phone__status t-meta">
+            <span>9:41</span>
+            <span>●●●</span>
+          </div>
+          <div className="ahero__top">
+            <img src="/brand/ky-flame-icon.png" alt="" width="28" height="28" />
+            <span>About us</span>
+          </div>
+          <p className="ahero__title">
+            What we create
+            <br />
+            is <em>business.</em>
+          </p>
+          <div className="ahero__facts">
+            <span>
+              <strong>{company.foundedYear}</strong>Founded
+            </span>
+            <span>
+              <strong>{projects.length}</strong>Websites
+            </span>
+            <span>
+              <strong>India</strong>Studio
+            </span>
+          </div>
+          <ul className="ahero__list">
+            {[
+              [PenTool, "Design", "Brand, UI and UX"],
+              [Code2, "Engineering", "Web and mobile apps"],
+              [TrendingUp, "Growth", "SEO and marketing"],
+            ].map(([Icon, t, d]) => (
+              <li key={t}>
+                <i>
+                  <Icon size={14} strokeWidth={1.75} />
+                </i>
+                <span>
+                  <b>{t}</b>
+                  {d}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <span className="ahero__cta">
+            Start a project <ArrowRight size={13} strokeWidth={2} />
+          </span>
+        </div>
+      </div>
+      <figcaption>
+        <ConceptLabel tone="dark">Concept screen</ConceptLabel>
+      </figcaption>
+    </figure>
+  );
+}
 
 const STRIP = ["thedecorshed", "pinkdinosaur", "vibhadesigns", "australglazing", "petsway", "property-box", "notahoax", "couponvolume"];
 
@@ -98,6 +160,7 @@ export default function About() {
         lines={["Engineers with", "a designer's eye."]}
         lead={company.boilerplate}
         art={<Ribbons set="footer" />}
+        aside={<HeroVisual />}
       >
         <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.3">
           <li>

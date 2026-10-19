@@ -2,7 +2,7 @@
    HEADER
    Always visible. Open at the top of a page; once scrolled it
    condenses into a slim frosted bar with a reading-progress line.
-   Tone follows the section beneath (data-tone="dark").
+   Tone follows the section beneath (data-tone="dark" or "color").
    ========================================================= */
 .site-header {
   --hh: 84px;
@@ -21,6 +21,11 @@
   transition:
     height 420ms var(--ease-out),
     color 300ms var(--ease-out);
+}
+
+/* Saturated colour fields: slate washes out on pink, blue and orange */
+.site-header.tone-color {
+  --h-muted: rgb(23 18 31 / 0.82);
 }
 
 .site-header.tone-dark {
@@ -63,20 +68,22 @@
   gap: var(--s-3);
 }
 
-/* Logo: sits straight on light pages; on dark sections it gets the white
-   plate the guidelines require. Same padding either way, so nothing shifts. */
+/* Logo: always on the white plate the guidelines ask for, so its light Cyan
+   letters read the same on every page. On light pages a hairline and a soft
+   shadow lift the plate off the pale background. */
 .site-header__logo .logo-card {
   margin-left: -10px;
   padding: 6px 10px;
   border-radius: 10px;
-  background: transparent;
-  transition:
-    background-color 300ms var(--ease-out),
-    box-shadow 300ms var(--ease-out);
+  background: var(--ky-white);
+  box-shadow:
+    0 0 0 1px rgb(23 18 31 / 0.06),
+    0 6px 16px -10px rgb(23 18 31 / 0.35);
+  transition: box-shadow 300ms var(--ease-out);
 }
 
-.tone-dark .site-header__logo .logo-card {
-  background: var(--ky-white);
+.tone-dark .site-header__logo .logo-card,
+.tone-color .site-header__logo .logo-card {
   box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
 }
 
@@ -959,8 +966,8 @@ html.has-cursor .cursor {
 }
 
 .cursor__ring {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border: 1.5px solid rgb(123 77 217 / 0.55);
   background: transparent;
 }
@@ -972,19 +979,20 @@ html.cursor-on .cursor__ring {
 
 /* over links and buttons: the ring grows and takes a soft Violet tint */
 html.cursor-link .cursor__ring {
-  width: 56px;
-  height: 56px;
+  width: 40px;
+  height: 40px;
   border-color: rgb(123 77 217 / 0.35);
   background: rgb(123 77 217 / 0.12);
 }
 
+/* GSAP writes an inline scale: none while it moves the cursor, so these two need !important */
 html.cursor-link .cursor__dot {
-  scale: 0;
+  scale: 0 !important;
 }
 
 /* press */
 html.cursor-down .cursor__ring {
-  scale: 0.82;
+  scale: 0.82 !important;
 }
 
 /* over text fields the native caret takes over */

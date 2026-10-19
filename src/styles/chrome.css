@@ -376,6 +376,24 @@
   color: rgb(255 255 255 / 0.5);
 }
 
+/* Follow column: a small brand mark before each network */
+.footer__social {
+  gap: 10px;
+}
+
+.footer__col .footer__social > svg:first-child {
+  flex: none;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.footer__col .footer__social:hover > svg:first-child {
+  transform: scale(1.08);
+}
+
+.footer__social-go {
+  margin-left: -4px;
+}
+
 .footer__address {
   display: grid;
   margin-top: 12px;
@@ -422,6 +440,8 @@
   justify-content: space-between;
   gap: 4px var(--s-4);
   padding-block: var(--s-3);
+  /* Keep the last line clear of the fixed WhatsApp button at the page end */
+  padding-inline-end: 72px;
   border-top: 1px solid var(--ink-line);
   color: var(--text-on-dark-muted);
 }
@@ -446,4 +466,63 @@
 
 .footer__legal a:hover {
   color: var(--ky-white);
+}
+
+.footer__legal-short {
+  display: none;
+}
+
+/* Phones: legal links in one even row, then copyright and place on their own lines */
+@media (max-width: 639px) {
+  .footer__base {
+    display: grid;
+    justify-content: stretch;
+    gap: 0;
+    padding-block: 0 var(--s-4);
+    padding-inline-end: var(--gutter);
+  }
+
+  .footer__legal {
+    order: -1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-bottom: var(--s-3);
+    border-bottom: 1px solid var(--ink-line);
+  }
+
+  .footer__legal li + li {
+    border-left: 1px solid var(--ink-line);
+  }
+
+  .footer__legal a {
+    justify-content: center;
+    width: 100%;
+    min-height: 52px;
+    color: rgb(255 255 255 / 0.86);
+  }
+
+  /* full name stays for screen readers, the short one is what fits */
+  .footer__legal-full {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .footer__legal-short {
+    display: inline;
+  }
+
+  .footer__rights {
+    display: block;
+  }
+
+  .footer__base > .t-meta {
+    /* both lines end well before the WhatsApp button */
+    max-width: calc(100% - 72px);
+    line-height: 1.8;
+  }
 }

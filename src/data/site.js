@@ -4,7 +4,7 @@
 export const company = {
   name: "KY Creatives",
   tagline: "What we create is business.",
-  descriptor: "Design-led software, web and mobile apps.",
+  descriptor: "Design led software, web and mobile apps.",
   boilerplate:
     "KY Creatives is a design-led studio that builds software, web apps and mobile apps for businesses around the world. We have a special focus on D2C brands, designing and building websites that help them launch faster and grow with fewer limits.",
   // kycreatives.com home and About pages: "since 2017"
@@ -40,7 +40,7 @@ export const mainNav = [
 ];
 
 export const legalNav = [
-  { label: "Privacy Policy", to: "/privacy-policy" },
-  { label: "Terms & Conditions", to: "/terms-and-conditions" },
-  { label: "Refunds & Cancellation", to: "/refunds-and-cancellation" },
+  { label: "Privacy Policy", short: "Privacy", to: "/privacy-policy" },
+  { label: "Terms & Conditions", short: "Terms", to: "/terms-and-conditions" },
+  { label: "Refunds & Cancellation", short: "Refunds", to: "/refunds-and-cancellation" },
 ];
