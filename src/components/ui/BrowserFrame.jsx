@@ -9,7 +9,7 @@ export default function BrowserFrame({
   domain,
   src,
   srcSet,
-  sizes = "(min-width: 900px) 50vw, 100vw",
+  sizes = "(min-width: 960px) 50vw, 100vw",
   alt,
   ratio = "4 / 5",
   loading = "lazy",

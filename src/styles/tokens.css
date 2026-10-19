@@ -1,12 +1,22 @@
 /*
-  KY Creatives design tokens
+  KY Creatives design system tokens
   Source of truth: KY Creatives Brand Guidelines 2026.
-  Every colour, type size, radius and spacing value used by components
-  should come from this file.
+
+  Components never invent their own sizes: type, spacing, layout, component
+  dimensions and image proportions all come from the roles below. Pages keep
+  their own art direction (colour fields, artwork, compositions) on top.
+
+  Breakpoints (used consistently across all stylesheets; CSS custom
+  properties cannot be used inside media queries, so they are listed here):
+    sm  640px   large phones / small tablets
+    md  768px   tablets
+    lg  960px   laptops; multi-column layouts begin
+    xl  1200px  desktop
+    small-phone guard: max-width 399px
 */
 
 :root {
-  /* Brand palette (exact values from the guidelines) */
+  /* ---------- Brand palette (exact values from the guidelines) ---------- */
   --ky-magenta: #e2418f;
   --ky-orange: #ff9533;
   --ky-violet: #7b4dd9;
@@ -23,15 +33,19 @@
   --ky-error: #d8334a;
   --ky-info: #4c8deb;
 
-  /* Signature gradients (stops taken from the guideline PDF) */
+  /* Signature gradients */
   --grad-flame: linear-gradient(90deg, var(--ky-magenta), var(--ky-orange));
   --grad-dusk: linear-gradient(90deg, var(--ky-violet), var(--ky-cobalt));
   --grad-aqua: linear-gradient(90deg, var(--ky-cyan), var(--ky-cobalt));
+  --grad-flame-v: linear-gradient(160deg, var(--ky-magenta), var(--ky-orange));
+  --grad-dusk-v: linear-gradient(160deg, var(--ky-violet), var(--ky-cobalt));
+  --grad-aqua-v: linear-gradient(160deg, var(--ky-cyan), var(--ky-cobalt));
 
-  /* Semantic roles */
+  /* ---------- Semantic colour roles ---------- */
   --surface: var(--ky-cloud);
   --surface-raised: var(--ky-white);
   --surface-dark: var(--ky-ink);
+  --ink-2: #221a2e; /* Ink lifted for panels on Ink */
   --text: var(--ky-ink);
   --text-muted: var(--ky-slate);
   --text-on-dark: var(--ky-white);
@@ -42,89 +56,133 @@
   --line: rgb(23 18 31 / 0.12);
   --line-strong: rgb(23 18 31 / 0.24);
   --line-on-dark: rgb(255 255 255 / 0.14);
+  --ink-line: rgb(255 255 255 / 0.12);
   --focus: var(--ky-violet);
 
-  /* Typography */
+  /* ---------- Typography ---------- */
   --font-display: "Libre Baskerville", "Baskerville", "Georgia", "Times New Roman", serif;
   --font-sans: "DM Sans", "Helvetica Neue", "Arial", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", "Consolas", "Menlo", monospace;
 
-  /* Brand web scale 64 / 40 / 24 / 18, scaled fluidly for small screens.
-     Baskerville is never set below 24px. */
-  --fs-display: clamp(2.5rem, 1.6rem + 3.6vw, 4rem); /* 40 -> 64 */
-  --fs-display-xl: clamp(2.75rem, 1.2rem + 6vw, 5.5rem); /* hero statement */
-  --fs-h2: clamp(1.875rem, 1.45rem + 1.7vw, 2.5rem); /* 30 -> 40 */
-  --fs-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem); /* 20 -> 24 (DM Sans) */
-  --fs-body: clamp(1.0625rem, 1.03rem + 0.15vw, 1.125rem); /* 17 -> 18 */
-  --fs-small: 0.9375rem;
-  --fs-label: 1rem;
-  --fs-meta: 0.875rem; /* 14 */
+  /*
+    Type roles (mobile -> desktop). Libre Baskerville for display roles,
+    DM Sans for everything functional, JetBrains Mono for metadata.
+      display   homepage statement only        44 -> 88
+      h1        page titles                     40 -> 64
+      h2        section titles                  32 -> 44
+      title     index/list item titles          24 -> 32
+      quote     statements and pull quotes      24 -> 36
+      h3        card and step titles            20 -> 24
+      h4        small headings                  18 -> 20
+      lead      intro paragraphs                17 -> 19
+      body      paragraphs                      16 -> 17
+      small     secondary text                  14
+      meta      mono labels and indices         13 / 12
+      button    buttons and CTAs                16 / 15
+  */
+  --fs-display: clamp(2.75rem, 0.75rem + 5.6vw, 5.5rem);
+  --fs-h1: clamp(2.5rem, 1.6rem + 2.6vw, 4rem);
+  --fs-h2: clamp(2rem, 1.55rem + 1.3vw, 2.75rem);
+  --fs-title: clamp(1.5rem, 1.3rem + 0.6vw, 2rem);
+  --fs-quote: clamp(1.5rem, 1.15rem + 1.1vw, 2.25rem);
+  --fs-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --fs-h4: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);
+  --fs-lead: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --fs-body: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
+  --fs-ui: 0.9375rem; /* navigation, lists and form UI */
+  --fs-small: 0.875rem;
+  --fs-meta: 0.8125rem;
+  --fs-meta-sm: 0.75rem;
+  --fs-button: 1rem;
+  --fs-button-sm: 0.9375rem;
+  /* decorative numerals and glyphs (never carry content on their own) */
+  --fs-numeral: clamp(5rem, 3rem + 5vw, 8rem);
+  --fs-glyph: 4rem;
 
-  --lh-display: 1.1;
-  --lh-h2: 1.15;
+  --lh-display: 1.02;
+  --lh-h1: 1.06;
+  --lh-h2: 1.12;
+  --lh-title: 1.2;
+  --lh-quote: 1.3;
   --lh-h3: 1.3;
   --lh-body: 1.6;
   --lh-meta: 1.5;
 
-  /* 8px spacing system */
-  --s-1: 0.5rem; /* 8 */
-  --s-2: 1rem; /* 16 */
-  --s-3: 1.5rem; /* 24 */
+  --ls-display: -0.045em;
+  --ls-h1: -0.035em;
+  --ls-h2: -0.03em;
+  --ls-title: -0.02em;
+  --ls-meta: 0.02em;
+
+  /* text measures */
+  --measure-heading: 18ch;
+  --measure-lead: 46ch;
+  --measure: 65ch;
+
+  /* ---------- Spacing: 8px system ---------- */
+  --s-0: 0.25rem; /* 4  micro */
+  --s-1: 0.5rem; /* 8  tight */
+  --s-2: 1rem; /* 16 standard */
+  --s-3: 1.5rem; /* 24 component */
   --s-4: 2rem; /* 32 */
   --s-5: 2.5rem; /* 40 */
-  --s-6: 3rem; /* 48 */
+  --s-6: 3rem; /* 48 sub-section */
   --s-8: 4rem; /* 64 */
   --s-10: 5rem; /* 80 */
   --s-12: 6rem; /* 96 */
   --s-16: 8rem; /* 128 */
-  --section-y: clamp(4.5rem, 3rem + 6vw, 9rem);
 
-  /* Layout: 12 columns at 1200px */
-  --container: 75rem; /* 1200 */
-  --container-wide: 90rem; /* 1440, used sparingly for image-led rows */
+  /* Vertical rhythm roles */
+  --section-y: clamp(4rem, 2.6rem + 4vw, 6rem); /* 64 -> 96 */
+  --section-y-sm: clamp(3rem, 2.2rem + 2.4vw, 4.5rem); /* 48 -> 72 */
+  --space-heading: var(--s-3); /* kicker/heading to text */
+  --space-block: clamp(2.5rem, 2rem + 1.6vw, 3.5rem); /* section head to its content */
+  --hero-pt: calc(var(--header-h) + clamp(2.5rem, 1.6rem + 2.8vw, 4.5rem));
+  --hero-pb: clamp(3rem, 2.2rem + 2.4vw, 4.5rem);
+
+  /* ---------- Layout ---------- */
+  --container: 75rem; /* 1200: main composition */
+  --container-wide: 90rem; /* 1440: image-led rows */
+  --container-narrow: 47.5rem; /* 760: reading */
   --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
   --grid-gap: clamp(1rem, 0.6rem + 1.2vw, 1.5rem);
-  --measure: 65ch;
+  --header-h: 76px;
 
-  /* Shape */
+  /* ---------- Components ---------- */
   --radius-card: 16px;
+  --radius-stage: 16px;
   --radius-control: 12px;
   --radius-pill: 999px;
 
-  /* Elevation: floating UI only */
+  --btn-h: 52px;
+  --btn-h-sm: 44px;
+  --btn-h-lg: 56px;
+  --btn-px: 22px;
+  --btn-gap: 10px;
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --control-h: 50px;
+  --card-pad: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+
+  /* ---------- Image roles (aspect ratios) ---------- */
+  --ratio-browser: 16 / 10; /* website screenshots in a browser frame */
+  --ratio-feature: 16 / 9; /* wide feature imagery */
+  --ratio-project: 4 / 5; /* portfolio previews */
+  --ratio-phone: 390 / 844; /* real mobile screenshots */
+  --ratio-square: 1 / 1; /* artwork, social posts */
+  --ratio-landscape: 4 / 3; /* stages and composed visuals */
+
+  /* ---------- Elevation ---------- */
   --shadow-float: 0 1px 2px rgb(23 18 31 / 0.06), 0 12px 32px -8px rgb(23 18 31 / 0.16);
   --shadow-float-lg: 0 2px 4px rgb(23 18 31 / 0.05), 0 32px 64px -24px rgb(23 18 31 / 0.28);
 
-  /* Motion */
+  /* ---------- Motion ---------- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-fast: 180ms;
   --dur-base: 320ms;
   --dur-slow: 640ms;
 
-  --header-h: 76px;
-
-  /* ---------- Colour roles (redesign) ----------
-     Ink       stage: hero, work, footer. Where imagery and gradients glow.
-     Cloud     reading surface for detailed information.
-     Violet    actions, and the Dusk field behind the process story.
-     Flame     heat: the closing CTA field, headline strokes, D2C energy.
-     Aqua      software: blueprint lines, web and mobile pages.
-     Cobalt    data and secondary UI, project stages.
-     Orange    highlights, metadata dots, marketing field.
-     Magenta   hero accent, selected project stages. */
-  --ink-2: #221a2e; /* Ink lifted for panels on Ink (derived, not a new hue) */
-  --ink-line: rgb(255 255 255 / 0.12);
-  --grad-flame-v: linear-gradient(160deg, var(--ky-magenta), var(--ky-orange));
-  --grad-dusk-v: linear-gradient(160deg, var(--ky-violet), var(--ky-cobalt));
-  --grad-aqua-v: linear-gradient(160deg, var(--ky-cyan), var(--ky-cobalt));
-
-  /* Oversized display type */
-  --fs-mega: clamp(3.25rem, 0.9rem + 9.4vw, 10rem);
-  --fs-hero: clamp(3rem, 0.8rem + 8.2vw, 8.75rem);
-  --fs-xl: clamp(2.5rem, 1.2rem + 5vw, 6rem);
-
-  --radius-stage: 16px;
   --z-header: 50;
   --z-menu: 80;
   --z-loader: 200;

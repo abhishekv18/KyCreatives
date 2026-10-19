@@ -46,9 +46,13 @@ function useHeaderState(pathname, headerRef) {
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
+    // Lazy routes paint after this effect runs; re-read when the page content changes size.
+    const ro = new ResizeObserver(onScroll);
+    ro.observe(document.body);
     return () => {
       live = false;
       clearTimeout(t);
+      ro.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };

@@ -124,7 +124,7 @@
 
 .mock-pdp__hero {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: var(--ratio-project);
   border-radius: 10px;
   background:
     radial-gradient(60% 45% at 50% 62%, #c98a5c 0 38%, transparent 39%),
@@ -248,7 +248,7 @@
 .mock-phone {
   width: 260px;
   max-width: 100%;
-  aspect-ratio: 9 / 19;
+  aspect-ratio: var(--ratio-phone);
   padding: 10px;
   border-radius: 40px;
   background: var(--ky-ink);

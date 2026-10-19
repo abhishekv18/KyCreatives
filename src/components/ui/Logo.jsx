@@ -11,14 +11,20 @@ export default function Logo({ width = 148, card = false, linked = true, onClick
       width={285}
       height={79}
       alt="KY Creatives"
-      style={{ width, height: "auto" }}
       decoding="async"
     />
   );
   const inner = card ? <span className="logo-card">{img}</span> : img;
-  if (!linked) return <span className={`logo ${className}`}>{inner}</span>;
+  // Width is a custom property so a context (e.g. the condensed header) can resize it in CSS.
+  const style = { "--logo-w": `${width}px` };
+  if (!linked)
+    return (
+      <span className={`logo ${className}`} style={style}>
+        {inner}
+      </span>
+    );
   return (
-    <Link to="/" className={`logo ${className}`} aria-label="KY Creatives, home" onClick={onClick}>
+    <Link to="/" className={`logo ${className}`} style={style} aria-label="KY Creatives, home" onClick={onClick}>
       {inner}
     </Link>
   );

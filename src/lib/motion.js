@@ -145,7 +145,7 @@ export function initReveals(root) {
 
   // Parallax only on larger screens; on phones native scroll stays untouched.
   const mm = gsap.matchMedia();
-  mm.add("(min-width: 900px)", () => {
+  mm.add("(min-width: 960px)", () => {
     q("[data-parallax]").forEach((el) => {
       const amount = parseFloat(el.dataset.parallax) || 10;
       gsap.fromTo(
