@@ -485,9 +485,15 @@ export default function Contact() {
                   <div>
                     <span className="contact__label">Studio</span>
                     <address>
-                      {company.address.lines.map((l) => (
-                        <span key={l}>{l}</span>
-                      ))}
+                      <a href={company.address.map} target="_blank" rel="noopener noreferrer" className="contact__map">
+                        {company.address.lines.map((l) => (
+                          <span key={l}>{l}</span>
+                        ))}
+                        <span className="contact__map-cta">
+                          View on Google Maps <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
+                        </span>
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </a>
                     </address>
                   </div>
                 </li>
@@ -536,12 +542,26 @@ export default function Contact() {
       </section>
 
       <section className="cnext section grain" data-tone="color" aria-labelledby="cnext-title">
+        <div className="cta__rings cnext__rings" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </div>
         <div className="container">
           <div className="cnext__head">
             <p className="kicker kicker--ink t-meta">What happens next</p>
             <h2 id="cnext-title" className="cnext__title">
               From first message to a clear plan.
             </h2>
+            <p className="cnext__promise" data-reveal="up">
+              <span className="cta__rings cnext__halo" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
+              <strong>24h</strong>
+              <span>First reply, on business days</span>
+            </p>
           </div>
           <ol role="list" className="cnext__list" data-stagger="">
             {NEXT.map((n, i) => (

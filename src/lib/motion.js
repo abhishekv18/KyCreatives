@@ -22,6 +22,16 @@ export const whenReady = () => readyPromise;
 export const heroPin = { end: 0 };
 
 /*
+  Reveals play once and never reverse. This is done with toggleActions rather
+  than once: true on purpose: a once trigger kills itself the moment it fires,
+  and when a new page creates many triggers together, one that is already in
+  view can fire during ScrollTrigger's own refresh pass, shrink its trigger
+  list mid-loop and throw "Cannot read properties of undefined (reading 'end')".
+  Live triggers are removed with the page's GSAP context instead.
+*/
+const PLAY_ONCE = { toggleActions: "play none none none" };
+
+/*
   Declarative scroll reveals, scoped to a container.
   Markup hooks:
     data-reveal="up"     fade + 24px rise
@@ -51,7 +61,7 @@ export function initReveals(root) {
         duration: 0.9,
         ease: EASE,
         delay: parseFloat(el.dataset.delay || 0),
-        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+        scrollTrigger: { trigger: el, start: "top 88%", ...PLAY_ONCE },
       }
     );
   });
@@ -65,14 +75,14 @@ export function initReveals(root) {
         duration: 1,
         ease: "power1.out",
         delay: parseFloat(el.dataset.delay || 0),
-        scrollTrigger: { trigger: el, start: "top 90%", once: true },
+        scrollTrigger: { trigger: el, start: "top 90%", ...PLAY_ONCE },
       }
     );
   });
 
   q('[data-reveal="clip"]').forEach((el) => {
     const media = el.querySelector("img, .clip-media");
-    const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 85%", once: true } });
+    const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 85%", ...PLAY_ONCE } });
     tl.fromTo(el, { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, ease: "power4.out" });
     if (media) tl.fromTo(media, { scale: 1.08 }, { scale: 1, duration: 1.6, ease: "power3.out" }, 0);
   });
@@ -80,7 +90,7 @@ export function initReveals(root) {
   // Horizontal wipe: used for wide image stages so not every reveal rises from below.
   q('[data-reveal="wipe"]').forEach((el) => {
     const media = el.querySelector("img, .clip-media");
-    const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 82%", once: true } });
+    const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 82%", ...PLAY_ONCE } });
     tl.fromTo(el, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.3, ease: "power4.inOut" });
     if (media) tl.fromTo(media, { scale: 1.12 }, { scale: 1, duration: 1.8, ease: "power3.out" }, 0.1);
   });
@@ -110,7 +120,7 @@ export function initReveals(root) {
           strokeDashoffset: 0,
           duration: 1.6,
           ease: "power2.inOut",
-          scrollTrigger: { trigger: p.closest("svg") || p, start: "top 85%", once: true },
+          scrollTrigger: { trigger: p.closest("svg") || p, start: "top 85%", ...PLAY_ONCE },
         }
       );
     });
@@ -127,7 +137,7 @@ export function initReveals(root) {
         ease: "power4.out",
         stagger: 0.09,
         delay: parseFloat(el.dataset.delay || 0),
-        scrollTrigger: { trigger: el, start: "top 88%", once: true },
+        scrollTrigger: { trigger: el, start: "top 88%", ...PLAY_ONCE },
       }
     );
   });
@@ -135,11 +145,15 @@ export function initReveals(root) {
   q("[data-stagger]").forEach((el) => {
     const items = Array.from(el.children);
     gsap.set(items, { opacity: 0, y: 20 });
+    let played = false;
     ScrollTrigger.create({
       trigger: el,
       start: "top 85%",
-      once: true,
-      onEnter: () => gsap.to(items, { opacity: 1, y: 0, duration: 0.8, ease: EASE, stagger: 0.07 }),
+      onEnter: () => {
+        if (played) return;
+        played = true;
+        gsap.to(items, { opacity: 1, y: 0, duration: 0.8, ease: EASE, stagger: 0.07 });
+      },
     });
   });
 

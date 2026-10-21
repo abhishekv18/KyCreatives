@@ -83,6 +83,16 @@
   .phero__art .art-ribbons {
     opacity: 0.35;
   }
+  /* on narrow screens the thin aqua ribbon lands right across the headline */
+  .phero__art .art-ribbons [data-ribbon="aqua"] {
+    display: none;
+  }
+  /* the dusk ribbon keeps its purple run under the flame stroke, but fades out
+     before its lower, blue end can cross the kicker and headline */
+  .phero__art .art-ribbons {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 84px, transparent 112px);
+    mask-image: linear-gradient(to bottom, #000 0, #000 84px, transparent 112px);
+  }
 }
 
 .phero__grid {
@@ -733,14 +743,15 @@
   translate: 0 -50%;
 }
 
+/* Phones and tablets: the rings radiate from the top right, behind the title,
+   where nothing covers them */
 @media (max-width: 959px) {
   .phero--contact .phero__art .art-arcs {
-    top: auto;
-    bottom: -20%;
-    right: -40%;
-    width: 140vw;
-    translate: none;
-    opacity: 0.6;
+    top: 0;
+    right: -70vw;
+    width: 160vw;
+    max-width: none;
+    translate: 0 -30%;
   }
 }
 
@@ -973,6 +984,30 @@
   color: var(--ky-violet);
 }
 
+/* address as a map link: reads as an address, with a quiet cue beneath */
+.contact__list .contact__map {
+  display: grid;
+  font-weight: 400;
+}
+
+.contact__map-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  color: var(--ky-violet);
+}
+
+.contact__map:hover .contact__map-cta svg {
+  transform: translate(2px, -2px);
+}
+
+.contact__map-cta svg {
+  transition: transform 300ms var(--ease-out);
+}
+
 .contact__social {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1070,8 +1105,17 @@
 
 /* What happens next */
 .cnext {
-  padding-bottom: calc(var(--section-y) + 32px);
+  /* the CTA band's top padding; the bottom and the gap above the steps are
+     tighter so the band, which also holds three steps, comes out the same
+     height as the CTA band on the other pages */
+  padding-block: calc(var(--section-y) + var(--s-2)) var(--section-y);
   background: var(--ky-white);
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .cnext {
+    padding-bottom: calc(var(--section-y) + var(--s-4));
+  }
 }
 
 .cnext__head {
@@ -1089,8 +1133,8 @@
 
 .cnext__list {
   display: grid;
-  gap: var(--s-5) var(--grid-gap);
-  margin-top: var(--s-8);
+  gap: var(--s-4) var(--grid-gap);
+  margin-top: calc(var(--s-5) + 6px);
 }
 
 @media (min-width: 768px) {
@@ -1759,8 +1803,54 @@
    does on every other page. Ink text, as the guidelines pair it. */
 .cnext {
   position: relative;
+  overflow: hidden;
   background: linear-gradient(125deg, var(--ky-magenta) 0%, #f0607a 38%, var(--ky-orange) 100%);
   color: var(--ky-ink);
+}
+
+.cnext > .container {
+  position: relative;
+}
+
+/* Phones: the same ring set as the closing CTA band on other pages, at the
+   same size, set beside the heading */
+.cnext .cnext__rings {
+  top: 150px;
+  right: -14vw;
+  width: min(78vw, 360px);
+  transform: translateY(-50%);
+}
+
+.cnext__halo {
+  display: none;
+}
+
+/* Wider screens: the rings are anchored to the 24h promise. Measured so the
+   solid ring passes just beneath it and the dashed ring just above it, and
+   no line touches any text from 768px up. */
+@media (min-width: 768px) {
+  .cnext {
+    isolation: isolate;
+  }
+  .cnext .cnext__rings {
+    display: none;
+  }
+  .cnext__promise {
+    position: relative;
+  }
+  .cnext .cnext__halo {
+    display: block;
+    z-index: -1;
+    top: -835px;
+    right: -425px;
+    width: 950px;
+    transform: none;
+  }
+  /* a larger soft disc than the CTA's, so it shows in the top-right corner;
+     it stays inside the dashed ring and ends above the 24h */
+  .cnext .cnext__halo i:nth-child(3) {
+    inset: 16%;
+  }
 }
 
 .cnext .kicker,
@@ -1773,14 +1863,51 @@
   color: var(--ky-ink);
 }
 
-.cnext__step {
-  border-top-color: rgb(23 18 31 / 0.22);
+/* the one promise in this section, set quietly in the top right */
+.cnext__promise {
+  display: grid;
+  gap: 4px;
+  justify-self: start;
+  margin-top: var(--s-2);
+  padding-left: 16px;
+  border-left: 2px solid var(--ky-ink);
+  color: var(--ky-ink);
 }
 
-.cnext__step::before,
-.cnext__step--1::before,
-.cnext__step--2::before {
-  background: var(--ky-ink);
+.cnext__promise strong {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 1.6rem + 2vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.cnext__promise > span:not(.cnext__halo) {
+  font-size: var(--fs-meta);
+  color: rgb(23 18 31 / 0.72);
+}
+
+@media (min-width: 768px) {
+  .cnext__head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+  .cnext__head .kicker {
+    grid-column: 1 / -1;
+  }
+  .cnext__promise {
+    margin-top: 0;
+  }
+}
+
+/* steps stand on their numbers alone: no rules, a cleaner band */
+.cnext__step {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.cnext__step::before {
+  content: none;
 }
 
 .cnext__step p {

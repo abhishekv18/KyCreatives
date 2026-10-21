@@ -11,7 +11,7 @@ export const services = [
     navLabel: "D2C Services",
     short: "Storefronts for brands that sell direct.",
     index:
-      "Our focus area. Brand-led online stores built for conversion, retention and repeat purchase, on Shopify or custom code.",
+      "Our focus area. Brand led online stores built for conversion, retention and repeat purchase, on Shopify or custom code.",
     accent: "flame",
     meta: {
       title: "D2C ecommerce websites and Shopify storefronts",

@@ -118,9 +118,12 @@ export default function Footer() {
               </li>
             </ul>
             <address className="footer__address">
-              {company.address.lines.map((l) => (
-                <span key={l}>{l}</span>
-              ))}
+              <a href={company.address.map} target="_blank" rel="noopener noreferrer">
+                {company.address.lines.map((l) => (
+                  <span key={l}>{l}</span>
+                ))}
+                <span className="sr-only"> (opens in Google Maps, new tab)</span>
+              </a>
             </address>
           </div>
 

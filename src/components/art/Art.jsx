@@ -74,6 +74,7 @@ export function Ribbons({ set = "hero", className = "", draw = true }) {
           strokeWidth={p.w}
           strokeLinecap="round"
           opacity={p.o}
+          data-ribbon={p.g}
           pathLength="1"
           {...(draw ? { "data-draw": "" } : {})}
         />

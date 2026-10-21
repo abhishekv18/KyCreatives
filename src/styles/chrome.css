@@ -395,12 +395,30 @@
 }
 
 .footer__address {
-  display: grid;
   margin-top: 12px;
   font-style: normal;
   font-size: var(--fs-meta);
   line-height: 1.6;
   color: var(--text-on-dark-muted);
+}
+
+.footer__col .footer__address a {
+  display: grid;
+  min-height: 0;
+  font-size: inherit;
+  white-space: normal;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    text-decoration-color var(--dur-fast) var(--ease-out);
+}
+
+.footer__col .footer__address a:hover {
+  color: var(--ky-white);
+  text-decoration-color: rgb(255 255 255 / 0.4);
 }
 
 /* 3. Wordmark: the studio name as a quiet signature */

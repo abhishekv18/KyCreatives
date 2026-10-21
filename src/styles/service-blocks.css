@@ -203,9 +203,16 @@
     grid-template-columns: repeat(12, minmax(0, 1fr));
     column-gap: var(--grid-gap);
   }
+  /* the intro runs the full height of the list and the count sits centred in
+     the space under the title, so the column has no empty gap */
   .deliv__intro {
     grid-column: 1 / span 5;
-    align-self: start;
+    align-self: stretch;
+    align-content: start;
+    grid-template-rows: auto auto 1fr;
+  }
+  .deliv__count {
+    align-self: center;
   }
   .deliv__list {
     grid-column: 7 / span 6;

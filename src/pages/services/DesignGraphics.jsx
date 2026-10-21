@@ -91,7 +91,7 @@ function SystemGallery() {
           </div>
           <p className="roles__lead" data-reveal="up">
             A brand system is a short set of rules: logo, colour, type and voice. Every card, post and page follows them,
-            so customers recognise you wherever they meet you. Shown here with our own identity.
+            so customers recognise you wherever they meet you.
           </p>
         </div>
 
