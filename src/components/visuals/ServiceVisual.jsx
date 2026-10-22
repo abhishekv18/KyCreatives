@@ -1,7 +1,7 @@
 import PhoneFrame from "../ui/PhoneFrame";
 import BrowserFrame from "../ui/BrowserFrame";
 import { Arcs, Blueprint } from "../art/Art";
-import { PhoneMock, PortalMock, CampaignMock, BrandSheet, DashboardMock, ConceptLabel } from "./Visuals";
+import { PhoneMock, PortalMock, CampaignSet, IdentitySet, DashboardMock, ConceptLabel } from "./Visuals";
 import { shotSrc } from "../../data/projects";
 
 /**
@@ -55,17 +55,17 @@ export default function ServiceVisual({ slug, compact = false }) {
     case "marketing":
       return (
         <div className="sv sv--marketing">
-          <CampaignMock />
+          <CampaignSet />
           <p className="sv__cap">
-            <ConceptLabel>Concept plan</ConceptLabel>
+            <ConceptLabel>Concept creative</ConceptLabel>
           </p>
         </div>
       );
     default:
       return (
         <div className="sv sv--design">
-          <BrandSheet />
-          <p className="sv__cap t-meta">Our own identity system</p>
+          <IdentitySet />
+          <p className="sv__cap t-meta">Our own identity, applied</p>
         </div>
       );
   }

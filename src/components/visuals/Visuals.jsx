@@ -239,88 +239,79 @@ export function DashboardMock() {
   );
 }
 
-/* A campaign plan across channels */
-export function CampaignMock() {
-  const lanes = [
-    ["Search", [1, 4], "violet"],
-    ["Social", [2, 6], "magenta"],
-    ["Paid", [3, 5], "orange"],
-    ["Email", [5, 7], "cobalt"],
-  ];
+/*
+  A campaign creative set in KY Creatives' own identity, shown as the formats
+  it would actually run in: a 9:16 story, a 1:1 feed post and an organic
+  search listing. Headlines are the examples from the brand guidelines; the
+  search snippet is the studio's own description. No metrics are shown.
+  Sized with container query units, so it scales as one piece.
+*/
+export function CampaignSet() {
   return (
-    <div className="mock mock-plan" aria-hidden="true">
-      <div className="mock-plan__head">
-        <span>Launch campaign plan</span>
-        <span className="t-meta">Weeks 1 to 8</span>
+    <div className="cset" aria-hidden="true">
+      <div className="cset__post">
+        <img className="cset__mark" src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
+        <p className="cset__head">Software that sells.</p>
+        <p className="cset__url">kycreatives.com</p>
       </div>
-      <div className="mock-plan__grid">
-        <div className="mock-plan__weeks">
-          <span />
-          {Array.from({ length: 8 }, (_, i) => (
-            <span key={i} className="t-meta">
-              W{i + 1}
-            </span>
-          ))}
+
+      <div className="cset__story">
+        <div className="cset__bars">
+          <i className="is-done" />
+          <i />
         </div>
-        {lanes.map(([name, [from, to], tone]) => (
-          <div className="mock-plan__lane" key={name}>
-            <span>{name}</span>
-            <i className={`mock-plan__bar bg-${tone}`} style={{ gridColumn: `${from + 1} / ${to + 2}` }} />
-          </div>
-        ))}
+        <div className="cset__who">
+          <img src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
+          <span>kycreatives</span>
+        </div>
+        <p className="cset__head">Apps that turn browsers into buyers.</p>
+        <span className="cset__cta">Start a project</span>
       </div>
-      <div className="mock-plan__foot">
-        <span>
-          <Check {...ico} /> Tracking checked
-        </span>
-        <span>
-          <Check {...ico} /> Landing page live
-        </span>
-        <span className="is-todo">Monthly report</span>
+
+      <div className="cset__serp">
+        <div className="cset__site">
+          <img src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
+          <span>
+            <b>KY Creatives</b>
+            <em>https://kycreatives.com</em>
+          </span>
+        </div>
+        <p className="cset__title">Design-led software, web and mobile apps | KY Creatives</p>
+        <p className="cset__desc">
+          A design-led studio building software, web apps and mobile apps for businesses worldwide, with a special focus on
+          D2C brands.
+        </p>
       </div>
     </div>
   );
 }
 
-/* KY Creatives' own identity system, presented as a design sheet (real work) */
-export function BrandSheet() {
-  const swatches = [
-    ["Magenta", "#E2418F"],
-    ["Orange", "#FF9533"],
-    ["Violet", "#7B4DD9"],
-    ["Cobalt", "#4C8DEB"],
-    ["Cyan", "#6FE3F5"],
-    ["Ink", "#17121F"],
-  ];
+/*
+  KY Creatives' identity applied, as a studio would present it: a letterhead
+  with the real logo and address, the brand guidelines cover, and the flame
+  mark as an app icon. Real assets and real details only.
+*/
+export function IdentitySet() {
   return (
-    <div className="mock mock-brand" aria-hidden="true">
-      <div className="mock-brand__type">
-        <span className="mock-brand__aa">Aa</span>
-        <span>
-          <strong>Libre Baskerville</strong>
-          <em>Display and headlines</em>
-        </span>
+    <div className="iset" aria-hidden="true">
+      <div className="iset__letter">
+        <img src="/brand/ky-creatives-logo.png" alt="" width="285" height="79" loading="lazy" />
+        <div className="iset__address">
+          <span>Tower A - 114, Ninex RMG, Sector 37C</span>
+          <span>Gurugram, Haryana 122001, India</span>
+          <span>info@kycreatives.com</span>
+        </div>
       </div>
-      <div className="mock-brand__swatches">
-        {swatches.map(([n, hex]) => (
-          <span key={n} style={{ "--c": hex }}>
-            <i />
-            <b>{n}</b>
-            <em className="t-meta">{hex}</em>
-          </span>
-        ))}
+
+      <div className="iset__book">
+        <img className="iset__book-mark" src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
+        <p className="iset__book-title">Brand guidelines</p>
+        <p className="iset__book-sub">Logo, colour, type and voice</p>
+        <span className="iset__book-band" />
       </div>
-      <div className="mock-brand__grads">
-        <i className="bg-flame" />
-        <i className="bg-dusk" />
-        <i className="bg-aqua" />
-      </div>
-      <div className="mock-brand__icon">
+
+      <div className="iset__icon">
         <img src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
-        <span>
-          <strong>Flame icon</strong>
-          <em>Favicon, app icon, avatar</em>
-        </span>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
-import { CampaignMock, ConceptLabel } from "../../components/visuals/Visuals";
+import { CampaignSet, ConceptLabel } from "../../components/visuals/Visuals";
 
 const service = serviceBySlug.marketing;
 
@@ -29,30 +29,18 @@ const PROMISES = [
   ["We will not", ["Guarantee rankings or a number of leads", "Hide results behind vanity metrics", "Lock your ad accounts in our name"]],
 ];
 
-// Headlines taken from the examples in the KY Creatives brand guidelines.
-const ADS = [
-  { tone: "ink", line: "Apps that turn browsers into buyers.", cta: "Start a project" },
-  { tone: "flame", line: "Software that sells.", cta: "See our work" },
-  { tone: "cyan", line: "Built to perform.", cta: "Learn more" },
-];
-
+/* One campaign as it would run: a story, a feed post and a search listing,
+   set in our own identity (headlines from the brand guidelines). */
 function HeroVisual() {
   return (
-    <div className="mkt-hero">
-      <div className="mkt-hero__plan" data-reveal="up">
-        <CampaignMock />
+    <figure className="mkt-hero">
+      <div data-reveal="up">
+        <CampaignSet />
       </div>
-      <ul role="list" className="mkt-hero__ads" aria-hidden="true">
-        {ADS.map((a, i) => (
-          <li key={a.line} className={`ad ad--${a.tone}`} data-reveal="up" data-delay={0.2 + i * 0.12}>
-            <span className="ad__brand t-meta">KY Creatives</span>
-            <span className="ad__line">{a.line}</span>
-            <span className="ad__cta">{a.cta}</span>
-          </li>
-        ))}
-      </ul>
-      <ConceptLabel>Concept plan and ad set, in our own identity</ConceptLabel>
-    </div>
+      <figcaption>
+        <ConceptLabel>Concept campaign, in our own identity</ConceptLabel>
+      </figcaption>
+    </figure>
   );
 }
 

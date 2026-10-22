@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, X, ArrowRight, ArrowUpRight, Mail, Phone } from "lucide-react";
+import { ChevronDown, X, ArrowRight, ArrowUpRight } from "lucide-react";
 import Logo from "../ui/Logo";
-import { Ribbons } from "../art/Art";
 import { services } from "../../data/services";
 import { company } from "../../data/site";
 import { serviceIcons } from "../ui/serviceIcons";
@@ -287,7 +286,6 @@ function MobileMenu({ open, onClose }) {
       aria-label="Site menu"
       hidden={!open}
     >
-      <Ribbons set="single" className="mnav__art" draw={false} />
       <div className="mnav__top container">
         <Logo width={124} card onClick={onClose} />
         <button className="icon-btn mnav__close" onClick={onClose} aria-label="Close menu">
@@ -314,21 +312,16 @@ function MobileMenu({ open, onClose }) {
               onClick={() => setSvcOpen((o) => !o)}
             >
               Services
-              <ChevronDown size={26} strokeWidth={1.5} aria-hidden="true" />
+              <ChevronDown size={22} strokeWidth={1.5} aria-hidden="true" />
             </button>
             <ul role="list" id={svcId} className="mnav__svc" hidden={!svcOpen}>
-              {services.map((s) => {
-                const Icon = serviceIcons[s.slug];
-                return (
-                  <li key={s.slug}>
-                    <NavLink to={s.path} onClick={onClose}>
-                      <Icon size={20} strokeWidth={1.5} aria-hidden="true" />
-                      <span>{s.name}</span>
-                      <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />
-                    </NavLink>
-                  </li>
-                );
-              })}
+              {services.map((s) => (
+                <li key={s.slug}>
+                  <NavLink to={s.path} onClick={onClose}>
+                    {s.name}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </li>
           <li style={{ "--i": 3 }}>
@@ -338,16 +331,25 @@ function MobileMenu({ open, onClose }) {
           </li>
         </ul>
         <div className="mnav__foot">
-          <Link to="/contact" className="btn btn--flame mnav__cta" onClick={onClose}>
+          <Link to="/contact" className="btn btn--light mnav__cta" onClick={onClose}>
             <span>Start a project</span>
             <ArrowUpRight className="btn__icon" size={18} strokeWidth={1.75} aria-hidden="true" />
           </Link>
-          <a href={`mailto:${company.email}`}>
-            <Mail size={18} strokeWidth={1.5} aria-hidden="true" /> {company.email}
-          </a>
-          <a href={company.phoneHref}>
-            <Phone size={18} strokeWidth={1.5} aria-hidden="true" /> {company.phoneDisplay}
-          </a>
+          <dl className="mnav__contact">
+            <div>
+              <dt>Email</dt>
+              <dd>
+                <a href={`mailto:${company.email}`}>{company.email}</a>
+              </dd>
+            </div>
+            <div>
+              <dt>Phone</dt>
+              <dd>
+                <a href={company.phoneHref}>{company.phoneDisplay}</a>
+              </dd>
+            </div>
+          </dl>
+          <p className="mnav__place">{company.address.short}</p>
         </div>
       </nav>
     </div>

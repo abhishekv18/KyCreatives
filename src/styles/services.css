@@ -778,77 +778,12 @@
 
 /* ---------- Marketing (Orange field) ---------- */
 .mkt-hero {
-  position: relative;
   display: grid;
-  gap: 14px;
+  gap: var(--s-3);
+  max-width: 560px;
+  margin: 0;
 }
 
-.mkt-hero__plan .mock {
-  box-shadow: 0 50px 90px -30px rgb(23 18 31 / 0.5);
-}
-
-.mkt-hero__ads {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: -10%;
-  padding-inline: 6%;
-}
-
-.ad {
-  position: relative;
-  display: grid;
-  align-content: space-between;
-  gap: 10px;
-  aspect-ratio: var(--ratio-project);
-  padding: clamp(10px, 1.6vw, 16px);
-  border-radius: 12px;
-  box-shadow: 0 30px 60px -24px rgb(23 18 31 / 0.6);
-  color: var(--ky-ink);
-}
-
-.ad:nth-child(2) {
-  transform: translateY(-14%);
-}
-
-.ad--ink {
-  background: var(--ky-ink);
-  color: var(--ky-white);
-}
-
-.ad--flame {
-  background: var(--grad-flame-v);
-}
-
-.ad--cyan {
-  background: var(--ky-cyan);
-}
-
-.ad__brand {
-  font-size: 0.625rem;
-  opacity: 0.8;
-}
-
-.ad__line {
-  font-family: var(--font-display);
-  font-size: clamp(0.95rem, 0.6rem + 1vw, 1.25rem);
-  line-height: 1.15;
-}
-
-.ad__cta {
-  justify-self: start;
-  padding: 5px 9px;
-  border-radius: 7px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  background: var(--ky-violet);
-  color: var(--ky-white);
-}
-
-.ad--flame .ad__cta,
-.ad--cyan .ad__cta {
-  background: var(--ky-ink);
-}
 
 .chan {
   background: var(--ky-white);
@@ -996,35 +931,9 @@
 /* ---------- Design & graphics (Cyan field) ---------- */
 .dsg-hero {
   display: grid;
-  gap: 32px;
-}
-
-/* The logo card is placed against the sheet, not the figure, so it never lands on the caption */
-.dsg-hero__stage {
-  position: relative;
-  padding-right: 10%;
-}
-
-.dsg-hero__sheet .mock {
-  box-shadow: 0 50px 90px -30px rgb(23 18 31 / 0.45);
-}
-
-.dsg-hero__card {
-  position: absolute;
-  right: 0;
-  bottom: -16px;
-  display: grid;
-  place-items: center;
-  width: min(46%, 240px);
-  aspect-ratio: 1.75;
-  border-radius: 10px;
-  background: var(--ky-white);
-  box-shadow: 0 30px 60px -20px rgb(23 18 31 / 0.45);
-}
-
-.dsg-hero__card img {
-  width: 72%;
-  height: auto;
+  gap: var(--s-3);
+  max-width: 560px;
+  margin: 0;
 }
 
 .dsg-hero figcaption {

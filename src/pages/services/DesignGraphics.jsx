@@ -9,7 +9,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
-import { BrandSheet } from "../../components/visuals/Visuals";
+import { IdentitySet } from "../../components/visuals/Visuals";
 import { company } from "../../data/site";
 
 const service = serviceBySlug["design-graphics"];
@@ -17,15 +17,10 @@ const service = serviceBySlug["design-graphics"];
 function HeroVisual() {
   return (
     <figure className="dsg-hero">
-      <div className="dsg-hero__stage">
-        <div className="dsg-hero__sheet" data-reveal="up">
-          <BrandSheet />
-        </div>
-        <div className="dsg-hero__card" data-reveal="up" data-delay="0.3" aria-hidden="true">
-          <img src="/brand/ky-creatives-logo.png" alt="" width="285" height="79" />
-        </div>
+      <div data-reveal="up">
+        <IdentitySet />
       </div>
-      <figcaption className="t-meta">From the KY Creatives brand guidelines, our own identity system</figcaption>
+      <figcaption className="t-meta">Our own identity applied: letterhead, guidelines and app icon</figcaption>
     </figure>
   );
 }

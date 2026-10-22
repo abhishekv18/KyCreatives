@@ -1610,7 +1610,6 @@
 }
 
 /* Divider aligned to the content edge, not the container padding */
-.astory__grid,
 .legal__grid {
   background: linear-gradient(var(--line), var(--line)) top center / calc(100% - 2 * var(--gutter)) 1px no-repeat;
 }

@@ -566,16 +566,6 @@
   }
 }
 
-.mnav__art {
-  position: fixed;
-  left: -20%;
-  bottom: -10%;
-  width: 140%;
-  height: 50%;
-  opacity: 0.45;
-  pointer-events: none;
-}
-
 .mnav__top {
   position: relative;
   display: flex;
@@ -588,27 +578,43 @@
   padding: 7px 12px;
 }
 
+/* the same size and shape as the header's menu button it replaces */
 .mnav__close {
-  color: var(--ky-white);
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   border: 1px solid var(--ink-line);
+  background: rgb(255 255 255 / 0.06);
+  color: var(--ky-white);
 }
 
+/* the menu fills the screen as one column: links at the top, the action and
+   contact details settled at the foot */
 .mnav__body {
   position: relative;
-  padding-top: var(--s-4);
-  padding-bottom: var(--s-8);
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--header-h));
+  padding-top: var(--s-3);
+  padding-bottom: max(var(--s-4), env(safe-area-inset-bottom));
+}
+
+.mnav__main {
+  border-top: 1px solid var(--ink-line);
 }
 
 .mnav__main > li {
   border-bottom: 1px solid var(--ink-line);
   animation: mnavItem 520ms var(--ease-out) both;
-  animation-delay: calc(120ms + var(--i) * 60ms);
+  animation-delay: calc(120ms + var(--i) * 50ms);
 }
 
 @keyframes mnavItem {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(12px);
   }
 }
 
@@ -618,20 +624,26 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  min-height: 72px;
+  min-height: 60px;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 1.4rem + 3vw, 2.75rem);
-  line-height: 1.1;
+  font-size: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   color: var(--ky-white);
   text-align: left;
 }
 
-.mnav__main > li > a.active {
-  color: var(--ky-cyan);
+/* the current page: a small cyan mark, the same cue as the desktop nav */
+.mnav__main > li > a.active::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ky-cyan);
 }
 
 .mnav__toggle svg {
-  color: var(--ky-cyan);
+  color: rgb(255 255 255 / 0.6);
   transition: transform var(--dur-base) var(--ease-out);
 }
 
@@ -641,48 +653,77 @@
 
 .mnav__svc {
   display: grid;
-  gap: 2px;
-  padding-bottom: var(--s-2);
+  padding: 0 0 var(--s-2);
 }
 
 .mnav__svc a {
-  display: grid;
-  grid-template-columns: 24px 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 14px;
-  min-height: 52px;
-  padding: 0 12px;
-  border-radius: var(--radius-control);
-  font-weight: 500;
-  color: rgb(255 255 255 / 0.86);
-}
-
-.mnav__svc a svg:first-child {
-  color: var(--ky-cyan);
+  min-height: 44px;
+  padding-left: var(--s-2);
+  border-left: 1px solid var(--ink-line);
+  font-size: var(--fs-body);
+  color: rgb(255 255 255 / 0.72);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
 }
 
 .mnav__svc a:hover,
 .mnav__svc a.active {
-  background: rgb(123 77 217 / 0.25);
   color: var(--ky-white);
+  border-left-color: var(--ky-cyan);
 }
 
 .mnav__foot {
   display: grid;
-  gap: var(--s-2);
-  margin-top: var(--s-5);
+  gap: var(--s-3);
+  margin-top: auto;
+  padding-top: var(--s-6);
 }
 
 .mnav__cta {
   width: 100%;
 }
 
-.mnav__foot a:not(.btn) {
+.mnav__contact {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-2);
+  margin: 0;
+}
+
+.mnav__contact dt {
+  font-size: var(--fs-small);
+  color: rgb(255 255 255 / 0.55);
+}
+
+.mnav__contact dd {
+  margin: 0;
+}
+
+.mnav__contact a {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   min-height: 44px;
-  color: rgb(255 255 255 / 0.75);
+  font-size: var(--fs-ui);
+  color: var(--ky-white);
+  white-space: nowrap;
+}
+
+/* the narrowest phones: email and phone stack, so neither has to break */
+@media (max-width: 359px) {
+  .mnav__contact {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.mnav__place {
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--ink-line);
+  font-size: var(--fs-small);
+  color: rgb(255 255 255 / 0.55);
 }
 
 /* ---------- Main ---------- */
@@ -799,7 +840,6 @@ main:focus {
   z-index: 60;
   display: inline-flex;
   align-items: center;
-  gap: 18px;
   opacity: 0;
   transform: translateY(16px);
   pointer-events: none;
@@ -869,8 +909,14 @@ main:focus {
     0 22px 40px -14px rgb(37 211 102 / 0.8);
 }
 
-/* White label pill beside the disc, revealed on hover or focus */
+/* White label pill beside the disc, revealed on hover or focus. It sits
+   outside the link's box, so only the disc itself takes clicks; hidden, it
+   never blocks the page beneath. */
 .wa__label {
+  position: absolute;
+  right: calc(100% + 18px);
+  top: 50%;
+  translate: 0 -50%;
   display: grid;
   padding: 10px 16px;
   border-radius: 14px;

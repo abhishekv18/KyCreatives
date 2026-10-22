@@ -667,170 +667,295 @@
   font-weight: 700;
 }
 
-/* ---------- Campaign plan ---------- */
-.mock-plan {
-  padding: 18px;
-  display: grid;
-  gap: 14px;
+/* ---------- Campaign creative set ----------
+   Every size is in container units (cqi = 1% of the set's width), so the
+   three formats keep their proportions at any size. */
+.cset {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  /* tall enough that the listing sits below the story's button */
+  aspect-ratio: 1 / 1.06;
+  font-family: var(--font-sans);
 }
 
-.mock-plan__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-weight: 700;
-  font-size: 14px;
+.cset > div {
+  position: absolute;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgb(23 18 31 / 0.55);
 }
 
-.mock-plan__head .t-meta {
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--ky-slate);
+.cset img {
+  display: block;
 }
 
-.mock-plan__grid {
-  display: grid;
-  gap: 8px;
-}
-
-.mock-plan__weeks,
-.mock-plan__lane {
-  display: grid;
-  grid-template-columns: 64px repeat(8, 1fr);
-  align-items: center;
-  gap: 4px;
-}
-
-.mock-plan__weeks span {
-  font-size: 10px;
-  color: var(--ky-slate);
-  text-align: center;
-}
-
-.mock-plan__lane {
-  padding: 6px 0;
-  border-top: 1px solid var(--m-line);
-}
-
-.mock-plan__lane > span {
-  grid-column: 1;
-  font-weight: 500;
-}
-
-.mock-plan__bar {
-  grid-row: 1;
-  height: 18px;
-  border-radius: 6px;
-  opacity: 0.9;
-}
-
-.mock-plan__foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  padding-top: 10px;
-  border-top: 1px solid var(--m-line);
-  color: var(--ky-slate);
-}
-
-.mock-plan__foot span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.mock-plan__foot svg {
-  color: var(--ky-success);
-}
-
-.mock-plan__foot .is-todo::before {
-  content: "";
-  width: 12px;
-  height: 12px;
-  border-radius: 4px;
-  border: 1.5px solid rgb(23 18 31 / 0.25);
-}
-
-/* ---------- Brand sheet ---------- */
-.mock-brand {
-  display: grid;
-  gap: 16px;
-  padding: 20px;
-}
-
-.mock-brand__type {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--m-line);
-}
-
-.mock-brand__aa {
+.cset__head {
   font-family: var(--font-display);
-  font-size: 56px;
-  line-height: 1;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
 }
 
-.mock-brand__type span:last-child,
-.mock-brand__icon span {
+/* 1:1 feed post */
+.cset__post {
+  left: 0;
+  top: 4%;
+  width: 52%;
+  aspect-ratio: 1;
   display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 5cqi;
+  border-radius: 1.6cqi;
+  background: var(--ky-violet);
+  color: var(--ky-white);
 }
 
-.mock-brand__type em,
-.mock-brand__icon em {
-  font-style: normal;
-  color: var(--ky-slate);
+.cset__mark {
+  width: 7cqi;
+  height: 7cqi;
 }
 
-.mock-brand__swatches {
+.cset__post .cset__head {
+  align-self: end;
+  font-size: 6.4cqi;
+}
+
+.cset__url {
+  margin-top: 3cqi;
+  font-size: 2.3cqi;
+  color: rgb(255 255 255 / 0.75);
+}
+
+/* 9:16 story */
+.cset__story {
+  right: 0;
+  top: 0;
+  width: 38%;
+  aspect-ratio: 9 / 16;
+  display: flex;
+  flex-direction: column;
+  padding: 3cqi 3.2cqi 4cqi;
+  border-radius: 2.6cqi;
+  background: var(--ky-ink);
+  color: var(--ky-white);
+}
+
+.cset__bars {
+  display: flex;
+  gap: 0.8cqi;
+}
+
+.cset__bars i {
+  flex: 1;
+  height: 0.5cqi;
+  border-radius: 1cqi;
+  background: rgb(255 255 255 / 0.3);
+}
+
+.cset__bars i.is-done {
+  background: var(--ky-white);
+}
+
+.cset__who {
+  display: flex;
+  align-items: center;
+  gap: 1.6cqi;
+  margin-top: 2.6cqi;
+  font-size: 2.3cqi;
+  font-weight: 600;
+}
+
+.cset__who img {
+  width: 5cqi;
+  height: 5cqi;
+}
+
+.cset__story .cset__head {
+  margin-top: auto;
+  font-size: 5.6cqi;
+}
+
+/* the one Flame moment in the set */
+.cset__story .cset__head::after {
+  content: "";
+  display: block;
+  width: 9cqi;
+  height: 0.7cqi;
+  margin-top: 3cqi;
+  border-radius: 1cqi;
+  background: var(--grad-flame);
+}
+
+.cset__cta {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.mock-brand__swatches span {
-  display: grid;
-  gap: 2px;
-}
-
-.mock-brand__swatches i {
-  height: 44px;
-  border-radius: 10px;
-  background: var(--c);
-  margin-bottom: 4px;
-}
-
-.mock-brand__swatches b {
+  place-items: center;
+  height: 7.4cqi;
+  margin-top: 4cqi;
+  border-radius: 1.4cqi;
+  background: var(--ky-white);
+  color: var(--ky-ink);
+  font-size: 2.5cqi;
   font-weight: 700;
 }
 
-.mock-brand__swatches em {
+/* organic search listing */
+.cset__serp {
+  left: 6%;
+  bottom: 0;
+  width: 70%;
+  display: grid;
+  gap: 1.2cqi;
+  padding: 3.6cqi 4cqi;
+  border-radius: 1.6cqi;
+  background: var(--ky-white);
+  color: var(--ky-ink);
+}
+
+.cset__site {
+  display: flex;
+  align-items: center;
+  gap: 1.8cqi;
+}
+
+.cset__site img {
+  width: 4.6cqi;
+  height: 4.6cqi;
+}
+
+.cset__site span {
+  display: grid;
+  line-height: 1.3;
+}
+
+.cset__site b {
+  font-size: 2.2cqi;
+  font-weight: 600;
+}
+
+.cset__site em {
+  font-size: 1.9cqi;
   font-style: normal;
-  font-size: 10.5px;
   color: var(--ky-slate);
 }
 
-.mock-brand__grads {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+.cset__title {
+  font-size: 3.1cqi;
+  line-height: 1.3;
+  color: #2c55b8;
 }
 
-.mock-brand__grads i {
-  height: 14px;
-  border-radius: 7px;
+.cset__desc {
+  font-size: 2.2cqi;
+  line-height: 1.5;
+  color: var(--ky-slate);
 }
 
-.mock-brand__icon {
+/* ---------- Identity set ----------
+   A letterhead and the guidelines cover at A4 proportion, and the flame mark
+   as an app icon. Sizes in container units, as above. */
+.iset {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 0.8;
+}
+
+.iset > div {
+  position: absolute;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgb(23 18 31 / 0.5);
+}
+
+.iset img {
+  display: block;
+}
+
+/* A4 letterhead: mostly paper, as a real one is */
+.iset__letter {
+  left: 0;
+  top: 0;
+  width: 46%;
+  aspect-ratio: 1 / 1.414;
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-top: 14px;
-  border-top: 1px solid var(--m-line);
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4.4cqi 4cqi 3.6cqi;
+  border-radius: 0.8cqi;
+  background: var(--ky-white);
 }
 
-.mock-brand__icon img {
-  width: 44px;
-  height: 44px;
+.iset__letter img {
+  width: 18cqi;
+  height: auto;
+}
+
+.iset__address {
+  display: grid;
+  gap: 0.5cqi;
+  padding-top: 1.6cqi;
+  border-top: 0.15cqi solid var(--line-strong);
+  font-family: var(--font-sans);
+  font-size: 1.45cqi;
+  line-height: 1.4;
+  color: var(--ky-slate);
+}
+
+/* A4 guidelines cover on Ink */
+.iset__book {
+  left: 33%;
+  top: 9%;
+  width: 46%;
+  aspect-ratio: 1 / 1.414;
+  display: flex;
+  flex-direction: column;
+  padding: 4.4cqi 4cqi;
+  border-radius: 0.8cqi;
+  background: var(--ky-ink);
+  color: var(--ky-white);
+}
+
+.iset__book-mark {
+  width: 6cqi;
+  height: 6cqi;
+}
+
+.iset__book-title {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-size: 6cqi;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.iset__book-sub {
+  margin-top: 1.6cqi;
+  margin-bottom: 4cqi;
+  font-family: var(--font-sans);
+  font-size: 1.9cqi;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.iset__book-band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.6cqi;
+  background: var(--grad-flame);
+}
+
+/* app icon: the round flame mark set on a matching tile */
+.iset__icon {
+  right: 0;
+  bottom: 4%;
+  width: 21%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 22%;
+  background: #13051f;
+}
+
+.iset__icon img {
+  width: 100%;
+  height: 100%;
 }

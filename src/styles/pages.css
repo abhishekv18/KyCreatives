@@ -46,138 +46,37 @@
   position: relative;
 }
 
+/* Dusk light: White at the top, settling into a pale Violet-to-Cobalt tint
+   (the Dusk gradient at about 15%) behind the capability strip. */
 .hero {
   position: sticky;
   top: 0;
   z-index: 0;
   overflow: hidden;
-  background: var(--ky-cloud);
+  background:
+    linear-gradient(180deg, var(--ky-white) 0%, var(--ky-white) 30%, rgb(255 255 255 / 0) 88%),
+    linear-gradient(90deg, #ece6fa 0%, #e8e5fb 50%, #e2edfc 100%);
 }
 
-/* ---------- Background: brand light, grain, layout sheet ---------- */
-.hero__bg {
+/* The light: a soft Violet glow that rests behind the headline (centre,
+   42% down) and is moved from there by the pointer in Hero.jsx. */
+.hero__lamp {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.hero__light {
-  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: min(860px, 150vw);
+  aspect-ratio: 1;
+  translate: -50% -50%;
   border-radius: 50%;
-}
-
-.hero__light--violet {
-  left: -18vw;
-  top: -26vw;
-  width: 72vw;
-  aspect-ratio: 1;
-  background: radial-gradient(closest-side, rgb(123 77 217 / 0.12), rgb(123 77 217 / 0.045) 55%, transparent 100%);
-}
-
-.hero__light--flame {
-  right: -16vw;
-  bottom: -30vw;
-  width: 62vw;
-  aspect-ratio: 1;
   background: radial-gradient(
     closest-side,
-    rgb(255 149 51 / 0.13),
-    rgb(226 65 143 / 0.06) 55%,
+    rgb(123 77 217 / 0.2),
+    rgb(123 77 217 / 0.1) 35%,
+    rgb(76 141 235 / 0.05) 60%,
     transparent 100%
   );
-}
-
-.hero__grain {
-  position: absolute;
-  inset: 0;
-  opacity: 0.07;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* 13 hairlines = the edges of the 12 columns the site is built on */
-.hero__sheet {
-  position: absolute;
-  inset: 0;
-  left: 50%;
-  translate: -50% 0;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
-}
-
-.hero__col {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(var(--gutter) + (100% - 2 * var(--gutter)) * var(--i) / 12);
-  width: 1px;
-  background: rgb(23 18 31 / 0.06);
-}
-
-/* Corner marks: small registration crosses at the content frame corners */
-.hero__mark {
-  position: absolute;
-  width: 13px;
-  height: 13px;
-  translate: -50% -50%;
-}
-
-.hero__mark::before,
-.hero__mark::after {
-  content: "";
-  position: absolute;
-  background: rgb(123 77 217 / 0.55);
-}
-
-.hero__mark::before {
-  left: 6px;
-  top: 0;
-  width: 1px;
-  height: 13px;
-}
-
-.hero__mark::after {
-  top: 6px;
-  left: 0;
-  width: 13px;
-  height: 1px;
-}
-
-.hero__mark--tl,
-.hero__mark--bl {
-  left: var(--gutter);
-}
-
-.hero__mark--tr,
-.hero__mark--br {
-  left: calc(100% - var(--gutter));
-}
-
-.hero__mark--tl,
-.hero__mark--tr {
-  top: calc(var(--header-h) + 24px);
-}
-
-.hero__mark--bl,
-.hero__mark--br {
-  top: calc(100% - 96px);
-}
-
-/* On small screens the sheet shows 4 columns, so the lines stay calm */
-@media (max-width: 767px) {
-  .hero__col {
-    display: none;
-  }
-  .hero__col:nth-child(3n + 1) {
-    display: block;
-  }
-  .hero__mark--bl,
-  .hero__mark--br {
-    top: calc(100% - 140px);
-  }
+  pointer-events: none;
+  will-change: transform;
 }
 
 /* ---------- Content ---------- */
@@ -234,7 +133,7 @@
 }
 
 /* "business." carries the only colour: Magenta, Violet, Cobalt (each keeps
-   at least 3:1 on Cloud at this size). */
+   at least 3:1 against the hero background at this size). */
 .hero__word {
   font-style: normal;
   background-image: linear-gradient(
@@ -281,7 +180,7 @@
 .hero__caps {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid var(--line-strong);
+  border-top: 1px solid rgb(23 18 31 / 0.12);
 }
 
 .hero__caps li {
@@ -296,7 +195,7 @@
 }
 
 .hero__caps li + li {
-  border-left: 1px solid var(--line);
+  border-left: 1px solid rgb(23 18 31 / 0.08);
 }
 
 .hero__caps .t-meta {
@@ -312,7 +211,7 @@
     border-left: 0;
   }
   .hero__caps li:nth-child(n + 3) {
-    border-top: 1px solid var(--line);
+    border-top: 1px solid rgb(23 18 31 / 0.08);
   }
   .hero__caps li {
     padding: 12px 6px;
@@ -1235,8 +1134,24 @@
   }
 }
 
+/* The phone keeps its designed 250px size and is scaled down as one piece,
+   so its screen never reflows into squashed, overflowing text. */
 .svcx__inline .sv--mobile .mock-phone {
-  width: min(46%, 210px);
+  width: 250px;
+  max-width: none;
+  zoom: 0.72;
+}
+
+@media (max-width: 479px) {
+  .svcx__inline .sv--mobile .mock-phone {
+    zoom: 0.66;
+  }
+}
+
+@media (max-width: 359px) {
+  .svcx__inline .sv--mobile .mock-phone {
+    zoom: 0.5;
+  }
 }
 
 .svcx__inline .sv--web .sv__site {
@@ -1340,26 +1255,33 @@
   box-shadow: var(--shadow-float-lg);
 }
 
+/* The rings are centred on the stage, which is where the phone sits, at
+   every size. They are a square wider than the stage, so they are exempt
+   from the global max-width on SVG (which used to shrink them and pull
+   their centre left of the phone). */
 .sv--mobile .art-arcs {
   position: absolute;
-  inset: -10%;
+  left: 50%;
+  top: 50%;
   width: 120%;
-  height: 120%;
+  max-width: none;
+  height: auto;
+  aspect-ratio: 1;
+  translate: -50% -50%;
 }
 
 .sv--mobile .mock-phone {
   width: min(250px, 52%);
 }
 
-.sv--portals .mock,
-.sv--marketing .mock,
-.sv--design .mock {
+.sv--portals .mock {
   width: 100%;
   box-shadow: var(--shadow-float-lg);
 }
 
-.sv--design .mock {
-  max-width: 420px;
+.sv--marketing .cset,
+.sv--design .iset {
+  max-width: 460px;
 }
 
 @media (max-width: 959px) {

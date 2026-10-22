@@ -6,13 +6,14 @@ import { gsap, whenReady, prefersReducedMotion } from "../../lib/motion";
 import { company } from "../../data/site";
 
 const CAPS = ["Software", "Web apps", "Mobile apps", "D2C websites"];
-const COLUMNS = 12;
 
 /*
-  Centred typographic hero on Cloud. Behind it: two very soft brand lights
-  (Violet upper left, Flame lower right), a fine grain, and the site's own
-  12-column grid drawn as hairlines with corner marks, like a layout sheet.
-  The grid draws in once; everything is readable within about a second.
+  Centred typographic hero. The background is the brand's Dusk light: White
+  at the top, settling into a pale Violet-to-Cobalt tint behind the
+  capability strip, like light at the horizon. One soft Violet light rests
+  behind the headline and, with a mouse, follows the pointer slowly, like a
+  lamp moved over paper. On touch screens and with reduced motion it stays
+  at rest. Everything is readable within about a second.
 */
 export default function Hero() {
   const ref = useRef(null);
@@ -23,32 +24,50 @@ export default function Hero() {
       const lines = q(".hero__title .split-line > span");
       const fades = q(".hero__fade");
       const word = q(".hero__word")[0];
-      const rules = q(".hero__col");
-      const marks = q(".hero__mark");
 
       if (prefersReducedMotion()) {
         gsap.set(lines, { yPercent: 0, y: 0 });
         return;
       }
 
+      // The light follows a mouse with a slow lag and settles back on leave.
+      const hero = ref.current;
+      const lamp = q(".hero__lamp")[0];
+      const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+      let offLamp = () => {};
+      if (fine && lamp) {
+        const xTo = gsap.quickTo(lamp, "x", { duration: 1.4, ease: "power3" });
+        const yTo = gsap.quickTo(lamp, "y", { duration: 1.4, ease: "power3" });
+        const onMove = (e) => {
+          const r = hero.getBoundingClientRect();
+          // offsets from the resting point (centre, 42% down; see CSS)
+          xTo(e.clientX - r.left - r.width * 0.5);
+          yTo(e.clientY - r.top - r.height * 0.42);
+        };
+        const onLeave = () => {
+          xTo(0);
+          yTo(0);
+        };
+        hero.addEventListener("pointermove", onMove);
+        hero.addEventListener("pointerleave", onLeave);
+        offLamp = () => {
+          hero.removeEventListener("pointermove", onMove);
+          hero.removeEventListener("pointerleave", onLeave);
+        };
+      }
+
       gsap.set(lines, { yPercent: 115, y: 0 });
       gsap.set(fades, { opacity: 0, y: 12 });
       gsap.set(word, { backgroundPosition: "100% 50%" });
-      gsap.set(rules, { scaleY: 0, transformOrigin: "50% 0%" });
-      gsap.set(marks, { opacity: 0, scale: 0.6 });
 
       let alive = true;
       whenReady().then(() => {
         if (!alive) return;
         gsap
           .timeline({ defaults: { ease: "power3.out" } })
-          // The layout sheet draws first, from the centre column outwards...
-          .to(rules, { scaleY: 1, duration: 1.4, ease: "power2.inOut", stagger: { each: 0.05, from: "center" } }, 0)
-          .to(marks, { opacity: 1, scale: 1, duration: 0.6, stagger: 0.06 }, 0.6)
-          // ...then the type is set on it.
-          .to(lines, { yPercent: 0, duration: 1.1, stagger: 0.1, ease: "power4.out" }, 0.2)
-          .to(word, { backgroundPosition: "0% 50%", duration: 1.6, ease: "power2.inOut" }, 0.5)
-          .to(fades, { opacity: 1, y: 0, duration: 0.8, stagger: 0.06 }, 0.5);
+          .to(lines, { yPercent: 0, duration: 1.1, stagger: 0.1, ease: "power4.out" }, 0)
+          .to(word, { backgroundPosition: "0% 50%", duration: 1.6, ease: "power2.inOut" }, 0.3)
+          .to(fades, { opacity: 1, y: 0, duration: 0.8, stagger: 0.06 }, 0.3);
       });
 
       // As the manifesto sheet slides over, the opening steps back a little.
@@ -66,6 +85,7 @@ export default function Hero() {
 
       return () => {
         alive = false;
+        offLamp();
       };
     },
     { scope: ref }
@@ -73,22 +93,7 @@ export default function Hero() {
 
   return (
     <section className="hero" ref={ref} data-tone="light" aria-labelledby="hero-title">
-      {/* Background: brand light, grain, and the 12-column layout sheet */}
-      <div className="hero__bg" aria-hidden="true">
-        <span className="hero__light hero__light--violet" />
-        <span className="hero__light hero__light--flame" />
-        <span className="hero__grain" />
-        <div className="container hero__sheet">
-          {Array.from({ length: COLUMNS + 1 }, (_, i) => (
-            <i key={i} className="hero__col" style={{ "--i": i }} />
-          ))}
-          <span className="hero__mark hero__mark--tl" />
-          <span className="hero__mark hero__mark--tr" />
-          <span className="hero__mark hero__mark--bl" />
-          <span className="hero__mark hero__mark--br" />
-        </div>
-      </div>
-
+      <div className="hero__lamp" aria-hidden="true" />
       <div className="container hero__inner">
         <div className="hero__center">
           <p className="hero__top t-meta hero__fade">
