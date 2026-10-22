@@ -12,7 +12,11 @@ export const company = {
   email: "info@kycreatives.com",
   phoneDisplay: "+91 76697 50672",
   phoneHref: "tel:+917669750672",
-  whatsapp: "https://wa.link/v3qbnn",
+  // Direct wa.me link with the studio's default greeting (the same text the old
+  // wa.link/v3qbnn short link carried). Linking straight to WhatsApp avoids the
+  // redirect hop, which can drop the pre-filled message when the app opens.
+  whatsapp:
+    "https://wa.me/917669750672?text=" + encodeURIComponent("Hi KYCreatives, I have a requirement for a website!"),
   address: {
     lines: ["Tower A - 114, Ninex RMG", "Sector 37C, Gurugram", "Haryana 122001, India"],
     short: "Gurugram, India",
