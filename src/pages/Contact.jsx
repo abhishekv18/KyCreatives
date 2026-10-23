@@ -2,11 +2,13 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Mail, Phone, MessageCircle, MapPin, Info, CheckCircle2, AlertCircle, Copy, Check, ArrowUpRight, HelpCircle } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
-import { Arcs } from "../components/art/Art";
+import Button from "../components/ui/Button";
+import { Arcs, Glow } from "../components/art/Art";
 import { services } from "../data/services";
 import { serviceIcons } from "../components/ui/serviceIcons";
 import SocialIcon from "../components/ui/SocialIcon";
 import { company, social, reviewLinks } from "../data/site";
+import { projects } from "../data/projects";
 
 const NOT_SURE = "Not sure yet";
 const SERVICE_OPTIONS = [...services.map((s) => s.name), NOT_SURE];
@@ -433,94 +435,128 @@ export default function Contact() {
   return (
     <>
       <PageHero
-        theme="dusk"
+        theme="ink"
         kicker="Contact"
         kickerTone="aqua"
         lines={["Tell us what", "you want to build."]}
         lead="A few lines are enough to start. We will reply with questions, an honest view of what it takes, and the next step."
         className="phero--contact"
-        art={<Arcs />}
+        art={
+          <>
+            <Glow />
+            <Arcs color="#E4DBFF" />
+          </>
+        }
         aside={<ReachCard />}
-      />
+      >
+        <div className="phero__actions" data-reveal="up" data-delay="0.3">
+          <Button href="#enquiry" variant="flame">
+            Start the enquiry
+          </Button>
+          <Button href={`mailto:${company.email}`} variant="ghost">
+            Email the studio
+          </Button>
+        </div>
+        <p className="phero__note t-meta" data-reveal="up" data-delay="0.35">
+          <span>First reply within 24 hours</span>
+          <span>India, the UK and the UAE</span>
+          <span>Since {company.foundedYear}</span>
+        </p>
+      </PageHero>
 
       <section className="contact section" data-tone="light" aria-label="Contact details and enquiry form">
         <div className="container contact__grid">
           <aside className="contact__details" data-reveal="up">
-            <div className="contact__block">
-              <h2 className="contact__h t-meta">Reach us directly</h2>
-              <ul role="list" className="contact__list">
-                <li>
-                  <span className="contact__icon" aria-hidden="true">
-                    <Mail size={18} strokeWidth={1.6} />
-                  </span>
-                  <div>
-                    <span className="contact__label">Email</span>
-                    <a href={`mailto:${company.email}`}>{company.email}</a>
-                  </div>
-                </li>
-                <li>
-                  <span className="contact__icon" aria-hidden="true">
-                    <Phone size={18} strokeWidth={1.6} />
-                  </span>
-                  <div>
-                    <span className="contact__label">Phone</span>
-                    <a href={company.phoneHref}>{company.phoneDisplay}</a>
-                  </div>
-                </li>
-                <li>
-                  <span className="contact__icon" aria-hidden="true">
-                    <MessageCircle size={18} strokeWidth={1.6} />
-                  </span>
-                  <div>
-                    <span className="contact__label">WhatsApp</span>
-                    <a href={company.whatsapp} target="_blank" rel="noopener noreferrer">
-                      Message us on WhatsApp<span className="sr-only"> (opens in a new tab)</span>
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <span className="contact__icon" aria-hidden="true">
-                    <MapPin size={18} strokeWidth={1.6} />
-                  </span>
-                  <div>
-                    <span className="contact__label">Studio</span>
-                    <address>
-                      <a href={company.address.map} target="_blank" rel="noopener noreferrer" className="contact__map">
-                        {company.address.lines.map((l) => (
-                          <span key={l}>{l}</span>
-                        ))}
-                        <span className="contact__map-cta">
-                          View on Google Maps <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
-                        </span>
-                        <span className="sr-only"> (opens in a new tab)</span>
-                      </a>
-                    </address>
-                  </div>
-                </li>
-              </ul>
+            <div className="contact__intro">
+              <p className="kicker kicker--dusk t-meta">Project enquiry</p>
+              <h2 className="contact__title">Prefer to write it down?</h2>
+              <p className="t-muted">
+                Tell us a little about the business and what you want to build. We reply within 24 hours on business
+                days, usually with a few questions.
+              </p>
+              <dl className="contact__facts">
+                <div>
+                  <dt>First reply on business days</dt>
+                  <dd>24h</dd>
+                </div>
+                <div>
+                  <dt>Websites in the portfolio</dt>
+                  <dd>{projects.length}</dd>
+                </div>
+                <div>
+                  <dt>Countries we work in</dt>
+                  <dd>3</dd>
+                </div>
+              </dl>
             </div>
 
-            <div className="contact__block">
-              <h2 className="contact__h t-meta">Follow the studio</h2>
-              <ul role="list" className="contact__social">
-                {social.map((s) => (
-                  <li key={s.label}>
-                    <a href={s.href} target="_blank" rel="noopener noreferrer" data-network={s.label.toLowerCase()}>
-                      <span className="contact__social-mark">
-                        <SocialIcon name={s.label} size={20} brand />
+            <div className="scard">
+              <div className="scard__studio">
+                <span className="contact__icon" aria-hidden="true">
+                  <MapPin size={18} strokeWidth={1.6} />
+                </span>
+                <div>
+                  <p className="scard__label t-meta">Studio</p>
+                  <address>
+                    <a href={company.address.map} target="_blank" rel="noopener noreferrer" className="contact__map">
+                      {company.address.lines.map((l) => (
+                        <span key={l}>{l}</span>
+                      ))}
+                      <span className="contact__map-cta">
+                        View on Google Maps <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
                       </span>
-                      <span className="contact__social-name">{s.label}</span>
-                      <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" className="contact__social-go" />
                       <span className="sr-only"> (opens in a new tab)</span>
                     </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                  </address>
+                </div>
+              </div>
 
-            <div className="contact__block">
-              <h2 className="contact__h t-meta">Client reviews</h2>
-              <p className="contact__reviews">
+              <ul role="list" className="scard__rows contact__dup">
+                <li>
+                  <a href={`mailto:${company.email}`}>
+                    <Mail size={16} strokeWidth={1.6} aria-hidden="true" />
+                    <span>{company.email}</span>
+                    <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" className="scard__go" />
+                  </a>
+                </li>
+                <li>
+                  <a href={company.phoneHref}>
+                    <Phone size={16} strokeWidth={1.6} aria-hidden="true" />
+                    <span>{company.phoneDisplay}</span>
+                    <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" className="scard__go" />
+                  </a>
+                </li>
+                <li>
+                  <a href={company.whatsapp} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle size={16} strokeWidth={1.6} aria-hidden="true" />
+                    <span>Message us on WhatsApp</span>
+                    <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" className="scard__go" />
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+              </ul>
+
+              <div className="scard__social">
+                <p className="scard__label t-meta">Follow the studio</p>
+                <ul role="list" className="scard__icons">
+                  {social.map((s) => (
+                    <li key={s.label}>
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${s.label} (opens in a new tab)`}
+                        title={s.label}
+                      >
+                        <SocialIcon name={s.label} size={18} brand />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <p className="scard__foot">
+                <span className="t-meta">Client reviews</span>
                 <a href={reviewLinks.trustpilot} target="_blank" rel="noopener noreferrer">
                   Trustpilot
                   <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
@@ -535,7 +571,7 @@ export default function Contact() {
             </div>
           </aside>
 
-          <div className="contact__form" data-reveal="up" data-delay="0.1">
+          <div className="contact__form" id="enquiry" data-reveal="up" data-delay="0.1">
             <EnquiryForm />
           </div>
         </div>

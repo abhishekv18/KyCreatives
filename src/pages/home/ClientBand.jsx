@@ -31,9 +31,11 @@ export default function ClientBand() {
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
-      const st = { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: 0.5 };
-      gsap.fromTo(".band__row--a .band__track", { xPercent: 0 }, { xPercent: -28, ease: "none", scrollTrigger: st });
-      gsap.fromTo(".band__row--b .band__track", { xPercent: -28 }, { xPercent: 0, ease: "none", scrollTrigger: st });
+      // A short, unhurried glide: the rows travel a little and ease in behind
+      // the scroll, so the names stay readable as they pass.
+      const st = { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: 2 };
+      gsap.fromTo(".band__row--a .band__track", { xPercent: -2 }, { xPercent: -9, ease: "none", scrollTrigger: st });
+      gsap.fromTo(".band__row--b .band__track", { xPercent: -9 }, { xPercent: -2, ease: "none", scrollTrigger: st });
     },
     { scope: ref }
   );

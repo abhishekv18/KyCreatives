@@ -4,16 +4,27 @@ import { useGSAP } from "@gsap/react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import { gsap, whenReady, prefersReducedMotion } from "../../lib/motion";
 import { company } from "../../data/site";
+import { projectBySlug } from "../../data/projects";
 
 const CAPS = ["Software", "Web apps", "Mobile apps", "D2C websites"];
 
+// The wall behind the headline: real client sites from the portfolio, five
+// columns of three. Phones show the first three columns only.
+const WALL = [
+  ["thedecorshed", "australglazing", "newindia"],
+  ["vibhadesigns", "pinkdinosaur", "globalayurveda"],
+  ["petsway", "property-box", "nirmaltrends"],
+  ["notahoax", "couponvolume", "rudrapolyplast"],
+  ["unlikelifestyle", "maapitambara", "primeexpertsolution"],
+].map((col) => col.map((slug) => projectBySlug[slug]).filter(Boolean));
+
 /*
-  Centred typographic hero. The background is the brand's Dusk light: White
-  at the top, settling into a pale Violet-to-Cobalt tint behind the
-  capability strip, like light at the horizon. One soft Violet light rests
-  behind the headline and, with a mouse, follows the pointer slowly, like a
-  lamp moved over paper. On touch screens and with reduced motion it stays
-  at rest. Everything is readable within about a second.
+  Centred typographic hero on Ink. Behind the headline sits a tilted wall of
+  real client sites, dimmed and fading into the dark, so the first thing a
+  visitor sees is work we have shipped. A soft Violet light rests behind the
+  headline and, with a mouse, follows the pointer slowly; a second glow sits
+  low on the horizon. The wall drifts gently and steps back as the manifesto
+  slides over. On touch screens and with reduced motion it stays at rest.
 */
 export default function Hero() {
   const ref = useRef(null);
@@ -73,6 +84,13 @@ export default function Hero() {
       // As the manifesto sheet slides over, the opening steps back a little.
       const sheet = document.querySelector(".manifesto");
       if (sheet) {
+        gsap.to(q(".hero__wall"), {
+          yPercent: -6,
+          scale: 1.04,
+          ease: "none",
+          immediateRender: false,
+          scrollTrigger: { trigger: sheet, start: "top bottom", end: "top top", scrub: 0.8 },
+        });
         gsap.to(q(".hero__inner"), {
           scale: 0.95,
           yPercent: -3,
@@ -92,7 +110,28 @@ export default function Hero() {
   );
 
   return (
-    <section className="hero" ref={ref} data-tone="light" aria-labelledby="hero-title">
+    <section className="hero on-dark" ref={ref} data-tone="dark" aria-labelledby="hero-title">
+      <div className="hero__wall" aria-hidden="true">
+        <div className="hero__wall-grid">
+          {WALL.map((col, c) => (
+            <div key={c} className="hero__wall-col">
+              {col.map((p) => (
+                <img
+                  key={p.slug}
+                  src={p.image}
+                  alt=""
+                  width="720"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="hero__veil" aria-hidden="true" />
       <div className="hero__lamp" aria-hidden="true" />
       <div className="container hero__inner">
         <div className="hero__center">

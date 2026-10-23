@@ -5,79 +5,6 @@
 
 export const services = [
   {
-    slug: "d2c",
-    path: "/services/d2c",
-    name: "D2C Services",
-    navLabel: "D2C Services",
-    short: "Storefronts for brands that sell direct.",
-    index:
-      "Our focus area. Brand led online stores built for conversion, retention and repeat purchase, on Shopify or custom code.",
-    accent: "flame",
-    meta: {
-      title: "D2C ecommerce websites and Shopify storefronts",
-      description:
-        "KY Creatives designs and builds D2C storefronts: Shopify and custom ecommerce, product pages, cart and checkout improvements, and mobile-first shopping.",
-    },
-    hero: {
-      lines: ["Stores that make", "buying the easy part."],
-      lead: "D2C is our focus area. We design and build online stores for brands that sell direct, so the product looks right, the page loads fast and checkout gets out of the way.",
-    },
-    offerings: [
-      {
-        title: "Shopify storefronts",
-        body: "Theme customisation or a fully custom theme, set up around how your catalogue and team actually work.",
-      },
-      {
-        title: "Custom ecommerce builds",
-        body: "When a platform theme is not enough: custom stores and multi-vendor marketplaces with the features your model needs.",
-      },
-      {
-        title: "Product page experience",
-        body: "Clear photography, honest product detail, variant pickers that make sense and the answers buyers look for before they commit.",
-      },
-      {
-        title: "Cart and checkout improvements",
-        body: "We review every step between add to cart and order placed, and remove the ones that do not need to be there, within what your platform allows.",
-      },
-      {
-        title: "Mobile-first shopping",
-        body: "Most D2C traffic arrives on a phone. We design for the thumb first, then scale up to the desktop.",
-      },
-      {
-        title: "Payments and integrations",
-        body: "Payment gateway setup, plus shipping, reviews, email and analytics tools chosen to fit your platform.",
-        scoped: true,
-      },
-      {
-        title: "Storefront performance",
-        body: "Image handling, script audits and page weight budgets, so the store stays quick as the catalogue grows.",
-      },
-    ],
-    deliverables: [
-      "Storefront design for home, collection, product, cart and content pages",
-      "Theme or custom build, connected to your products and payments",
-      "Mobile and desktop testing on real devices",
-      "Launch checklist: redirects, metadata, analytics, payment test orders",
-      "Handover session so your team can run the store day to day",
-    ],
-    faqs: [
-      {
-        q: "Do you only work with Shopify?",
-        a: "No. We have built stores on Shopify, WordPress and custom code. We recommend a platform once we understand your catalogue, team and budget.",
-      },
-      {
-        q: "Can you redesign our existing store?",
-        a: "Yes. We start by reviewing what you have, then tell you what can be kept, what should be rebuilt and why.",
-      },
-      {
-        q: "Will you look after the store after launch?",
-        a: "We offer website maintenance plans for updates, backups, security and fixes. We can also keep improving the store with you on a monthly basis.",
-      },
-    ],
-    cta: "Tell us about your brand and what you sell.",
-    related: ["thedecorshed", "vibhadesigns", "petsway", "globalayurveda", "nirmaltrends", "notahoax"],
-  },
-  {
     slug: "web-apps-websites",
     path: "/services/web-apps-websites",
     name: "Web Apps & Websites",
@@ -149,6 +76,79 @@ export const services = [
     ],
     cta: "Tell us what the website or app needs to do.",
     related: ["property-box", "pinkdinosaur", "australglazing", "couponvolume"],
+  },
+  {
+    slug: "d2c",
+    path: "/services/d2c",
+    name: "D2C Services",
+    navLabel: "D2C Services",
+    short: "Storefronts for brands that sell direct.",
+    index:
+      "Our focus area. Brand led online stores built for conversion, retention and repeat purchase, on Shopify or custom code.",
+    accent: "flame",
+    meta: {
+      title: "D2C ecommerce websites and Shopify storefronts",
+      description:
+        "KY Creatives designs and builds D2C storefronts: Shopify and custom ecommerce, product pages, cart and checkout improvements, and mobile-first shopping.",
+    },
+    hero: {
+      lines: ["Stores that make", "buying the easy part."],
+      lead: "D2C is our focus area. We design and build online stores for brands that sell direct, so the product looks right, the page loads fast and checkout gets out of the way.",
+    },
+    offerings: [
+      {
+        title: "Shopify storefronts",
+        body: "Theme customisation or a fully custom theme, set up around how your catalogue and team actually work.",
+      },
+      {
+        title: "Custom ecommerce builds",
+        body: "When a platform theme is not enough: custom stores and multi-vendor marketplaces with the features your model needs.",
+      },
+      {
+        title: "Product page experience",
+        body: "Clear photography, honest product detail, variant pickers that make sense and the answers buyers look for before they commit.",
+      },
+      {
+        title: "Cart and checkout improvements",
+        body: "We review every step between add to cart and order placed, and remove the ones that do not need to be there, within what your platform allows.",
+      },
+      {
+        title: "Mobile-first shopping",
+        body: "Most D2C traffic arrives on a phone. We design for the thumb first, then scale up to the desktop.",
+      },
+      {
+        title: "Payments and integrations",
+        body: "Payment gateway setup, plus shipping, reviews, email and analytics tools chosen to fit your platform.",
+        scoped: true,
+      },
+      {
+        title: "Storefront performance",
+        body: "Image handling, script audits and page weight budgets, so the store stays quick as the catalogue grows.",
+      },
+    ],
+    deliverables: [
+      "Storefront design for home, collection, product, cart and content pages",
+      "Theme or custom build, connected to your products and payments",
+      "Mobile and desktop testing on real devices",
+      "Launch checklist: redirects, metadata, analytics, payment test orders",
+      "Handover session so your team can run the store day to day",
+    ],
+    faqs: [
+      {
+        q: "Do you only work with Shopify?",
+        a: "No. We have built stores on Shopify, WordPress and custom code. We recommend a platform once we understand your catalogue, team and budget.",
+      },
+      {
+        q: "Can you redesign our existing store?",
+        a: "Yes. We start by reviewing what you have, then tell you what can be kept, what should be rebuilt and why.",
+      },
+      {
+        q: "Will you look after the store after launch?",
+        a: "We offer website maintenance plans for updates, backups, security and fixes. We can also keep improving the store with you on a monthly basis.",
+      },
+    ],
+    cta: "Tell us about your brand and what you sell.",
+    related: ["thedecorshed", "vibhadesigns", "petsway", "globalayurveda", "nirmaltrends", "notahoax"],
   },
   {
     slug: "mobile-apps",

@@ -49,6 +49,76 @@ const SETS = {
   single: [{ d: "M-60 700 C 360 520, 640 860, 1000 620 S 1360 300, 1540 340", w: 80, g: "flame", o: 1 }],
 };
 
+/*
+  Quiet hero light for dark pages: two soft pools of Dusk and Cobalt behind the
+  centrepiece. Pure CSS, so it scales cleanly to any screen without cropping
+  into hard bands the way the ribbons do on narrow viewports.
+*/
+export function Glow({ className = "" }) {
+  return <div className={`art-glow ${className}`} />;
+}
+
+/*
+  Column guides: fine vertical hairlines on the page's own grid, fading out
+  toward the edges. A quiet, structural texture for colour-field heroes.
+*/
+export function Guides({ className = "", tone = "light" }) {
+  return <div className={`art-guides art-guides--${tone} ${className}`} />;
+}
+
+/*
+  Growth chart for Marketing: a row of rising bars along the foot of the
+  hero, dashed gridlines behind them, and a trend line joining the bar tops.
+  Drawn in Ink at low opacity so it reads as texture on the colour field.
+*/
+const BARS = [70, 95, 85, 125, 115, 160, 150, 195, 190, 235, 260, 300];
+
+export function ChartLines({ className = "" }) {
+  const w = 1440 / BARS.length;
+  const bw = w * 0.52;
+  const tops = BARS.map((h, i) => [i * w + w / 2, 900 - h]);
+  const trend = tops.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)} ${y - 28}`).join(" ");
+  return (
+    <svg
+      className={`art-chart ${className}`}
+      viewBox="0 0 1440 900"
+      preserveAspectRatio="xMidYMax slice"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {[560, 660, 760, 860].map((y) => (
+        <line
+          key={y}
+          x1="0"
+          x2="1440"
+          y1={y}
+          y2={y}
+          stroke="#17121F"
+          strokeOpacity="0.1"
+          strokeWidth="1"
+          strokeDasharray="2 8"
+        />
+      ))}
+      {BARS.map((h, i) => (
+        <rect
+          key={i}
+          x={i * w + (w - bw) / 2}
+          y={900 - h}
+          width={bw}
+          height={h + 12}
+          rx="10"
+          fill="#17121F"
+          fillOpacity={0.05 + i * 0.006}
+        />
+      ))}
+      <path d={trend} fill="none" stroke="#17121F" strokeOpacity="0.28" strokeWidth="1.75" strokeLinejoin="round" />
+      {tops.map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y - 28} r="4.5" fill="#FFFFFF" fillOpacity="0.85" stroke="#17121F" strokeOpacity="0.35" strokeWidth="1.5" />
+      ))}
+    </svg>
+  );
+}
+
 export function Ribbons({ set = "hero", className = "", draw = true }) {
   const uid = useId().replace(/:/g, "");
   const paths = SETS[set];

@@ -11,8 +11,8 @@ import { services } from "../data/services";
 import { projectBySlug } from "../data/projects";
 import { testimonials } from "../data/testimonials";
 import { company } from "../data/site";
-import { gsap, prefersReducedMotion } from "../lib/motion";
-import { Ribbons } from "../components/art/Art";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "../lib/motion";
+import { Glow, Guides } from "../components/art/Art";
 import { projects } from "../data/projects";
 
 // From the brand guidelines: "Brand essence, what we are, in five lines".
@@ -107,37 +107,147 @@ function HeroVisual() {
   );
 }
 
+// Figures for the "What we do" column, all derived from the site's own data.
+const FIGURES = [
+  [`${new Date().getFullYear() - company.foundedYear}+`, "Years building for the web"],
+  [String(projects.length), "Client websites delivered"],
+  [String(services.length), "Services under one roof"],
+  ["3", "Countries: India, UK, UAE"],
+];
+
+// The portfolio grouped by what kind of site it is, counted from the data.
+const KINDS = [
+  ["D2C stores and brand sites", ["D2C store", "D2C brand site"]],
+  ["Business websites", ["Business website"]],
+  ["Portals and platforms", ["News portal", "Web platform", "Project website"]],
+  ["Non-profits and organisations", ["Non-profit website", "Organisation website"]],
+].map(([label, kinds]) => [projects.filter((p) => kinds.includes(p.kind)).length, label]);
+
 const STRIP = ["thedecorshed", "pinkdinosaur", "vibhadesigns", "australglazing", "petsway", "property-box", "notahoax", "couponvolume"];
 
+/*
+  Selected work: the section pins and the row of sites scrolls sideways with
+  the page, so every project passes through view before the page moves on.
+  With reduced motion it is a plain, swipeable row instead.
+*/
 function WorkStrip() {
   const ref = useRef(null);
+  const nowRef = useRef(null);
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
-      gsap.fromTo(
-        ".astrip__track",
-        { xPercent: 0 },
-        {
-          xPercent: -22,
-          ease: "none",
-          scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: true },
-        }
-      );
+      const track = ref.current.querySelector(".astrip__track");
+      const viewport = ref.current.querySelector(".astrip__viewport");
+      const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
+      const total = STRIP.length;
+      gsap.to(track, {
+        x: () => -distance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top top",
+          end: () => "+=" + distance(),
+          pin: true,
+          anticipatePin: 1,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const n = Math.min(total, Math.floor(self.progress * total) + 1);
+            if (nowRef.current) nowRef.current.textContent = String(n).padStart(2, "0");
+          },
+        },
+      });
     },
     { scope: ref }
   );
   return (
-    <section className="astrip" ref={ref} data-tone="light" aria-label="A selection of client websites">
-      <div className="astrip__track">
-        {STRIP.map((slug) => {
-          const p = projectBySlug[slug];
-          return (
-            <figure key={slug} className="astrip__item">
-              <img src={p.image} alt={`${p.name} website`} loading="lazy" width="520" height="650" />
-              <figcaption className="t-meta">{p.name}</figcaption>
-            </figure>
-          );
-        })}
+    <section className="astrip" ref={ref} data-tone="light" aria-labelledby="astrip-title">
+      <div className="container astrip__head">
+        <h2 id="astrip-title" className="kicker t-meta">
+          Selected work
+        </h2>
+        <p className="astrip__count t-meta" aria-hidden="true">
+          <span ref={nowRef}>01</span> / {String(STRIP.length).padStart(2, "0")}
+        </p>
+      </div>
+      <div className="astrip__viewport">
+        <ol role="list" className="astrip__track">
+          {STRIP.map((slug, i) => {
+            const p = projectBySlug[slug];
+            return (
+              <li key={slug} className="astrip__item">
+                <figure>
+                  <img src={p.image} alt={`${p.name} website`} loading="lazy" width="520" height="650" />
+                  <figcaption>
+                    <span className="astrip__n t-meta">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="astrip__name">{p.name}</span>
+                    <span className="astrip__sector t-meta">{p.sector}</span>
+                  </figcaption>
+                </figure>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+/*
+  Brand essence: the intro stays in view on wide screens with a large numeral
+  that follows the statement being read; the others ease back slightly.
+*/
+function Essence() {
+  const ref = useRef(null);
+  const numRef = useRef(null);
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      const rows = gsap.utils.toArray(".essence__row", ref.current);
+      const setActive = (i) => {
+        rows.forEach((r, j) => r.classList.toggle("is-active", j === i));
+        if (numRef.current) numRef.current.textContent = String(i + 1).padStart(2, "0");
+      };
+      ref.current.classList.add("is-tracking");
+      setActive(0);
+      rows.forEach((row, i) => {
+        ScrollTrigger.create({
+          trigger: row,
+          start: "top 55%",
+          end: "bottom 55%",
+          onToggle: (self) => self.isActive && setActive(i),
+        });
+      });
+    },
+    { scope: ref }
+  );
+  return (
+    <section className="essence section" ref={ref} data-tone="light" aria-labelledby="essence-title">
+      <div className="container essence__grid">
+        <div className="intro essence__intro">
+          <p className="kicker t-meta">What we stand for</p>
+          <div id="essence-title">
+            <SplitHeading className="about__h" lines={["What we create", "is business."]} />
+          </div>
+          <p className="t-muted essence__note" data-reveal="up">
+            Our brand essence in four lines. It is how we choose projects, and how we judge our own work.
+          </p>
+          <p className="essence__big" aria-hidden="true">
+            <span ref={numRef}>01</span>
+            <small>/ {String(ESSENCE.length).padStart(2, "0")}</small>
+          </p>
+        </div>
+        <dl className="essence__list">
+          {ESSENCE.map(([term, def], i) => (
+            <div className="essence__row" key={term} data-reveal="up">
+              <dt className="t-meta">
+                <span className="essence__n">{String(i + 1).padStart(2, "0")}</span>
+                {term}
+              </dt>
+              <dd>{def}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );
@@ -159,7 +269,12 @@ export default function About() {
         kickerTone="aqua"
         lines={["Engineers with", "a designer's eye."]}
         lead={company.boilerplate}
-        art={<Ribbons set="footer" />}
+        art={
+          <>
+            <Glow />
+            <Guides tone="dark" />
+          </>
+        }
         aside={<HeroVisual />}
       >
         <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.3">
@@ -184,9 +299,14 @@ export default function About() {
 
       <section className="astory section" data-tone="light" aria-labelledby="astory-title">
         <div className="container astory__grid">
-          <h2 id="astory-title" className="kicker t-meta" data-reveal="fade">
-            Our story
-          </h2>
+          <div className="astory__side">
+            <h2 id="astory-title" className="kicker t-meta" data-reveal="fade">
+              Our story
+            </h2>
+            <p className="astory__where t-meta" data-reveal="fade">
+              Based in {company.address.short}. Working with clients in India, the UK and the UAE.
+            </p>
+          </div>
           <div className="astory__body">
             <p className="astory__big" data-reveal="up">
               We started in {company.foundedYear} as a web design and development team in Gurugram, India.
@@ -203,30 +323,26 @@ export default function About() {
                 that sell online and need a website that does real work for the business.
               </p>
             </div>
+            <div className="astory__kinds">
+              <p className="astory__kinds-title t-meta" data-reveal="fade">
+                The work so far: {projects.length} websites
+              </p>
+              <ul role="list" className="astory__kinds-list" data-stagger="">
+                {KINDS.map(([n, label]) => (
+                  <li key={label}>
+                    <strong>{String(n).padStart(2, "0")}</strong>
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
       <WorkStrip />
 
-      <section className="essence section" data-tone="light" aria-labelledby="essence-title">
-        <div className="container">
-          <div className="intro">
-            <p className="kicker t-meta">What we stand for</p>
-            <div id="essence-title">
-              <SplitHeading className="about__h" lines={["What we create", "is business."]} />
-            </div>
-          </div>
-          <dl className="essence__list">
-            {ESSENCE.map(([term, def], i) => (
-              <div className={`essence__row essence__row--${i}`} key={term} data-reveal="up">
-                <dt className="t-meta">{term}</dt>
-                <dd>{def}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
+      <Essence />
 
       <section className="ways section on-dark grain" data-tone="dark" aria-labelledby="ways-title">
         <div className="container">
@@ -264,6 +380,14 @@ export default function About() {
             <p className="t-muted" data-reveal="up">
               Each service has its own page with what is included and how a project runs.
             </p>
+            <dl className="acap__figs" data-stagger="">
+              {FIGURES.map(([value, label]) => (
+                <div key={label} className="acap__fig">
+                  <dt className="t-meta">{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
           <ul role="list" className="acap__list">
             {services.map((s) => (

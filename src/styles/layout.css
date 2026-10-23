@@ -1,26 +1,39 @@
 /* =========================================================
    HEADER
-   Always visible. Open at the top of a page; once scrolled it
-   condenses into a slim frosted bar with a reading-progress line.
+   A floating island. At the top of a page it sits open on the
+   page; once scrolled it lifts into a rounded frosted capsule
+   and narrows a little.
    Tone follows the section beneath (data-tone="dark" or "color").
    ========================================================= */
+:root {
+  --island-top: 12px;
+  --island-h: 60px;
+  --island-edge: max(10px, calc(var(--gutter) - 14px));
+  --island-w: min(calc(100% - 2 * var(--island-edge)), calc(var(--container) + 28px));
+}
+
+@media (max-width: 959px) {
+  :root {
+    --island-top: 10px;
+    --island-h: 56px;
+  }
+}
+
 .site-header {
-  --hh: 84px;
+  --hh: calc(var(--island-top) + var(--island-h));
   --h-fg: var(--ky-ink);
   --h-muted: var(--ky-slate);
-  --h-bar: rgb(255 255 255 / 0.82);
-  --h-line: rgb(23 18 31 / 0.09);
+  --h-bar: rgb(255 255 255 / 0.84);
+  --h-line: rgb(23 18 31 / 0.08);
   --h-hover: rgb(23 18 31 / 0.05);
+  --h-chip: rgb(23 18 31 / 0.06);
   position: fixed;
   inset: 0 0 auto;
   z-index: var(--z-header);
-  height: var(--hh);
-  display: flex;
-  align-items: center;
+  padding-top: var(--island-top);
   color: var(--h-fg);
-  transition:
-    height 420ms var(--ease-out),
-    color 300ms var(--ease-out);
+  /* only the island takes pointer events, never the strip around it */
+  pointer-events: none;
 }
 
 /* Saturated colour fields: slate washes out on pink, blue and orange */
@@ -30,56 +43,64 @@
 
 .site-header.tone-dark {
   --h-fg: var(--ky-white);
-  --h-muted: rgb(255 255 255 / 0.68);
-  --h-bar: rgb(23 18 31 / 0.82);
+  --h-muted: rgb(255 255 255 / 0.7);
+  --h-bar: rgb(30 24 40 / 0.78);
   --h-line: rgb(255 255 255 / 0.1);
-  --h-hover: rgb(255 255 255 / 0.1);
-}
-
-.site-header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--h-bar);
-  -webkit-backdrop-filter: blur(16px) saturate(1.4);
-  backdrop-filter: blur(16px) saturate(1.4);
-  border-bottom: 1px solid var(--h-line);
-  box-shadow: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 12px 32px -28px rgb(23 18 31 / 0.4);
-  opacity: 0;
-  transition:
-    opacity 360ms var(--ease-out),
-    background-color 300ms var(--ease-out);
-}
-
-.site-header.is-scrolled {
-  --hh: 64px;
-  height: 64px;
-}
-
-.site-header.is-scrolled::before {
-  opacity: 1;
+  --h-hover: rgb(255 255 255 / 0.08);
+  --h-chip: rgb(255 255 255 / 0.12);
 }
 
 .site-header__inner {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--s-3);
+  width: var(--island-w);
+  height: var(--island-h);
+  margin-inline: auto;
+  padding: 0 8px 0 14px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  pointer-events: auto;
+  transition:
+    width 520ms var(--ease-out),
+    background-color 360ms var(--ease-out),
+    border-color 360ms var(--ease-out),
+    box-shadow 360ms var(--ease-out);
 }
 
-/* Logo: always on the white plate the guidelines ask for, so its light Cyan
-   letters read the same on every page. On light pages a hairline and a soft
-   shadow lift the plate off the pale background. */
+.site-header.is-scrolled .site-header__inner {
+  width: min(calc(100% - 2 * var(--island-edge)), 1100px);
+  background: var(--h-bar);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+  border-color: var(--h-line);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.5) inset,
+    0 18px 40px -24px rgb(23 18 31 / 0.35);
+}
+
+.site-header.tone-dark.is-scrolled .site-header__inner {
+  box-shadow: 0 18px 40px -20px rgb(0 0 0 / 0.6);
+}
+
+/* Logo: always on the white plate the guidelines ask for. Open on a light
+   page the plate is lifted by a hairline; inside the white capsule it simply
+   merges; on Ink it sits as a clean white card. */
 .site-header__logo .logo-card {
-  margin-left: -10px;
-  padding: 6px 10px;
+  margin-left: -6px;
+  padding: 5px 9px;
   border-radius: 10px;
   background: var(--ky-white);
   box-shadow:
     0 0 0 1px rgb(23 18 31 / 0.06),
     0 6px 16px -10px rgb(23 18 31 / 0.35);
   transition: box-shadow 300ms var(--ease-out);
+}
+
+.site-header.is-scrolled:not(.tone-dark) .site-header__logo .logo-card {
+  box-shadow: none;
 }
 
 .tone-dark .site-header__logo .logo-card,
@@ -113,13 +134,15 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 40px;
+  height: 38px;
   padding: 0 14px;
   border-radius: 10px;
   font-size: var(--fs-ui);
   font-weight: 500;
   color: var(--h-muted);
-  transition: color 220ms var(--ease-out);
+  transition:
+    color 220ms var(--ease-out),
+    background-color 220ms var(--ease-out);
 }
 
 .nav__link:hover,
@@ -130,28 +153,10 @@
   color: var(--h-fg);
 }
 
-/* Current page: a small Flame point under the label */
-.nav__link::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 3px;
-  width: 4px;
-  height: 4px;
-  margin-left: -2px;
-  border-radius: 50%;
-  background: var(--grad-flame);
-  opacity: 0;
-  transform: scale(0.4);
-  transition:
-    opacity 260ms var(--ease-out),
-    transform 260ms var(--ease-out);
-}
-
-.nav__link.active::after,
-.nav__link.is-active::after {
-  opacity: 1;
-  transform: none;
+/* Current page: a quiet filled chip */
+.nav__link.active,
+.nav__link.is-active {
+  background: var(--h-chip);
 }
 
 /* The gliding highlight behind the hovered link */
@@ -159,9 +164,9 @@
   position: absolute;
   left: 0;
   top: 50%;
-  height: 40px;
+  height: 38px;
   width: var(--iw, 0);
-  margin-top: -20px;
+  margin-top: -19px;
   border-radius: 10px;
   background: var(--h-hover);
   transform: translateX(var(--ix, 0));
@@ -189,7 +194,7 @@
 .site-header__actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 }
 
 .site-header__clock {
@@ -201,11 +206,34 @@
   white-space: nowrap;
 }
 
+/* a small live pulse: the studio clock is running */
 .site-header__clock-dot {
+  position: relative;
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--ky-violet);
+  background: var(--ky-success);
+}
+
+.site-header__clock-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--ky-success);
+  opacity: 0;
+  animation: clockPulse 2.4s var(--ease-out) infinite;
+}
+
+@keyframes clockPulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.8);
+  }
 }
 
 .site-header__clock-time {
@@ -217,9 +245,9 @@
   display: none;
   align-items: center;
   gap: 12px;
-  height: var(--btn-h-sm);
-  padding: 0 7px 0 18px;
-  border-radius: var(--radius-control);
+  height: 42px;
+  padding: 0 6px 0 16px;
+  border-radius: 12px;
   background: var(--ky-ink);
   color: var(--ky-white);
   font-weight: 700;
@@ -261,22 +289,34 @@
   background: var(--ky-cyan);
 }
 
+/* Phone menu button: a compact square that matches the capsule */
 .site-header__toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  height: 44px;
-  padding: 0 14px;
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
   border: 1px solid var(--h-line);
-  background: rgb(255 255 255 / 0.5);
+  background: rgb(255 255 255 / 0.6);
   color: var(--h-fg);
-  font-weight: 700;
-  font-size: var(--fs-ui);
+  transition: background-color 300ms var(--ease-out);
+}
+
+.is-scrolled .site-header__toggle {
+  background: transparent;
 }
 
 .tone-dark .site-header__toggle {
   background: rgb(255 255 255 / 0.06);
+}
+
+.site-header__menu-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .site-header__bars {
@@ -295,6 +335,11 @@
 .site-header__bars i:last-child {
   width: 11px;
   justify-self: end;
+  transition: width 300ms var(--ease-out);
+}
+
+.site-header__toggle:hover .site-header__bars i:last-child {
+  width: 18px;
 }
 
 /* Thin rule separating the studio clock from the call to action */
@@ -327,19 +372,20 @@
 }
 
 @media (max-width: 399px) {
-  .site-header__menu-label {
-    display: none;
-  }
-  .site-header__logo img {
+  .site-header__logo img,
+  .is-scrolled .site-header__logo img {
     width: 112px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-header,
+  .site-header__inner,
   .nav__indicator,
   .site-header__logo img {
     transition: none;
+  }
+  .site-header__clock-dot::after {
+    animation: none;
   }
 }
 
@@ -353,7 +399,7 @@
   position: fixed;
   top: calc(var(--hh) + 6px);
   left: 50%;
-  width: min(1040px, calc(100vw - 48px));
+  width: min(1100px, calc(100vw - 2 * var(--island-edge)));
   transform: translateX(-50%);
   color: var(--ky-ink);
 }
@@ -566,120 +612,190 @@
   }
 }
 
+/* The menu's top bar sits exactly where the header capsule was, so opening
+   the menu reads as the capsule turning dark rather than a new screen. */
 .mnav__top {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--header-h);
+  width: var(--island-w);
+  height: var(--island-h);
+  margin: var(--island-top) auto 0;
+  padding: 0 8px 0 14px;
+  border: 1px solid var(--ink-line);
+  border-radius: 18px;
+  background: rgb(255 255 255 / 0.04);
 }
 
 .mnav__top .logo-card {
-  padding: 7px 12px;
+  margin-left: -6px;
+  padding: 5px 9px;
+  border-radius: 10px;
+}
+
+.mnav__top .logo img {
+  width: 112px;
 }
 
 /* the same size and shape as the header's menu button it replaces */
 .mnav__close {
   display: inline-grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
   border: 1px solid var(--ink-line);
   background: rgb(255 255 255 / 0.06);
   color: var(--ky-white);
 }
 
-/* the menu fills the screen as one column: links at the top, the action and
-   contact details settled at the foot */
+/* The menu fills the screen as one column: pages, then services as tiles,
+   with the action and contact details settled at the foot. */
 .mnav__body {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: calc(100svh - var(--header-h));
-  padding-top: var(--s-3);
-  padding-bottom: max(var(--s-4), env(safe-area-inset-bottom));
+  min-height: calc(100svh - var(--island-top) - var(--island-h));
+  padding-top: var(--s-4);
+  padding-bottom: max(var(--s-3), env(safe-area-inset-bottom));
 }
 
-.mnav__main {
-  border-top: 1px solid var(--ink-line);
+.mnav__label {
+  margin-bottom: 6px;
+  font-size: var(--fs-meta-sm);
+  color: rgb(255 255 255 / 0.45);
 }
 
-.mnav__main > li {
-  border-bottom: 1px solid var(--ink-line);
-  animation: mnavItem 520ms var(--ease-out) both;
-  animation-delay: calc(120ms + var(--i) * 50ms);
+.mnav__main > li,
+.mnav__svc > li {
+  animation: mnavItem 480ms var(--ease-out) both;
+  animation-delay: calc(100ms + var(--i) * 40ms);
 }
 
 @keyframes mnavItem {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
   }
 }
 
-.mnav__main > li > a,
-.mnav__toggle {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 60px;
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  color: var(--ky-white);
-  text-align: left;
+.mnav__main {
+  margin-bottom: var(--s-4);
 }
 
-/* the current page: a small cyan mark, the same cue as the desktop nav */
-.mnav__main > li > a.active::after {
+.mnav__main > li + li {
+  border-top: 1px solid var(--ink-line);
+}
+
+.mnav__main a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: rgb(255 255 255 / 0.86);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.mnav__main a svg {
+  color: rgb(255 255 255 / 0.4);
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.mnav__main a:hover,
+.mnav__main a.active {
+  color: var(--ky-white);
+}
+
+.mnav__main a:hover svg {
+  transform: translateX(4px);
+  color: var(--ky-white);
+}
+
+/* current page: the arrow becomes a small cyan mark */
+.mnav__main a.active svg {
+  display: none;
+}
+
+.mnav__main a.active::after {
   content: "";
   width: 6px;
   height: 6px;
+  margin-right: 6px;
   border-radius: 50%;
   background: var(--ky-cyan);
 }
 
-.mnav__toggle svg {
-  color: rgb(255 255 255 / 0.6);
-  transition: transform var(--dur-base) var(--ease-out);
-}
-
-.mnav__toggle[aria-expanded="true"] svg {
-  transform: rotate(180deg);
-}
-
-.mnav__svc {
+/* Services: a two-column grid of compact tiles */
+.mnav__svc[role="list"] {
   display: grid;
-  padding: 0 0 var(--s-2);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .mnav__svc a {
+  --hue: var(--ky-violet);
   display: flex;
   align-items: center;
-  min-height: 44px;
-  padding-left: var(--s-2);
-  border-left: 1px solid var(--ink-line);
-  font-size: var(--fs-body);
-  color: rgb(255 255 255 / 0.72);
+  gap: 10px;
+  height: 100%;
+  min-height: 52px;
+  padding: 10px 12px;
+  border: 1px solid var(--ink-line);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.03);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  line-height: 1.25;
+  color: rgb(255 255 255 / 0.86);
   transition:
-    color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out);
+}
+
+.mnav__svc a[data-hue="flame"],
+.mnav__svc a[data-hue="magenta"] {
+  --hue: var(--ky-magenta);
+}
+.mnav__svc a[data-hue="cyan"] {
+  --hue: var(--ky-cyan);
+}
+.mnav__svc a[data-hue="cobalt"] {
+  --hue: var(--ky-cobalt);
+}
+.mnav__svc a[data-hue="orange"] {
+  --hue: var(--ky-orange);
+}
+
+.mnav__svc-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--hue) 18%, transparent);
+  color: var(--hue);
 }
 
 .mnav__svc a:hover,
 .mnav__svc a.active {
+  background: rgb(255 255 255 / 0.07);
+  border-color: rgb(255 255 255 / 0.22);
   color: var(--ky-white);
-  border-left-color: var(--ky-cyan);
 }
 
 .mnav__foot {
   display: grid;
-  gap: var(--s-3);
+  gap: var(--s-2);
   margin-top: auto;
-  padding-top: var(--s-6);
+  padding-top: var(--s-5);
 }
 
 .mnav__cta {
@@ -687,43 +803,31 @@
 }
 
 .mnav__contact {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--s-2);
-  margin: 0;
-}
-
-.mnav__contact dt {
-  font-size: var(--fs-small);
-  color: rgb(255 255 255 / 0.55);
-}
-
-.mnav__contact dd {
-  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 var(--s-2);
 }
 
 .mnav__contact a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-size: var(--fs-ui);
-  color: var(--ky-white);
+  font-size: var(--fs-small);
+  color: rgb(255 255 255 / 0.78);
   white-space: nowrap;
 }
 
-/* the narrowest phones: email and phone stack, so neither has to break */
-@media (max-width: 359px) {
-  .mnav__contact {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
+.mnav__contact a:hover {
+  color: var(--ky-white);
 }
 
-.mnav__place {
+.mnav__foot .site-header__clock {
+  display: inline-flex;
   padding-top: var(--s-2);
   border-top: 1px solid var(--ink-line);
-  font-size: var(--fs-small);
-  color: rgb(255 255 255 / 0.55);
+  --h-muted: rgb(255 255 255 / 0.55);
+  --h-fg: var(--ky-white);
 }
 
 /* ---------- Main ---------- */
@@ -736,7 +840,7 @@ main:focus {
   background: var(--ky-ink);
 }
 
-/* ---------- Loader (on Ink, flowing into the dark hero) ---------- */
+/* ---------- Loader: light, with soft brand light and a Flame bar ---------- */
 .loader {
   position: fixed;
   inset: 0;
@@ -744,57 +848,106 @@ main:focus {
   display: grid;
   grid-template-rows: 1fr auto;
   padding: var(--gutter);
-  background: var(--ky-cloud);
+  overflow: hidden;
+  background: rgb(255 255 255);
   color: var(--ky-ink);
+}
+
+/* two soft pools of brand light, drifting slowly behind the logo */
+.loader__lights {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.loader__lights i {
+  position: absolute;
+  width: min(70vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(40px);
+  animation: loaderDrift 9s ease-in-out infinite alternate;
+}
+
+.loader__lights i:first-child {
+  left: -14%;
+  top: -22%;
+  background: radial-gradient(closest-side, rgb(123 77 217 / 0.16), transparent);
+}
+
+.loader__lights i:last-child {
+  right: -16%;
+  bottom: -30%;
+  background: radial-gradient(closest-side, rgb(255 149 51 / 0.14), rgb(226 65 143 / 0.06) 55%, transparent);
+  animation-direction: alternate-reverse;
+}
+
+@keyframes loaderDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6%, 4%, 0) scale(1.08);
+  }
 }
 
 .loader__brand {
+  position: relative;
   display: grid;
   place-content: center;
   justify-items: center;
-  gap: 22px;
+  gap: 20px;
   text-align: center;
 }
 
-.loader__plate {
-  display: inline-flex;
-  padding: 14px 20px;
-  border-radius: var(--radius-control);
-  background: var(--ky-white);
-  box-shadow: 0 20px 40px -24px rgb(23 18 31 / 0.25);
-  animation: loaderLogo 900ms var(--ease-out) both;
-}
-
-.loader__plate img {
-  width: clamp(170px, 20vw, 220px);
+/* the official logo, on white as the guidelines ask */
+.loader__logo {
+  width: clamp(180px, 17vw, 228px);
   height: auto;
-}
-
-.loader__wordmark {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  color: var(--ky-ink);
+  animation: loaderIn 1s var(--ease-out) both;
 }
 
 .loader__line {
+  overflow: hidden;
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.4rem);
   line-height: 1.3;
   color: var(--ky-slate);
-  animation: loaderLogo 900ms 120ms var(--ease-out) both;
 }
 
-@keyframes loaderLogo {
+.loader__line > span {
+  display: block;
+  animation: loaderRise 1s 250ms var(--ease-out) both;
+}
+
+.loader__line em {
+  font-style: normal;
+  background: var(--grad-flame);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes loaderIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px) scale(0.98);
+    filter: blur(6px);
+  }
+}
+
+@keyframes loaderRise {
+  from {
+    transform: translateY(110%);
   }
 }
 
 .loader__meta {
-  width: min(420px, 100%);
+  position: relative;
+  width: min(360px, 100%);
   margin-inline: auto;
-  padding-bottom: var(--s-4);
+  padding-bottom: var(--s-5);
+  animation: loaderIn 1s 350ms var(--ease-out) both;
 }
 
 .loader__track {
@@ -806,6 +959,7 @@ main:focus {
 
 .loader__bar {
   height: 100%;
+  border-radius: 2px;
   background: var(--grad-flame);
   transform-origin: left;
   transform: scaleX(0);
@@ -814,9 +968,16 @@ main:focus {
 .loader__labels {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
-  font-size: 0.75rem;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
   color: var(--ky-slate);
+}
+
+.loader__labels span:last-child {
+  font-variant-numeric: tabular-nums;
+  color: var(--ky-ink);
 }
 
 .loader__dot {
@@ -828,8 +989,15 @@ main:focus {
   margin: -7px 0 0 -7px;
   border-radius: 50%;
   background: var(--grad-flame);
+  box-shadow: 0 0 24px 4px rgb(226 65 143 / 0.35);
   transform: scale(0);
   pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader__lights i {
+    animation: none;
+  }
 }
 
 /* ---------- Floating WhatsApp button ---------- */

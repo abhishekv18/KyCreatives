@@ -9,6 +9,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
+import { Guides } from "../../components/art/Art";
 import { IdentitySet } from "../../components/visuals/Visuals";
 import { company } from "../../data/site";
 
@@ -179,7 +180,7 @@ export default function DesignGraphics() {
   useServiceMeta(service);
   return (
     <div className="svcpage svcpage--cyan">
-      <ServiceHero service={service} theme="cyan" aside={<HeroVisual />} />
+      <ServiceHero service={service} theme="cyan" art={<Guides />} aside={<HeroVisual />} />
       <SystemGallery />
       <Offerings
         service={service}

@@ -11,7 +11,7 @@ import {
 import SplitHeading from "../../components/ui/SplitHeading";
 import BrowserFrame from "../../components/ui/BrowserFrame";
 import ContactCTA from "../../components/ui/ContactCTA";
-import { Blueprint, Ribbons } from "../../components/art/Art";
+import { Blueprint, Glow } from "../../components/art/Art";
 import { DashboardMock, ConceptLabel } from "../../components/visuals/Visuals";
 import { shotSrc, projectBySlug } from "../../data/projects";
 
@@ -114,7 +114,7 @@ export default function WebAppsWebsites() {
         art={
           <>
             <Blueprint />
-            <Ribbons set="footer" />
+            <Glow />
           </>
         }
         aside={<HeroVisual />}

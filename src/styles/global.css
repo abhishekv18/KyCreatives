@@ -479,7 +479,7 @@ html.motion-ok .split-line > span {
 /* ---------- Scrollbar in the brand palette ---------- */
 html {
   scrollbar-width: thin;
-  scrollbar-color: rgb(123 77 217 / 0.55) var(--ky-cloud);
+  scrollbar-color: var(--ky-ink) var(--ky-cloud);
 }
 
 ::-webkit-scrollbar {
@@ -494,9 +494,9 @@ html {
 ::-webkit-scrollbar-thumb {
   border: 3px solid var(--ky-cloud);
   border-radius: 999px;
-  background: linear-gradient(180deg, rgb(123 77 217 / 0.7), rgb(76 141 235 / 0.7));
+  background: var(--ky-ink);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--ky-violet), var(--ky-cobalt));
+  background: #2e2738;
 }

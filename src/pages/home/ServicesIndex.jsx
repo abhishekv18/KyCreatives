@@ -1,16 +1,59 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ServiceVisual from "../../components/visuals/ServiceVisual";
 import { services } from "../../data/services";
 import { serviceIcons, serviceStage } from "../../components/ui/serviceIcons";
+import { gsap, prefersReducedMotion } from "../../lib/motion";
 
 export default function ServicesIndex() {
   const [active, setActive] = useState(services[0].slug);
+  const ref = useRef(null);
+
+  // Phones and tablets: each service's visual rises into place as it arrives,
+  // then its contents drift gently against the scroll.
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      const mm = gsap.matchMedia();
+      mm.add("(max-width: 959px)", () => {
+        gsap.utils.toArray(".svcx__inline", ref.current).forEach((stage) => {
+          gsap.fromTo(
+            stage,
+            { y: 48, scale: 0.94, opacity: 0 },
+            {
+              y: 0,
+              scale: 1,
+              opacity: 1,
+              duration: 0.9,
+              ease: "power3.out",
+              // plays each time the stage arrives, from either direction
+              scrollTrigger: { trigger: stage, start: "top 88%", end: "bottom 12%", toggleActions: "play reverse play reverse" },
+            }
+          );
+          const inner = stage.querySelector(".sv");
+          if (inner) {
+            gsap.fromTo(
+              inner,
+              { yPercent: 6 },
+              {
+                yPercent: -6,
+                ease: "none",
+                scrollTrigger: { trigger: stage, start: "top bottom", end: "bottom top", scrub: 0.8 },
+              }
+            );
+          }
+        });
+      });
+      return () => mm.revert();
+    },
+    { scope: ref }
+  );
 
   return (
-    <section className="svcx" data-tone="light" aria-labelledby="svcx-title">
+    <section className="svcx" ref={ref} data-tone="light" aria-labelledby="svcx-title">
       <div className="container">
         <div className="svcx__head">
           <p className="kicker kicker--dusk t-meta">Services</p>

@@ -37,7 +37,11 @@ function Panel({ item, index, total }) {
   const p = projectBySlug[item.slug];
   const wide = shotSrc(p.slug, "wide");
   return (
-    <article className={`wpanel wpanel--${item.stage}`} aria-labelledby={`wp-${p.slug}`}>
+    <article
+      className={`wpanel wpanel--${item.stage}`}
+      style={{ "--i": index }}
+      aria-labelledby={`wp-${p.slug}`}
+    >
       <div className="wpanel__shade" aria-hidden="true" />
       <div className="wpanel__info">
         <p className="wpanel__index t-meta">
@@ -176,7 +180,9 @@ export default function Work() {
     () => {
       if (prefersReducedMotion()) return;
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 960px)", () => {
+      // Matches the CSS: panels stack on wide screens, and on smaller screens
+      // tall enough for a whole panel to stay in view.
+      mm.add("(min-width: 960px), (min-height: 640px)", () => {
         const panels = gsap.utils.toArray(".wpanel", ref.current);
         panels.slice(0, -1).forEach((panel, i) => {
           const next = panels[i + 1];

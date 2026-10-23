@@ -3,7 +3,10 @@
    ========================================================= */
 .art-ribbons,
 .art-grid,
-.art-arcs {
+.art-arcs,
+.art-glow,
+.art-guides,
+.art-chart {
   display: block;
   pointer-events: none;
 }
@@ -543,4 +546,59 @@
     max-width: calc(100% - 72px);
     line-height: 1.8;
   }
+}
+
+/* Hero light: soft pools of Dusk and Cobalt behind the centrepiece */
+.art-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(42% 46% at 82% 34%, rgb(123 77 217 / 0.34), transparent 72%),
+    radial-gradient(30% 34% at 70% 78%, rgb(76 141 235 / 0.16), transparent 72%),
+    radial-gradient(60% 40% at 0% 0%, rgb(123 77 217 / 0.1), transparent 70%);
+}
+
+@media (max-width: 959px) {
+  .art-glow {
+    background:
+      radial-gradient(90% 34% at 50% 78%, rgb(123 77 217 / 0.3), transparent 72%),
+      radial-gradient(70% 24% at 100% 0%, rgb(76 141 235 / 0.14), transparent 72%);
+  }
+}
+
+/* Column guides: six columns on the container grid (three on phones) */
+.art-guides {
+  --g-line: rgb(23 18 31 / 0.09);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(calc(100% - 2 * var(--gutter)), var(--container));
+  transform: translateX(-50%);
+  border-right: 1px solid var(--g-line);
+  background-image: linear-gradient(90deg, var(--g-line) 0 1px, transparent 1px);
+  background-size: calc(100% / 6) 100%;
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 20%, transparent 80%);
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 20%, transparent 80%);
+}
+
+.art-guides--dark {
+  --g-line: rgb(255 255 255 / 0.07);
+}
+
+@media (max-width: 767px) {
+  .art-guides {
+    background-size: calc(100% / 3) 100%;
+  }
+}
+
+/* Marketing chart lines: fill the hero, fading out toward the copy */
+.art-chart {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  -webkit-mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.12) 0%, rgb(0 0 0 / 0.3) 40%, #000 66%);
+  mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.12) 0%, rgb(0 0 0 / 0.3) 40%, #000 66%);
 }

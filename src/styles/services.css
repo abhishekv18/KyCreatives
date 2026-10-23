@@ -69,9 +69,33 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: end;
-  gap: clamp(10px, 2vw, 22px);
+  gap: clamp(10px, 2vw, 24px);
   width: 100%;
-  max-width: 600px;
+  max-width: 680px;
+}
+
+/* A taller hero than the other services: D2C is the focus area, and the
+   three live stores need room to breathe. Content stays centred. */
+@media (min-width: 960px) {
+  .shero--d2c {
+    min-height: min(92svh, 820px);
+    display: flex;
+    align-items: center;
+    padding-top: calc(var(--hero-pt) + var(--s-4));
+    padding-bottom: calc(var(--hero-pb) + var(--s-4));
+  }
+  .shero--d2c .phero__grid {
+    width: 100%;
+  }
+  .shero--d2c.phero--split .phero__copy {
+    grid-column: 1 / span 6;
+  }
+  .shero--d2c.phero--split .phero__aside {
+    grid-column: 7 / span 6;
+  }
+  .shero--d2c .phero__lead {
+    max-width: 44ch;
+  }
 }
 
 .d2c-phones__a {
@@ -417,11 +441,16 @@
   margin-inline: auto;
 }
 
+/* Rings centred between the phones and wide enough to sweep behind both.
+   Exempt from the global SVG max-width, which otherwise keeps them small. */
 .app-hero__arcs {
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: 150%;
+  top: 46%;
+  width: 190%;
+  max-width: none;
+  height: auto;
+  aspect-ratio: 1;
   transform: translate(-50%, -50%);
 }
 
@@ -439,9 +468,36 @@
   transform: rotate(3deg);
 }
 
+/* The phones keep their designed 250px width and are scaled down as a whole
+   to fit their column, so the screens never squeeze or overflow. */
 .app-hero .mock-phone {
-  width: 100%;
+  width: 250px;
+  max-width: none;
   box-shadow: 0 50px 90px -30px rgb(23 18 31 / 0.7);
+}
+
+@media (min-width: 960px) {
+  .app-hero .mock-phone {
+    zoom: 0.9;
+  }
+}
+
+@media (max-width: 639px) {
+  .app-hero .mock-phone {
+    zoom: 0.78;
+  }
+}
+
+@media (max-width: 479px) {
+  .app-hero .mock-phone {
+    zoom: 0.62;
+  }
+}
+
+@media (max-width: 359px) {
+  .app-hero .mock-phone {
+    zoom: 0.5;
+  }
 }
 
 .app-hero__cap {

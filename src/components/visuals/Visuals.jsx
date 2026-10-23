@@ -250,9 +250,22 @@ export function CampaignSet() {
   return (
     <div className="cset" aria-hidden="true">
       <div className="cset__post">
-        <img className="cset__mark" src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
-        <p className="cset__head">Software that sells.</p>
-        <p className="cset__url">kycreatives.com</p>
+        <div className="cset__top">
+          <img className="cset__mark" src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
+          <span className="cset__kind">Instagram post</span>
+        </div>
+        <div className="cset__copy">
+          <p className="cset__head">Software that sells.</p>
+          <p className="cset__sub">Websites, apps and stores, designed and built by one team.</p>
+        </div>
+        <div className="cset__foot">
+          <p className="cset__url">kycreatives.com</p>
+          <span className="cset__dots">
+            <i className="is-on" />
+            <i />
+            <i />
+          </span>
+        </div>
       </div>
 
       <div className="cset__story">
@@ -296,6 +309,13 @@ export function IdentitySet() {
     <div className="iset" aria-hidden="true">
       <div className="iset__letter">
         <img src="/brand/ky-creatives-logo.png" alt="" width="285" height="79" loading="lazy" />
+        <div className="iset__body">
+          <span className="iset__date">12 March</span>
+          <span className="iset__dear">Dear Priya,</span>
+          {[96, 88, 92, 70, 0, 94, 84, 60].map((w, i) =>
+            w ? <i key={i} style={{ width: `${w}%` }} /> : <b key={i} />
+          )}
+        </div>
         <div className="iset__address">
           <span>Tower A - 114, Ninex RMG, Sector 37C</span>
           <span>Gurugram, Haryana 122001, India</span>
@@ -308,6 +328,15 @@ export function IdentitySet() {
         <p className="iset__book-title">Brand guidelines</p>
         <p className="iset__book-sub">Logo, colour, type and voice</p>
         <span className="iset__book-band" />
+      </div>
+
+      <div className="iset__palette">
+        <span className="iset__palette-label">Palette</span>
+        <span className="iset__swatches">
+          {["#E2418F", "#FF9533", "#7B4DD9", "#4C8DEB", "#6FE3F5", "#17121F"].map((c) => (
+            <i key={c} style={{ background: c }} />
+          ))}
+        </span>
       </div>
 
       <div className="iset__icon">

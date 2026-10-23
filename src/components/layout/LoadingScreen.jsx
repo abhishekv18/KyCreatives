@@ -2,18 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, markReady, prefersReducedMotion } from "../../lib/motion";
 import { lockScroll } from "../../lib/smooth";
 
-const MIN_MS = 650; // long enough to avoid a flash, short enough not to be a wait
+const MIN_MS = 900; // long enough for the line to land, short enough not to be a wait
 const MAX_MS = 3500; // hard ceiling: the visitor can never be stuck here
 
 /**
- * Branded first-load screen. Progress reflects real work: web fonts plus the
- * page's critical images (marked data-critical). Shown on every full load.
+ * Light first-load screen: the official logo on white with soft brand light
+ * drifting behind it, a short line and a Flame progress bar. Progress reflects
+ * real work: web fonts plus the page's critical images (marked data-critical).
+ * On exit the bar travels to the centre and collapses into a point, and the
+ * screen dissolves around it. Shown on every full load, never during in-app
+ * navigation, and skipped with reduced motion.
  */
 export default function LoadingScreen() {
-  // Plays on every full page load or refresh; never during in-app navigation
-  // (the layout mounts once). Skipped entirely with reduced motion.
   const [show, setShow] = useState(() => !prefersReducedMotion());
-  const [logoFailed, setLogoFailed] = useState(false);
   const rootRef = useRef(null);
   const barRef = useRef(null);
   const pctRef = useRef(null);
@@ -25,17 +26,17 @@ export default function LoadingScreen() {
     }
     lockScroll(true);
     const start = performance.now();
-    const reduced = prefersReducedMotion();
     let finished = false;
     let shown = 0;
 
     const setProgress = (p) => {
       const target = Math.max(shown, Math.min(1, p));
-      gsap.to(barRef.current, { scaleX: target, duration: 0.4, ease: "power2.out", overwrite: true });
+      gsap.to(barRef.current, { scaleX: target, duration: 0.5, ease: "power2.out", overwrite: true });
       const obj = { v: shown };
       gsap.to(obj, {
         v: target,
-        duration: 0.4,
+        duration: 0.5,
+        ease: "power1.out",
         onUpdate: () => {
           if (pctRef.current) pctRef.current.textContent = `${Math.round(obj.v * 100)}%`;
         },
@@ -63,35 +64,39 @@ export default function LoadingScreen() {
       if (finished) return;
       finished = true;
       setProgress(1);
+      const root = rootRef.current;
       const out = () => {
         lockScroll(false);
         markReady();
         setShow(false);
       };
-      if (reduced) {
-        gsap.to(rootRef.current, { autoAlpha: 0, duration: 0.2, onComplete: out });
-        return;
-      }
-      // The Flame bar travels to the centre of the screen and collapses into a
-      // single point; the Cloud field then dissolves around it and the hero's
-      // orb grows out of that point.
-      const root = rootRef.current;
+      // The progress bar travels to the centre of the screen and collapses into
+      // a single point; the light field then dissolves around it while the
+      // point blooms and fades, handing over to the page.
       const track = root.querySelector(".loader__track");
       const dot = root.querySelector(".loader__dot");
       const r = track.getBoundingClientRect();
       const dx = window.innerWidth / 2 - (r.left + r.width / 2);
       const dy = window.innerHeight / 2 - (r.top + r.height / 2);
       gsap
-        .timeline({ delay: 0.2, onComplete: out })
-        .to(".loader__brand, .loader__labels", { opacity: 0, y: -10, duration: 0.45, ease: "power2.in", stagger: 0.05 })
+        .timeline({ delay: 0.25, onComplete: out })
+        .to(root.querySelectorAll(".loader__brand, .loader__labels"), {
+          opacity: 0,
+          y: -12,
+          filter: "blur(4px)",
+          duration: 0.45,
+          ease: "power2.in",
+          stagger: 0.05,
+        })
         .to(track, { x: dx, y: dy, backgroundColor: "rgba(23,18,31,0)", duration: 0.75, ease: "power3.inOut" }, 0.15)
-        .to(track, { scaleX: 0.025, duration: 0.45, ease: "power3.in" }, 0.6)
+        .to(track, { scaleX: 0.02, duration: 0.45, ease: "power3.in" }, 0.6)
         .fromTo(dot, { scale: 0, opacity: 1 }, { scale: 1, duration: 0.3, ease: "power2.out" }, 0.95)
         .set(track, { opacity: 0 }, 1.0)
         .set(root, { pointerEvents: "none" }, 1.05)
         .call(() => markReady(), null, 1.05)
-        .to(root, { backgroundColor: "rgba(246,243,251,0)", duration: 0.5, ease: "power1.out" }, 1.05)
-        .to(dot, { opacity: 0, scale: 1.6, duration: 0.5, ease: "power2.out" }, 1.25);
+        .to(root.querySelector(".loader__lights"), { opacity: 0, duration: 0.4, ease: "power1.out" }, 1.0)
+        .to(root, { backgroundColor: "rgba(255,255,255,0)", duration: 0.55, ease: "power1.out" }, 1.05)
+        .to(dot, { opacity: 0, scale: 2.2, duration: 0.6, ease: "power2.out" }, 1.2);
     };
 
     const all = Promise.all(tasks).then(() => {
@@ -112,28 +117,31 @@ export default function LoadingScreen() {
 
   return (
     <div className="loader" ref={rootRef} role="status" aria-live="polite" aria-label="Loading KY Creatives">
-      <div className="loader__brand">
-        <span className="loader__plate">
-          {logoFailed ? (
-            <span className="loader__wordmark">KY Creatives</span>
-          ) : (
-            <img
-              src="/brand/ky-creatives-logo.png"
-              width="285"
-              height="79"
-              alt="KY Creatives"
-              onError={() => setLogoFailed(true)}
-            />
-          )}
-        </span>
-        <p className="loader__line">What we create is business.</p>
+      <div className="loader__lights" aria-hidden="true">
+        <i />
+        <i />
       </div>
-      <div className="loader__meta">
-        <div className="loader__track" aria-hidden="true">
+      <div className="loader__brand">
+        <img
+          className="loader__logo"
+          src="/brand/ky-creatives-logo.png"
+          width="285"
+          height="79"
+          alt="KY Creatives"
+          decoding="async"
+        />
+        <p className="loader__line" aria-hidden="true">
+          <span>
+            What we create is <em>business.</em>
+          </span>
+        </p>
+      </div>
+      <div className="loader__meta" aria-hidden="true">
+        <div className="loader__track">
           <div className="loader__bar" ref={barRef} />
         </div>
         <div className="loader__labels t-meta">
-          <span>Loading</span>
+          <span>Design-led studio · Est. 2017</span>
           <span ref={pctRef}>0%</span>
         </div>
       </div>

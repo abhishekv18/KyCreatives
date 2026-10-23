@@ -1,10 +1,23 @@
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
 import { ArrowUpRight } from "lucide-react";
 import SplitHeading from "../../components/ui/SplitHeading";
 import { testimonials } from "../../data/testimonials";
 import { reviewLinks } from "../../data/site";
+import { ScrollTrigger, prefersReducedMotion } from "../../lib/motion";
 
-// White, Ink, White rhythm; each review carries one of the three signature gradients.
-const ACCENTS = ["flame", "dusk", "aqua"];
+/* The quote with its key phrase marked, as the client wrote it. */
+function Quote({ text, highlight }) {
+  const at = highlight ? text.indexOf(highlight) : -1;
+  if (at < 0) return <p>{text}</p>;
+  return (
+    <p>
+      {text.slice(0, at)}
+      <span className="rq__hl">{highlight}</span>
+      {text.slice(at + highlight.length)}
+    </p>
+  );
+}
 
 const initials = (name) =>
   name
@@ -14,14 +27,62 @@ const initials = (name) =>
     .slice(0, 2)
     .toUpperCase();
 
+function Review({ t, index, total }) {
+  return (
+    <li className="rcard">
+      <figure>
+        <p className="rcard__top t-meta" aria-hidden="true">
+          <span>{t.company}</span>
+          <span>
+            {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+          </span>
+        </p>
+        <span className="rcard__glyph" aria-hidden="true">
+          &rdquo;
+        </span>
+        <blockquote className="rq__quote">
+          <Quote text={t.quote} highlight={t.highlight} />
+        </blockquote>
+        <figcaption className="rcard__by">
+          <span className="rcard__mono" aria-hidden="true">
+            {initials(t.name)}
+          </span>
+          <span className="rcard__who">
+            <span className="rq__name">{t.name}</span>
+            <span className="rq__co t-meta">Client, {t.company}</span>
+          </span>
+        </figcaption>
+      </figure>
+    </li>
+  );
+}
+
 /*
-  The three published client reviews, as an editorial sheet: three equal
-  columns ruled by hairlines, each quote set in Baskerville and signed at the
-  foot. No ratings, portraits or counts that we cannot verify.
+  The three published client reviews as matching cards: a row on wide screens,
+  a swipeable, snapping rail on phones. The phrase each client stressed is
+  marked as the section scrolls in. No ratings, portraits or counts that we
+  cannot verify.
 */
 export default function Testimonials() {
+  const ref = useRef(null);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) {
+        ref.current.classList.add("is-in");
+        return;
+      }
+      ScrollTrigger.create({
+        trigger: ".reviews__cards",
+        start: "top 70%",
+        onEnter: () => ref.current.classList.add("is-in"),
+      });
+    },
+    { scope: ref }
+  );
+
   return (
-    <section className="reviews" data-tone="light" aria-labelledby="reviews-title">
+    <section className="reviews" ref={ref} data-tone="light" aria-labelledby="reviews-title">
       <div className="container">
         <div className="reviews__head">
           <p className="kicker t-meta">Client reviews</p>
@@ -45,30 +106,14 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <ul role="list" className="reviews__grid" data-stagger="">
+        <ul role="list" className="reviews__cards" data-stagger="">
           {testimonials.map((t, i) => (
-            <li key={t.name} className={`review review--${ACCENTS[i % 3]} ${i === 1 ? "review--feature on-dark" : ""}`}>
-              <figure>
-                <p className="review__index t-meta" aria-hidden="true">
-                  <span>{String(i + 1).padStart(2, "0")}</span>
-                  <span className="review__mark">&ldquo;</span>
-                </p>
-                <blockquote className="review__quote">
-                  <p>{t.quote}</p>
-                </blockquote>
-                <figcaption className="review__by">
-                  <span className="review__avatar" aria-hidden="true">
-                    {initials(t.name)}
-                  </span>
-                  <span className="review__who">
-                    <span className="review__name">{t.name}</span>
-                    <span className="review__co t-meta">{t.company}</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
+            <Review key={t.name} t={t} index={i} total={testimonials.length} />
           ))}
         </ul>
+        <p className="reviews__hint t-meta" aria-hidden="true">
+          Swipe to read all {testimonials.length} reviews
+        </p>
       </div>
     </section>
   );

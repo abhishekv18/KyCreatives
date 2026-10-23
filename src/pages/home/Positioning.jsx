@@ -1,28 +1,31 @@
-import { Gauge, ShoppingBag, Globe, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SplitHeading from "../../components/ui/SplitHeading";
+import { projects } from "../../data/projects";
 
-// The three positioning pillars come straight from the brand guidelines.
-// Each sits on its own colour field: Cobalt for engineering, Flame for D2C,
-// Cyan for global delivery. Ink text on each is a readable brand pairing.
+const d2cCount = projects.filter((p) => p.kind.startsWith("D2C")).length;
+
+// The three positioning pillars come straight from the brand guidelines. Each
+// is set as a ruled row and backed by one plain fact, taken from the portfolio
+// data rather than claimed, so the principle reads as evidence, not a slogan.
 const PILLARS = [
   {
-    icon: Gauge,
-    tone: "cobalt",
     title: "Built to perform",
     body: "Fast, stable software, web apps and mobile apps, engineered to scale as your business grows.",
+    figure: "One team",
+    proof: "designs and builds every screen, from first sketch to launch",
   },
   {
-    icon: ShoppingBag,
-    tone: "flame",
     title: "D2C websites",
     body: "Our focus area. Brand-led storefronts built for conversion, retention and repeat purchase.",
+    figure: `${d2cCount} of ${projects.length}`,
+    proof: "websites in our portfolio are D2C stores and brand sites",
   },
   {
-    icon: Globe,
-    tone: "cyan",
     title: "Global by default",
     body: "Delivery, communication and standards built for clients across time zones.",
+    figure: "3",
+    proof: "countries we have shipped for: India, the UK and the UAE",
   },
 ];
 
@@ -30,15 +33,13 @@ export default function Positioning() {
   return (
     <section className="pos" data-tone="light" aria-labelledby="pos-title">
       <div className="container">
-        <p className="kicker t-meta">How we think</p>
-        <div id="pos-title" className="pos__statement">
-          <SplitHeading
-            as="h2"
-            lines={["Three things", "we build on."]}
-          />
-        </div>
-
-        <div className="pos__grid">
+        <div className="pos__head">
+          <div>
+            <p className="kicker t-meta">How we think</p>
+            <div id="pos-title" className="pos__statement">
+              <SplitHeading as="h2" lines={["Three things", "we build on."]} />
+            </div>
+          </div>
           <div className="pos__body">
             <p className="t-lead" data-reveal="up">
               The same three principles shape every project, from a single landing page to a full platform.
@@ -52,22 +53,25 @@ export default function Positioning() {
               <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
             </Link>
           </div>
-
-          <ul role="list" className="pos__pillars" data-stagger="">
-            {PILLARS.map(({ icon: Icon, tone, title, body }, i) => (
-              <li key={title} className={`pos__pillar pos__pillar--${tone}`}>
-                <span className="pos__pillar-top">
-                  <span className="pos__icon" aria-hidden="true">
-                    <Icon size={20} strokeWidth={1.6} />
-                  </span>
-                  <span className="t-meta">{String(i + 1).padStart(2, "0")}</span>
-                </span>
-                <h3 className="pos__pillar-title">{title}</h3>
-                <p>{body}</p>
-              </li>
-            ))}
-          </ul>
         </div>
+
+        <ol role="list" className="pos__rows">
+          {PILLARS.map(({ title, body, figure, proof }, i) => (
+            <li key={title} className="pos__row" data-reveal="up">
+              <span className="pos__n t-meta" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="pos__main">
+                <h3 className="pos__row-title">{title}</h3>
+                <p>{body}</p>
+              </div>
+              <p className="pos__proof">
+                <strong>{figure}</strong>
+                <span>{proof}</span>
+              </p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

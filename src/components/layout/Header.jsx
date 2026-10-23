@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ChevronDown, X, ArrowRight, ArrowUpRight } from "lucide-react";
 import Logo from "../ui/Logo";
@@ -10,7 +10,7 @@ import { whenReady } from "../../lib/motion";
 
 /*
   Scroll state. The header never hides: at the top of a page it sits open on
-  the page; once scrolled it condenses into a slim frosted bar. It also reads
+  the page; once scrolled it lifts into a floating frosted capsule. It also reads
   the tone of the section beneath it (sections declare data-tone="dark", or
   "color" for saturated light fields) so it keeps its contrast.
 */
@@ -244,8 +244,6 @@ function ServicesMenu() {
 
 function MobileMenu({ open, onClose }) {
   const panelRef = useRef(null);
-  const [svcOpen, setSvcOpen] = useState(false);
-  const svcId = useId();
 
   useEffect(() => {
     if (!open) return;
@@ -286,70 +284,56 @@ function MobileMenu({ open, onClose }) {
       aria-label="Site menu"
       hidden={!open}
     >
-      <div className="mnav__top container">
+      <div className="mnav__top">
         <Logo width={124} card onClick={onClose} />
         <button className="icon-btn mnav__close" onClick={onClose} aria-label="Close menu">
           <X size={24} strokeWidth={1.5} aria-hidden="true" />
         </button>
       </div>
       <nav className="mnav__body container" aria-label="Mobile">
+        <p className="mnav__label t-meta">Menu</p>
         <ul role="list" className="mnav__main">
-          <li style={{ "--i": 0 }}>
-            <NavLink to="/" end onClick={onClose}>
-              Home
-            </NavLink>
-          </li>
-          <li style={{ "--i": 1 }}>
-            <NavLink to="/about" onClick={onClose}>
-              About
-            </NavLink>
-          </li>
-          <li style={{ "--i": 2 }}>
-            <button
-              className="mnav__toggle"
-              aria-expanded={svcOpen}
-              aria-controls={svcId}
-              onClick={() => setSvcOpen((o) => !o)}
-            >
-              Services
-              <ChevronDown size={22} strokeWidth={1.5} aria-hidden="true" />
-            </button>
-            <ul role="list" id={svcId} className="mnav__svc" hidden={!svcOpen}>
-              {services.map((s) => (
-                <li key={s.slug}>
-                  <NavLink to={s.path} onClick={onClose}>
-                    {s.name}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </li>
-          <li style={{ "--i": 3 }}>
-            <NavLink to="/contact" onClick={onClose}>
-              Contact
-            </NavLink>
-          </li>
+          {[
+            ["/", "Home", true],
+            ["/about", "About"],
+            ["/contact", "Contact"],
+          ].map(([to, label, end], i) => (
+            <li key={to} style={{ "--i": i }}>
+              <NavLink to={to} end={end} onClick={onClose}>
+                <span>{label}</span>
+                <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />
+              </NavLink>
+            </li>
+          ))}
         </ul>
+
+        <p className="mnav__label t-meta">Services</p>
+        <ul role="list" className="mnav__svc">
+          {services.map((s, i) => {
+            const Icon = serviceIcons[s.slug];
+            return (
+              <li key={s.slug} style={{ "--i": i + 3 }}>
+                <NavLink to={s.path} onClick={onClose} data-hue={MENU_TONE[s.slug]}>
+                  <span className="mnav__svc-icon" aria-hidden="true">
+                    <Icon size={16} strokeWidth={1.6} />
+                  </span>
+                  <span>{s.name}</span>
+                </NavLink>
+              </li>
+            );
+          })}
+        </ul>
+
         <div className="mnav__foot">
           <Link to="/contact" className="btn btn--light mnav__cta" onClick={onClose}>
             <span>Start a project</span>
             <ArrowUpRight className="btn__icon" size={18} strokeWidth={1.75} aria-hidden="true" />
           </Link>
-          <dl className="mnav__contact">
-            <div>
-              <dt>Email</dt>
-              <dd>
-                <a href={`mailto:${company.email}`}>{company.email}</a>
-              </dd>
-            </div>
-            <div>
-              <dt>Phone</dt>
-              <dd>
-                <a href={company.phoneHref}>{company.phoneDisplay}</a>
-              </dd>
-            </div>
-          </dl>
-          <p className="mnav__place">{company.address.short}</p>
+          <div className="mnav__contact">
+            <a href={`mailto:${company.email}`}>{company.email}</a>
+            <a href={company.phoneHref}>{company.phoneDisplay}</a>
+          </div>
+          <StudioClock />
         </div>
       </nav>
     </div>
@@ -379,7 +363,7 @@ export default function Header() {
   return (
     <>
       <header ref={headerRef} className={`site-header tone-${tone} ${scrolled ? "is-scrolled" : ""}`}>
-        <div className="container site-header__inner">
+        <div className="site-header__inner">
           <Logo width={132} card className="site-header__logo" />
           <nav className="nav" aria-label="Main">
             <ul
