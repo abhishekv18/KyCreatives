@@ -18,7 +18,7 @@ function PageTransition({ children }) {
     () => {
       initReveals(ref.current);
       if (!prefersReducedMotion()) {
-        gsap.fromTo(ref.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", clearProps: "transform" });
+        gsap.fromTo(ref.current, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out", clearProps: "transform" });
       }
     },
     { scope: ref, dependencies: [pathname] }

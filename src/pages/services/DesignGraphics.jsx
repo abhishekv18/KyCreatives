@@ -190,7 +190,7 @@ export default function DesignGraphics() {
       <Deliverables items={service.deliverables} tone="flame" title={["What you take", "away"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
-      <ContactCTA lines={["Tell us where your brand", "needs to show up."]} />
+      <ContactCTA lines={["Where should your", "brand show up?"]} />
     </div>
   );
 }

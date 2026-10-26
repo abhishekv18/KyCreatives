@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, markReady, prefersReducedMotion } from "../../lib/motion";
 import { lockScroll } from "../../lib/smooth";
 
-const MIN_MS = 900; // long enough for the line to land, short enough not to be a wait
-const MAX_MS = 3500; // hard ceiling: the visitor can never be stuck here
+const MIN_MS = 600; // long enough to avoid a flash, short enough not to be a wait
+const MAX_MS = 2200; // hard ceiling: the visitor can never be stuck here
 
 /**
- * Light first-load screen: the official logo on white with soft brand light
- * drifting behind it, a short line and a Flame progress bar. Progress reflects
+ * Light first-load screen: the official logo on a white-to-Cloud field with
+ * soft pastel light, faint column guides, a short line and a Flame progress bar. Progress reflects
  * real work: web fonts plus the page's critical images (marked data-critical).
  * On exit the bar travels to the centre and collapses into a point, and the
  * screen dissolves around it. Shown on every full load, never during in-app
@@ -79,24 +79,23 @@ export default function LoadingScreen() {
       const dx = window.innerWidth / 2 - (r.left + r.width / 2);
       const dy = window.innerHeight / 2 - (r.top + r.height / 2);
       gsap
-        .timeline({ delay: 0.25, onComplete: out })
+        .timeline({ delay: 0.1, onComplete: out })
         .to(root.querySelectorAll(".loader__brand, .loader__labels"), {
           opacity: 0,
           y: -12,
-          filter: "blur(4px)",
-          duration: 0.45,
+          duration: 0.3,
           ease: "power2.in",
           stagger: 0.05,
         })
-        .to(track, { x: dx, y: dy, backgroundColor: "rgba(23,18,31,0)", duration: 0.75, ease: "power3.inOut" }, 0.15)
-        .to(track, { scaleX: 0.02, duration: 0.45, ease: "power3.in" }, 0.6)
-        .fromTo(dot, { scale: 0, opacity: 1 }, { scale: 1, duration: 0.3, ease: "power2.out" }, 0.95)
-        .set(track, { opacity: 0 }, 1.0)
-        .set(root, { pointerEvents: "none" }, 1.05)
-        .call(() => markReady(), null, 1.05)
-        .to(root.querySelector(".loader__lights"), { opacity: 0, duration: 0.4, ease: "power1.out" }, 1.0)
-        .to(root, { backgroundColor: "rgba(255,255,255,0)", duration: 0.55, ease: "power1.out" }, 1.05)
-        .to(dot, { opacity: 0, scale: 2.2, duration: 0.6, ease: "power2.out" }, 1.2);
+        .to(track, { x: dx, y: dy, backgroundColor: "rgba(23,18,31,0)", duration: 0.5, ease: "power3.inOut" }, 0.08)
+        .to(track, { scaleX: 0.02, duration: 0.3, ease: "power3.in" }, 0.38)
+        .fromTo(dot, { scale: 0, opacity: 1 }, { scale: 1, duration: 0.2, ease: "power2.out" }, 0.62)
+        .set(track, { opacity: 0 }, 0.66)
+        .set(root, { pointerEvents: "none" }, 0.68)
+        .call(() => markReady(), null, 0.68)
+        .to(root.querySelectorAll(".loader__guides, .loader__lights"), { opacity: 0, duration: 0.3, ease: "power1.out" }, 0.62)
+        .to(root.querySelector(".loader__bg"), { opacity: 0, duration: 0.4, ease: "power1.out" }, 0.68)
+        .to(dot, { opacity: 0, scale: 2.2, duration: 0.45, ease: "power2.out" }, 0.78);
     };
 
     const all = Promise.all(tasks).then(() => {
@@ -117,10 +116,12 @@ export default function LoadingScreen() {
 
   return (
     <div className="loader" ref={rootRef} role="status" aria-live="polite" aria-label="Loading KY Creatives">
+      <div className="loader__bg" aria-hidden="true" />
       <div className="loader__lights" aria-hidden="true">
         <i />
         <i />
       </div>
+      <div className="loader__guides" aria-hidden="true" />
       <div className="loader__brand">
         <img
           className="loader__logo"

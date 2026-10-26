@@ -121,7 +121,7 @@ export default function Marketing() {
       <Deliverables items={service.deliverables} tone="violet" title={["What each month", "includes"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
-      <ContactCTA lines={["Tell us where your", "customers come from today."]} />
+      <ContactCTA lines={["Tell us where", "customers find you."]} />
     </div>
   );
 }

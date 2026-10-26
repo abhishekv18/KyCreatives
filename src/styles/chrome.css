@@ -104,12 +104,32 @@
   font-size: var(--fs-meta);
 }
 
+/* Every closing headline is two short lines, so the band is the same height
+   on every page (About is the reference). On wider screens each authored line
+   stays on one line. */
 .cta__title {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
   line-height: var(--lh-h2);
   letter-spacing: var(--ls-h2);
   max-width: 16ch;
+}
+
+/* the narrowest phones: a touch smaller, so two lines still fit */
+@media (max-width: 359px) {
+  .cta__title {
+    max-width: none;
+    font-size: calc(var(--fs-h2) * 0.86);
+  }
+}
+
+@media (min-width: 768px) {
+  .cta__title {
+    max-width: none;
+  }
+  .cta__title .split-line > span {
+    white-space: nowrap;
+  }
 }
 
 .cta__bottom {

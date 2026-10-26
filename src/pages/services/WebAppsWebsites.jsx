@@ -133,7 +133,7 @@ export default function WebAppsWebsites() {
       <Deliverables items={service.deliverables} tone="cyan" />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
-      <ContactCTA lines={["Tell us what the website", "or app needs to do."]} />
+      <ContactCTA lines={["Tell us what your", "site needs to do."]} />
     </div>
   );
 }

@@ -1169,28 +1169,10 @@
   color: var(--ky-slate);
 }
 
-/* Cloud with a faint dot grid that fades out, and a soft Violet light
-   resting behind the form */
+/* Plain Cloud, the site's light ground, as on the Home page */
 .contact {
   position: relative;
-  isolation: isolate;
-  background:
-    linear-gradient(180deg, rgb(123 77 217 / 0.09) 0%, rgb(123 77 217 / 0) 260px),
-    radial-gradient(42% 38% at 78% 18%, rgb(123 77 217 / 0.1), transparent 72%),
-    radial-gradient(36% 30% at 8% 70%, rgb(76 141 235 / 0.07), transparent 72%),
-    var(--ky-cloud);
-}
-
-.contact::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(rgb(23 18 31 / 0.09) 1px, transparent 1.3px);
-  background-size: 22px 22px;
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.5) 45%, transparent 85%);
-  mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.5) 45%, transparent 85%);
+  background: var(--ky-cloud);
 }
 
 .contact__grid {
@@ -1461,6 +1443,13 @@
   }
 }
 
+/* narrow tablets: the three columns are shorter, so a little more room below */
+@media (min-width: 768px) and (max-width: 959px) {
+  .cnext {
+    padding-bottom: calc(var(--section-y) + var(--s-4) + 30px);
+  }
+}
+
 .cnext__head {
   display: grid;
   gap: var(--s-2);
@@ -1483,6 +1472,40 @@
 @media (min-width: 768px) {
   .cnext__list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Phones: the three steps become a swipeable row, so the band keeps the same
+   height as the closing band on every other page */
+@media (max-width: 767px) {
+  .cnext__list[role="list"] {
+    grid-auto-flow: column;
+    grid-auto-columns: min(82%, 320px);
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 4px var(--gutter) 2px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .cnext__list::-webkit-scrollbar {
+    display: none;
+  }
+  .cnext__step {
+    scroll-snap-align: start;
+  }
+  /* with one step in view, the band takes the CTA's own spacing */
+  .cnext {
+    padding-bottom: calc(var(--section-y) + var(--s-4) + 6px);
+  }
+  .cnext__list[role="list"] {
+    margin-top: calc(var(--s-5) + var(--s-5));
+  }
+}
+
+@media (max-width: 359px) {
+  .cnext__title {
+    font-size: calc(var(--fs-h2) * 0.86);
   }
 }
 

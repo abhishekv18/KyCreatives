@@ -104,7 +104,7 @@ export default function MobileApps() {
       <Deliverables items={service.deliverables} tone="ink" title={["From first sketch", "to the app stores"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
-      <ContactCTA lines={["Tell us who the app is for", "and what it should do."]} />
+      <ContactCTA lines={["Tell us who your", "app is for."]} />
     </div>
   );
 }

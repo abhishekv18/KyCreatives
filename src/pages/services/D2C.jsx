@@ -123,7 +123,7 @@ export default function D2C() {
       <Deliverables items={service.deliverables} tone="ink" title={["What a store", "project includes"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
-      <ContactCTA lines={["Tell us about your brand", "and what you sell."]} />
+      <ContactCTA lines={["Tell us what", "your brand sells."]} />
     </div>
   );
 }

@@ -170,7 +170,7 @@ export default function Portals() {
       <Deliverables items={service.deliverables} tone="violet" title={["From process map", "to trained team"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
-      <ContactCTA lines={["Which process should", "leave the spreadsheet first?"]} />
+      <ContactCTA lines={["Which spreadsheet", "goes first?"]} />
     </div>
   );
 }
