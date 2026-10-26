@@ -50,6 +50,7 @@ const router = createBrowserRouter([
       
       { path: "/services/web-apps-websites", element: <WebAppsWebsites /> },
       { path: "/services/d2c", element: <D2C /> },
+      { path: "/services/mobile-apps", element: <MobileApps /> },
      
       { path: "/privacy-policy", element: <PrivacyPolicy /> },
       { path: "/terms-and-conditions", element: <Terms /> },
