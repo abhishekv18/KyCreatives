@@ -135,12 +135,12 @@ export default function Hero() {
       <div className="hero__lamp" aria-hidden="true" />
       <div className="container hero__inner">
         <div className="hero__center">
-          <p className="hero__top t-meta hero__fade">
+          {/* <p className="hero__top t-meta hero__fade">
             <span className="hero__top-brand">
               KY Creatives<span aria-hidden="true"> · </span>
             </span>
             Design-led studio<span aria-hidden="true"> · </span>Est. {company.foundedYear}
-          </p>
+          </p> */}
 
           <h1 id="hero-title" className="hero__title" aria-label="What we create is business." data-reveal-manual="">
             <span className="split-line" aria-hidden="true">
