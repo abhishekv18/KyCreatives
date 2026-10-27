@@ -1,5 +1,5 @@
-import { useEffect, useId, useRef, useState } from "react";
-import { Mail, Phone, MessageCircle, MapPin, Info, CheckCircle2, AlertCircle, Copy, Check, ArrowUpRight, HelpCircle } from "lucide-react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { Mail, Phone, MessageCircle, MapPin, Info, CheckCircle2, AlertCircle, Copy, Check, ArrowUpRight, HelpCircle, Send } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
 import Button from "../components/ui/Button";
@@ -9,6 +9,16 @@ import { serviceIcons } from "../components/ui/serviceIcons";
 import SocialIcon from "../components/ui/SocialIcon";
 import { company, social, reviewLinks } from "../data/site";
 import { projects } from "../data/projects";
+import Toast from "../components/ui/Toast";
+
+/* Web3Forms delivers enquiries to the studio inbox. The access key is public by
+   design (it only allows sending to the inbox it was issued for) and lives in
+   .env.local as VITE_WEB3FORMS_KEY. Without a key the form falls back to
+   drafting the message in the visitor's own email app. */
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
+const WEB3FORMS_URL = "https://api.web3forms.com/submit";
+// The inbox that receives enquiries; the form's notes and email fallbacks use it.
+const ENQUIRY_EMAIL = "kycreatives66@gmail.com";
 
 const NOT_SURE = "Not sure yet";
 const SERVICE_OPTIONS = [...services.map((s) => s.name), NOT_SURE];
@@ -100,7 +110,7 @@ function validate(v) {
   if (phone && (!/^[+\d\s().-]+$/.test(phone) || digits < 7 || digits > 15))
     e.phone = "Check the phone number. Include the country code, for example +91 98765 43210.";
   if (!v.services.length) e.services = "Choose at least one service, or Not sure yet.";
-  if (v.details.trim().length < 20) e.details = "Tell us a little more about the project, at least a sentence or two.";
+  if (!v.details.trim()) e.details = "Tell us a little about the project.";
   return e;
 }
 
@@ -120,7 +130,7 @@ function buildEmail(v) {
     v.budget.trim() ? `Budget: ${v.budget.trim()}` : null,
   ].filter((l) => l !== null);
   const body = lines.join("\n");
-  return { subject, body, href: `mailto:${company.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}` };
+  return { subject, body, href: `mailto:${ENQUIRY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}` };
 }
 
 function Field({ id, label, optional, error, hint, children }) {
@@ -152,7 +162,10 @@ function EnquiryForm() {
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [status, setStatus] = useState("idle"); // idle | opening | opened
+  const [status, setStatus] = useState("idle"); // idle | sending | opening | opened
+  const [toast, setToast] = useState(null);
+  const closeToast = useCallback(() => setToast(null), []);
+  const botRef = useRef(null);
   const [draft, setDraft] = useState(null);
   const [copied, setCopied] = useState(false);
   const summaryRef = useRef(null);
@@ -183,20 +196,74 @@ function EnquiryForm() {
       return;
     }
     const d = buildEmail(values);
+    if (WEB3FORMS_KEY) {
+      send(d);
+      return;
+    }
     setDraft(d);
     setStatus("opening");
     // Hand the message to the visitor's email app. Nothing is sent from this site.
-    window.location.href = d.href;
+    window.location.assign(d.href);
     setTimeout(() => {
       setStatus("opened");
       requestAnimationFrame(() => resultRef.current?.focus());
     }, 600);
   };
 
+  // Sends the enquiry through Web3Forms; on success the form clears and a toast
+  // confirms it, on failure nothing is lost and the visitor can email instead.
+  const send = async (d) => {
+    setStatus("sending");
+    setToast(null);
+    const v = values;
+    try {
+      const res = await fetch(WEB3FORMS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: d.subject,
+          from_name: "KY Creatives website",
+          replyto: v.email.trim(),
+          botcheck: botRef.current?.checked || false,
+          name: v.name.trim(),
+          email: v.email.trim(),
+          company: v.company.trim() || "Not given",
+          phone: v.phone.trim() || "Not given",
+          services: v.services.join(", "),
+          budget: v.budget.trim() || "Not given",
+          message: v.details.trim(),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) throw new Error(data.message || "Send failed");
+      const first = v.name.trim().split(/\s+/)[0];
+      setValues(EMPTY);
+      setErrors({});
+      setSubmitted(false);
+      setStatus("idle");
+      setToast({
+        id: Date.now(),
+        tone: "success",
+        title: "Enquiry sent",
+        text: `Thank you, ${first}. We will reply to ${v.email.trim()} within 24 hours on business days.`,
+      });
+    } catch {
+      setStatus("idle");
+      setToast({
+        id: Date.now(),
+        tone: "error",
+        title: "Your enquiry was not sent",
+        text: "Something went wrong on the way. Your answers are still in the form, so you can try again.",
+        action: { label: `Or email ${ENQUIRY_EMAIL}`, href: d.href },
+      });
+    }
+  };
+
   const copy = async () => {
     if (!draft) return;
     try {
-      await navigator.clipboard.writeText(`To: ${company.email}\nSubject: ${draft.subject}\n\n${draft.body}`);
+      await navigator.clipboard.writeText(`To: ${ENQUIRY_EMAIL}\nSubject: ${draft.subject}\n\n${draft.body}`);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
@@ -213,7 +280,7 @@ function EnquiryForm() {
         <h2 className="t-h3">Your email draft is ready</h2>
         <p>
           Your email app should have opened with the message filled in. <strong>Nothing has been sent yet.</strong>{" "}
-          Press send in your email app to reach us at {company.email}.
+          Press send in your email app to reach us at {ENQUIRY_EMAIL}.
         </p>
         <p className="t-muted">
           If no email app opened, copy the message and send it from any email account, or write to us directly.
@@ -245,6 +312,17 @@ function EnquiryForm() {
 
   return (
     <form className="form" onSubmit={onSubmit} noValidate aria-describedby={`${base}-note`}>
+      <Toast toast={toast} onClose={closeToast} />
+      {/* Spam trap: hidden from people, ticked only by bots */}
+      <input
+        ref={botRef}
+        type="checkbox"
+        name="botcheck"
+        className="form__trap"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
       <div className="form__head">
         <p className="form__title">Project enquiry</p>
         <p className="form__meta t-meta">Takes about 2 minutes</p>
@@ -253,8 +331,8 @@ function EnquiryForm() {
         <div className="form-errors" ref={summaryRef} tabIndex={-1} role="alert">
           <p>
             <strong>
-              {errorList.length === 1 ? "One thing to fix" : `${errorList.length} things to fix`} before we can draft your
-              email:
+              {errorList.length === 1 ? "One thing to fix" : `${errorList.length} things to fix`} before{" "}
+              {WEB3FORMS_KEY ? "we can send your enquiry" : "we can draft your email"}:
             </strong>
           </p>
           <ul>
@@ -411,15 +489,35 @@ function EnquiryForm() {
       <div className="form__foot">
         <div className="form__note" id={`${base}-note`}>
           <Info size={16} strokeWidth={1.75} aria-hidden="true" />
-          <p>
-            Nothing is sent from this page. Continue opens your email app with a message to {company.email}, ready to
-            review and send.
-          </p>
+          {WEB3FORMS_KEY ? (
+            <p>Your enquiry goes straight to {ENQUIRY_EMAIL}. We reply within 24 hours on business days.</p>
+          ) : (
+            <p>
+              Nothing is sent from this page. Continue opens your email app with a message to {ENQUIRY_EMAIL}, ready to
+              review and send.
+            </p>
+          )}
         </div>
-        <button type="submit" className="btn btn--primary form__submit" disabled={status === "opening"}>
-          <span>{status === "opening" ? "Opening your email app" : "Continue in your email app"}</span>
-          <Mail size={18} strokeWidth={1.75} aria-hidden="true" className="btn__icon" />
-        </button>
+        {WEB3FORMS_KEY ? (
+          <button
+            type="submit"
+            className={`btn btn--primary form__submit ${status === "sending" ? "is-busy" : ""}`}
+            disabled={status === "sending"}
+            aria-busy={status === "sending"}
+          >
+            <span>{status === "sending" ? "Sending" : "Send enquiry"}</span>
+            {status === "sending" ? (
+              <span className="form__spinner" aria-hidden="true" />
+            ) : (
+              <Send size={18} strokeWidth={1.75} aria-hidden="true" className="btn__icon" />
+            )}
+          </button>
+        ) : (
+          <button type="submit" className="btn btn--primary form__submit" disabled={status === "opening"}>
+            <span>{status === "opening" ? "Opening your email app" : "Continue in your email app"}</span>
+            <Mail size={18} strokeWidth={1.75} aria-hidden="true" className="btn__icon" />
+          </button>
+        )}
       </div>
     </form>
   );

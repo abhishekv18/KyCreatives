@@ -2329,3 +2329,176 @@
   line-height: 1.5;
   color: var(--ky-slate);
 }
+
+/* ---------- Enquiry: spam trap, sending state, toast ---------- */
+.form__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.form__submit.is-busy {
+  cursor: progress;
+  opacity: 0.85;
+}
+
+.form__spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgb(255 255 255 / 0.35);
+  border-top-color: var(--ky-white);
+  animation: formSpin 700ms linear infinite;
+}
+
+@keyframes formSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Toast: a white card in the top right corner, just below the header capsule */
+.toast {
+  position: fixed;
+  top: calc(var(--island-top) + var(--island-h) + 14px);
+  /* lines up with the right edge of the header capsule (1100px when scrolled) */
+  right: max(var(--island-edge), calc((100% - 1100px) / 2), env(safe-area-inset-right));
+  z-index: 90;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+  width: min(360px, calc(100vw - 48px));
+  padding: 14px 12px 15px 14px;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgb(23 18 31 / 0.08);
+  background: var(--ky-white);
+  color: var(--ky-ink);
+  box-shadow:
+    0 1px 2px rgb(23 18 31 / 0.05),
+    0 18px 40px -18px rgb(23 18 31 / 0.3);
+  animation: toastIn 420ms var(--ease-out) both;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px) scale(0.98);
+  }
+}
+
+.toast__icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgb(22 160 107 / 0.12);
+  color: var(--ky-success);
+}
+
+.toast__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.toast--error .toast__icon {
+  background: rgb(216 51 74 / 0.1);
+  color: var(--ky-error);
+}
+
+.toast__body {
+  display: grid;
+  gap: 2px;
+  padding-top: 4px;
+}
+
+.toast__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+}
+
+.toast__text {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ky-slate);
+  overflow-wrap: anywhere;
+}
+
+.toast__action {
+  justify-self: start;
+  margin-top: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ky-violet);
+  border-bottom: 1px solid currentColor;
+}
+
+.toast__close {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: -2px -2px 0 0;
+  border-radius: 8px;
+  color: var(--ky-slate);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.toast__close:hover {
+  background: var(--ky-cloud);
+  color: var(--ky-ink);
+}
+
+/* time left before the toast closes itself */
+.toast__timer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--grad-dusk);
+  transform-origin: left;
+  animation: toastTimer var(--toast-ms, 6000ms) linear both;
+}
+
+@keyframes toastTimer {
+  to {
+    transform: scaleX(0);
+  }
+}
+
+/* phones: full width under the header, dropping in from above */
+@media (max-width: 559px) {
+  .toast {
+    left: var(--island-edge);
+    right: var(--island-edge);
+    top: calc(var(--island-top) + var(--island-h) + 10px);
+    width: auto;
+    animation-name: toastDrop;
+  }
+}
+
+@keyframes toastDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast,
+  .form__spinner {
+    animation: none;
+  }
+  .toast__timer {
+    display: none;
+  }
+}
