@@ -7,7 +7,7 @@ const MAX_MS = 2200; // hard ceiling: the visitor can never be stuck here
 
 /**
  * Light first-load screen: the official logo on a white-to-Cloud field with
- * soft pastel light, faint column guides, a short line and a Flame progress bar. Progress reflects
+ * soft pastel light, a short line and a Flame progress bar. Progress reflects
  * real work: web fonts plus the page's critical images (marked data-critical).
  * On exit the bar travels to the centre and collapses into a point, and the
  * screen dissolves around it. Shown on every full load, never during in-app
@@ -93,7 +93,7 @@ export default function LoadingScreen() {
         .set(track, { opacity: 0 }, 0.66)
         .set(root, { pointerEvents: "none" }, 0.68)
         .call(() => markReady(), null, 0.68)
-        .to(root.querySelectorAll(".loader__guides, .loader__lights"), { opacity: 0, duration: 0.3, ease: "power1.out" }, 0.62)
+        .to(root.querySelector(".loader__lights"), { opacity: 0, duration: 0.3, ease: "power1.out" }, 0.62)
         .to(root.querySelector(".loader__bg"), { opacity: 0, duration: 0.4, ease: "power1.out" }, 0.68)
         .to(dot, { opacity: 0, scale: 2.2, duration: 0.45, ease: "power2.out" }, 0.78);
     };
@@ -121,7 +121,6 @@ export default function LoadingScreen() {
         <i />
         <i />
       </div>
-      <div className="loader__guides" aria-hidden="true" />
       <div className="loader__brand">
         <img
           className="loader__logo"
