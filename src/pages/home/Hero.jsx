@@ -142,6 +142,7 @@ export default function Hero() {
             Design-led studio<span aria-hidden="true"> · </span>Est. {company.foundedYear}
           </p> */}
 
+
           <h1 id="hero-title" className="hero__title" aria-label="What we create is business." data-reveal-manual="">
             <span className="split-line" aria-hidden="true">
               <span>What we create</span>

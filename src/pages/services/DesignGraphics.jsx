@@ -9,7 +9,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
-import { Guides } from "../../components/art/Art";
+import { Pattern } from "../../components/art/Art";
 import { IdentitySet } from "../../components/visuals/Visuals";
 import { company } from "../../data/site";
 
@@ -116,9 +116,23 @@ function SystemGallery() {
               <figure className="bsys__app" data-reveal="up">
                 <div className="bsys__frame" aria-hidden="true">
                   <div className="sys__post">
-                    <span className="rule-flame" />
-                    <p>What we create is business.</p>
-                    <img src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
+                    <div className="sys__post-top">
+                      <span className="rule-flame" />
+                      <span className="sys__post-tag">@kycreatives</span>
+                    </div>
+                    <div className="sys__post-copy">
+                      <p>What we create is business.</p>
+                      <span className="sys__post-sub">Software, web and mobile apps, designed and built by one team.</span>
+                    </div>
+                    <div className="sys__post-foot">
+                      <img src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
+                      <span className="sys__post-url">kycreatives.com</span>
+                      <span className="sys__post-dots">
+                        <i className="is-on" />
+                        <i />
+                        <i />
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <figcaption>
@@ -180,7 +194,7 @@ export default function DesignGraphics() {
   useServiceMeta(service);
   return (
     <div className="svcpage svcpage--cyan">
-      <ServiceHero service={service} theme="cyan" art={<Guides />} aside={<HeroVisual />} />
+      <ServiceHero service={service} theme="cyan" art={<Pattern kind="layout" />} aside={<HeroVisual />} />
       <SystemGallery />
       <Offerings
         service={service}

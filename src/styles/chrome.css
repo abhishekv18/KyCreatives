@@ -6,9 +6,36 @@
 .art-arcs,
 .art-glow,
 .art-guides,
-.art-chart {
+.art-chart,
+.art-pattern {
   display: block;
   pointer-events: none;
+}
+
+/* Hero patterns, the same as the matching Home services panels, fading out
+   toward the edges */
+.art-pattern {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: radial-gradient(ellipse 80% 75% at 60% 50%, #000 30%, transparent 90%);
+  mask-image: radial-gradient(ellipse 80% 75% at 60% 50%, #000 30%, transparent 90%);
+}
+
+/* Marketing: a chart grid */
+.art-pattern--chart {
+  background-image:
+    repeating-linear-gradient(180deg, rgb(23 18 31 / 0.09) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(90deg, rgb(23 18 31 / 0.05) 0 1px, transparent 1px 96px);
+}
+
+/* Design and Graphics: a six-column layout grid over a fine baseline */
+.art-pattern--layout {
+  background-image:
+    linear-gradient(90deg, rgb(23 18 31 / 0.07) 0 1px, transparent 1px),
+    linear-gradient(180deg, rgb(23 18 31 / 0.04) 0 1px, transparent 1px);
+  background-size:
+    calc(100% / 6) 100%,
+    100% 16px;
 }
 
 .art-grid {

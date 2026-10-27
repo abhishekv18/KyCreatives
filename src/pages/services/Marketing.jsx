@@ -9,7 +9,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
-import { ChartLines } from "../../components/art/Art";
+import { Pattern } from "../../components/art/Art";
 import { CampaignSet, ConceptLabel } from "../../components/visuals/Visuals";
 
 const service = serviceBySlug.marketing;
@@ -110,7 +110,7 @@ export default function Marketing() {
   useServiceMeta(service);
   return (
     <div className="svcpage svcpage--orange">
-      <ServiceHero service={service} theme="orange" art={<ChartLines />} aside={<HeroVisual />} />
+      <ServiceHero service={service} theme="orange" art={<Pattern kind="chart" />} aside={<HeroVisual />} />
       <Channels />
       <Promises />
       <Offerings

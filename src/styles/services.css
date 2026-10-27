@@ -1229,10 +1229,73 @@
   max-width: 10ch;
 }
 
-.sys__post img {
+.sys__post-top {
   position: relative;
-  width: 40px;
-  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sys__post-tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.3);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: rgb(255 255 255 / 0.88);
+}
+
+.sys__post-copy {
+  position: relative;
+  display: grid;
+  gap: 10px;
+}
+
+.sys__post-sub {
+  max-width: 24ch;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: rgb(255 255 255 / 0.82);
+}
+
+.sys__post-foot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgb(255 255 255 / 0.22);
+}
+
+.sys__post img {
+  width: 28px;
+  height: 28px;
+}
+
+.sys__post-url {
+  font-size: 0.75rem;
+  color: rgb(255 255 255 / 0.8);
+}
+
+.sys__post-dots {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.sys__post-dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.45);
+}
+
+.sys__post-dots i.is-on {
+  width: 14px;
+  border-radius: 3px;
+  background: var(--ky-white);
 }
 
 .sys__cards {

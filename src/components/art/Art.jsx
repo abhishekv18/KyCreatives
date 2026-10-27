@@ -119,6 +119,15 @@ export function ChartLines({ className = "" }) {
   );
 }
 
+/*
+  Background patterns shared with the Home services panels, so each service
+  hero carries the same texture as its panel: "chart" for Marketing,
+  "layout" for Design and Graphics.
+*/
+export function Pattern({ kind, className = "" }) {
+  return <div className={`art-pattern art-pattern--${kind} ${className}`} />;
+}
+
 export function Ribbons({ set = "hero", className = "", draw = true }) {
   const uid = useId().replace(/:/g, "");
   const paths = SETS[set];
