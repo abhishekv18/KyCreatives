@@ -94,7 +94,7 @@
   display: grid;
   gap: clamp(14px, 1.6vw, 24px);
   align-content: start;
-  animation: wallDrift 26s ease-in-out infinite alternate;
+  animation: wallDrift 16s ease-in-out infinite alternate;
 }
 
 .hero__wall-col:nth-child(even) {
@@ -108,6 +108,24 @@
   }
   to {
     transform: translateY(3%);
+  }
+}
+
+/* Phones: the columns are shorter, so the same drift reads slower; a quicker
+   cycle and a little more travel give it the same life as on desktop */
+@media (max-width: 767px) {
+  .hero__wall-col {
+    animation-name: wallDriftSm;
+    animation-duration: 16s;
+  }
+}
+
+@keyframes wallDriftSm {
+  from {
+    transform: translateY(-6%);
+  }
+  to {
+    transform: translateY(6%);
   }
 }
 
@@ -1364,6 +1382,52 @@
   padding: 8%;
 }
 
+/* Background lines behind each service visual, one pattern per service, in
+   the stage's own ink at low strength and fading toward the edges. Web apps
+   (blueprint grid) and mobile apps (arcs) already carry their own art. */
+.svcx__panel::before,
+.svcx__inline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, #000 30%, transparent 85%);
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, #000 30%, transparent 85%);
+}
+
+/* D2C: fine diagonal pinstripes, like retail packaging */
+.svcx__panel.stage--flame::before,
+.svcx__inline.stage--flame::before {
+  background-image: repeating-linear-gradient(135deg, rgb(255 255 255 / 0.22) 0 1px, transparent 1px 22px);
+}
+
+/* Portals: table rows with one column rule, like a data view */
+.svcx__panel.stage--cobalt::before,
+.svcx__inline.stage--cobalt::before {
+  background-image:
+    linear-gradient(90deg, transparent calc(30% - 1px), rgb(255 255 255 / 0.27) calc(30% - 1px) 30%, transparent 30%),
+    repeating-linear-gradient(180deg, rgb(255 255 255 / 0.22) 0 1px, transparent 1px 44px);
+}
+
+/* Marketing: a chart grid, gridlines stronger than the time columns */
+.svcx__panel.stage--orange::before,
+.svcx__inline.stage--orange::before {
+  background-image:
+    repeating-linear-gradient(180deg, rgb(23 18 31 / 0.16) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(90deg, rgb(23 18 31 / 0.09) 0 1px, transparent 1px 96px);
+}
+
+/* Design: a layout grid, six columns over a fine baseline */
+.svcx__panel.stage--cyan::before,
+.svcx__inline.stage--cyan::before {
+  background-image:
+    linear-gradient(90deg, rgb(23 18 31 / 0.11) 0 1px, transparent 1px),
+    linear-gradient(180deg, rgb(23 18 31 / 0.07) 0 1px, transparent 1px);
+  background-size:
+    calc(100% / 6) 100%,
+    100% 16px;
+}
+
 .sv__cap {
   position: absolute;
   left: 20px;
@@ -1384,6 +1448,39 @@
 
 .sv--d2c .phone:nth-child(2) {
   transform: translateY(10%);
+}
+
+/* Desktop stage on short laptop screens: the stage gets shorter but not
+   narrower, so the phones inside are capped by the height available and
+   always show whole. The stage itself is unchanged. */
+@media (min-width: 960px) {
+  .svcx__stage .sv--d2c {
+    padding-inline: max(14%, calc(47% - (100vh - var(--header-h) - 64px) * 0.33));
+  }
+}
+
+@media (min-width: 960px) and (max-height: 760px) {
+  .svcx__stage .sv--mobile .mock-phone {
+    zoom: 0.86;
+  }
+}
+
+@media (min-width: 960px) and (max-height: 680px) {
+  .svcx__stage .sv--mobile .mock-phone {
+    zoom: 0.74;
+  }
+}
+
+@media (min-width: 960px) and (max-height: 600px) {
+  .svcx__stage .sv--mobile .mock-phone {
+    zoom: 0.64;
+  }
+}
+
+@media (min-width: 960px) and (max-height: 520px) {
+  .svcx__stage .sv--mobile .mock-phone {
+    zoom: 0.54;
+  }
 }
 
 .sv--web .art-grid {
