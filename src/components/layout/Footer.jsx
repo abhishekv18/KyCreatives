@@ -2,7 +2,8 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { gsap, prefersReducedMotion } from "../../lib/motion";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { getLenis } from "../../lib/smooth";
+import { ArrowUpRight, ArrowRight, ArrowUp } from "lucide-react";
 import Logo from "../ui/Logo";
 import SocialIcon from "../ui/SocialIcon";
 import { services } from "../../data/services";
@@ -11,6 +12,19 @@ import { company, social, legalNav } from "../../data/site";
 // Read once when the app loads; the copyright year follows the visitor's clock.
 const YEAR = new Date().getFullYear();
 const MARK = "KY Creatives";
+
+// Glides back to the top of the page, then moves keyboard focus there too.
+function backToTop() {
+  const reduced = prefersReducedMotion();
+  const focusTop = () => document.getElementById("main")?.focus({ preventScroll: true });
+  const lenis = getLenis();
+  if (lenis && !reduced) {
+    lenis.scrollTo(0, { duration: 1.4, onComplete: focusTop });
+  } else {
+    window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+    focusTop();
+  }
+}
 
 /*
   Footer on Ink. Four bands, top to bottom:
@@ -165,7 +179,17 @@ export default function Footer() {
             </li>
           ))}
         </ul>
-        <p className="t-meta footer__place">Gurugram, India · Since {company.foundedYear}</p>
+        <div className="footer__end">
+          <p className="t-meta footer__place">Gurugram, India · Since {company.foundedYear}</p>
+          <button type="button" className="footer__totop" onClick={backToTop} aria-label="Back to top">
+            <span className="footer__totop-label t-meta" aria-hidden="true">
+              Back to top
+            </span>
+            <span className="footer__totop-icon" aria-hidden="true">
+              <ArrowUp size={16} strokeWidth={1.75} />
+            </span>
+          </button>
+        </div>
       </div>
     </footer>
   );

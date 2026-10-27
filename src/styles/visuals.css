@@ -906,8 +906,8 @@
 }
 
 /* ---------- Identity set ----------
-   A letterhead and the guidelines cover at A4 proportion, and the flame mark
-   as an app icon. Sizes in container units, as above. */
+   The website on screen, the guidelines cover at A4 proportion, the palette
+   and the flame mark as an app icon. Sizes in container units, as above. */
 .iset {
   container-type: inline-size;
   position: relative;
@@ -925,99 +925,212 @@
   display: block;
 }
 
-/* A4 letterhead: mostly paper, as a real one is */
-.iset__letter {
+/* The website on screen: browser chrome and a page built from the identity */
+.iset__web {
   left: 0;
-  top: 0;
-  width: 46%;
-  aspect-ratio: 1 / 1.414;
+  top: 4%;
+  width: 74%;
+  aspect-ratio: 16 / 11;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 4.4cqi 4cqi 3.6cqi;
-  border-radius: 0.8cqi;
+  border-radius: 1.4cqi;
   background: var(--ky-white);
 }
 
-.iset__letter img {
-  width: 18cqi;
-  height: auto;
+.iset__bar {
+  display: flex;
+  align-items: center;
+  gap: 1.6cqi;
+  height: 4.2cqi;
+  padding: 0 1.8cqi;
+  background: var(--ky-cloud);
+  border-bottom: 1px solid rgb(23 18 31 / 0.06);
 }
 
-/* the letter itself: a date, a greeting and a few set lines of text */
-.iset__body {
-  display: grid;
-  gap: 1.1cqi;
-  margin-top: 4cqi;
-  margin-bottom: auto;
-  font-family: var(--font-sans);
-  font-size: 1.45cqi;
+.iset__dots {
+  display: flex;
+  gap: 0.7cqi;
+}
+
+.iset__dots i {
+  width: 1cqi;
+  height: 1cqi;
+  border-radius: 50%;
+  background: rgb(23 18 31 / 0.18);
+}
+
+.iset__url {
+  padding: 0.5cqi 1.6cqi;
+  border-radius: 1cqi;
+  background: var(--ky-white);
+  font-family: var(--font-mono);
+  font-size: 1.3cqi;
   color: var(--ky-slate);
 }
 
-.iset__date {
-  margin-bottom: 1.4cqi;
+.iset__page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2.4cqi 3.4cqi 3cqi;
+  background: linear-gradient(180deg, var(--ky-white) 0%, var(--ky-cloud) 100%);
 }
 
-.iset__dear {
-  margin-bottom: 0.4cqi;
+.iset__nav {
+  display: flex;
+  align-items: center;
+  gap: 2cqi;
+  width: 100%;
+  margin-bottom: 4.4cqi;
+}
+
+.iset__nav img {
+  width: 11cqi;
+  height: auto;
+}
+
+.iset__links {
+  display: flex;
+  gap: 1.6cqi;
+  margin-left: auto;
+}
+
+.iset__links i {
+  width: 4cqi;
+  height: 0.6cqi;
+  border-radius: 1cqi;
+  background: rgb(23 18 31 / 0.14);
+}
+
+.iset__navbtn {
+  padding: 0.7cqi 1.4cqi;
+  border-radius: 0.8cqi;
+  background: var(--ky-ink);
+  font-family: var(--font-sans);
+  font-size: 1.15cqi;
+  font-weight: 600;
+  color: var(--ky-white);
+}
+
+.iset__kicker {
+  margin-bottom: 1.2cqi;
+  font-family: var(--font-mono);
+  font-size: 1.3cqi;
+  color: var(--ky-slate);
+}
+
+.iset__h {
+  font-family: var(--font-display);
+  font-size: 4.6cqi;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   color: var(--ky-ink);
 }
 
-.iset__body i {
-  display: block;
-  height: 0.7cqi;
+.iset__h em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--ky-magenta), var(--ky-violet) 55%, var(--ky-cobalt));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.iset__lines {
+  display: grid;
+  gap: 0.8cqi;
+  width: 32cqi;
+  margin-top: 1.8cqi;
+}
+
+.iset__lines i {
+  height: 0.6cqi;
   border-radius: 1cqi;
   background: rgb(23 18 31 / 0.1);
 }
 
-.iset__body b {
-  height: 0.6cqi;
+.iset__lines i:last-child {
+  width: 70%;
 }
 
-.iset__address {
-  display: grid;
-  gap: 0.5cqi;
-  padding-top: 1.6cqi;
-  border-top: 0.15cqi solid var(--line-strong);
+.iset__ctas {
+  display: flex;
+  gap: 1cqi;
+  margin-top: 2.2cqi;
+}
+
+.iset__ctas b {
+  padding: 0.8cqi 1.6cqi;
+  border-radius: 0.9cqi;
+  background: var(--ky-violet);
   font-family: var(--font-sans);
-  font-size: 1.45cqi;
-  line-height: 1.4;
-  color: var(--ky-slate);
+  font-size: 1.2cqi;
+  font-weight: 600;
+  color: var(--ky-white);
+}
+
+.iset__ctas b.is-ghost {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgb(23 18 31 / 0.2);
+  color: var(--ky-ink);
+}
+
+/* a row of work tiles in the brand gradients */
+.iset__tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2cqi;
+  width: 100%;
+  margin-top: auto;
+}
+
+.iset__tiles i {
+  height: 5.4cqi;
+  border-radius: 1cqi;
+  background: var(--grad-flame);
+}
+
+.iset__tiles i:nth-child(2) {
+  background: var(--grad-dusk);
+}
+
+.iset__tiles i:nth-child(3) {
+  background: var(--grad-aqua);
 }
 
 /* A4 guidelines cover on Ink */
 .iset__book {
-  left: 33%;
-  top: 9%;
-  width: 46%;
+  left: 50%;
+  top: 30%;
+  z-index: 2;
+  width: 32%;
   aspect-ratio: 1 / 1.414;
   display: flex;
   flex-direction: column;
-  padding: 4.4cqi 4cqi;
+  padding: 3.2cqi 3cqi;
   border-radius: 0.8cqi;
   background: var(--ky-ink);
   color: var(--ky-white);
 }
 
 .iset__book-mark {
-  width: 6cqi;
-  height: 6cqi;
+  width: 4.6cqi;
+  height: 4.6cqi;
 }
 
 .iset__book-title {
   margin-top: auto;
   font-family: var(--font-display);
-  font-size: 6cqi;
+  font-size: 4.4cqi;
   line-height: 1.08;
   letter-spacing: -0.02em;
 }
 
 .iset__book-sub {
-  margin-top: 1.6cqi;
-  margin-bottom: 4cqi;
+  margin-top: 1.2cqi;
+  margin-bottom: 3cqi;
   font-family: var(--font-sans);
-  font-size: 1.9cqi;
+  font-size: 1.45cqi;
   color: rgb(255 255 255 / 0.7);
 }
 
@@ -1026,19 +1139,19 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 1.6cqi;
+  height: 1.2cqi;
   background: var(--grad-flame);
 }
 
 /* palette card: the six brand colours, as on a swatch book */
 .iset__palette {
-  right: 2%;
-  top: 0;
+  right: 0;
+  top: 2%;
   z-index: 2;
   display: grid;
   gap: 1.6cqi;
-  width: 25%;
-  padding: 2.4cqi;
+  width: 22%;
+  padding: 2.2cqi;
   border-radius: 1.6cqi;
   background: var(--ky-white);
 }
@@ -1065,8 +1178,9 @@
 /* app icon: the round flame mark set on a matching tile */
 .iset__icon {
   right: 0;
-  bottom: 4%;
-  width: 21%;
+  bottom: 2%;
+  z-index: 3;
+  width: 18%;
   aspect-ratio: 1;
   display: grid;
   place-items: center;

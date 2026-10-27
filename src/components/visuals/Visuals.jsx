@@ -300,26 +300,51 @@ export function CampaignSet() {
 }
 
 /*
-  KY Creatives' identity applied, as a studio would present it: a letterhead
-  with the real logo and address, the brand guidelines cover, and the flame
-  mark as an app icon. Real assets and real details only.
+  KY Creatives' identity applied, as a studio would present it: the website
+  on screen, the brand guidelines cover, the palette, and the flame mark as an
+  app icon. Real assets and real details only.
 */
 export function IdentitySet() {
   return (
     <div className="iset" aria-hidden="true">
-      <div className="iset__letter">
-        <img src="/brand/ky-creatives-logo.png" alt="" width="285" height="79" loading="lazy" />
-        <div className="iset__body">
-          <span className="iset__date">12 March</span>
-          <span className="iset__dear">Dear Priya,</span>
-          {[96, 88, 92, 70, 0, 94, 84, 60].map((w, i) =>
-            w ? <i key={i} style={{ width: `${w}%` }} /> : <b key={i} />
-          )}
+      <div className="iset__web">
+        <div className="iset__bar">
+          <span className="iset__dots">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="iset__url">kycreatives.com</span>
         </div>
-        <div className="iset__address">
-          <span>Tower A - 114, Ninex RMG, Sector 37C</span>
-          <span>Gurugram, Haryana 122001, India</span>
-          <span>info@kycreatives.com</span>
+        <div className="iset__page">
+          <div className="iset__nav">
+            <img src="/brand/ky-creatives-logo.png" alt="" width="285" height="79" loading="lazy" />
+            <span className="iset__links">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span className="iset__navbtn">Start a project</span>
+          </div>
+          <p className="iset__kicker">Design-led studio · Est. 2017</p>
+          <p className="iset__h">
+            What we create
+            <br />
+            is <em>business.</em>
+          </p>
+          <span className="iset__lines">
+            <i />
+            <i />
+          </span>
+          <span className="iset__ctas">
+            <b>Start a project</b>
+            <b className="is-ghost">See our work</b>
+          </span>
+          <span className="iset__tiles">
+            <i />
+            <i />
+            <i />
+          </span>
         </div>
       </div>
 
