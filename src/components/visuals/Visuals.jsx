@@ -76,7 +76,79 @@ export function PhoneMock({ variant = "home" }) {
           <span>9:41</span>
           <span>●●●</span>
         </div>
-        {variant === "home" ? (
+        {variant === "product" ? (
+          <>
+            <div className="mock-phone__shopbar">
+              <span className="mock-phone__shopname">maison</span>
+              <span className="mock-phone__shopicons">
+                <Heart {...ico} />
+                <ShoppingBag {...ico} />
+              </span>
+            </div>
+            <div className="mock-phone__product">
+              <span className="mock-phone__vase" />
+              <span className="mock-phone__badge">New</span>
+              <span className="mock-phone__dots">
+                <i className="is-on" />
+                <i />
+                <i />
+              </span>
+            </div>
+            <div className="mock-phone__pinfo">
+              <span className="mock-phone__pname">Ceramic table vase</span>
+              <span className="mock-phone__prow">
+                <strong>₹1,890</strong>
+                <span className="mock-phone__stars">
+                  <Star {...ico} />
+                  4.8
+                </span>
+              </span>
+              <span className="mock-phone__swatches">
+                <i className="is-on" />
+                <i />
+                <i />
+              </span>
+            </div>
+            <span className="mock-phone__buy">Add to bag</span>
+          </>
+        ) : variant === "cart" ? (
+          <>
+            <div className="mock-phone__hello">
+              <span>Your bag</span>
+              <span className="mock-phone__count">2 items</span>
+            </div>
+            <div className="mock-phone__items">
+              {[
+                ["Ceramic table vase", "Sand", "₹1,890", "a"],
+                ["Linen cushion cover", "Clay", "₹990", "b"],
+              ].map(([name, opt, price, k]) => (
+                <span key={k} className="mock-phone__item">
+                  <i className={`mock-phone__thumb mock-phone__thumb--${k}`} />
+                  <span>
+                    <b>{name}</b>
+                    <em>{opt} · Qty 1</em>
+                  </span>
+                  <strong>{price}</strong>
+                </span>
+              ))}
+            </div>
+            <div className="mock-phone__totals">
+              <span>
+                Delivery <em>Free</em>
+              </span>
+              <span>
+                <b>Total</b>
+                <b>₹2,880</b>
+              </span>
+            </div>
+            <span className="mock-phone__buy">
+              <Lock {...ico} /> Checkout
+            </span>
+            <span className="mock-phone__note">
+              <Truck {...ico} /> Arrives by Friday
+            </span>
+          </>
+        ) : variant === "home" ? (
           <>
             <div className="mock-phone__hello">
               <span>Good morning</span>
@@ -138,12 +210,14 @@ export function PhoneMock({ variant = "home" }) {
             </div>
           </>
         )}
-        <div className="mock-phone__tabbar">
-          <i className="is-on" />
-          <i />
-          <i />
-          <i />
-        </div>
+        {variant !== "product" && variant !== "cart" && (
+          <div className="mock-phone__tabbar">
+            <i className="is-on" />
+            <i />
+            <i />
+            <i />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -314,38 +388,75 @@ export function IdentitySet() {
             <i />
             <i />
           </span>
-          <span className="iset__url">kycreatives.com</span>
+          <span className="iset__url">KY Creatives / Brand system</span>
         </div>
-        <div className="iset__page">
-          <div className="iset__nav">
-            <img src="/brand/ky-creatives-logo.png" alt="" width="285" height="79" loading="lazy" />
-            <span className="iset__links">
-              <i />
-              <i />
-              <i />
-            </span>
-            <span className="iset__navbtn">Start a project</span>
+        <div className="iset__canvas">
+          <span className="iset__tools">
+            <i />
+            <i className="is-on" />
+            <i />
+            <i />
+          </span>
+          <div className="iset__board">
+            <div className="iset__art">
+              <span className="iset__art-label">Logo / construction</span>
+              <div className="iset__frame">
+                <i className="iset__ring iset__ring--a" />
+                <i className="iset__ring iset__ring--b" />
+                <img src="/brand/ky-flame-icon.png" alt="" width="512" height="512" loading="lazy" />
+                <span className="iset__select">
+                  <b />
+                  <b />
+                  <b />
+                  <b />
+                </span>
+              </div>
+            </div>
+            <div className="iset__type">
+              <span className="iset__art-label">Type</span>
+              <span className="iset__aa">Aa</span>
+              <span className="iset__font">
+                <b>Libre Baskerville</b>
+                <em>Display</em>
+              </span>
+              <span className="iset__font">
+                <b className="is-sans">DM Sans</b>
+                <em>Text</em>
+              </span>
+            </div>
           </div>
-          <p className="iset__kicker">Design-led studio · Est. 2017</p>
-          <p className="iset__h">
-            What we create
-            <br />
-            is <em>business.</em>
-          </p>
-          <span className="iset__lines">
-            <i />
-            <i />
-          </span>
-          <span className="iset__ctas">
-            <b>Start a project</b>
-            <b className="is-ghost">See our work</b>
-          </span>
-          <span className="iset__tiles">
-            <i />
-            <i />
-            <i />
-          </span>
+          <div className="iset__layers">
+            <span className="iset__art-label">Layers</span>
+            {["Logo", "Colour", "Type", "Voice"].map((l, i) => (
+              <span key={l} className={`iset__layer ${i === 0 ? "is-on" : ""}`}>
+                <i />
+                {l}
+              </span>
+            ))}
+          </div>
         </div>
+      </div>
+
+      <div className="iset__comp">
+        <span className="iset__art-label">Components</span>
+        <span className="iset__comp-row">
+          <b className="iset__btn">Start a project</b>
+          <b className="iset__btn iset__btn--ghost">Our work</b>
+        </span>
+        <span className="iset__input">
+          <em>Email</em>
+          <span>
+            name@company.com
+            <i />
+          </span>
+        </span>
+        <span className="iset__comp-row">
+          <span className="iset__toggle">
+            <i />
+          </span>
+          <span className="iset__chip">D2C</span>
+          <span className="iset__chip iset__chip--on">Brand</span>
+        </span>
       </div>
 
       <div className="iset__book">

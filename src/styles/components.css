@@ -2,20 +2,34 @@
 .logo {
   display: inline-flex;
   align-items: center;
+  gap: calc(var(--logo-size, 22px) * 0.42);
   flex: none;
   min-height: 44px;
+  color: inherit;
+  font-size: var(--logo-size, 22px);
+  transition: font-size 420ms var(--ease-out);
 }
 
-.logo img {
-  width: var(--logo-w, 148px);
-  height: auto;
+.logo__mark {
+  width: auto;
+  height: 1.7em;
+  filter: drop-shadow(0 2px 6px rgb(123 77 217 / 0.25));
 }
 
-.logo-card {
-  display: inline-flex;
-  padding: 14px 18px;
-  background: var(--ky-white);
-  border-radius: var(--radius-control);
+.logo__word {
+  font-family: var(--font-display);
+  font-size: 1em;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.logo__word b {
+  font-weight: 700;
+  background: linear-gradient(110deg, var(--ky-magenta) 0%, var(--ky-orange) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ---------- Browser frame ---------- */

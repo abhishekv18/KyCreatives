@@ -202,40 +202,48 @@ function ServicesMenu() {
       </button>
       <div id="services-menu" className="svc-menu" hidden={!open} onKeyDown={onPanelKey}>
         <div className="svc-menu__inner">
+          <div className="svc-menu__main">
+            <p className="svc-menu__kicker t-meta">Services</p>
+            <ul role="list" className="svc-menu__grid">
+              {services.map((s) => {
+                const Icon = serviceIcons[s.slug];
+                return (
+                  <li key={s.slug}>
+                    <Link
+                      className={`svc-menu__link ${location.pathname === s.path ? "is-current" : ""}`}
+                      data-hue={MENU_TONE[s.slug]}
+                      to={s.path}
+                      onClick={() => setOpen(false)}
+                    >
+                      <span className="svc-menu__icon" aria-hidden="true">
+                        <Icon size={18} strokeWidth={1.6} />
+                      </span>
+                      <span className="svc-menu__text">
+                        <span className="svc-menu__name">
+                          {s.name}
+                          {s.slug === "d2c" && <span className="svc-menu__focus t-meta">Focus</span>}
+                        </span>
+                        <span className="svc-menu__desc">{s.short}</span>
+                      </span>
+                      <ArrowUpRight className="svc-menu__go" size={16} strokeWidth={1.75} aria-hidden="true" />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
           <div className="svc-menu__side">
-            <p className="svc-menu__kicker t-meta">Services / 06</p>
-            <p className="svc-menu__lede">Design, engineering and growth, from one team.</p>
-            <p className="svc-menu__note">Not sure which one fits? We will help you choose.</p>
+            <p className="svc-menu__kicker t-meta">Not sure where to start?</p>
+            <p className="svc-menu__lede">Tell us the problem. We will suggest the right mix.</p>
             <Link to="/contact" className="svc-menu__cta" onClick={() => setOpen(false)}>
-              Tell us about the project
+              <span>Start a project</span>
               <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
             </Link>
+            <p className="svc-menu__note t-meta">
+              <span aria-hidden="true" className="svc-menu__dot" />
+              First reply within 24 hours
+            </p>
           </div>
-          <ul role="list" className="svc-menu__grid">
-            {services.map((s, i) => {
-              const Icon = serviceIcons[s.slug];
-              return (
-                <li key={s.slug}>
-                  <Link
-                    className={`svc-menu__link ${location.pathname === s.path ? "is-current" : ""}`}
-                    data-hue={MENU_TONE[s.slug]}
-                    to={s.path}
-                    onClick={() => setOpen(false)}
-                  >
-                    <span className="svc-menu__top">
-                      <span className="svc-menu__num t-meta">{String(i + 1).padStart(2, "0")}</span>
-                      <Icon className="svc-menu__icon" size={18} strokeWidth={1.5} aria-hidden="true" />
-                    </span>
-                    <span className="svc-menu__name">
-                      {s.name}
-                      {s.slug === "d2c" && <span className="svc-menu__focus t-meta">Focus</span>}
-                    </span>
-                    <span className="svc-menu__desc">{s.short}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
         </div>
       </div>
     </div>
@@ -285,7 +293,7 @@ function MobileMenu({ open, onClose }) {
       hidden={!open}
     >
       <div className="mnav__top">
-        <Logo width={124} card onClick={onClose} />
+        <Logo size={20} onClick={onClose} />
         <button className="icon-btn mnav__close" onClick={onClose} aria-label="Close menu">
           <X size={24} strokeWidth={1.5} aria-hidden="true" />
         </button>
@@ -364,7 +372,7 @@ export default function Header() {
     <>
       <header ref={headerRef} className={`site-header tone-${tone} ${scrolled ? "is-scrolled" : ""}`}>
         <div className="site-header__inner">
-          <Logo width={132} card className="site-header__logo" />
+          <Logo size={22} className="site-header__logo" />
           <nav className="nav" aria-label="Main">
             <ul
               role="list"
@@ -397,8 +405,6 @@ export default function Header() {
             </ul>
           </nav>
           <div className="site-header__actions">
-            <StudioClock />
-            <span className="site-header__divider" aria-hidden="true" />
             <Link to="/contact" className="site-header__cta">
               <span>Start a project</span>
               <span className="site-header__cta-icon" aria-hidden="true">

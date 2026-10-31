@@ -1,4 +1,3 @@
-import PhoneFrame from "../ui/PhoneFrame";
 import BrowserFrame from "../ui/BrowserFrame";
 import { Arcs, Blueprint } from "../art/Art";
 import { PhoneMock, PortalMock, CampaignSet, IdentitySet, DashboardMock, ConceptLabel } from "./Visuals";
@@ -13,9 +12,11 @@ export default function ServiceVisual({ slug, compact = false }) {
     case "d2c":
       return (
         <div className="sv sv--d2c">
-          <PhoneFrame src="/images/work/m-thedecorshed.webp" alt="" />
-          <PhoneFrame src="/images/work/m-vibhadesigns.webp" alt="" />
-          <p className="sv__cap t-meta">Live client stores on a phone</p>
+          <PhoneMock variant="product" />
+          <PhoneMock variant="cart" />
+          <p className="sv__cap">
+            <ConceptLabel tone="dark">Concept store screens</ConceptLabel>
+          </p>
         </div>
       );
     case "web-apps-websites": {

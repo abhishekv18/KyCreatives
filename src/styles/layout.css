@@ -85,35 +85,21 @@
   box-shadow: 0 18px 40px -20px rgb(0 0 0 / 0.6);
 }
 
-/* Logo: always on the white plate the guidelines ask for. Open on a light
-   page the plate is lifted by a hairline; inside the white capsule it simply
-   merges; on Ink it sits as a clean white card. */
-.site-header__logo .logo-card {
-  margin-left: -6px;
-  padding: 5px 9px;
-  border-radius: 10px;
-  background: var(--ky-white);
-  box-shadow:
-    0 0 0 1px rgb(23 18 31 / 0.06),
-    0 6px 16px -10px rgb(23 18 31 / 0.35);
-  transition: box-shadow 300ms var(--ease-out);
+/* Logo: the wordmark takes the header's text colour, so it reads on light,
+   dark and colour fields alike; it steps down a little once scrolled. */
+.site-header__logo {
+  color: var(--h-fg);
 }
 
-.site-header.is-scrolled:not(.tone-dark) .site-header__logo .logo-card {
-  box-shadow: none;
+.is-scrolled .site-header__logo {
+  font-size: calc(var(--logo-size) * 0.9);
 }
 
-.tone-dark .site-header__logo .logo-card,
-.tone-color .site-header__logo .logo-card {
-  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
-}
-
-.site-header__logo img {
-  transition: width 420ms var(--ease-out);
-}
-
-.is-scrolled .site-header__logo img {
-  width: 118px;
+/* on saturated colour fields (orange, flame, cyan) the Flame gradient would
+   blend in, so "KY" is set in the same ink as the rest of the wordmark */
+.site-header.tone-color:not(.is-scrolled) .logo__word b {
+  background: none;
+  color: currentColor;
 }
 
 /* ---------- Primary navigation ---------- */
@@ -372,16 +358,16 @@
 }
 
 @media (max-width: 399px) {
-  .site-header__logo img,
-  .is-scrolled .site-header__logo img {
-    width: 112px;
+  .site-header__logo,
+  .is-scrolled .site-header__logo {
+    font-size: 19px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .site-header__inner,
   .nav__indicator,
-  .site-header__logo img {
+  .logo {
     transition: none;
   }
   .site-header__clock-dot::after {
@@ -414,15 +400,15 @@
 
 .svc-menu__inner {
   display: grid;
-  grid-template-columns: minmax(0, 4fr) minmax(0, 9fr);
-  border-radius: var(--radius-card);
+  grid-template-columns: minmax(0, 8fr) minmax(0, 3.4fr);
+  border-radius: 18px;
   background: var(--ky-white);
   border: 1px solid rgb(23 18 31 / 0.08);
   box-shadow:
     0 1px 2px rgb(23 18 31 / 0.04),
-    0 30px 60px -30px rgb(23 18 31 / 0.28);
+    0 30px 60px -30px rgb(23 18 31 / 0.3);
   overflow: hidden;
-  animation: menuIn 280ms var(--ease-out);
+  animation: menuIn 260ms var(--ease-out);
 }
 
 @keyframes menuIn {
@@ -432,46 +418,171 @@
   }
 }
 
-/* Left: a quiet introduction on Cloud */
-.svc-menu__side {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 28px;
-  background: var(--ky-cloud);
-  border-right: 1px solid var(--line);
+/* Left: the six services as compact rows in two columns */
+.svc-menu__main {
+  padding: 20px 16px 16px;
 }
 
 .svc-menu__kicker {
+  padding: 0 12px 10px;
   font-size: var(--fs-meta-sm);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ky-slate);
 }
 
-.svc-menu__lede {
-  font-family: var(--font-display);
-  font-size: var(--fs-h3);
-  line-height: 1.25;
-  letter-spacing: -0.015em;
+.svc-menu__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 8px;
+}
+
+.svc-menu__link {
+  --hue: var(--ky-violet);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 14px;
+  height: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  transition: background-color 220ms var(--ease-out);
+}
+
+.svc-menu__link[data-hue="flame"],
+.svc-menu__link[data-hue="magenta"] {
+  --hue: var(--ky-magenta);
+}
+.svc-menu__link[data-hue="cyan"] {
+  --hue: #2bb8cf;
+}
+.svc-menu__link[data-hue="cobalt"] {
+  --hue: var(--ky-cobalt);
+}
+.svc-menu__link[data-hue="orange"] {
+  --hue: var(--ky-orange);
+}
+
+.svc-menu__link:hover,
+.svc-menu__link:focus-visible,
+.svc-menu__link.is-current {
+  background: var(--ky-cloud);
+}
+
+.svc-menu__icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--hue) 12%, transparent);
+  color: var(--hue);
+  transition:
+    background-color 220ms var(--ease-out),
+    color 220ms var(--ease-out);
+}
+
+.svc-menu__link:hover .svc-menu__icon,
+.svc-menu__link:focus-visible .svc-menu__icon {
+  background: var(--hue);
+  color: var(--ky-white);
+}
+
+.svc-menu__text {
+  display: grid;
+  gap: 3px;
+  padding-top: 1px;
+}
+
+.svc-menu__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
   color: var(--ky-ink);
 }
 
-.svc-menu__note {
-  margin-top: auto;
-  font-size: var(--fs-small);
+.svc-menu__focus {
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgb(226 65 143 / 0.1);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ky-magenta);
+}
+
+.svc-menu__desc {
+  font-size: 0.8125rem;
   line-height: 1.5;
   color: var(--ky-slate);
+}
+
+.svc-menu__go {
+  margin-top: 2px;
+  color: var(--ky-slate);
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 300ms var(--ease-out);
+}
+
+.svc-menu__link:hover .svc-menu__go,
+.svc-menu__link:focus-visible .svc-menu__go {
+  opacity: 1;
+  transform: none;
+  color: var(--ky-ink);
+}
+
+/* Right: a short prompt on Ink */
+.svc-menu__side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 26px 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(90% 60% at 100% 0%, rgb(123 77 217 / 0.35), transparent 70%),
+    var(--ky-ink);
+  color: var(--ky-white);
+}
+
+.svc-menu__side .svc-menu__kicker {
+  padding: 0;
+  color: rgb(255 255 255 / 0.55);
+}
+
+.svc-menu__lede {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 .svc-menu__cta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  min-height: 40px;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding: 12px 14px 12px 16px;
+  border-radius: 12px;
+  background: var(--ky-white);
+  color: var(--ky-ink);
   font-size: var(--fs-ui);
   font-weight: 700;
-  color: var(--ky-violet);
+  transition: background-color 220ms var(--ease-out);
+}
+
+.svc-menu__cta:hover {
+  background: var(--ky-cyan);
 }
 
 .svc-menu__cta svg {
@@ -479,116 +590,22 @@
 }
 
 .svc-menu__cta:hover svg {
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
-/* Right: the six services as a ruled 3 x 2 index */
-.svc-menu__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding: 12px 20px 20px;
-  column-gap: 20px;
-}
-
-.svc-menu__link {
-  --accent: var(--ky-violet);
-  position: relative;
-  display: grid;
-  align-content: start;
-  gap: 6px;
-  height: 100%;
-  padding: 18px 4px 16px;
-  border-top: 1px solid var(--line);
-}
-
-.svc-menu__grid li:nth-child(-n + 3) .svc-menu__link {
-  border-top-color: transparent;
-}
-
-.svc-menu__link[data-hue="flame"],
-.svc-menu__link[data-hue="magenta"] {
-  --accent: var(--ky-magenta);
-}
-.svc-menu__link[data-hue="cyan"],
-.svc-menu__link[data-hue="cobalt"] {
-  --accent: var(--ky-cobalt);
-}
-.svc-menu__link[data-hue="orange"] {
-  --accent: var(--ky-orange);
-}
-
-/* the one coloured moment: a short accent rule drawn on hover or focus */
-.svc-menu__link::before {
-  content: "";
-  position: absolute;
-  left: 4px;
-  top: -1px;
-  width: 36px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 380ms var(--ease-out);
-}
-
-.svc-menu__link:hover::before,
-.svc-menu__link:focus-visible::before,
-.svc-menu__link.is-current::before {
-  transform: scaleX(1);
-}
-
-.svc-menu__top {
-  display: flex;
-  justify-content: space-between;
+.svc-menu__note {
+  display: inline-flex;
   align-items: center;
-}
-
-.svc-menu__num {
-  font-size: var(--fs-meta-sm);
-  color: var(--ky-slate);
-}
-
-.svc-menu__icon {
-  color: rgb(23 18 31 / 0.4);
-  transition: color 260ms var(--ease-out);
-}
-
-.svc-menu__link:hover .svc-menu__icon,
-.svc-menu__link:focus-visible .svc-menu__icon {
-  color: var(--accent);
-}
-
-.svc-menu__name {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
   gap: 8px;
-  margin-top: 6px;
-  font-family: var(--font-display);
-  font-size: var(--fs-h4);
-  line-height: 1.25;
-  color: var(--ky-ink);
-  transition: color 220ms var(--ease-out);
+  font-size: var(--fs-meta-sm);
+  color: rgb(255 255 255 / 0.6);
 }
 
-.svc-menu__link:hover .svc-menu__name,
-.svc-menu__link:focus-visible .svc-menu__name {
-  color: var(--ky-violet);
-}
-
-.svc-menu__focus {
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ky-magenta);
-}
-
-.svc-menu__desc {
-  font-size: var(--fs-small);
-  line-height: 1.5;
-  color: var(--ky-slate);
+.svc-menu__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ky-success);
 }
 
 /* ---------- Mobile menu ---------- */
@@ -628,14 +645,8 @@
   background: rgb(255 255 255 / 0.04);
 }
 
-.mnav__top .logo-card {
-  margin-left: -6px;
-  padding: 5px 9px;
-  border-radius: 10px;
-}
-
-.mnav__top .logo img {
-  width: 112px;
+.mnav__top .logo {
+  color: var(--ky-white);
 }
 
 /* the same size and shape as the header's menu button it replaces */

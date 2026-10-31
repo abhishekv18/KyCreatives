@@ -1,25 +1,25 @@
 import { Link } from "react-router-dom";
 
 /**
- * Official KY Creatives logo, used untouched (no recolouring, effects or stretching).
- * On dark grounds pass `card` so it sits on a white card, as the guidelines require.
+ * KY Creatives logo: the official flame mark with the wordmark set as live
+ * text in the brand serif. "KY" carries the Flame gradient and "Creatives"
+ * takes the surrounding text colour, so the logo stays sharp at any size and
+ * reads clearly on light, dark and colour fields without a backing plate.
+ * `size` is the wordmark's font size in px; the mark scales with it.
  */
-export default function Logo({ width = 148, card = false, linked = true, onClick, className = "" }) {
-  const img = (
-    <img
-      src="/brand/ky-creatives-logo.png"
-      width={285}
-      height={79}
-      alt="KY Creatives"
-      decoding="async"
-    />
+export default function Logo({ size = 22, linked = true, onClick, className = "" }) {
+  const inner = (
+    <>
+      <img className="logo__mark" src="/brand/ky-flame.png" width="245" height="358" alt="" decoding="async" />
+      <span className="logo__word" aria-hidden="true">
+        <b>KY</b> Creatives
+      </span>
+    </>
   );
-  const inner = card ? <span className="logo-card">{img}</span> : img;
-  // Width is a custom property so a context (e.g. the condensed header) can resize it in CSS.
-  const style = { "--logo-w": `${width}px` };
+  const style = { "--logo-size": `${size}px` };
   if (!linked)
     return (
-      <span className={`logo ${className}`} style={style}>
+      <span className={`logo ${className}`} style={style} role="img" aria-label="KY Creatives">
         {inner}
       </span>
     );

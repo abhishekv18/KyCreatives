@@ -9,10 +9,9 @@ import {
   OtherServices,
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
-import PhoneFrame from "../../components/ui/PhoneFrame";
 import ContactCTA from "../../components/ui/ContactCTA";
 import { Arcs } from "../../components/art/Art";
-import { StorefrontMock, ConceptLabel } from "../../components/visuals/Visuals";
+import { StorefrontMock, ConceptLabel, PhoneMock } from "../../components/visuals/Visuals";
 
 const service = serviceBySlug.d2c;
 
@@ -29,30 +28,18 @@ function HeroPhones() {
   return (
     <div className="d2c-hero">
       <Arcs className="d2c-hero__arcs" color="#17121F" />
-      <div className="d2c-phones" aria-label="Client stores on a phone">
-        <PhoneFrame
-          className="d2c-phones__b"
-          src="/images/work/m-vibhadesigns.webp"
-          alt="Vibha Designs store on a phone"
-          label="vibhadesigns.com"
-          loading="eager"
-        />
-        <PhoneFrame
-          className="d2c-phones__a"
-          src="/images/work/m-thedecorshed.webp"
-          alt="The Decorshed store on a phone"
-          label="thedecorshed.com"
-          loading="eager"
-        />
-        <PhoneFrame
-          className="d2c-phones__c"
-          src="/images/work/m-notahoax.webp"
-          alt="Notahoax fragrance store on a phone"
-          label="notahoax.in"
-          loading="eager"
-        />
+      <div className="d2c-phones" aria-hidden="true">
+        <div className="d2c-phones__b">
+          <PhoneMock variant="cart" />
+        </div>
+        <div className="d2c-phones__a">
+          <PhoneMock variant="product" />
+        </div>
+        <div className="d2c-phones__c">
+          <PhoneMock variant="order" />
+        </div>
       </div>
-      <p className="d2c-hero__tag t-meta">3 live client stores, as shoppers see them on a phone</p>
+      <p className="d2c-hero__tag t-meta">Concept store: product, bag and delivery, on a phone</p>
     </div>
   );
 }

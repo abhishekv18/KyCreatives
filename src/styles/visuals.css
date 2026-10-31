@@ -427,6 +427,263 @@
   background: var(--ky-violet);
 }
 
+/* Store screens (product page and bag), used for D2C */
+.mock-phone--product .mock-phone__screen,
+.mock-phone--cart .mock-phone__screen {
+  padding-bottom: 14px;
+  background: var(--ky-white);
+}
+
+.mock-phone__shopbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 0 4px;
+}
+
+.mock-phone__shopname {
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: 0.02em;
+}
+
+.mock-phone__shopicons {
+  display: flex;
+  gap: 12px;
+}
+
+.mock-phone__product {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 210px;
+  border-radius: 18px;
+  background:
+    radial-gradient(60% 50% at 50% 80%, rgb(23 18 31 / 0.12), transparent 70%),
+    linear-gradient(160deg, #fbe7dd 0%, #f6d3c4 100%);
+}
+
+/* a simple vase: body and neck, in Flame */
+.mock-phone__vase {
+  position: relative;
+  width: 74px;
+  height: 104px;
+  margin-top: 18px;
+  border-radius: 46% 46% 40% 40% / 38% 38% 52% 52%;
+  background: linear-gradient(150deg, var(--ky-orange), var(--ky-magenta));
+  box-shadow: inset -10px -8px 18px rgb(23 18 31 / 0.18);
+}
+
+.mock-phone__vase::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -22px;
+  width: 30px;
+  height: 28px;
+  margin-left: -15px;
+  border-radius: 6px 6px 10px 10px;
+  background: linear-gradient(150deg, #ffa553, #ec5a83);
+}
+
+.mock-phone__badge {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--ky-white);
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.mock-phone__dots {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  gap: 4px;
+}
+
+.mock-phone__dots i,
+.mock-phone__swatches i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(23 18 31 / 0.2);
+}
+
+.mock-phone__dots i.is-on {
+  width: 14px;
+  border-radius: 3px;
+  background: var(--ky-ink);
+}
+
+.mock-phone__pinfo {
+  display: grid;
+  gap: 6px;
+  padding: 0 4px;
+}
+
+.mock-phone__pname {
+  font-family: var(--font-display);
+  font-size: 15px;
+}
+
+.mock-phone__prow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mock-phone__prow strong {
+  font-size: 15px;
+}
+
+.mock-phone__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  color: var(--ky-slate);
+}
+
+.mock-phone__stars svg {
+  color: var(--ky-orange);
+  fill: var(--ky-orange);
+}
+
+.mock-phone__swatches {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.mock-phone__swatches i {
+  width: 16px;
+  height: 16px;
+  background: #e9c8b5;
+  box-shadow: 0 0 0 1px rgb(23 18 31 / 0.08);
+}
+
+.mock-phone__swatches i:nth-child(2) {
+  background: #b45f4b;
+}
+
+.mock-phone__swatches i:nth-child(3) {
+  background: var(--ky-ink);
+}
+
+.mock-phone__swatches i.is-on {
+  box-shadow:
+    0 0 0 2px var(--ky-white),
+    0 0 0 3.5px var(--ky-ink);
+}
+
+.mock-phone__buy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: auto;
+  padding: 13px;
+  border-radius: 14px;
+  background: var(--ky-ink);
+  color: var(--ky-white);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mock-phone__count {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  color: var(--ky-slate);
+}
+
+.mock-phone__items {
+  display: grid;
+  gap: 8px;
+}
+
+.mock-phone__item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 14px;
+  background: var(--ky-cloud);
+}
+
+.mock-phone__item span {
+  display: grid;
+  gap: 2px;
+}
+
+.mock-phone__item b {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.mock-phone__item em {
+  font-style: normal;
+  font-size: 9.5px;
+  color: var(--ky-slate);
+}
+
+.mock-phone__item strong {
+  font-size: 11px;
+}
+
+.mock-phone__thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 50% 62%, var(--ky-magenta) 0 14px, transparent 15px),
+    linear-gradient(160deg, #fbe7dd, #f6d3c4);
+}
+
+.mock-phone__thumb--b {
+  background:
+    linear-gradient(135deg, transparent 30%, rgb(255 255 255 / 0.35) 30% 34%, transparent 34%),
+    linear-gradient(160deg, #c98b6f, #a9634c);
+}
+
+.mock-phone__totals {
+  display: grid;
+  gap: 8px;
+  padding: 12px 4px;
+  border-top: 1px solid rgb(23 18 31 / 0.08);
+  font-size: 11px;
+}
+
+.mock-phone__totals span {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ky-slate);
+}
+
+.mock-phone__totals em {
+  font-style: normal;
+  color: var(--ky-success);
+  font-weight: 600;
+}
+
+.mock-phone__totals b {
+  color: var(--ky-ink);
+  font-size: 13px;
+}
+
+.mock-phone__note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--ky-slate);
+}
+
 /* ---------- Portal ---------- */
 .mock-portal {
   display: grid;
@@ -912,7 +1169,7 @@
   container-type: inline-size;
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 0.8;
+  aspect-ratio: 1 / 0.88;
 }
 
 .iset > div {
@@ -968,134 +1225,329 @@
   color: var(--ky-slate);
 }
 
-.iset__page {
+/* A design canvas: tool rail, the board (logo construction and type) and a
+   layers panel. Sizes in container units. */
+.iset__canvas {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 2.4cqi 3.4cqi 3cqi;
-  background: linear-gradient(180deg, var(--ky-white) 0%, var(--ky-cloud) 100%);
+  display: grid;
+  grid-template-columns: 4cqi minmax(0, 1fr) 19cqi;
+  background: var(--ky-cloud);
 }
 
-.iset__nav {
-  display: flex;
-  align-items: center;
-  gap: 2cqi;
-  width: 100%;
-  margin-bottom: 4.4cqi;
+.iset__tools {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 1.4cqi;
+  padding-top: 2cqi;
+  background: var(--ky-white);
+  border-right: 1px solid rgb(23 18 31 / 0.06);
 }
 
-.iset__nav img {
-  width: 11cqi;
-  height: auto;
-}
-
-.iset__links {
-  display: flex;
-  gap: 1.6cqi;
-  margin-left: auto;
-}
-
-.iset__links i {
-  width: 4cqi;
-  height: 0.6cqi;
-  border-radius: 1cqi;
+.iset__tools i {
+  width: 1.8cqi;
+  height: 1.8cqi;
+  border-radius: 0.5cqi;
   background: rgb(23 18 31 / 0.14);
 }
 
-.iset__navbtn {
-  padding: 0.7cqi 1.4cqi;
-  border-radius: 0.8cqi;
-  background: var(--ky-ink);
-  font-family: var(--font-sans);
-  font-size: 1.15cqi;
-  font-weight: 600;
-  color: var(--ky-white);
+.iset__tools i.is-on {
+  background: var(--ky-violet);
 }
 
-.iset__kicker {
-  margin-bottom: 1.2cqi;
+.iset__board {
+  display: grid;
+  grid-template-columns: 24cqi minmax(0, 1fr);
+  gap: 2cqi;
+  align-content: start;
+  padding: 2.4cqi 2.2cqi;
+}
+
+.iset__art-label {
+  display: block;
+  margin-bottom: 0.9cqi;
   font-family: var(--font-mono);
+  font-size: 1.15cqi;
+  letter-spacing: 0.02em;
+  color: var(--ky-slate);
+}
+
+/* the artboard: the flame mark on a fine grid, with construction circles
+   and a selection box, as in a design tool */
+.iset__frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 0.6cqi;
+  background-color: var(--ky-white);
+  background-image:
+    linear-gradient(90deg, rgb(123 77 217 / 0.08) 0 1px, transparent 1px),
+    linear-gradient(180deg, rgb(123 77 217 / 0.08) 0 1px, transparent 1px);
+  background-size: 2cqi 2cqi;
+  box-shadow: 0 0 0 1px rgb(23 18 31 / 0.06);
+}
+
+.iset__frame img {
+  position: relative;
+  width: 42%;
+  height: auto;
+}
+
+.iset__ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed rgb(226 65 143 / 0.55);
+}
+
+.iset__ring--a {
+  inset: 22%;
+}
+
+.iset__ring--b {
+  inset: 10%;
+  border-style: solid;
+  border-color: rgb(123 77 217 / 0.25);
+}
+
+.iset__select {
+  position: absolute;
+  inset: 27%;
+  border: 1px solid var(--ky-cobalt);
+}
+
+.iset__select b {
+  position: absolute;
+  width: 1cqi;
+  height: 1cqi;
+  background: var(--ky-white);
+  border: 1px solid var(--ky-cobalt);
+}
+
+.iset__select b:nth-child(1) {
+  left: -0.5cqi;
+  top: -0.5cqi;
+}
+
+.iset__select b:nth-child(2) {
+  right: -0.5cqi;
+  top: -0.5cqi;
+}
+
+.iset__select b:nth-child(3) {
+  left: -0.5cqi;
+  bottom: -0.5cqi;
+}
+
+.iset__select b:nth-child(4) {
+  right: -0.5cqi;
+  bottom: -0.5cqi;
+}
+
+/* type specimen */
+.iset__type {
+  display: grid;
+  align-content: start;
+  gap: 0.9cqi;
+}
+
+.iset__aa {
+  font-family: var(--font-display);
+  font-size: 7.4cqi;
+  line-height: 1;
+  color: var(--ky-ink);
+}
+
+.iset__font {
+  display: grid;
+  gap: 0.2cqi;
+  padding-top: 0.9cqi;
+  border-top: 1px solid rgb(23 18 31 / 0.08);
+}
+
+.iset__font b {
+  font-family: var(--font-display);
+  font-size: 1.45cqi;
+  font-weight: 400;
+  color: var(--ky-ink);
+}
+
+.iset__font b.is-sans {
+  font-family: var(--font-sans);
+  font-weight: 600;
+}
+
+.iset__font em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 1.05cqi;
+  color: var(--ky-slate);
+}
+
+/* layers panel */
+.iset__layers {
+  display: grid;
+  align-content: start;
+  gap: 0.5cqi;
+  padding: 2.4cqi 1.6cqi;
+  background: var(--ky-white);
+  border-left: 1px solid rgb(23 18 31 / 0.06);
+}
+
+.iset__layer {
+  display: flex;
+  align-items: center;
+  gap: 0.9cqi;
+  padding: 0.8cqi 1cqi;
+  border-radius: 0.6cqi;
+  font-family: var(--font-sans);
   font-size: 1.3cqi;
   color: var(--ky-slate);
 }
 
-.iset__h {
-  font-family: var(--font-display);
-  font-size: 4.6cqi;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+.iset__layer i {
+  width: 1.2cqi;
+  height: 1.2cqi;
+  border-radius: 0.3cqi;
+  border: 1px solid rgb(23 18 31 / 0.25);
+}
+
+.iset__layer.is-on {
+  background: rgb(76 141 235 / 0.12);
   color: var(--ky-ink);
 }
 
-.iset__h em {
-  font-style: normal;
-  background: linear-gradient(100deg, var(--ky-magenta), var(--ky-violet) 55%, var(--ky-cobalt));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.iset__layer.is-on i {
+  border-color: var(--ky-cobalt);
+  background: var(--ky-cobalt);
 }
 
-.iset__lines {
+/* Home services panel: the shorter set (no components sheet), so it fits
+   the panel on short laptop screens. The service page keeps the full set. */
+.sv--design .iset {
+  aspect-ratio: 1 / 0.8;
+}
+
+.sv--design .iset__comp {
+  display: none;
+}
+
+/* components sheet: buttons, an input and controls in the brand system */
+.iset__comp {
+  left: 3%;
+  top: 65%;
+  width: 41%;
   display: grid;
-  gap: 0.8cqi;
-  width: 32cqi;
-  margin-top: 1.8cqi;
+  gap: 1.6cqi;
+  padding: 2.4cqi 2.6cqi 2.8cqi;
+  border-radius: 1.4cqi;
+  background: var(--ky-white);
 }
 
-.iset__lines i {
-  height: 0.6cqi;
-  border-radius: 1cqi;
-  background: rgb(23 18 31 / 0.1);
+.iset__comp .iset__art-label {
+  margin-bottom: 0.2cqi;
 }
 
-.iset__lines i:last-child {
-  width: 70%;
-}
-
-.iset__ctas {
+.iset__comp-row {
   display: flex;
-  gap: 1cqi;
-  margin-top: 2.2cqi;
+  align-items: center;
+  gap: 1.2cqi;
 }
 
-.iset__ctas b {
-  padding: 0.8cqi 1.6cqi;
+.iset__btn {
+  padding: 1cqi 1.8cqi;
   border-radius: 0.9cqi;
   background: var(--ky-violet);
   font-family: var(--font-sans);
-  font-size: 1.2cqi;
+  font-size: 1.35cqi;
   font-weight: 600;
   color: var(--ky-white);
+  white-space: nowrap;
 }
 
-.iset__ctas b.is-ghost {
+.iset__btn--ghost {
   background: transparent;
   box-shadow: inset 0 0 0 1px rgb(23 18 31 / 0.2);
   color: var(--ky-ink);
 }
 
-/* a row of work tiles in the brand gradients */
-.iset__tiles {
+.iset__input {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.2cqi;
-  width: 100%;
-  margin-top: auto;
+  gap: 0.6cqi;
+  font-family: var(--font-sans);
 }
 
-.iset__tiles i {
-  height: 5.4cqi;
-  border-radius: 1cqi;
-  background: var(--grad-flame);
+.iset__input em {
+  font-style: normal;
+  font-size: 1.15cqi;
+  color: var(--ky-slate);
 }
 
-.iset__tiles i:nth-child(2) {
-  background: var(--grad-dusk);
+.iset__input > span {
+  display: flex;
+  align-items: center;
+  gap: 0.3cqi;
+  padding: 1cqi 1.4cqi;
+  border-radius: 0.9cqi;
+  background: var(--ky-cloud);
+  box-shadow:
+    0 0 0 1px var(--ky-violet),
+    0 0 0 0.5cqi rgb(123 77 217 / 0.15);
+  font-size: 1.3cqi;
+  color: var(--ky-ink);
 }
 
-.iset__tiles i:nth-child(3) {
-  background: var(--grad-aqua);
+/* a blinking caret, as if someone is typing */
+.iset__input i {
+  width: 1px;
+  height: 1.6cqi;
+  background: var(--ky-violet);
+  animation: isetCaret 1.1s steps(1) infinite;
+}
+
+@keyframes isetCaret {
+  50% {
+    opacity: 0;
+  }
+}
+
+.iset__toggle {
+  position: relative;
+  width: 4.2cqi;
+  height: 2.4cqi;
+  border-radius: 2cqi;
+  background: var(--ky-cobalt);
+}
+
+.iset__toggle i {
+  position: absolute;
+  right: 0.3cqi;
+  top: 0.3cqi;
+  width: 1.8cqi;
+  height: 1.8cqi;
+  border-radius: 50%;
+  background: var(--ky-white);
+}
+
+.iset__chip {
+  padding: 0.6cqi 1.4cqi;
+  border-radius: 2cqi;
+  box-shadow: inset 0 0 0 1px rgb(23 18 31 / 0.15);
+  font-family: var(--font-sans);
+  font-size: 1.2cqi;
+  color: var(--ky-slate);
+}
+
+.iset__chip--on {
+  background: var(--ky-ink);
+  box-shadow: none;
+  color: var(--ky-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iset__input i {
+    animation: none;
+  }
 }
 
 /* A4 guidelines cover on Ink */

@@ -83,7 +83,7 @@ export default function Footer() {
 
         <div className="footer__grid">
           <div className="footer__brand">
-            <Logo width={132} card />
+            <Logo size={26} />
             <p>
               A design-led studio building software, web apps and mobile apps for businesses worldwide, with a special
               focus on D2C brands.

@@ -232,6 +232,36 @@
   border-bottom: 2px solid var(--ky-ink);
 }
 
+/* Wide screens: the button sits in the centre of the light circle with the
+   email just beneath it, inside the circle, so the rings, button and email
+   read as one piece beside the headline. The rings are centred at
+   (100% + 12vw - ring/2, 50%). */
+@media (min-width: 1200px) {
+  .cta__inner {
+    position: static;
+  }
+  .cta__actions {
+    --ring: min(70vw, 900px);
+    position: absolute;
+    left: calc(100% + 12vw - var(--ring) / 2);
+    top: 50%;
+    z-index: 1;
+    display: block;
+    translate: -50% -50%;
+  }
+  .cta__button {
+    box-shadow: 0 24px 50px -20px rgb(23 18 31 / 0.45);
+  }
+  .cta__mail {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 18px);
+    width: max-content;
+    translate: -50% 0;
+    white-space: nowrap;
+  }
+}
+
 /* =========================================================
    FOOTER (Ink): invitation, index, wordmark, base
    ========================================================= */
@@ -382,9 +412,8 @@
   }
 }
 
-.footer__brand .logo-card {
-  padding: 6px 10px;
-  border-radius: 10px;
+.footer__brand .logo {
+  color: var(--ky-white);
 }
 
 .footer__brand p {

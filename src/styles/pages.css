@@ -379,7 +379,6 @@
     grid-column: 3 / span 10;
   }
 }
-
 .manifesto__label {
   display: inline-flex;
   align-items: center;
@@ -1281,8 +1280,7 @@
 }
 
 .svcx__inline .sv--d2c {
-  /* Cap the phones on wide tablets so they stay inside the capped stage height */
-  padding: 8% max(18%, calc(50% - 150px)) 16%;
+  padding: 6% 4% 14%;
 }
 
 /* Inline mockups can fill the stage, so the caption sits on its own backing */
@@ -1440,22 +1438,69 @@
   color: inherit;
 }
 
+/* D2C: a product page and the bag, side by side. The phones keep their
+   designed 250px width and scale as a whole, so the screens never squash. */
 .sv--d2c {
-  grid-template-columns: 1fr 1fr;
-  gap: 6%;
-  padding: 10% 14% 14%;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-content: center;
+  gap: 14px;
+  padding: 6% 4% 12%;
 }
 
-.sv--d2c .phone:nth-child(2) {
-  transform: translateY(10%);
+.sv--d2c .mock-phone {
+  width: 250px;
+  max-width: none;
+  zoom: 0.78;
+}
+
+.sv--d2c .mock-phone:nth-child(2) {
+  transform: translateY(9%);
+}
+
+@media (min-width: 960px) and (max-width: 1199px) {
+  .svcx__stage .sv--d2c .mock-phone {
+    zoom: 0.66;
+  }
 }
 
 /* Desktop stage on short laptop screens: the stage gets shorter but not
-   narrower, so the phones inside are capped by the height available and
+   narrower, so the phones inside step down with the height available and
    always show whole. The stage itself is unchanged. */
-@media (min-width: 960px) {
-  .svcx__stage .sv--d2c {
-    padding-inline: max(14%, calc(47% - (100vh - var(--header-h) - 64px) * 0.33));
+@media (min-width: 960px) and (max-height: 640px) {
+  .svcx__stage .sv--d2c .mock-phone {
+    zoom: 0.68;
+  }
+}
+
+@media (min-width: 960px) and (max-height: 560px) {
+  .svcx__stage .sv--d2c .mock-phone {
+    zoom: 0.58;
+  }
+}
+
+/* Phones and tablets: the inline stage */
+@media (max-width: 959px) {
+  .svcx__inline .sv--d2c .mock-phone {
+    zoom: 0.8;
+  }
+}
+
+@media (max-width: 767px) {
+  .svcx__inline .sv--d2c .mock-phone {
+    zoom: 0.68;
+  }
+}
+
+@media (max-width: 479px) {
+  .svcx__inline .sv--d2c .mock-phone {
+    zoom: 0.58;
+  }
+}
+
+@media (max-width: 359px) {
+  .svcx__inline .sv--d2c .mock-phone {
+    zoom: 0.47;
   }
 }
 

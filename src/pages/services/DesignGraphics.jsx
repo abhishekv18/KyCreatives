@@ -21,7 +21,7 @@ function HeroVisual() {
       <div data-reveal="up">
         <IdentitySet />
       </div>
-      <figcaption className="t-meta">Our own identity applied: website, guidelines and app icon</figcaption>
+      <figcaption className="t-meta">Our own identity: logo construction, type, guidelines and app icon</figcaption>
     </figure>
   );
 }

@@ -98,6 +98,53 @@
   }
 }
 
+/* Designed store screens: each phone keeps its 250px design and scales as a
+   whole; the side phones tuck slightly behind the product page */
+.d2c-phones {
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  gap: 0;
+}
+
+.d2c-phones .mock-phone {
+  width: 250px;
+  max-width: none;
+  zoom: 0.7;
+  box-shadow: 0 40px 70px -30px rgb(23 18 31 / 0.55);
+}
+
+.d2c-phones__b,
+.d2c-phones__c {
+  position: relative;
+  z-index: 1;
+}
+
+.d2c-phones__b {
+  margin-right: -14px;
+}
+
+.d2c-phones__c {
+  margin-left: -14px;
+}
+
+@media (max-width: 639px) {
+  .d2c-phones .mock-phone {
+    zoom: 0.5;
+  }
+}
+
+@media (max-width: 479px) {
+  .d2c-phones .mock-phone {
+    zoom: 0.44;
+  }
+}
+
+@media (max-width: 359px) {
+  .d2c-phones .mock-phone {
+    zoom: 0.36;
+  }
+}
+
 .d2c-phones__a {
   grid-column: 2;
   grid-row: 1;
