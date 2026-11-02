@@ -2,6 +2,7 @@ import { serviceBySlug } from "../../data/services";
 import { useServiceMeta } from "../../hooks/usePageMeta";
 import {
   ServiceHero,
+  ServiceEnquiry,
   Offerings,
   Deliverables,
   ServiceFaq,
@@ -9,6 +10,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
+import PartnersStrip from "../../components/ui/PartnersStrip";
 import { Pattern } from "../../components/art/Art";
 import { IdentitySet } from "../../components/visuals/Visuals";
 import { company } from "../../data/site";
@@ -195,6 +197,7 @@ export default function DesignGraphics() {
   return (
     <div className="svcpage svcpage--cyan">
       <ServiceHero service={service} theme="cyan" art={<Pattern kind="layout" />} aside={<HeroVisual />} />
+      <ServiceEnquiry service={service} />
       <SystemGallery />
       <Offerings
         service={service}
@@ -204,6 +207,7 @@ export default function DesignGraphics() {
       <Deliverables items={service.deliverables} tone="flame" title={["What you take", "away"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
+      <PartnersStrip />
       <ContactCTA lines={["Where should your", "brand show up?"]} />
     </div>
   );

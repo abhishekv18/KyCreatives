@@ -80,7 +80,8 @@
 .offer__row::before {
   content: "";
   position: absolute;
-  inset: -1px calc(-1 * var(--s-3));
+  /* bleed past the text, but never past the page gutter on phones */
+  inset: -1px calc(-1 * min(var(--s-3), var(--gutter) - 6px));
   z-index: -1;
   border-radius: 14px;
   background: color-mix(in srgb, var(--accent) 16%, var(--ky-white));
@@ -93,7 +94,7 @@
 .offer__row::after {
   content: "";
   position: absolute;
-  left: calc(-1 * var(--s-3));
+  left: calc(-1 * min(var(--s-3), var(--gutter) - 6px));
   top: var(--s-3);
   bottom: var(--s-3);
   width: 4px;

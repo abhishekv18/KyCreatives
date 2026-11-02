@@ -7,12 +7,22 @@ function Card({ p, hidden }) {
   return (
     <li className="pcard" aria-hidden={hidden || undefined}>
       <span className="pcard__logo">
-        <img
-          src={p.image}
-          alt={hidden ? "" : p.name ? `${p.name} logo` : "Partner logo"}
-          decoding="async"
-          className={p.shape ? `pcard__img--${p.shape}` : undefined}
-        />
+        {p.wordmark ? (
+          <span
+            className={`pcard__wordmark ${p.wordmark.serif ? "pcard__wordmark--serif" : ""}`}
+            style={{ color: p.wordmark.color }}
+            aria-hidden="true"
+          >
+            {p.wordmark.text}
+          </span>
+        ) : (
+          <img
+            src={p.image}
+            alt={hidden ? "" : p.name ? `${p.name} logo` : "Partner logo"}
+            decoding="async"
+            className={p.shape ? `pcard__img--${p.shape}` : undefined}
+          />
+        )}
       </span>
       <span className="pcard__name">{p.short || p.name || "Partner"}</span>
     </li>
@@ -20,8 +30,8 @@ function Card({ p, hidden }) {
 }
 
 /*
-  Partner logos from the original site as a slow two-row slider. Every mark
-  sits on an identical white card, so ten very different logos read as one
+  Client logos as a slow two-row slider. Every mark sits on an identical
+  white card, so twenty very different logos read as one
   set. Rows drift in opposite directions; hover, focus or the Pause button
   stops them, and with reduced motion they become a still, wrapping grid.
 */
@@ -38,7 +48,7 @@ export default function Partners() {
           <SplitHeading as="h2" className="partners__title" lines={["The businesses", "behind the work."]} />
         </div>
         <div className="partners__side" data-reveal="up">
-          <p className="t-muted">Brands, organisations and public projects that have partnered with KY Creatives.</p>
+          <p className="t-muted">D2C brands, companies, news platforms and non-profits whose websites we have designed and built.</p>
           <button
             type="button"
             className="partners__toggle"
@@ -56,11 +66,11 @@ export default function Partners() {
           <div key={r} className={`marquee__row ${r ? "marquee__row--rev" : ""}`}>
             <ul role="list" className="marquee__track" aria-label={r ? undefined : "Partner logos"}>
               {row.map((p) => (
-                <Card key={p.image} p={p} />
+                <Card key={p.name} p={p} />
               ))}
               {/* Duplicate set for a seamless loop; hidden from assistive tech */}
               {row.map((p) => (
-                <Card key={`${p.image}-dup`} p={p} hidden />
+                <Card key={`${p.name}-dup`} p={p} hidden />
               ))}
             </ul>
           </div>

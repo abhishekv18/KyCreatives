@@ -7,6 +7,7 @@ import Faq from "../ui/Faq";
 import { services } from "../../data/services";
 import { projectBySlug } from "../../data/projects";
 import { serviceIcons } from "../ui/serviceIcons";
+import QuickEnquiry from "../ui/QuickEnquiry";
 
 const DARK = new Set(["ink", "violet"]);
 
@@ -34,6 +35,22 @@ export function ServiceHero({ service, aside, art, theme = "cloud", focus = fals
       </div>
     </PageHero>
   );
+}
+
+// The consultation form under each service hero, in the page's accent, with
+// designed slides on the laptop that match the service.
+const ENQUIRY = {
+  "web-apps-websites": { tone: "violet", theme: "web", interest: "Website" },
+  d2c: { tone: "flame", theme: "d2c", interest: "Online store" },
+  "mobile-apps": { tone: "violet", theme: "mobile", interest: "Mobile app" },
+  portals: { tone: "cobalt", theme: "portals", interest: "Portal" },
+  marketing: { tone: "orange", theme: "marketing", interest: "Marketing" },
+  "design-graphics": { tone: "cyan", theme: "design", interest: "Branding" },
+};
+
+export function ServiceEnquiry({ service }) {
+  const e = ENQUIRY[service.slug] || ENQUIRY["web-apps-websites"];
+  return <QuickEnquiry source={service.name} tone={e.tone} theme={e.theme} interest={e.interest} />;
 }
 
 /** Numbered index of offerings. Rows fill with the page accent on hover. */
@@ -129,9 +146,9 @@ export function RelatedWork({ slugs, title = ["Work in this area"], lead }) {
           {slugs.map((slug, i) => {
             const p = projectBySlug[slug];
             return (
-              <li key={slug} className={`rwork__item rwork__item--${(i % 3) + 1}`}>
+              <li key={slug} className={`rwork__item rwork__item--${(i % 3) + 1}`} data-reveal="rise">
                 <figure>
-                  <div className="rwork__img" data-reveal="clip">
+                  <div className="rwork__img">
                     <img src={p.image} alt={`${p.name} website`} loading="lazy" width="520" height="650" />
                   </div>
                   <figcaption>

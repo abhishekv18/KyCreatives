@@ -3,6 +3,7 @@ import { serviceBySlug } from "../../data/services";
 import { useServiceMeta } from "../../hooks/usePageMeta";
 import {
   ServiceHero,
+  ServiceEnquiry,
   Offerings,
   Deliverables,
   ServiceFaq,
@@ -10,6 +11,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
+import PartnersStrip from "../../components/ui/PartnersStrip";
 import { Blueprint } from "../../components/art/Art";
 import { PortalMock, ConceptLabel } from "../../components/visuals/Visuals";
 
@@ -146,6 +148,7 @@ export default function Portals() {
   return (
     <div className="svcpage svcpage--cobalt">
       <ServiceHero service={service} theme="cobalt" art={<Blueprint tone="light" />} aside={<HeroVisual />} />
+      <ServiceEnquiry service={service} />
       <RoleMap />
       <Offerings
         service={service}
@@ -170,6 +173,7 @@ export default function Portals() {
       <Deliverables items={service.deliverables} tone="violet" title={["From process map", "to trained team"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
+      <PartnersStrip />
       <ContactCTA lines={["Which spreadsheet", "goes first?"]} />
     </div>
   );

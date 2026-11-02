@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SplitHeading from "../../components/ui/SplitHeading";
 import { projects } from "../../data/projects";
+import { company } from "../../data/site";
 
 const d2cCount = projects.filter((p) => p.kind.startsWith("D2C")).length;
 
@@ -39,6 +40,19 @@ export default function Positioning() {
             <div id="pos-title" className="pos__statement">
               <SplitHeading as="h2" lines={["Three things", "we build on."]} />
             </div>
+            <ol role="list" className="pos__index">
+              {PILLARS.map(({ title }, i) => (
+                <li key={title}>
+                  <span className="t-meta">{String(i + 1).padStart(2, "0")}</span>
+                  {title}
+                </li>
+              ))}
+            </ol>
+            <p className="pos__facts t-meta">
+              <span>Since {company.foundedYear}</span>
+              <span>{projects.length} websites live</span>
+              <span>India · UK · UAE</span>
+            </p>
           </div>
           <div className="pos__body">
             <p className="t-lead" data-reveal="up">

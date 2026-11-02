@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
+import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import BrowserFrame from "../../components/ui/BrowserFrame";
 import PhoneFrame from "../../components/ui/PhoneFrame";
@@ -12,12 +13,14 @@ import { gsap, prefersReducedMotion } from "../../lib/motion";
   follows the guideline pairings: Ink on Orange, Cobalt and Magenta; White on
   Violet and Ink.
 */
+// The first five websites in the studio's own order, each panel set on that
+// site's own brand colour. `dark` marks colours that need white text.
 const FEATURED = [
-  { slug: "thedecorshed", stage: "orange", phone: "m-thedecorshed" },
-  { slug: "vibhadesigns", stage: "violet", phone: "m-vibhadesigns" },
-  { slug: "petsway", stage: "cobalt" },
-  { slug: "notahoax", stage: "ink", phone: "m-notahoax" },
-  { slug: "pinkdinosaur", stage: "magenta" },
+  { slug: "maacubs", bg: "#6b46c8", dark: true, phone: "m-maacubs" },
+  { slug: "brandgap", bg: "#f1e4dc", phone: "m-brandgap" },
+  { slug: "thedecorshed", bg: "#e8683b", phone: "m-thedecorshed" },
+  { slug: "rugsandroses", bg: "#5a2121", dark: true, phone: "m-rugsandroses" },
+  { slug: "thelabelbysiya", bg: "#b9876a", phone: "m-thelabelbysiya" },
 ];
 const INITIAL_INDEX = 8;
 const domainOf = (url) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
@@ -38,8 +41,8 @@ function Panel({ item, index, total }) {
   const wide = shotSrc(p.slug, "wide");
   return (
     <article
-      className={`wpanel wpanel--${item.stage}`}
-      style={{ "--i": index }}
+      className={`wpanel wpanel--brand ${item.dark ? "wpanel--on-dark" : ""}`}
+      style={{ "--i": index, "--p-bg": item.bg }}
       aria-labelledby={`wp-${p.slug}`}
     >
       <div className="wpanel__shade" aria-hidden="true" />
@@ -173,7 +176,6 @@ export default function Work() {
   const ref = useRef(null);
   const featuredSlugs = FEATURED.map((f) => f.slug);
   const rest = projects.filter((p) => !featuredSlugs.includes(p.slug));
-  rest.sort((a, b) => Number(!!b.liveUrl) - Number(!!a.liveUrl));
 
   // Stacking: while the next panel slides over, the current one recedes.
   useGSAP(
@@ -225,7 +227,10 @@ export default function Work() {
         <div className="work-index">
           <div className="work-index__head">
             <h3 className="work-index__title">More from the portfolio</h3>
-            <p className="t-meta">Company sites, portals, news and non-profits</p>
+            <Link to="/portfolio" className="work-index__all">
+              See the full portfolio
+              <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
+            </Link>
           </div>
           <ProjectIndex items={rest} />
         </div>

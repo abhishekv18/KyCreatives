@@ -2,6 +2,7 @@ import { serviceBySlug } from "../../data/services";
 import { useServiceMeta } from "../../hooks/usePageMeta";
 import {
   ServiceHero,
+  ServiceEnquiry,
   Offerings,
   Deliverables,
   RelatedWork,
@@ -11,6 +12,7 @@ import {
 import SplitHeading from "../../components/ui/SplitHeading";
 import BrowserFrame from "../../components/ui/BrowserFrame";
 import ContactCTA from "../../components/ui/ContactCTA";
+import PartnersStrip from "../../components/ui/PartnersStrip";
 import { Blueprint, Glow } from "../../components/art/Art";
 import { DashboardMock, ConceptLabel } from "../../components/visuals/Visuals";
 import { shotSrc, projectBySlug } from "../../data/projects";
@@ -119,6 +121,7 @@ export default function WebAppsWebsites() {
         }
         aside={<HeroVisual />}
       />
+      <ServiceEnquiry service={service} />
       <Offerings
         service={service}
         title={["Websites and web apps,", "designed and engineered together."]}
@@ -126,13 +129,14 @@ export default function WebAppsWebsites() {
       />
       <Compare />
       <RelatedWork
-        slugs={["pinkdinosaur", "property-box", "australglazing", "couponvolume", "asrithms", "rudrapolyplast", "newindia", "banglarjalapath", "sarvdharamsewasangh"]}
+        slugs={["maacubs", "brandgap", "shabdmailnews", "shivangikaur", "abhinaybuilders", "property-box", "pinkdinosaur", "couponvolume", "bigbrothervisa"]}
         title={["Built for very", "different businesses."]}
-        lead="Staffing, real estate, manufacturing, news, public infrastructure and non-profits, in India, the UK and the UAE."
+        lead="Healthcare, marketing, news, coaching, property, real estate, staffing, deals and visas, for clients in India and abroad."
       />
       <Deliverables items={service.deliverables} tone="cyan" />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
+      <PartnersStrip />
       <ContactCTA lines={["Tell us what your", "site needs to do."]} />
     </div>
   );

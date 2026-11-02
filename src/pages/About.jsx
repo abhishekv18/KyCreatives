@@ -6,6 +6,7 @@ import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
 import SplitHeading from "../components/ui/SplitHeading";
 import ContactCTA from "../components/ui/ContactCTA";
+import PartnersStrip from "../components/ui/PartnersStrip";
 import { ConceptLabel } from "../components/visuals/Visuals";
 import { services } from "../data/services";
 import { projectBySlug } from "../data/projects";
@@ -117,13 +118,14 @@ const FIGURES = [
 
 // The portfolio grouped by what kind of site it is, counted from the data.
 const KINDS = [
-  ["D2C stores and brand sites", ["D2C store", "D2C brand site"]],
-  ["Business websites", ["Business website"]],
-  ["Portals and platforms", ["News portal", "Web platform", "Project website"]],
+  ["D2C stores", ["D2C store"]],
+  ["Business and agency websites", ["Business website", "Agency website", "Workshop website"]],
+  ["Platforms and news portals", ["Health platform", "Web platform", "News portal"]],
   ["Non-profits and organisations", ["Non-profit website", "Organisation website"]],
 ].map(([label, kinds]) => [projects.filter((p) => kinds.includes(p.kind)).length, label]);
 
-const STRIP = ["thedecorshed", "pinkdinosaur", "vibhadesigns", "australglazing", "petsway", "property-box", "notahoax", "couponvolume"];
+// The first ten websites, in the order of the studio's own list.
+const STRIP = projects.slice(0, 10).map((p) => p.slug);
 
 /*
   Selected work: the section pins and the row of sites scrolls sideways with
@@ -447,6 +449,7 @@ export default function About() {
         </div>
       </section>
 
+      <PartnersStrip />
       <ContactCTA lines={["Let's talk about", "your next build."]} />
     </>
   );

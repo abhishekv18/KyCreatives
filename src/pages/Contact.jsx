@@ -2,6 +2,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Mail, Phone, MessageCircle, MapPin, Info, CheckCircle2, AlertCircle, Copy, Check, ArrowUpRight, HelpCircle, Send } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
+import PartnersStrip from "../components/ui/PartnersStrip";
 import Button from "../components/ui/Button";
 import { Arcs, Glow } from "../components/art/Art";
 import { services } from "../data/services";
@@ -675,6 +676,7 @@ export default function Contact() {
         </div>
       </section>
 
+      <PartnersStrip />
       <section className="cnext section grain" data-tone="color" aria-labelledby="cnext-title">
         <div className="cta__rings cnext__rings" aria-hidden="true">
           <i />

@@ -2,6 +2,7 @@ import { serviceBySlug } from "../../data/services";
 import { useServiceMeta } from "../../hooks/usePageMeta";
 import {
   ServiceHero,
+  ServiceEnquiry,
   Offerings,
   Deliverables,
   ServiceFaq,
@@ -9,6 +10,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
+import PartnersStrip from "../../components/ui/PartnersStrip";
 import { Arcs } from "../../components/art/Art";
 import { PhoneMock, ConceptLabel } from "../../components/visuals/Visuals";
 
@@ -95,6 +97,7 @@ export default function MobileApps() {
   return (
     <div className="svcpage svcpage--violet">
       <ServiceHero service={service} theme="violet" aside={<HeroPhones />} />
+      <ServiceEnquiry service={service} />
       <Offerings
         service={service}
         title={["Apps for both stores,", "built to keep improving."]}
@@ -104,6 +107,7 @@ export default function MobileApps() {
       <Deliverables items={service.deliverables} tone="ink" title={["From first sketch", "to the app stores"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
+      <PartnersStrip />
       <ContactCTA lines={["Tell us who your", "app is for."]} />
     </div>
   );

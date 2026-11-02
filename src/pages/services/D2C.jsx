@@ -2,6 +2,7 @@ import { serviceBySlug } from "../../data/services";
 import { useServiceMeta } from "../../hooks/usePageMeta";
 import {
   ServiceHero,
+  ServiceEnquiry,
   Offerings,
   Deliverables,
   RelatedWork,
@@ -10,6 +11,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
+import PartnersStrip from "../../components/ui/PartnersStrip";
 import { Arcs } from "../../components/art/Art";
 import { StorefrontMock, ConceptLabel, PhoneMock } from "../../components/visuals/Visuals";
 
@@ -96,10 +98,11 @@ export default function D2C() {
   return (
     <div className="svcpage svcpage--flame">
       <ServiceHero service={service} theme="flame" focus aside={<HeroPhones />} />
+      <ServiceEnquiry service={service} />
       <RelatedWork
         slugs={service.related}
         title={["D2C stores", "we have built."]}
-        lead="Online stores for decor, gifts, pet apparel, fragrance, personal care and fashion brands. Each one is live today."
+        lead="Online stores for decor, rugs, fashion, streetwear, gifts, hair care, pet apparel, crystals and fragrance. Each one is live today."
       />
       <Anatomy />
       <Offerings
@@ -110,6 +113,7 @@ export default function D2C() {
       <Deliverables items={service.deliverables} tone="ink" title={["What a store", "project includes"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
+      <PartnersStrip />
       <ContactCTA lines={["Tell us what", "your brand sells."]} />
     </div>
   );

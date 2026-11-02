@@ -491,6 +491,17 @@
   }
 }
 
+/* Phones: the strip sizes to its content instead of filling the screen,
+   so it follows the story above without a screen-high gap */
+@media (max-width: 767px) {
+  .astory {
+    padding-bottom: var(--s-2);
+  }
+  .astrip {
+    min-height: 0;
+  }
+}
+
 .astrip__head {
   display: flex;
   align-items: center;
@@ -1433,20 +1444,20 @@
   /* the CTA band's top padding; the bottom and the gap above the steps are
      tighter so the band, which also holds three steps, comes out the same
      height as the CTA band on the other pages */
-  padding-block: calc(var(--section-y) + var(--s-2)) var(--section-y);
+  padding-block: var(--section-y) calc(var(--section-y) - 24px);
   background: var(--ky-white);
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {
   .cnext {
-    padding-bottom: calc(var(--section-y) + var(--s-4));
+    padding-bottom: calc(var(--section-y) + 8px);
   }
 }
 
 /* narrow tablets: the three columns are shorter, so a little more room below */
 @media (min-width: 768px) and (max-width: 959px) {
   .cnext {
-    padding-bottom: calc(var(--section-y) + var(--s-4) + 30px);
+    padding-bottom: calc(var(--section-y) + 38px);
   }
 }
 
@@ -1496,7 +1507,7 @@
   }
   /* with one step in view, the band takes the CTA's own spacing */
   .cnext {
-    padding-bottom: calc(var(--section-y) + var(--s-4) + 6px);
+    padding-bottom: calc(var(--section-y) + 14px);
   }
   .cnext__list[role="list"] {
     margin-top: calc(var(--s-5) + var(--s-5));

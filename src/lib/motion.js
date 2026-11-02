@@ -66,6 +66,24 @@ export function initReveals(root) {
     );
   });
 
+  // Two-way: rises in each time it enters, from below or from above, and
+  // eases back out as it leaves, so scrolling back up replays it too.
+  q('[data-reveal="rise"]').forEach((el) => {
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 48, scale: 0.97 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.8,
+        ease: EASE,
+        delay: parseFloat(el.dataset.delay || 0),
+        scrollTrigger: { trigger: el, start: "top 94%", end: "bottom 6%", toggleActions: "play reverse play reverse" },
+      }
+    );
+  });
+
   q('[data-reveal="fade"]').forEach((el) => {
     gsap.fromTo(
       el,

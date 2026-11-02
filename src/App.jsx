@@ -10,6 +10,7 @@ import { whenReady } from "./lib/motion";
 const pages = {
   About: () => import("./pages/About"),
   Contact: () => import("./pages/Contact"),
+  Portfolio: () => import("./pages/Portfolio"),
   D2C: () => import("./pages/services/D2C"),
   WebAppsWebsites: () => import("./pages/services/WebAppsWebsites"),
   MobileApps: () => import("./pages/services/MobileApps"),
@@ -23,6 +24,7 @@ const pages = {
 };
 const About = lazy(pages.About);
 const Contact = lazy(pages.Contact);
+const Portfolio = lazy(pages.Portfolio);
 const D2C = lazy(pages.D2C);
 const WebAppsWebsites = lazy(pages.WebAppsWebsites);
 const MobileApps = lazy(pages.MobileApps);
@@ -47,6 +49,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
+      { path: "/portfolio", element: <Portfolio /> },
       
       { path: "/services/web-apps-websites", element: <WebAppsWebsites /> },
       { path: "/services/d2c", element: <D2C /> },

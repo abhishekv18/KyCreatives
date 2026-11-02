@@ -1,0 +1,385 @@
+/* =========================================================
+   QUICK ENQUIRY: copy and a laptop showing real work on the
+   left, a short consultation form on the right. Under every
+   service hero and at the foot of the portfolio.
+   ========================================================= */
+.qe {
+  --qe-accent: var(--ky-violet);
+  --qe-tint: rgb(123 77 217 / 0.1);
+  position: relative;
+  padding-block: var(--section-y);
+  overflow: hidden;
+  background: var(--ky-cloud);
+}
+
+.qe--flame {
+  --qe-accent: var(--ky-magenta);
+  --qe-tint: rgb(226 65 143 / 0.1);
+}
+.qe--cobalt {
+  --qe-accent: var(--ky-cobalt);
+  --qe-tint: rgb(76 141 235 / 0.12);
+}
+.qe--orange {
+  --qe-accent: var(--ky-orange);
+  --qe-tint: rgb(255 149 51 / 0.14);
+}
+.qe--cyan {
+  --qe-accent: #26b5cc;
+  --qe-tint: rgb(111 227 245 / 0.22);
+}
+
+/* a soft pool of the page accent behind the form */
+.qe::before {
+  content: "";
+  position: absolute;
+  right: -10%;
+  top: 10%;
+  width: min(60vw, 720px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--qe-tint), transparent);
+  pointer-events: none;
+}
+
+.qe__grid {
+  position: relative;
+  display: grid;
+  gap: var(--s-6);
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .qe__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+  }
+  .qe__intro {
+    grid-column: 1 / span 7;
+  }
+  .qe__card {
+    grid-column: 8 / span 5;
+  }
+}
+
+.qe__intro {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+.qe__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  color: var(--ky-ink);
+}
+
+.qe__title span {
+  color: var(--qe-accent);
+}
+
+.qe__lead {
+  max-width: 46ch;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-body);
+  color: var(--ky-slate);
+}
+
+/* Form card */
+.qe__card {
+  position: relative;
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--card-pad);
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--ky-white);
+  border: 1px solid rgb(23 18 31 / 0.07);
+  box-shadow:
+    0 1px 2px rgb(23 18 31 / 0.04),
+    0 40px 80px -44px rgb(23 18 31 / 0.38);
+}
+
+/* the page accent as a fine band along the top of the card */
+.qe__card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--qe-accent), var(--ky-violet));
+}
+
+.qe__card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.qe__card-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.01em;
+  color: var(--ky-ink);
+}
+
+.qe__card-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-meta-sm);
+  color: var(--ky-slate);
+}
+
+.qe__row {
+  display: grid;
+  gap: var(--s-3);
+}
+
+@media (min-width: 560px) {
+  .qe__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.qe-field textarea {
+  min-height: 108px;
+}
+
+.qe__submit {
+  width: 100%;
+  justify-content: center;
+}
+
+.qe__note {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: var(--fs-meta-sm);
+  color: var(--ky-slate);
+}
+
+/* =========================================================
+   PORTFOLIO PAGE: every website, in the order of the studio's
+   own list, as a grid of tall cards.
+   ========================================================= */
+.pf {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--section-y);
+  background: var(--ky-cloud);
+}
+
+/* Fine drafting lines behind the grid: horizontal rules every 96px, a
+   stronger vertical every 4th column, and a few diagonal guides, fading
+   out down the page so the cards stay the focus. */
+.pf::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(180deg, rgb(123 77 217 / 0.08) 0 1px, transparent 1px 96px),
+    repeating-linear-gradient(90deg, rgb(23 18 31 / 0.05) 0 1px, transparent 1px 25%),
+    repeating-linear-gradient(135deg, rgb(123 77 217 / 0.035) 0 1px, transparent 1px 160px);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.6) 40%, rgb(0 0 0 / 0.25) 100%);
+  mask-image: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 0.6) 40%, rgb(0 0 0 / 0.25) 100%);
+}
+
+.pf__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+
+.pf__filters[role="list"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pf__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--ky-white);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--ky-slate);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.pf__filter em {
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta-sm);
+  opacity: 0.6;
+}
+
+.pf__filter:hover {
+  border-color: var(--ky-ink);
+  color: var(--ky-ink);
+}
+
+.pf__filter[aria-pressed="true"] {
+  border-color: var(--ky-ink);
+  background: var(--ky-ink);
+  color: var(--ky-white);
+}
+
+.pf__count {
+  font-size: var(--fs-meta);
+  color: var(--ky-slate);
+}
+
+.pf__grid[role="list"] {
+  display: grid;
+  gap: var(--s-5) var(--grid-gap);
+}
+
+@media (min-width: 640px) {
+  .pf__grid[role="list"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .pf__grid[role="list"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.pf-card {
+  display: grid;
+  gap: 14px;
+}
+
+.pf-card__shot {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--ky-white);
+  box-shadow:
+    0 0 0 1px rgb(23 18 31 / 0.06),
+    0 24px 48px -32px rgb(23 18 31 / 0.4);
+}
+
+.pf-card__shot img {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ratio-project);
+  object-fit: cover;
+  object-position: top;
+  transition: transform 900ms var(--ease-out);
+}
+
+/* a browser bar across the top of every screenshot */
+.pf-card__bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 30px;
+  padding: 0 12px;
+  background: var(--ky-white);
+  border-bottom: 1px solid var(--line);
+}
+
+.pf-card__bar i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(23 18 31 / 0.15);
+}
+
+.pf-card__bar span {
+  margin-left: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--ky-slate);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pf-card__visit {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--ky-ink);
+  color: var(--ky-white);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 300ms var(--ease-out),
+    transform 400ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .pf-card__shot:hover img {
+    transform: scale(1.03);
+  }
+  .pf-card__shot:hover .pf-card__visit,
+  .pf-card__shot:focus-visible .pf-card__visit {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (hover: none) {
+  .pf-card__visit {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pf-card__info {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px 12px;
+  align-items: baseline;
+}
+
+.pf-card__n {
+  grid-row: 1 / span 2;
+  font-size: var(--fs-meta-sm);
+  color: var(--ky-violet);
+}
+
+.pf-card__name {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ky-ink);
+}
+
+.pf-card__meta {
+  font-size: var(--fs-meta-sm);
+  color: var(--ky-slate);
+}

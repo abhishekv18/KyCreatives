@@ -18,6 +18,9 @@ import "./styles/pages.css";
 import "./styles/inner.css";
 import "./styles/service-blocks.css";
 import "./styles/services.css";
+import "./styles/portfolio.css";
+import "./styles/laptop.css";
+import "./styles/tech.css";
 
 import App from "./App";
 

@@ -2,6 +2,7 @@ import { serviceBySlug } from "../../data/services";
 import { useServiceMeta } from "../../hooks/usePageMeta";
 import {
   ServiceHero,
+  ServiceEnquiry,
   Offerings,
   Deliverables,
   ServiceFaq,
@@ -9,6 +10,7 @@ import {
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
+import PartnersStrip from "../../components/ui/PartnersStrip";
 import { Pattern } from "../../components/art/Art";
 import { CampaignSet, ConceptLabel } from "../../components/visuals/Visuals";
 
@@ -111,6 +113,7 @@ export default function Marketing() {
   return (
     <div className="svcpage svcpage--orange">
       <ServiceHero service={service} theme="orange" art={<Pattern kind="chart" />} aside={<HeroVisual />} />
+      <ServiceEnquiry service={service} />
       <Channels />
       <Promises />
       <Offerings
@@ -121,6 +124,7 @@ export default function Marketing() {
       <Deliverables items={service.deliverables} tone="violet" title={["What each month", "includes"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
+      <PartnersStrip />
       <ContactCTA lines={["Tell us where", "customers find you."]} />
     </div>
   );

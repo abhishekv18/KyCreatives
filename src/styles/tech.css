@@ -1,0 +1,423 @@
+/* =========================================================
+   TECHNOLOGY PARTNERS: a slow slider of full-colour logos on
+   white cards, with a thin row of jobs running the other way
+   ========================================================= */
+.tps {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--section-y);
+  background: linear-gradient(180deg, var(--ky-white) 0%, var(--ky-cloud) 100%);
+}
+
+/* a soft band of brand light behind the slider */
+.tps::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  z-index: -1;
+  width: min(1100px, 120vw);
+  height: 280px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(123 77 217 / 0.12), rgb(76 141 235 / 0.06) 60%, transparent);
+  pointer-events: none;
+}
+
+.tps__head {
+  display: grid;
+  gap: var(--s-3);
+  margin-bottom: var(--s-6);
+}
+
+@media (min-width: 960px) {
+  .tps__head {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    align-items: end;
+  }
+  .tps__head > div:first-child {
+    grid-column: 1 / span 7;
+  }
+  .tps__side {
+    grid-column: 9 / span 4;
+  }
+}
+
+.tps__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+}
+
+.tps__title .split-line:last-child > span {
+  color: var(--ky-violet);
+}
+
+.tps__side {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.tps__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tps__count {
+  font-size: var(--fs-small);
+  color: var(--ky-slate);
+}
+
+.tps__count b {
+  margin-right: 4px;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--ky-ink);
+}
+
+/* the rail: full bleed, fading out at both edges */
+.tps__rail {
+  position: relative;
+  overflow: hidden;
+  padding-block: 10px 18px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+.tps__track[role="list"] {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  animation: tpsSlide 46s linear infinite;
+}
+
+.tps__track--rev[role="list"] {
+  animation-duration: 38s;
+  animation-direction: reverse;
+}
+
+@keyframes tpsSlide {
+  to {
+    transform: translateX(calc(-50% - 9px));
+  }
+}
+
+.tps__rail:hover .tps__track,
+.tps__rail:focus-within .tps__track,
+.tps__rail.is-paused .tps__track {
+  animation-play-state: paused;
+}
+
+.tps__card {
+  position: relative;
+  flex: none;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
+  gap: 14px;
+  width: clamp(170px, 11vw + 80px, 224px);
+  height: clamp(118px, 4vw + 92px, 144px);
+  padding: 20px 18px 12px;
+  border-radius: 20px;
+  background: var(--ky-white);
+  box-shadow:
+    0 0 0 1px rgb(23 18 31 / 0.07),
+    0 1px 2px rgb(23 18 31 / 0.04),
+    0 18px 40px -28px rgb(23 18 31 / 0.35);
+  transition:
+    transform 450ms var(--ease-out),
+    box-shadow 450ms var(--ease-out);
+}
+
+/* a gradient ring that appears on hover */
+.tps__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--ky-magenta), var(--ky-violet), var(--ky-cyan));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 450ms var(--ease-out);
+}
+
+.tps__logo {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 0;
+}
+
+.tps__logo img {
+  width: auto;
+  max-width: 80%;
+  height: 34px;
+  object-fit: contain;
+  transition: transform 450ms var(--ease-out);
+}
+
+.tps__role {
+  width: 100%;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-meta-sm);
+  text-align: center;
+  color: var(--ky-slate);
+}
+
+@media (hover: hover) {
+  .tps__card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0 1px 2px rgb(23 18 31 / 0.04),
+      0 30px 50px -28px rgb(91 69 196 / 0.45);
+  }
+  .tps__card:hover::before {
+    opacity: 1;
+  }
+  .tps__card:hover .tps__logo img {
+    transform: scale(1.06);
+  }
+}
+
+/* second row: the jobs, as quiet pills */
+.tps__rail--jobs {
+  margin-top: 4px;
+}
+
+.tps__job {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgb(255 255 255 / 0.7);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta-sm);
+  letter-spacing: 0.02em;
+  color: var(--ky-slate);
+  white-space: nowrap;
+}
+
+.tps__job i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--grad-flame);
+}
+
+.tps__job:nth-child(3n + 2) i {
+  background: var(--grad-dusk);
+}
+
+.tps__job:nth-child(3n) i {
+  background: var(--grad-aqua);
+}
+
+@media (max-width: 639px) {
+  .tps__logo img {
+    height: 28px;
+  }
+  .tps__track[role="list"] {
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tps__track[role="list"] {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    padding-inline: var(--gutter);
+    animation: none;
+  }
+  .tps__card[aria-hidden="true"],
+  .tps__rail--jobs {
+    display: none;
+  }
+  .tps__rail {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* =========================================================
+   PARTNERS STRIP (inner pages): one row of client logos
+   ========================================================= */
+.pstrip {
+  padding-block: var(--s-8);
+  background: var(--ky-white);
+  border-top: 1px solid var(--line);
+}
+
+.pstrip__inner {
+  display: grid;
+  gap: var(--s-4);
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .pstrip__inner {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    column-gap: var(--grid-gap);
+  }
+}
+
+.pstrip__intro {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.pstrip__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ky-ink);
+}
+
+.pstrip__title b {
+  font-weight: 400;
+  background: var(--grad-dusk);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pstrip__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--ky-violet);
+  border-bottom: 1px solid rgb(123 77 217 / 0.35);
+}
+
+.pstrip__link svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+.pstrip__link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.pstrip__rail {
+  overflow: hidden;
+  padding-block: 8px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.pstrip__track[role="list"] {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  animation: pstripSlide 60s linear infinite;
+}
+
+.pstrip__rail:hover .pstrip__track {
+  animation-play-state: paused;
+}
+
+@keyframes pstripSlide {
+  to {
+    transform: translateX(calc(-50% - 7px));
+  }
+}
+
+.pstrip__item {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 168px;
+  height: 84px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: var(--ky-white);
+  box-shadow:
+    0 0 0 1px rgb(23 18 31 / 0.07),
+    0 12px 28px -22px rgb(23 18 31 / 0.35);
+  transition:
+    transform 400ms var(--ease-out),
+    box-shadow 400ms var(--ease-out);
+}
+
+.pstrip__item img {
+  max-width: 100%;
+  max-height: 50px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.pstrip__word {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.pstrip__word--serif {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+@media (hover: hover) {
+  .pstrip__item:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 0 1px rgb(123 77 217 / 0.3),
+      0 18px 36px -22px rgb(91 69 196 / 0.45);
+  }
+}
+
+@media (max-width: 639px) {
+  .pstrip__item {
+    width: 140px;
+    height: 72px;
+  }
+  .pstrip__item img {
+    max-height: 42px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pstrip__track[role="list"] {
+    animation: none;
+  }
+  .pstrip__item[aria-hidden="true"] {
+    display: none;
+  }
+  /* a still row people can swipe or scroll instead */
+  .pstrip__rail {
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* keeps the long logo row from widening the page itself */
+    contain: paint;
+  }
+}
+
+/* breathing room to the left of every consultation laptop */
+@media (min-width: 768px) {
+  .laptop {
+    margin-left: clamp(16px, 4%, 44px);
+  }
+}

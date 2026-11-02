@@ -402,12 +402,16 @@
   display: grid;
   grid-template-columns: minmax(0, 8fr) minmax(0, 3.4fr);
   border-radius: 18px;
-  background: var(--ky-white);
-  border: 1px solid rgb(23 18 31 / 0.08);
+  /* the frame is drawn with a shadow ring rather than a border, and the
+     background matches each half, so no white edge shows at the corners
+     of the dark panel */
+  background: linear-gradient(90deg, var(--ky-white) 70%, var(--ky-ink) 70%);
   box-shadow:
+    0 0 0 1px rgb(23 18 31 / 0.08),
     0 1px 2px rgb(23 18 31 / 0.04),
     0 30px 60px -30px rgb(23 18 31 / 0.3);
   overflow: hidden;
+  isolation: isolate;
   animation: menuIn 260ms var(--ease-out);
 }
 
@@ -421,6 +425,8 @@
 /* Left: the six services as compact rows in two columns */
 .svc-menu__main {
   padding: 20px 16px 16px;
+  border-radius: 18px 0 0 18px;
+  background: var(--ky-white);
 }
 
 .svc-menu__kicker {
@@ -548,6 +554,7 @@
   gap: 12px;
   padding: 28px 26px 24px;
   overflow: hidden;
+  border-radius: 0 18px 18px 0;
   background:
     radial-gradient(90% 60% at 100% 0%, rgb(123 77 217 / 0.35), transparent 70%),
     var(--ky-ink);

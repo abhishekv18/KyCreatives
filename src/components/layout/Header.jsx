@@ -304,6 +304,7 @@ function MobileMenu({ open, onClose }) {
           {[
             ["/", "Home", true],
             ["/about", "About"],
+            ["/portfolio", "Portfolio"],
             ["/contact", "Contact"],
           ].map(([to, label, end], i) => (
             <li key={to} style={{ "--i": i }}>
@@ -383,11 +384,11 @@ export default function Header() {
               onPointerLeave={hide}
               onBlur={hide}
             >
-              <li>
+              {/* <li>
                 <NavLink to="/" end className="nav__link">
                   Home
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink to="/about" className="nav__link">
                   About
@@ -395,6 +396,11 @@ export default function Header() {
               </li>
               <li>
                 <ServicesMenu />
+              </li>
+              <li>
+                <NavLink to="/portfolio" className="nav__link">
+                  Portfolio
+                </NavLink>
               </li>
               <li>
                 <NavLink to="/contact" className="nav__link">

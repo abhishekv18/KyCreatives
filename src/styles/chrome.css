@@ -88,7 +88,7 @@
 .cta {
   position: relative;
   overflow: hidden;
-  padding-block: calc(var(--section-y) + var(--s-2)) calc(var(--section-y) + var(--s-4));
+  padding-block: var(--section-y) calc(var(--section-y) + var(--s-1));
   background: linear-gradient(125deg, var(--ky-magenta) 0%, #f0607a 38%, var(--ky-orange) 100%);
   color: var(--ky-ink);
 }

@@ -5,6 +5,7 @@ import ClientBand from "./home/ClientBand";
 import Positioning from "./home/Positioning";
 import Work from "./home/Work";
 import ServicesIndex from "./home/ServicesIndex";
+import TechPartners from "./home/TechPartners";
 import Process from "./home/Process";
 import Testimonials from "./home/Testimonials";
 import Partners from "./home/Partners";
@@ -31,6 +32,7 @@ export default function Home() {
       </div>
       <ClientBand />
       <Positioning />
+      <TechPartners />
       <Work />
       <ServicesIndex />
       <Process />

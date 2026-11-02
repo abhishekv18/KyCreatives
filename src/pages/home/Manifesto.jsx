@@ -14,8 +14,7 @@ const STATEMENT = [
   ["We", "build", "software,", "web", "apps", "and", "mobile", "apps"],
   ["for", "businesses", "around", "the", "world,"],
   ["and", "websites", "that", "help"],
-  ["D2C", "brands", "launch", "faster", "and"],
-  ["grow", "with", "fewer", "limits."],
+  ["D2C", "brands", "launch", "faster."],
 ];
 const ACCENT = new Set(["designers", "engineers"]);
 const FLAME = new Set(["D2C"]);
