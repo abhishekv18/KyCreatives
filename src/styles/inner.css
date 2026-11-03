@@ -441,11 +441,10 @@
 .astory__kinds-list strong {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2.5rem, 1.8rem + 2.6vw, 4rem);
-  line-height: 1;
+  font-size: clamp(1.5rem, 1.25rem + 0.9vw, 2.25rem);
+  line-height: 1.1;
   letter-spacing: var(--ls-title);
   color: var(--ky-violet);
-  font-variant-numeric: tabular-nums;
 }
 
 .astory__kinds-list span {
@@ -509,15 +508,6 @@
   gap: var(--s-2);
 }
 
-.astrip__count {
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.astrip__count span {
-  color: var(--ky-ink);
-}
-
 .astrip__viewport {
   overflow: hidden;
 }
@@ -566,14 +556,7 @@
 
 .astrip__item figcaption {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 2px 12px;
-  align-items: baseline;
-}
-
-.astrip__n {
-  grid-row: 1 / span 2;
-  color: var(--ky-violet);
+  gap: 2px;
 }
 
 .astrip__name {
@@ -601,9 +584,6 @@
   .astrip__item {
     scroll-snap-align: start;
     scroll-margin-left: var(--gutter);
-  }
-  .astrip__count {
-    display: none;
   }
 }
 

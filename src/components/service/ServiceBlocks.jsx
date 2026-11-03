@@ -152,7 +152,6 @@ export function RelatedWork({ slugs, title = ["Work in this area"], lead }) {
                     <img src={p.image} alt={`${p.name} website`} loading="lazy" width="520" height="650" />
                   </div>
                   <figcaption>
-                    <span className="rwork__num t-meta">{String(i + 1).padStart(2, "0")}</span>
                     <span className="rwork__name">{p.name}</span>
                     <span className="rwork__sector">{p.sector}</span>
                     {p.liveUrl && (

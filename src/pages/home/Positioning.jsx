@@ -1,29 +1,29 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import SplitHeading from "../../components/ui/SplitHeading";
-import { projects } from "../../data/projects";
 import { company } from "../../data/site";
 
-const d2cCount = projects.filter((p) => p.kind.startsWith("D2C")).length;
-
 // The three positioning pillars come straight from the brand guidelines. Each
-// is set as a ruled row and backed by one plain fact, taken from the portfolio
-// data rather than claimed, so the principle reads as evidence, not a slogan.
+// is set as a ruled row and backed by one plain fact, so the principle reads
+// as evidence, not a slogan.
 const PILLARS = [
   {
     title: "Built to perform",
+    note: "Fast, stable, made to scale",
     body: "Fast, stable software, web apps and mobile apps, engineered to scale as your business grows.",
     figure: "One team",
     proof: "designs and builds every screen, from first sketch to launch",
   },
   {
     title: "D2C websites",
+    note: "Stores built to sell",
     body: "Our focus area. Brand-led storefronts built for conversion, retention and repeat purchase.",
-    figure: `${d2cCount} of ${projects.length}`,
-    proof: "websites in our portfolio are D2C stores and brand sites",
+    figure: "Our focus",
+    proof: "storefronts and brand sites for businesses that sell online",
   },
   {
     title: "Global by default",
+    note: "Standards for every time zone",
     body: "Delivery, communication and standards built for clients across time zones.",
     figure: "3",
     proof: "countries we have shipped for: India, the UK and the UAE",
@@ -41,16 +41,17 @@ export default function Positioning() {
               <SplitHeading as="h2" lines={["Three things", "we build on."]} />
             </div>
             <ol role="list" className="pos__index">
-              {PILLARS.map(({ title }, i) => (
+              {PILLARS.map(({ title, note }, i) => (
                 <li key={title}>
                   <span className="t-meta">{String(i + 1).padStart(2, "0")}</span>
                   {title}
+                  <span className="pos__index-note">{note}</span>
                 </li>
               ))}
             </ol>
             <p className="pos__facts t-meta">
               <span>Since {company.foundedYear}</span>
-              <span>{projects.length} websites live</span>
+              <span>D2C focus</span>
               <span>India · UK · UAE</span>
             </p>
           </div>
@@ -62,6 +63,11 @@ export default function Positioning() {
               Design decides how a product feels. Engineering decides whether it holds up. We do both in the same room,
               so nothing is lost in a handover and every screen we design is one we know how to ship.
             </p>
+            <ul role="list" className="pos__means" data-reveal="up" data-delay="0.1">
+              <li>One team from first sketch to launch</li>
+              <li>No handover between design and build</li>
+              <li>Every screen designed to ship</li>
+            </ul>
             <Link to="/about" className="link-u" data-reveal="up" data-delay="0.12">
               More about the studio
               <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />

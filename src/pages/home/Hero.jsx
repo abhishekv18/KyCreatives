@@ -11,11 +11,11 @@ const CAPS = ["Software", "Web apps", "Mobile apps", "D2C websites"];
 // The wall behind the headline: real client sites from the portfolio, five
 // columns of three. Phones show the first three columns only.
 const WALL = [
-  ["maacubs", "thelabelbysiya", "shabdmailnews"],
-  ["brandgap", "vibhadesigns", "shivangikaur"],
-  ["thedecorshed", "dudle", "pinkdinosaur"],
-  ["rugsandroses", "petsway", "property-box"],
-  ["ramysprofessional", "abhinaybuilders", "healeroftheages"],
+  ["maacubs", "thedecorshed", "rugsandroses"],
+  ["thelabelbysiya", "vibhadesigns", "dudle"],
+  ["ramysprofessional", "petsway", "shabdmailnews"],
+  ["shivangikaur", "abhinaybuilders", "property-box"],
+  ["pinkdinosaur", "couponvolume", "brandgap"],
 ].map((col) => col.map((slug) => projectBySlug[slug]).filter(Boolean));
 
 /*

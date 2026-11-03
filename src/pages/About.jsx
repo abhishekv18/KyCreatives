@@ -73,7 +73,7 @@ function HeroVisual() {
               <strong>{company.foundedYear}</strong>Founded
             </span>
             <span>
-              <strong>{projects.length}</strong>Websites
+              <strong>D2C</strong>Focus
             </span>
             <span>
               <strong>India</strong>Studio
@@ -111,18 +111,18 @@ function HeroVisual() {
 // Figures for the "What we do" column, all derived from the site's own data.
 const FIGURES = [
   [`${new Date().getFullYear() - company.foundedYear}+`, "Years building for the web"],
-  [String(projects.length), "Client websites delivered"],
+  ["1", "Team for design and build"],
   [String(services.length), "Services under one roof"],
   ["3", "Countries: India, UK, UAE"],
 ];
 
-// The portfolio grouped by what kind of site it is, counted from the data.
+// The kinds of website in the portfolio.
 const KINDS = [
-  ["D2C stores", ["D2C store"]],
-  ["Business and agency websites", ["Business website", "Agency website", "Workshop website"]],
-  ["Platforms and news portals", ["Health platform", "Web platform", "News portal"]],
-  ["Non-profits and organisations", ["Non-profit website", "Organisation website"]],
-].map(([label, kinds]) => [projects.filter((p) => kinds.includes(p.kind)).length, label]);
+  ["D2C", "Stores for brands that sell online"],
+  ["Business", "Business and agency websites"],
+  ["Platforms", "Platforms and news portals"],
+  ["Non-profit", "Non-profits and organisations"],
+];
 
 // The first ten websites, in the order of the studio's own list.
 const STRIP = projects.slice(0, 10).map((p) => p.slug);
@@ -134,14 +134,12 @@ const STRIP = projects.slice(0, 10).map((p) => p.slug);
 */
 function WorkStrip() {
   const ref = useRef(null);
-  const nowRef = useRef(null);
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
       const track = ref.current.querySelector(".astrip__track");
       const viewport = ref.current.querySelector(".astrip__viewport");
       const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
-      const total = STRIP.length;
       gsap.to(track, {
         x: () => -distance(),
         ease: "none",
@@ -153,10 +151,6 @@ function WorkStrip() {
           anticipatePin: 1,
           scrub: 0.6,
           invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const n = Math.min(total, Math.floor(self.progress * total) + 1);
-            if (nowRef.current) nowRef.current.textContent = String(n).padStart(2, "0");
-          },
         },
       });
     },
@@ -168,20 +162,16 @@ function WorkStrip() {
         <h2 id="astrip-title" className="kicker t-meta">
           Selected work
         </h2>
-        <p className="astrip__count t-meta" aria-hidden="true">
-          <span ref={nowRef}>01</span> / {String(STRIP.length).padStart(2, "0")}
-        </p>
       </div>
       <div className="astrip__viewport">
         <ol role="list" className="astrip__track">
-          {STRIP.map((slug, i) => {
+          {STRIP.map((slug) => {
             const p = projectBySlug[slug];
             return (
               <li key={slug} className="astrip__item">
                 <figure>
                   <img src={p.image} alt={`${p.name} website`} loading="lazy" width="520" height="650" />
                   <figcaption>
-                    <span className="astrip__n t-meta">{String(i + 1).padStart(2, "0")}</span>
                     <span className="astrip__name">{p.name}</span>
                     <span className="astrip__sector t-meta">{p.sector}</span>
                   </figcaption>
@@ -289,10 +279,6 @@ export default function About() {
             {company.address.short}
           </li>
           <li>
-            <span>Portfolio</span>
-            {projects.length} websites
-          </li>
-          <li>
             <span>Focus</span>
             D2C brands
           </li>
@@ -327,12 +313,12 @@ export default function About() {
             </div>
             <div className="astory__kinds">
               <p className="astory__kinds-title t-meta" data-reveal="fade">
-                The work so far: {projects.length} websites
+                The work so far
               </p>
               <ul role="list" className="astory__kinds-list" data-stagger="">
-                {KINDS.map(([n, label]) => (
+                {KINDS.map(([kind, label]) => (
                   <li key={label}>
-                    <strong>{String(n).padStart(2, "0")}</strong>
+                    <strong>{kind}</strong>
                     <span>{label}</span>
                   </li>
                 ))}

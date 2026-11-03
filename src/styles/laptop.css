@@ -1271,13 +1271,6 @@
   white-space: nowrap;
 }
 
-.pf-stack__badge b {
-  font-family: var(--font-display);
-  font-size: 1.375rem;
-  font-weight: 400;
-  color: var(--ky-violet);
-}
-
 .pf-stack__badge i {
   width: 8px;
   height: 8px;

@@ -9,6 +9,7 @@ import TechPartners from "./home/TechPartners";
 import Process from "./home/Process";
 import Testimonials from "./home/Testimonials";
 import Partners from "./home/Partners";
+import MarketingPartner from "./home/MarketingPartner";
 import ContactCTA from "../components/ui/ContactCTA";
 
 /*
@@ -38,6 +39,7 @@ export default function Home() {
       <Process />
       <Testimonials />
       <Partners />
+      <MarketingPartner />
       <ContactCTA />
     </>
   );

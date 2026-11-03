@@ -4,9 +4,8 @@ import SplitHeading from "../../components/ui/SplitHeading";
 
 /*
   The platforms the studio builds on, as a slow, continuous slider of
-  full-colour logos on white cards, with a second, thinner row of the jobs
-  they do running the other way. Hover, focus or the Pause button stops
-  both rows; with reduced motion they become a still, wrapping set.
+  full-colour logos on white cards. Hover, focus or the Pause button stops
+  it; with reduced motion it becomes a still, wrapping set.
 */
 const PARTNERS = [
   { name: "Shopify", role: "Storefronts", file: "shopify" },
@@ -19,8 +18,6 @@ const PARTNERS = [
   { name: "Judge.me", role: "Product reviews", file: "judgeme" },
   { name: "ReelUp", role: "Shoppable video", file: "reelup" },
 ];
-
-const JOBS = ["Hosting", "CDN", "Cloud", "Storefronts", "Checkout", "Payments", "UPI and cards", "Reviews", "Shoppable video", "Security"];
 
 function Card({ p, hidden }) {
   return (
@@ -67,17 +64,6 @@ export default function TechPartners() {
           ))}
           {PARTNERS.map((p) => (
             <Card key={`${p.name}-dup`} p={p} hidden />
-          ))}
-        </ul>
-      </div>
-
-      <div className={`tps__rail tps__rail--jobs ${paused ? "is-paused" : ""}`} aria-hidden="true">
-        <ul role="list" className="tps__track tps__track--rev">
-          {[...JOBS, ...JOBS].map((j, i) => (
-            <li key={i} className="tps__job">
-              <i />
-              {j}
-            </li>
           ))}
         </ul>
       </div>

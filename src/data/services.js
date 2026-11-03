@@ -75,7 +75,7 @@ export const services = [
       },
     ],
     cta: "Tell us what the website or app needs to do.",
-    related: ["maacubs", "brandgap", "property-box", "pinkdinosaur"],
+    related: ["maacubs", "property-box", "pinkdinosaur", "brandgap"],
   },
   {
     slug: "d2c",
@@ -148,7 +148,7 @@ export const services = [
       },
     ],
     cta: "Tell us about your brand and what you sell.",
-    related: ["thedecorshed", "rugsandroses", "thelabelbysiya", "vibhadesigns", "dudle", "ramysprofessional", "petsway", "healeroftheages", "notahoax"],
+    related: ["thedecorshed", "rugsandroses", "thelabelbysiya", "vibhadesigns", "dudle", "ramysprofessional", "petsway", "notahoax"],
   },
   {
     slug: "mobile-apps",

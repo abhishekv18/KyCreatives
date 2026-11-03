@@ -483,10 +483,6 @@
   color: var(--text-muted);
 }
 
-.band__count {
-  color: var(--ky-violet);
-}
-
 .band__row {
   overflow: hidden;
   padding-block: 6px;
@@ -589,6 +585,23 @@
   color: var(--ky-violet);
 }
 
+/* a short line at the end of each row; phones keep the name alone, since the
+   rows below say it in full */
+.pos__index-note {
+  display: none;
+  margin-left: auto;
+  font-size: var(--fs-small);
+  font-weight: 400;
+  color: var(--ky-slate);
+  text-align: right;
+}
+
+@media (min-width: 560px) {
+  .pos__index-note {
+    display: block;
+  }
+}
+
 .pos__facts {
   display: flex;
   flex-wrap: wrap;
@@ -616,13 +629,25 @@
   .pos__head {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     column-gap: var(--grid-gap);
-    /* both halves meet on their vertical centre */
-    align-items: center;
+    /* both halves share a top and a bottom edge */
+    align-items: stretch;
   }
-  /* the heading block is centred within the left half, balancing the text */
+  /* the heading block fills the left half from the page's left edge; its rows
+     share any spare height, so it ends level with the text opposite */
   .pos__head > div:first-child {
     grid-column: 1 / span 6;
-    justify-self: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .pos__index[role="list"] {
+    flex: 1;
+    grid-auto-rows: 1fr;
+  }
+  .pos__index li {
+    align-items: center;
+  }
+  .pos__facts {
+    justify-content: space-between;
   }
   .pos__body {
     grid-column: 8 / span 5;
@@ -633,6 +658,33 @@
   display: grid;
   gap: var(--s-3);
   justify-items: start;
+  align-content: space-between;
+}
+
+/* what the principles mean in practice, ruled like the list opposite */
+.pos__means[role="list"] {
+  justify-self: stretch;
+  border-top: 1px solid var(--line-strong);
+}
+
+.pos__means li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-block: 11px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  color: var(--ky-ink);
+}
+
+.pos__means li::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--ky-violet);
 }
 
 /* Principles as ruled rows: number, statement, and the fact behind it */
@@ -1029,7 +1081,7 @@
 @media (min-width: 768px) {
   .pindex__head,
   .pindex__row {
-    grid-template-columns: 44px minmax(0, 1.5fr) minmax(0, 1.2fr) minmax(0, 0.9fr) 84px;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr) minmax(0, 0.9fr) 84px;
   }
 }
 
@@ -1040,10 +1092,6 @@
   font-size: var(--fs-meta-sm);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-}
-
-.pindex__head span:first-child {
-  grid-column: 2;
 }
 
 @media (min-width: 768px) {
@@ -1091,19 +1139,9 @@
   .pindex__row:hover::before {
     transform: scaleY(1);
   }
-  .pindex__row:hover .pindex__num {
-    color: var(--ky-cyan);
-  }
   .pindex__row:hover .pindex__name {
     color: var(--ky-white);
   }
-}
-
-.pindex__num {
-  display: none;
-  font-size: var(--fs-meta-sm);
-  color: rgb(255 255 255 / 0.4);
-  transition: color 300ms var(--ease-out);
 }
 
 .pindex__name {
@@ -1135,9 +1173,6 @@
 }
 
 @media (min-width: 768px) {
-  .pindex__num {
-    display: block;
-  }
   .pindex__sector,
   .pindex__link {
     grid-column: auto;

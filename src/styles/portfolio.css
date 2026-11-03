@@ -227,13 +227,6 @@
     border-color var(--dur-fast) var(--ease-out);
 }
 
-.pf__filter em {
-  font-style: normal;
-  font-family: var(--font-mono);
-  font-size: var(--fs-meta-sm);
-  opacity: 0.6;
-}
-
 .pf__filter:hover {
   border-color: var(--ky-ink);
   color: var(--ky-ink);
@@ -243,11 +236,6 @@
   border-color: var(--ky-ink);
   background: var(--ky-ink);
   color: var(--ky-white);
-}
-
-.pf__count {
-  font-size: var(--fs-meta);
-  color: var(--ky-slate);
 }
 
 .pf__grid[role="list"] {
@@ -360,15 +348,7 @@
 
 .pf-card__info {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 2px 12px;
-  align-items: baseline;
-}
-
-.pf-card__n {
-  grid-row: 1 / span 2;
-  font-size: var(--fs-meta-sm);
-  color: var(--ky-violet);
+  gap: 2px;
 }
 
 .pf-card__name {

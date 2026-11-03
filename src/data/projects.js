@@ -31,9 +31,6 @@ export const projects = [
   p("maacubs", "MaaCubs Healthcare", "Mother and baby healthcare", "Health platform", "business",
     "A doctor-led healthcare platform for mothers and babies, with pregnancy and baby tracking, doctor consultations and a health library.",
     "https://www.maacubs.com/"),
-  p("brandgap", "BrandGap", "Performance marketing", "Agency website", "business",
-    "A website for a growth agency that helps D2C, e-commerce and service businesses with performance marketing and creative strategy.",
-    "https://brand-gap.vercel.app/"),
   p("thedecorshed", "The Decorshed", "Home and garden decor", "D2C store", "store",
     "An online store for garden fountains, planters, miniatures and festive decor, organised by room and occasion.",
     "https://thedecorshed.com/", { credited: true }),
@@ -70,9 +67,6 @@ export const projects = [
   p("pinkdinosaur", "Pink Dinosaur", "Staffing and IT services", "Business website", "business",
     "A website for a staffing, recruitment and IT services firm, with service pages and enquiry routes.",
     "https://pinkdinosaur.co/", { credited: true }),
-  p("healeroftheages", "Healer of the Ages", "Crystals and wellness", "D2C store", "store",
-    "A store for crystal bracelets, pendants and healing products, grouped by intention.",
-    "https://healeroftheages717.com/"),
   p("couponvolume", "Coupon Volume", "Deals and coupons, UAE", "Web platform", "business",
     "A coupon and deals platform listing codes from retailers in the UAE.",
     "https://couponvolume.com/"),
@@ -88,6 +82,9 @@ export const projects = [
   p("maapitambara", "Maa Pitambara Pragya Peeth", "Spiritual organisation", "Organisation website", "community",
     "A website for a spiritual organisation's events, programmes and announcements.",
     "https://maapitambarapragyapeeth.org/"),
+  p("brandgap", "BrandGap", "Performance marketing", "Agency website", "business",
+    "A website for a growth agency that helps D2C, e-commerce and service businesses with performance marketing and creative strategy.",
+    "https://brandgap.co/"),
 ];
 
 export const projectBySlug = Object.fromEntries(projects.map((p) => [p.slug, p]));

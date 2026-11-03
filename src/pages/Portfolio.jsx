@@ -14,7 +14,8 @@ const domainOf = (url) => url.replace(/^https?:\/\//, "").replace(/^www\./, "").
 
 /*
   Every website in the portfolio, in the studio's own order (the KY Creatives
-  Linktree), as tall cards with a browser bar and a link to the live site.
+  Linktree, with BrandGap last), as tall cards with a browser bar and a link to
+  the live site.
   A row of filters narrows the grid by kind of website; the enquiry form
   closes the page.
 */
@@ -35,9 +36,7 @@ function HeroStack() {
           <img src={shotSrc(p.slug, "portfolio").src.replace(".webp", "-sm.webp")} alt="" width="640" height="800" />
         </figure>
       ))}
-      <span className="pf-stack__badge pf-stack__badge--a">
-        <b>{projects.length}</b> live websites
-      </span>
+      <span className="pf-stack__badge pf-stack__badge--a">Live client websites</span>
       <span className="pf-stack__badge pf-stack__badge--b">
         <i /> India · UK · UAE
       </span>
@@ -59,7 +58,8 @@ export default function Portfolio() {
     return () => cancelAnimationFrame(id);
   }, [filter]);
   const shown = filter === "all" ? projects : projects.filter((p) => p.group === filter);
-  const groups = GROUPS.map((g) => ({ ...g, count: projects.filter((p) => p.group === g.id).length })).filter((g) => g.count);
+  const groups = GROUPS.filter((g) => projects.some((p) => p.group === g.id));
+  const shownLabel = groups.find((g) => g.id === filter)?.label || "All websites";
 
   return (
     <>
@@ -80,15 +80,17 @@ export default function Portfolio() {
       >
         <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.3">
           <li>
-            <span>Websites</span>
-            {projects.length}
+            <span>Since</span>
+            {company.foundedYear}
           </li>
-          {groups.map((g) => (
-            <li key={g.id}>
-              <span>{g.label}</span>
-              {g.count}
-            </li>
-          ))}
+          <li>
+            <span>Studio</span>
+            {company.address.short}
+          </li>
+          <li>
+            <span>Focus</span>
+            D2C brands
+          </li>
         </ul>
       </PageHero>
 
@@ -101,28 +103,27 @@ export default function Portfolio() {
             <ul role="list" className="pf__filters" aria-label="Filter websites">
               <li>
                 <button type="button" className="pf__filter" aria-pressed={filter === "all"} onClick={() => setFilter("all")}>
-                  All <em>{projects.length}</em>
+                  All
                 </button>
               </li>
               {groups.map((g) => (
                 <li key={g.id}>
                   <button type="button" className="pf__filter" aria-pressed={filter === g.id} onClick={() => setFilter(g.id)}>
-                    {g.label} <em>{g.count}</em>
+                    {g.label}
                   </button>
                 </li>
               ))}
             </ul>
-            <p className="pf__count t-meta" aria-live="polite">
-              Showing {shown.length} of {projects.length}
+            <p className="sr-only" aria-live="polite">
+              Showing: {shownLabel}
             </p>
           </div>
 
           <ol role="list" className="pf__grid">
-            {shown.map((p) => {
-              const n = projects.indexOf(p) + 1;
+            {shown.map((p, i) => {
               const tall = shotSrc(p.slug, "portfolio");
               return (
-                <li key={p.slug} className="pf-card" data-reveal="rise" data-delay={((n - 1) % 3) * 0.08}>
+                <li key={p.slug} className="pf-card" data-reveal="rise" data-delay={(i % 3) * 0.08}>
                   <a className="pf-card__shot" href={p.liveUrl} target="_blank" rel="noopener noreferrer">
                     <span className="pf-card__bar" aria-hidden="true">
                       <i />
@@ -135,7 +136,7 @@ export default function Portfolio() {
                       srcSet={tall.srcSet}
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
                       alt={`${p.name} website`}
-                      loading={n > 3 ? "lazy" : "eager"}
+                      loading={i >= 3 ? "lazy" : "eager"}
                       width="720"
                       height="900"
                     />
@@ -148,9 +149,6 @@ export default function Portfolio() {
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                   <div className="pf-card__info">
-                    <span className="pf-card__n t-meta" aria-hidden="true">
-                      {String(n).padStart(2, "0")}
-                    </span>
                     <h3 className="pf-card__name">{p.name}</h3>
                     <span className="pf-card__meta t-meta">
                       {p.sector} · {p.kind}

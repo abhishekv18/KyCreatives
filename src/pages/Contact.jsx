@@ -9,7 +9,6 @@ import { services } from "../data/services";
 import { serviceIcons } from "../components/ui/serviceIcons";
 import SocialIcon from "../components/ui/SocialIcon";
 import { company, social, reviewLinks } from "../data/site";
-import { projects } from "../data/projects";
 import Toast from "../components/ui/Toast";
 
 /* Web3Forms delivers enquiries to the studio inbox. The access key is public by
@@ -579,8 +578,8 @@ export default function Contact() {
                   <dd>24h</dd>
                 </div>
                 <div>
-                  <dt>Websites in the portfolio</dt>
-                  <dd>{projects.length}</dd>
+                  <dt>Building for the web since</dt>
+                  <dd>{company.foundedYear}</dd>
                 </div>
                 <div>
                   <dt>Countries we work in</dt>

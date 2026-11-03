@@ -31,7 +31,7 @@ function Card({ p, hidden }) {
 
 /*
   Client logos as a slow two-row slider. Every mark sits on an identical
-  white card, so twenty very different logos read as one
+  white card, so very different logos read as one
   set. Rows drift in opposite directions; hover, focus or the Pause button
   stops them, and with reduced motion they become a still, wrapping grid.
 */

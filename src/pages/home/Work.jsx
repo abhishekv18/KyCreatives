@@ -13,14 +13,14 @@ import { gsap, prefersReducedMotion } from "../../lib/motion";
   follows the guideline pairings: Ink on Orange, Cobalt and Magenta; White on
   Violet and Ink.
 */
-// The first five websites in the studio's own order, each panel set on that
+// Five websites from the portfolio, each panel set on that
 // site's own brand colour. `dark` marks colours that need white text.
 const FEATURED = [
   { slug: "maacubs", bg: "#6b46c8", dark: true, phone: "m-maacubs" },
-  { slug: "brandgap", bg: "#f1e4dc", phone: "m-brandgap" },
   { slug: "thedecorshed", bg: "#e8683b", phone: "m-thedecorshed" },
   { slug: "rugsandroses", bg: "#5a2121", dark: true, phone: "m-rugsandroses" },
   { slug: "thelabelbysiya", bg: "#b9876a", phone: "m-thelabelbysiya" },
+  { slug: "brandgap", bg: "#f1e4dc", phone: "m-brandgap" },
 ];
 const INITIAL_INDEX = 8;
 const domainOf = (url) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
@@ -36,7 +36,7 @@ function LiveLink({ project, className = "wpanel__link" }) {
   );
 }
 
-function Panel({ item, index, total }) {
+function Panel({ item, index }) {
   const p = projectBySlug[item.slug];
   const wide = shotSrc(p.slug, "wide");
   return (
@@ -48,7 +48,6 @@ function Panel({ item, index, total }) {
       <div className="wpanel__shade" aria-hidden="true" />
       <div className="wpanel__info">
         <p className="wpanel__index t-meta">
-          {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
           <span>{p.kind}</span>
         </p>
         <h3 id={`wp-${p.slug}`} className="wpanel__name">
@@ -123,11 +122,8 @@ function ProjectIndex({ items }) {
       </div>
       <div className="pindex__wrap" ref={listRef} onPointerLeave={() => setActive(null)}>
         <ul role="list" className="pindex__list">
-          {shown.map((p, i) => (
+          {shown.map((p) => (
             <li key={p.slug} className="pindex__row" onPointerEnter={() => setActive(p.slug)}>
-              <span className="pindex__num t-meta" aria-hidden="true">
-                {String(i + 6).padStart(2, "0")}
-              </span>
               <span className="pindex__name">{p.name}</span>
               <span className="pindex__sector">{p.sector}</span>
               <span className="pindex__kind t-meta">{p.kind}</span>
@@ -165,7 +161,7 @@ function ProjectIndex({ items }) {
       </div>
       {items.length > INITIAL_INDEX && (
         <button className="btn btn--ghost pindex__more" aria-expanded={expanded} onClick={() => setExpanded((e) => !e)}>
-          {expanded ? "Show fewer projects" : `Show all ${items.length} projects`}
+          {expanded ? "Show fewer projects" : "Show all projects"}
         </button>
       )}
     </div>
@@ -213,14 +209,13 @@ export default function Work() {
             <SplitHeading as="h2" className="work__title" lines={["Stores and sites", "already in business."]} />
           </div>
           <p className="work__lead" data-reveal="up">
-            A selection from the {projects.length} websites in our portfolio. Every screen here is a real client site,
-            captured live.
+            A selection from our portfolio. Every screen here is a real client site, captured live.
           </p>
         </div>
 
         <div className="work__stack">
           {FEATURED.map((item, i) => (
-            <Panel key={item.slug} item={item} index={i} total={FEATURED.length} />
+            <Panel key={item.slug} item={item} index={i} />
           ))}
         </div>
 

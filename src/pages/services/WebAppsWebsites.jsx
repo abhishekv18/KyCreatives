@@ -10,43 +10,19 @@ import {
   OtherServices,
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
-import BrowserFrame from "../../components/ui/BrowserFrame";
 import ContactCTA from "../../components/ui/ContactCTA";
 import PartnersStrip from "../../components/ui/PartnersStrip";
 import { Blueprint, Glow } from "../../components/art/Art";
-import { DashboardMock, ConceptLabel } from "../../components/visuals/Visuals";
-import { shotSrc, projectBySlug } from "../../data/projects";
+import { ConceptLabel } from "../../components/visuals/Visuals";
+import WebBuildScene from "../../components/visuals/WebBuildScene";
 
 const service = serviceBySlug["web-apps-websites"];
 
 function HeroVisual() {
-  const s = shotSrc("pinkdinosaur", "wide");
   return (
     <div className="web-hero">
-      <div className="web-hero__back" data-reveal="wipe">
-        <img
-          src={projectBySlug["property-box"].image}
-          alt="Property Box real estate website"
-          width="520"
-          height="650"
-          loading="eager"
-        />
-      </div>
-      <div className="web-hero__site" data-reveal="up" data-delay="0.2">
-        <BrowserFrame
-          domain="pinkdinosaur.co"
-          {...s}
-          sizes="(min-width: 960px) 38vw, 90vw"
-          alt="Pink Dinosaur company website home page"
-          ratio="16 / 10"
-          loading="eager"
-          className="browser--dark"
-        />
-      </div>
-      <div className="web-hero__app" data-reveal="up" data-delay="0.4">
-        <DashboardMock />
-        <ConceptLabel tone="dark">Concept web app screen</ConceptLabel>
-      </div>
+      <WebBuildScene />
+      <ConceptLabel tone="dark">Concept website and web app</ConceptLabel>
     </div>
   );
 }
@@ -129,7 +105,7 @@ export default function WebAppsWebsites() {
       />
       <Compare />
       <RelatedWork
-        slugs={["maacubs", "brandgap", "shabdmailnews", "shivangikaur", "abhinaybuilders", "property-box", "pinkdinosaur", "couponvolume", "bigbrothervisa"]}
+        slugs={["maacubs", "shabdmailnews", "shivangikaur", "abhinaybuilders", "property-box", "pinkdinosaur", "couponvolume", "bigbrothervisa", "brandgap"]}
         title={["Built for very", "different businesses."]}
         lead="Healthcare, marketing, news, coaching, property, real estate, staffing, deals and visas, for clients in India and abroad."
       />

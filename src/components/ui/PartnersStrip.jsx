@@ -33,7 +33,7 @@ export default function PartnersStrip() {
         <div className="pstrip__intro">
           <p className="kicker t-meta">Our clients</p>
           <h2 id="pstrip-title" className="pstrip__title">
-            Trusted by <b>{partners.length}</b> businesses
+            Trusted by <b>growing</b> businesses
           </h2>
           <Link to="/portfolio" className="pstrip__link">
             See their websites

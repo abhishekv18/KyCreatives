@@ -46,7 +46,6 @@ export default function ClientBand() {
         <h2 id="band-title" className="t-meta">
           Websites we have designed and built, since {company.foundedYear}
         </h2>
-        <span className="t-meta band__count">{projects.length} in the portfolio</span>
       </div>
       <Row items={names.slice(0, Math.ceil(names.length / 2))} cls="band__row--a" />
       <Row items={names.slice(Math.ceil(names.length / 2))} cls="band__row--b" />
