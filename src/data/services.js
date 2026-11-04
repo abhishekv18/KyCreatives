@@ -63,7 +63,7 @@ export const services = [
     faqs: [
       {
         q: "Which technologies do you use?",
-        a: "Our recent work includes WordPress, Shopify, PHP, Node.js and hand-written front ends. We choose the stack per project and explain the reason.",
+        a: "Our recent work includes WordPress, Shopify, PHP, Node.js and hand written front ends. We choose the stack per project and explain the reason.",
       },
       {
         q: "Can we update the content ourselves?",
