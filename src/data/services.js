@@ -89,7 +89,7 @@ export const services = [
     meta: {
       title: "D2C ecommerce websites and Shopify storefronts",
       description:
-        "KY Creatives designs and builds D2C storefronts: Shopify and custom ecommerce, product pages, cart and checkout improvements, and mobile-first shopping.",
+        "KY Creatives designs and builds D2C storefronts: Shopify and custom ecommerce, product pages, cart and checkout improvements, and mobile first shopping.",
     },
     hero: {
       lines: ["Stores that make", "buying the easy part."],
