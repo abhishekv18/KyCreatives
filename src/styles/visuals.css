@@ -5,10 +5,10 @@
   font-family: var(--font-sans);
   color: var(--ky-ink);
   background: var(--ky-white);
-  border-radius: var(--radius-card);
+  border-radius: clamp(8px, 2vw, var(--radius-card));
   box-shadow: var(--shadow-float);
   overflow: hidden;
-  font-size: 12px;
+  font-size: clamp(10px, 1.5vw, 12px);
   line-height: 1.4;
   user-select: none;
   max-width: 100%;
@@ -19,14 +19,14 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.75rem;
+  font-size: clamp(0.6875rem, 1.2vw, 0.75rem);
   color: var(--text-muted);
 }
 
 .concept-label::before {
   content: "";
-  width: 6px;
-  height: 6px;
+  width: clamp(5px, 1vw, 6px);
+  height: clamp(5px, 1vw, 6px);
   border-radius: 50%;
   background: var(--ky-cobalt);
 }
@@ -35,65 +35,43 @@
   color: var(--text-on-dark-muted);
 }
 
-.bg-flame {
-  background: var(--grad-flame);
-}
-.bg-dusk {
-  background: var(--grad-dusk);
-}
-.bg-aqua {
-  background: var(--grad-aqua);
-}
-.bg-violet {
-  background: var(--ky-violet);
-}
-.bg-magenta {
-  background: var(--ky-magenta);
-}
-.bg-orange {
-  background: var(--ky-orange);
-}
-.bg-cyan {
-  background: var(--ky-cyan);
-}
-.bg-cobalt {
-  background: var(--ky-cobalt);
-}
+.bg-flame { background: var(--grad-flame); }
+.bg-dusk { background: var(--grad-dusk); }
+.bg-aqua { background: var(--grad-aqua); }
+.bg-violet { background: var(--ky-violet); }
+.bg-magenta { background: var(--ky-magenta); }
+.bg-orange { background: var(--ky-orange); }
+.bg-cyan { background: var(--ky-cyan); }
+.bg-cobalt { background: var(--ky-cobalt); }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: clamp(6px, 1.5vw, 8px);
+  height: clamp(6px, 1.5vw, 8px);
   border-radius: 50%;
   flex: none;
 }
-.dot--violet {
-  background: var(--ky-violet);
-}
-.dot--cobalt {
-  background: var(--ky-cobalt);
-}
-.dot--cyan {
-  background: var(--ky-cyan);
-}
+.dot--violet { background: var(--ky-violet); }
+.dot--cobalt { background: var(--ky-cobalt); }
+.dot--cyan { background: var(--ky-cyan); }
 
 /* ---------- Storefront PDP ---------- */
 .mock-pdp__nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 12px 18px;
+  gap: clamp(8px, 2vw, 12px);
+  padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 18px);
   border-bottom: 1px solid var(--m-line);
 }
 
 .mock-pdp__brand {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: clamp(13px, 2.5vw, 15px);
 }
 
 .mock-pdp__links {
   display: flex;
-  gap: 16px;
+  gap: clamp(10px, 2.5vw, 16px);
   color: var(--ky-slate);
 }
 
@@ -105,27 +83,27 @@
 
 .mock-pdp__icons {
   display: flex;
-  gap: 12px;
+  gap: clamp(8px, 2vw, 12px);
 }
 
 .mock-pdp__body {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   align-items: start;
-  gap: 20px;
-  padding: 18px;
+  gap: clamp(12px, 3vw, 20px);
+  padding: clamp(12px, 3vw, 18px);
 }
 
 .mock-pdp__gallery {
   display: grid;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 8px);
   min-width: 0;
 }
 
 .mock-pdp__hero {
   width: 100%;
   aspect-ratio: var(--ratio-project);
-  border-radius: 10px;
+  border-radius: clamp(6px, 1.5vw, 10px);
   background:
     radial-gradient(60% 45% at 50% 62%, #c98a5c 0 38%, transparent 39%),
     radial-gradient(48% 10% at 50% 85%, rgb(23 18 31 / 0.12), transparent 70%),
@@ -134,7 +112,6 @@
 }
 
 .mock-pdp__hero::after {
-  /* leaves of the plant */
   content: "";
   position: absolute;
   left: 30%;
@@ -150,12 +127,12 @@
 .mock-pdp__thumbs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
+  gap: clamp(4px, 1vw, 6px);
 }
 
 .mock-pdp__thumbs i {
   aspect-ratio: 1;
-  border-radius: 6px;
+  border-radius: clamp(4px, 1vw, 6px);
   background: #efe3d6;
   border: 1px solid transparent;
 }
@@ -167,18 +144,18 @@
 .mock-pdp__info {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: clamp(6px, 1.5vw, 10px);
   padding-top: 4px;
 }
 
 .mock-pdp__crumb {
   color: var(--ky-slate);
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 .mock-pdp__title {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: clamp(14px, 3vw, 18px);
   line-height: 1.25;
 }
 
@@ -193,30 +170,30 @@
   margin-left: 6px;
   color: var(--ky-slate);
   font-style: normal;
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 .mock-pdp__price {
   font-weight: 700;
-  font-size: 14px;
+  font-size: clamp(12px, 2.5vw, 14px);
 }
 
 .mock-pdp__label {
   color: var(--ky-slate);
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 .mock-pdp__sizes {
   display: flex;
-  gap: 6px;
+  gap: clamp(4px, 1vw, 6px);
 }
 
 .mock-pdp__sizes i {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 30px;
-  border-radius: 8px;
+  width: clamp(26px, 6vw, 34px);
+  height: clamp(24px, 5vw, 30px);
+  border-radius: clamp(6px, 1.5vw, 8px);
   border: 1px solid var(--m-line);
 }
 
@@ -228,9 +205,9 @@
 .mock-pdp__cta {
   display: grid;
   place-items: center;
-  height: 38px;
+  height: clamp(30px, 6vw, 38px);
   margin-top: 4px;
-  border-radius: 10px;
+  border-radius: clamp(8px, 2vw, 10px);
   background: var(--ky-ink);
   color: var(--ky-white);
   font-weight: 700;
@@ -241,30 +218,28 @@
   align-items: center;
   gap: 6px;
   color: var(--ky-slate);
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 /* ---------- Phone ---------- */
-/* Concept phones are a little shorter than a real screenshot frame, so the
-   designed screens fill them without an empty band above the tab bar. */
 .mock-phone {
-  width: 260px;
+  width: clamp(200px, 80vw, 260px);
   max-width: 100%;
   aspect-ratio: 390 / 730;
-  padding: 10px;
-  border-radius: 40px;
+  padding: clamp(6px, 2vw, 10px);
+  border-radius: clamp(30px, 10vw, 40px);
   background: var(--ky-ink);
   box-shadow: var(--shadow-float-lg);
 }
 
 .mock-phone__notch {
   position: absolute;
-  top: 18px;
+  top: clamp(12px, 3vw, 18px);
   left: 50%;
-  width: 84px;
-  height: 22px;
-  margin-left: -42px;
-  border-radius: 20px;
+  width: clamp(64px, 20vw, 84px);
+  height: clamp(16px, 4vw, 22px);
+  margin-left: clamp(-32px, -10vw, -42px);
+  border-radius: clamp(16px, 5vw, 20px);
   background: var(--ky-ink);
   z-index: 2;
 }
@@ -274,9 +249,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 14px 14px 64px;
-  border-radius: 31px;
+  gap: clamp(8px, 2vw, 12px);
+  padding: clamp(10px, 2vw, 14px) clamp(10px, 2vw, 14px) clamp(48px, 10vw, 64px);
+  border-radius: clamp(24px, 8vw, 31px);
   background: var(--ky-cloud);
   overflow: hidden;
 }
@@ -284,7 +259,7 @@
 .mock-phone__status {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: clamp(8px, 1.5vw, 10px);
   padding: 0 6px;
 }
 
@@ -292,16 +267,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
+  margin-top: clamp(8px, 2vw, 12px);
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: clamp(14px, 3vw, 17px);
 }
 
 .mock-phone__card {
   display: grid;
   gap: 4px;
-  padding: 14px;
-  border-radius: 16px;
+  padding: clamp(10px, 2vw, 14px);
+  border-radius: clamp(12px, 3vw, 16px);
   background: var(--ky-white);
 }
 
@@ -311,13 +286,13 @@
 }
 
 .mock-phone__card strong {
-  font-size: 18px;
+  font-size: clamp(15px, 3vw, 18px);
 }
 
 .mock-phone__card em {
   font-style: normal;
   font-weight: 700;
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
   opacity: 0.9;
   color: inherit;
 }
@@ -329,26 +304,28 @@
 .mock-phone__row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 8px);
 }
 
 .mock-phone__tile {
   display: grid;
   justify-items: center;
   gap: 6px;
-  padding: 12px 4px;
-  border-radius: 14px;
+  padding: clamp(8px, 2vw, 12px) 4px;
+  border-radius: clamp(10px, 2vw, 14px);
   background: var(--ky-white);
-  font-size: 10.5px;
+  font-size: clamp(9px, 1.5vw, 10.5px);
 }
 
 .mock-phone__tile svg {
   color: var(--ky-violet);
+  width: clamp(14px, 3vw, 18px);
+  height: clamp(14px, 3vw, 18px);
 }
 
 .mock-phone__list {
   display: grid;
-  gap: 6px;
+  gap: clamp(4px, 1vw, 6px);
 }
 
 .mock-phone__list span {
@@ -356,15 +333,15 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 8px;
-  padding: 10px;
-  border-radius: 12px;
+  padding: clamp(8px, 1.5vw, 10px);
+  border-radius: clamp(8px, 2vw, 12px);
   background: var(--ky-white);
-  font-size: 10.5px;
+  font-size: clamp(9px, 1.5vw, 10.5px);
 }
 
 .mock-phone__list i {
-  width: 8px;
-  height: 8px;
+  width: clamp(6px, 1.5vw, 8px);
+  height: clamp(6px, 1.5vw, 8px);
   border-radius: 50%;
   background: var(--ky-cyan);
 }
@@ -372,16 +349,16 @@
 .mock-phone__steps {
   display: grid;
   gap: 2px;
-  padding: 12px;
-  border-radius: 16px;
+  padding: clamp(8px, 2vw, 12px);
+  border-radius: clamp(12px, 3vw, 16px);
   background: var(--ky-white);
 }
 
 .mock-phone__steps span {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 0;
+  gap: clamp(6px, 1.5vw, 10px);
+  padding: clamp(6px, 1vw, 8px) 0;
   color: var(--ky-slate);
 }
 
@@ -392,8 +369,8 @@
 .mock-phone__steps i {
   display: grid;
   place-items: center;
-  width: 20px;
-  height: 20px;
+  width: clamp(16px, 3.5vw, 20px);
+  height: clamp(16px, 3.5vw, 20px);
   border-radius: 50%;
   border: 1.5px solid rgb(23 18 31 / 0.2);
   color: var(--ky-white);
@@ -406,18 +383,18 @@
 
 .mock-phone__tabbar {
   position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 14px;
+  left: clamp(10px, 2vw, 14px);
+  right: clamp(10px, 2vw, 14px);
+  bottom: clamp(10px, 2vw, 14px);
   display: flex;
   justify-content: space-around;
-  padding: 14px;
-  border-radius: 18px;
+  padding: clamp(10px, 2vw, 14px);
+  border-radius: clamp(14px, 3vw, 18px);
   background: var(--ky-white);
 }
 
 .mock-phone__tabbar i {
-  width: 18px;
+  width: clamp(14px, 3vw, 18px);
   height: 4px;
   border-radius: 4px;
   background: rgb(23 18 31 / 0.15);
@@ -427,10 +404,9 @@
   background: var(--ky-violet);
 }
 
-/* Store screens (product page and bag), used for D2C */
 .mock-phone--product .mock-phone__screen,
 .mock-phone--cart .mock-phone__screen {
-  padding-bottom: 14px;
+  padding-bottom: clamp(10px, 2vw, 14px);
   background: var(--ky-white);
 }
 
@@ -438,37 +414,36 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 12px;
+  margin-top: clamp(8px, 2vw, 12px);
   padding: 0 4px;
 }
 
 .mock-phone__shopname {
   font-family: var(--font-display);
-  font-size: 17px;
+  font-size: clamp(14px, 3vw, 17px);
   letter-spacing: 0.02em;
 }
 
 .mock-phone__shopicons {
   display: flex;
-  gap: 12px;
+  gap: clamp(8px, 2vw, 12px);
 }
 
 .mock-phone__product {
   position: relative;
   display: grid;
   place-items: center;
-  height: 210px;
-  border-radius: 18px;
+  height: clamp(160px, 40vw, 210px);
+  border-radius: clamp(14px, 3vw, 18px);
   background:
     radial-gradient(60% 50% at 50% 80%, rgb(23 18 31 / 0.12), transparent 70%),
     linear-gradient(160deg, #fbe7dd 0%, #f6d3c4 100%);
 }
 
-/* a simple vase: body and neck, in Flame */
 .mock-phone__vase {
   position: relative;
-  width: 74px;
-  height: 104px;
+  width: clamp(60px, 15vw, 74px);
+  height: clamp(84px, 20vw, 104px);
   margin-top: 18px;
   border-radius: 46% 46% 40% 40% / 38% 38% 52% 52%;
   background: linear-gradient(150deg, var(--ky-orange), var(--ky-magenta));
@@ -480,9 +455,9 @@
   position: absolute;
   left: 50%;
   top: -22px;
-  width: 30px;
-  height: 28px;
-  margin-left: -15px;
+  width: clamp(24px, 6vw, 30px);
+  height: clamp(22px, 5vw, 28px);
+  margin-left: clamp(-12px, -3vw, -15px);
   border-radius: 6px 6px 10px 10px;
   background: linear-gradient(150deg, #ffa553, #ec5a83);
 }
@@ -494,7 +469,7 @@
   padding: 3px 8px;
   border-radius: 999px;
   background: var(--ky-white);
-  font-size: 9.5px;
+  font-size: clamp(8px, 1.5vw, 9.5px);
   font-weight: 700;
 }
 
@@ -507,14 +482,14 @@
 
 .mock-phone__dots i,
 .mock-phone__swatches i {
-  width: 6px;
-  height: 6px;
+  width: clamp(4px, 1vw, 6px);
+  height: clamp(4px, 1vw, 6px);
   border-radius: 50%;
   background: rgb(23 18 31 / 0.2);
 }
 
 .mock-phone__dots i.is-on {
-  width: 14px;
+  width: clamp(10px, 2vw, 14px);
   border-radius: 3px;
   background: var(--ky-ink);
 }
@@ -527,7 +502,7 @@
 
 .mock-phone__pname {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: clamp(13px, 2.5vw, 15px);
 }
 
 .mock-phone__prow {
@@ -537,42 +512,39 @@
 }
 
 .mock-phone__prow strong {
-  font-size: 15px;
+  font-size: clamp(13px, 2.5vw, 15px);
 }
 
 .mock-phone__stars {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 10.5px;
+  font-size: clamp(9px, 1.5vw, 10.5px);
   color: var(--ky-slate);
 }
 
 .mock-phone__stars svg {
   color: var(--ky-orange);
   fill: var(--ky-orange);
+  width: clamp(10px, 2vw, 12px);
+  height: clamp(10px, 2vw, 12px);
 }
 
 .mock-phone__swatches {
   display: flex;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 8px);
   margin-top: 2px;
 }
 
 .mock-phone__swatches i {
-  width: 16px;
-  height: 16px;
+  width: clamp(12px, 3vw, 16px);
+  height: clamp(12px, 3vw, 16px);
   background: #e9c8b5;
   box-shadow: 0 0 0 1px rgb(23 18 31 / 0.08);
 }
 
-.mock-phone__swatches i:nth-child(2) {
-  background: #b45f4b;
-}
-
-.mock-phone__swatches i:nth-child(3) {
-  background: var(--ky-ink);
-}
+.mock-phone__swatches i:nth-child(2) { background: #b45f4b; }
+.mock-phone__swatches i:nth-child(3) { background: var(--ky-ink); }
 
 .mock-phone__swatches i.is-on {
   box-shadow:
@@ -586,32 +558,32 @@
   justify-content: center;
   gap: 6px;
   margin-top: auto;
-  padding: 13px;
-  border-radius: 14px;
+  padding: clamp(10px, 2vw, 13px);
+  border-radius: clamp(10px, 2vw, 14px);
   background: var(--ky-ink);
   color: var(--ky-white);
-  font-size: 12px;
+  font-size: clamp(10px, 2vw, 12px);
   font-weight: 700;
 }
 
 .mock-phone__count {
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: clamp(9px, 1.5vw, 10.5px);
   color: var(--ky-slate);
 }
 
 .mock-phone__items {
   display: grid;
-  gap: 8px;
+  gap: clamp(6px, 1.5vw, 8px);
 }
 
 .mock-phone__item {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 10px;
-  padding: 8px;
-  border-radius: 14px;
+  gap: clamp(6px, 1.5vw, 10px);
+  padding: clamp(6px, 1.5vw, 8px);
+  border-radius: clamp(10px, 2vw, 14px);
   background: var(--ky-cloud);
 }
 
@@ -621,24 +593,24 @@
 }
 
 .mock-phone__item b {
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
   font-weight: 600;
 }
 
 .mock-phone__item em {
   font-style: normal;
-  font-size: 9.5px;
+  font-size: clamp(8px, 1.2vw, 9.5px);
   color: var(--ky-slate);
 }
 
 .mock-phone__item strong {
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 .mock-phone__thumb {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: clamp(36px, 8vw, 44px);
+  height: clamp(36px, 8vw, 44px);
+  border-radius: clamp(8px, 1.5vw, 10px);
   background:
     radial-gradient(circle at 50% 62%, var(--ky-magenta) 0 14px, transparent 15px),
     linear-gradient(160deg, #fbe7dd, #f6d3c4);
@@ -652,10 +624,10 @@
 
 .mock-phone__totals {
   display: grid;
-  gap: 8px;
-  padding: 12px 4px;
+  gap: clamp(6px, 1.5vw, 8px);
+  padding: clamp(8px, 2vw, 12px) 4px;
   border-top: 1px solid rgb(23 18 31 / 0.08);
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 .mock-phone__totals span {
@@ -672,7 +644,7 @@
 
 .mock-phone__totals b {
   color: var(--ky-ink);
-  font-size: 13px;
+  font-size: clamp(11px, 2vw, 13px);
 }
 
 .mock-phone__note {
@@ -680,22 +652,22 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-size: 10px;
+  font-size: clamp(8px, 1.2vw, 10px);
   color: var(--ky-slate);
 }
 
 /* ---------- Portal ---------- */
 .mock-portal {
   display: grid;
-  grid-template-columns: 150px 1fr;
-  min-height: 320px;
+  grid-template-columns: clamp(100px, 25vw, 150px) 1fr;
+  min-height: clamp(280px, 40vw, 320px);
 }
 
 .mock-portal__side {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 16px 12px;
+  padding: clamp(12px, 2vw, 16px) clamp(8px, 2vw, 12px);
   background: var(--ky-ink);
   color: rgb(255 255 255 / 0.7);
 }
@@ -704,11 +676,13 @@
   margin-bottom: 12px;
   color: var(--ky-white);
   font-weight: 700;
+  font-size: clamp(11px, 2vw, 13px);
 }
 
 .mock-portal__side span:not(.mock-portal__org):not(.mock-portal__role) {
-  padding: 7px 10px;
-  border-radius: 8px;
+  padding: clamp(4px, 1vw, 7px) clamp(6px, 1.5vw, 10px);
+  border-radius: clamp(6px, 1.5vw, 8px);
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 .mock-portal__side span.is-on {
@@ -721,15 +695,16 @@
   align-items: center;
   gap: 6px;
   margin-top: auto;
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
   color: var(--ky-cyan);
 }
 
 .mock-portal__main {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 16px;
+  gap: clamp(10px, 2vw, 14px);
+  padding: clamp(12px, 2vw, 16px);
+  min-width: 0;
 }
 
 .mock-portal__head {
@@ -737,24 +712,24 @@
   justify-content: space-between;
   align-items: center;
   font-weight: 700;
-  font-size: 14px;
+  font-size: clamp(12px, 2.5vw, 14px);
 }
 
 .mock-portal__search {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
-  border-radius: 8px;
+  padding: clamp(4px, 1vw, 6px) clamp(6px, 1.5vw, 10px);
+  border-radius: clamp(6px, 1.5vw, 8px);
   border: 1px solid var(--m-line);
   color: var(--ky-slate);
   font-weight: 400;
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 .mock-portal__table {
   border: 1px solid var(--m-line);
-  border-radius: 10px;
+  border-radius: clamp(8px, 2vw, 10px);
   overflow: hidden;
 }
 
@@ -762,22 +737,22 @@
   display: grid;
   grid-template-columns: 1.3fr 1.2fr 0.5fr;
   align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
+  gap: clamp(6px, 1.5vw, 8px);
+  padding: clamp(8px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
   border-top: 1px solid var(--m-line);
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 .mock-portal__th {
   border-top: 0;
   background: var(--ky-cloud);
   color: var(--ky-slate);
-  font-size: 11px;
 }
 
 .mock-portal__avatar {
   justify-self: end;
-  width: 20px;
-  height: 20px;
+  width: clamp(16px, 3vw, 20px);
+  height: clamp(16px, 3vw, 20px);
   border-radius: 50%;
   background: var(--grad-aqua);
 }
@@ -786,50 +761,43 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
 }
 
 .mock-status::before {
   content: "";
-  width: 7px;
-  height: 7px;
+  width: clamp(5px, 1vw, 7px);
+  height: clamp(5px, 1vw, 7px);
   border-radius: 50%;
 }
 
-.mock-status--ok::before {
-  background: var(--ky-success);
-}
-.mock-status--warn::before {
-  background: var(--ky-warning);
-}
-.mock-status--info::before {
-  background: var(--ky-info);
-}
+.mock-status--ok::before { background: var(--ky-success); }
+.mock-status--warn::before { background: var(--ky-warning); }
+.mock-status--info::before { background: var(--ky-info); }
 
 .mock-portal__note {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: clamp(8px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
+  border-radius: clamp(8px, 2vw, 10px);
   background: var(--ky-cloud);
   color: var(--ky-slate);
-  font-size: 11px;
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 /* ---------- Dashboard ---------- */
 .mock-dash__top {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
+  gap: clamp(10px, 2vw, 16px);
+  padding: clamp(8px, 2vw, 12px) clamp(12px, 2vw, 16px);
   border-bottom: 1px solid var(--m-line);
 }
 
 .mock-dash__logo {
-  width: 22px;
-  height: 22px;
-  border-radius: 7px;
+  width: clamp(18px, 4vw, 22px);
+  height: clamp(18px, 4vw, 22px);
+  border-radius: clamp(5px, 1.5vw, 7px);
   background: var(--grad-dusk);
 }
 
@@ -837,11 +805,12 @@
   display: flex;
   gap: 4px;
   color: var(--ky-slate);
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
 .mock-dash__tabs i {
-  padding: 5px 10px;
-  border-radius: 8px;
+  padding: clamp(4px, 1vw, 5px) clamp(6px, 1.5vw, 10px);
+  border-radius: clamp(6px, 1.5vw, 8px);
 }
 
 .mock-dash__tabs i.is-on {
@@ -851,8 +820,8 @@
 }
 
 .mock-dash__user {
-  width: 24px;
-  height: 24px;
+  width: clamp(18px, 4vw, 24px);
+  height: clamp(18px, 4vw, 24px);
   margin-left: auto;
   border-radius: 50%;
   background: var(--grad-aqua);
@@ -861,29 +830,29 @@
 .mock-dash__body {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: 14px;
-  padding: 16px;
+  gap: clamp(10px, 2vw, 14px);
+  padding: clamp(12px, 2vw, 16px);
 }
 
 .mock-dash__col {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 14px;
-  border-radius: 12px;
+  padding: clamp(10px, 2vw, 14px);
+  border-radius: clamp(8px, 2vw, 12px);
   border: 1px solid var(--m-line);
 }
 
 .mock-dash__h {
   font-weight: 700;
-  font-size: 13px;
+  font-size: clamp(11px, 2vw, 13px);
 }
 
 .mock-dash__cal {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  height: 140px;
+  gap: clamp(6px, 1.5vw, 8px);
+  height: clamp(100px, 20vw, 140px);
   align-items: end;
 }
 
@@ -898,11 +867,11 @@
 .mock-dash__cal span {
   text-align: center;
   color: var(--ky-slate);
-  font-size: 10.5px;
+  font-size: clamp(8px, 1.5vw, 10.5px);
 }
 
 .mock-dash__cal i {
-  border-radius: 6px;
+  border-radius: clamp(4px, 1vw, 6px);
   background: linear-gradient(180deg, var(--ky-violet), var(--ky-cobalt));
   opacity: 0.85;
 }
@@ -911,29 +880,27 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 0;
+  padding: clamp(6px, 1.5vw, 8px) 0;
   border-bottom: 1px solid var(--m-line);
 }
 
 .mock-dash__btn {
   display: grid;
   place-items: center;
-  height: 32px;
+  height: clamp(26px, 5vw, 32px);
   margin-top: auto;
-  border-radius: 9px;
+  border-radius: clamp(6px, 1.5vw, 9px);
   background: var(--ky-violet);
   color: var(--ky-white);
   font-weight: 700;
+  font-size: clamp(9px, 1.5vw, 11px);
 }
 
-/* ---------- Campaign creative set ----------
-   Every size is in container units (cqi = 1% of the set's width), so the
-   three formats keep their proportions at any size. */
+/* ---------- Campaign creative set ---------- */
 .cset {
   container-type: inline-size;
   position: relative;
   width: 100%;
-  /* tall enough that the listing sits below the story's button */
   aspect-ratio: 1 / 1.06;
   font-family: var(--font-sans);
 }
@@ -954,7 +921,6 @@
   letter-spacing: -0.02em;
 }
 
-/* 1:1 feed post */
 .cset__post {
   left: 0;
   top: 4%;
@@ -1038,7 +1004,6 @@
   background: var(--ky-white);
 }
 
-/* 9:16 story */
 .cset__story {
   right: 0;
   top: 0;
@@ -1087,7 +1052,6 @@
   font-size: 4.9cqi;
 }
 
-/* the one Flame moment in the set */
 .cset__story .cset__head::after {
   content: "";
   display: block;
@@ -1110,7 +1074,6 @@
   font-weight: 700;
 }
 
-/* organic search listing */
 .cset__serp {
   left: 6%;
   bottom: 0;
@@ -1162,9 +1125,7 @@
   color: var(--ky-slate);
 }
 
-/* ---------- Identity set ----------
-   The website on screen, the guidelines cover at A4 proportion, the palette
-   and the flame mark as an app icon. Sizes in container units, as above. */
+/* ---------- Identity set ---------- */
 .iset {
   container-type: inline-size;
   position: relative;
@@ -1182,7 +1143,6 @@
   display: block;
 }
 
-/* The website on screen: browser chrome and a page built from the identity */
 .iset__web {
   left: 0;
   top: 4%;
@@ -1225,8 +1185,6 @@
   color: var(--ky-slate);
 }
 
-/* A design canvas: tool rail, the board (logo construction and type) and a
-   layers panel. Sizes in container units. */
 .iset__canvas {
   flex: 1;
   display: grid;
@@ -1272,8 +1230,6 @@
   color: var(--ky-slate);
 }
 
-/* the artboard: the flame mark on a fine grid, with construction circles
-   and a selection box, as in a design tool */
 .iset__frame {
   position: relative;
   display: grid;
@@ -1324,27 +1280,11 @@
   border: 1px solid var(--ky-cobalt);
 }
 
-.iset__select b:nth-child(1) {
-  left: -0.5cqi;
-  top: -0.5cqi;
-}
+.iset__select b:nth-child(1) { left: -0.5cqi; top: -0.5cqi; }
+.iset__select b:nth-child(2) { right: -0.5cqi; top: -0.5cqi; }
+.iset__select b:nth-child(3) { left: -0.5cqi; bottom: -0.5cqi; }
+.iset__select b:nth-child(4) { right: -0.5cqi; bottom: -0.5cqi; }
 
-.iset__select b:nth-child(2) {
-  right: -0.5cqi;
-  top: -0.5cqi;
-}
-
-.iset__select b:nth-child(3) {
-  left: -0.5cqi;
-  bottom: -0.5cqi;
-}
-
-.iset__select b:nth-child(4) {
-  right: -0.5cqi;
-  bottom: -0.5cqi;
-}
-
-/* type specimen */
 .iset__type {
   display: grid;
   align-content: start;
@@ -1384,7 +1324,6 @@
   color: var(--ky-slate);
 }
 
-/* layers panel */
 .iset__layers {
   display: grid;
   align-content: start;
@@ -1422,8 +1361,6 @@
   background: var(--ky-cobalt);
 }
 
-/* Home services panel: the shorter set (no components sheet), so it fits
-   the panel on short laptop screens. The service page keeps the full set. */
 .sv--design .iset {
   aspect-ratio: 1 / 0.8;
 }
@@ -1432,7 +1369,6 @@
   display: none;
 }
 
-/* components sheet: buttons, an input and controls in the brand system */
 .iset__comp {
   left: 3%;
   top: 65%;
@@ -1497,7 +1433,6 @@
   color: var(--ky-ink);
 }
 
-/* a blinking caret, as if someone is typing */
 .iset__input i {
   width: 1px;
   height: 1.6cqi;
@@ -1506,9 +1441,7 @@
 }
 
 @keyframes isetCaret {
-  50% {
-    opacity: 0;
-  }
+  50% { opacity: 0; }
 }
 
 .iset__toggle {
@@ -1550,7 +1483,6 @@
   }
 }
 
-/* A4 guidelines cover on Ink */
 .iset__book {
   left: 50%;
   top: 30%;
@@ -1595,7 +1527,6 @@
   background: var(--grad-flame);
 }
 
-/* palette card: the six brand colours, as on a swatch book */
 .iset__palette {
   right: 0;
   top: 2%;
@@ -1627,7 +1558,6 @@
   border-radius: 50%;
 }
 
-/* app icon: the round flame mark set on a matching tile */
 .iset__icon {
   right: 0;
   bottom: 2%;

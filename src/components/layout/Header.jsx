@@ -63,20 +63,23 @@ function useHeaderState(pathname, headerRef) {
 
 /* Studio local time: a small, true detail for an international studio. */
 const timeFormat = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit" });
+// function StudioClock() {
+//   const [now, setNow] = useState(() => timeFormat.format(new Date()));
+//   useEffect(() => {
+//     const id = setInterval(() => setNow(timeFormat.format(new Date())), 20000);
+//     return () => clearInterval(id);
+//   }, []);
+//   return (
+//     <p className="site-header__clock t-meta">
+//       <span className="site-header__clock-dot" aria-hidden="true" />
+//       Gurugram <span className="site-header__clock-time">{now}</span> IST
+//     </p>
+   
+//   );
+// }
 function StudioClock() {
-  const [now, setNow] = useState(() => timeFormat.format(new Date()));
-  useEffect(() => {
-    const id = setInterval(() => setNow(timeFormat.format(new Date())), 20000);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <p className="site-header__clock t-meta">
-      <span className="site-header__clock-dot" aria-hidden="true" />
-      Gurugram <span className="site-header__clock-time">{now}</span> IST
-    </p>
-  );
+  return null;
 }
-
 /* A soft highlight that glides to whichever link is hovered or focused. */
 function useNavIndicator(listRef) {
   const move = useCallback(

@@ -13,6 +13,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-padding-top: calc(var(--header-h) + 16px);
+  overflow-x: hidden;
 }
 
 html.lenis,
@@ -86,10 +87,12 @@ h3,
 h4 {
   font-weight: 400;
   text-wrap: balance;
+  overflow-wrap: break-word;
 }
 
 p {
   text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 ::selection {
@@ -176,6 +179,7 @@ p {
   font-size: var(--fs-h1);
   line-height: var(--lh-h1);
   letter-spacing: var(--ls-h1);
+  max-width: 20ch;
 }
 
 .t-h2 {
@@ -183,6 +187,7 @@ p {
   font-size: var(--fs-h2);
   line-height: var(--lh-h2);
   letter-spacing: var(--ls-h2);
+  max-width: 22ch;
 }
 
 .t-h3 {
@@ -191,6 +196,7 @@ p {
   line-height: var(--lh-h3);
   font-weight: 500;
   letter-spacing: -0.01em;
+  max-width: 30ch;
 }
 
 .t-lead {
@@ -246,8 +252,9 @@ p {
   align-items: center;
   justify-content: center;
   gap: var(--btn-gap);
-  min-height: var(--btn-h);
-  padding: 0 var(--btn-px);
+  min-height: clamp(2.75rem, 5vw, 3.25rem);
+  padding-inline: clamp(1.25rem, 3vw, var(--btn-px));
+  padding-block: clamp(0.5rem, 1.5vw, 0.75rem);
   border-radius: var(--radius-control);
   border: 1px solid var(--btn-border);
   background: var(--btn-bg);
@@ -255,9 +262,10 @@ p {
   font-family: var(--font-sans);
   font-size: var(--fs-button);
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.2;
   letter-spacing: 0.005em;
-  white-space: nowrap;
+  text-align: center;
+  text-wrap: balance;
   overflow: hidden;
   isolation: isolate;
   transition:
@@ -344,18 +352,9 @@ p {
   --btn-bg: var(--ky-cloud);
 }
 
-@media (max-width: 399px) {
-  .btn {
-    white-space: normal;
-    text-align: center;
-    line-height: 1.25;
-    padding-block: 12px;
-  }
-}
-
 .btn--sm {
   min-height: var(--btn-h-sm);
-  padding: 0 18px;
+  padding: 0 clamp(1rem, 2vw, 1.125rem);
   font-size: var(--fs-button-sm);
 }
 
@@ -368,6 +367,7 @@ p {
   font-weight: 700;
   color: var(--link);
   min-height: 44px;
+  text-wrap: balance;
 }
 
 .on-dark .link-u {
@@ -399,6 +399,7 @@ p {
 
 .link-u svg {
   transition: transform var(--dur-base) var(--ease-out);
+  flex-shrink: 0;
 }
 
 .link-u:hover svg {
@@ -411,7 +412,7 @@ p {
 .rule-aqua {
   display: block;
   height: 2px;
-  width: 64px;
+  width: clamp(3rem, 5vw, 4rem);
   border-radius: 2px;
 }
 

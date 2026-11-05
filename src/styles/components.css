@@ -14,6 +14,7 @@
   width: auto;
   height: 1.7em;
   filter: drop-shadow(0 2px 6px rgb(123 77 217 / 0.25));
+  flex-shrink: 0;
 }
 
 .logo__word {
@@ -39,26 +40,28 @@
   box-shadow: var(--shadow-float);
   overflow: hidden;
   border: 1px solid rgb(23 18 31 / 0.06);
+  min-width: 0;
 }
 
 .browser__bar {
   display: flex;
   align-items: center;
-  gap: 12px;
-  height: 36px;
-  padding: 0 14px;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
+  height: clamp(2rem, 4.5vw, 2.25rem);
+  padding: 0 clamp(0.625rem, 2vw, 0.875rem);
   border-bottom: 1px solid var(--line);
   background: #fbfafd;
 }
 
 .browser__dots {
   display: inline-flex;
-  gap: 6px;
+  gap: clamp(0.25rem, 1.5vw, 0.375rem);
+  flex-shrink: 0;
 }
 
 .browser__dots i {
-  width: 8px;
-  height: 8px;
+  width: clamp(6px, 1.5vw, 8px);
+  height: clamp(6px, 1.5vw, 8px);
   border-radius: 50%;
   background: rgb(23 18 31 / 0.14);
 }
@@ -66,13 +69,16 @@
 .browser__url {
   font-size: var(--fs-meta-sm);
   color: var(--text-muted);
-  padding: 2px 10px;
+  padding: 2px clamp(0.5rem, 1.5vw, 0.625rem);
   border-radius: 6px;
   background: rgb(23 18 31 / 0.04);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
+  flex: 1;
+  max-width: 70%;
+  margin-inline: auto;
 }
 
 .browser__view {
@@ -129,8 +135,8 @@
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding: 24px 0;
+  gap: clamp(1rem, 4vw, 1.5rem);
+  padding: clamp(1rem, 3vw, 1.5rem) 0;
   text-align: left;
 }
 
@@ -145,9 +151,10 @@
 }
 
 .faq__a {
-  padding: 0 0 28px;
-  max-width: 62ch;
+  padding: 0 0 clamp(1.25rem, 3vw, 1.75rem);
+  max-width: 65ch;
   color: var(--text-muted);
+  text-wrap: pretty;
 }
 
 .faq__q button:hover span {
@@ -157,8 +164,9 @@
 /* ---------- Section intro (heading + optional lead), left aligned ---------- */
 .intro {
   display: grid;
-  gap: var(--s-3);
+  gap: clamp(1rem, 2.5vw, 1.5rem);
   max-width: 46rem;
+  min-width: 0;
 }
 
 .intro--split {
@@ -176,7 +184,7 @@
 .kicker {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: clamp(0.5rem, 1.5vw, 0.75rem);
   color: var(--text-muted);
 }
 
@@ -186,10 +194,11 @@
 
 .kicker::before {
   content: "";
-  width: 24px;
+  width: clamp(1rem, 2vw, 1.5rem);
   height: 2px;
   border-radius: 2px;
   background: var(--grad-flame);
+  flex-shrink: 0;
 }
 
 .kicker--dusk::before {
@@ -209,7 +218,7 @@
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: clamp(0.375rem, 1vw, 0.5rem);
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
   color: var(--text-muted);
@@ -217,10 +226,11 @@
 
 .tag::before {
   content: "";
-  width: 7px;
-  height: 7px;
+  width: clamp(6px, 1.5vw, 7px);
+  height: clamp(6px, 1.5vw, 7px);
   border-radius: 50%;
   background: var(--ky-success);
+  flex-shrink: 0;
 }
 
 .tag--scoped::before {

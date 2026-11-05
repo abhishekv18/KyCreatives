@@ -2,7 +2,8 @@
    LAPTOP with designed, sliding screens (consultation section)
    ========================================================= */
 .laptop {
-  width: min(100%, 640px);
+  width: clamp(280px, 85%, 42rem);
+  margin-inline: auto;
   margin-top: var(--s-3);
   filter: drop-shadow(0 40px 50px rgb(23 18 31 / 0.22));
 }
@@ -10,7 +11,7 @@
 .laptop__lid {
   position: relative;
   padding: 2.6% 2.6% 3%;
-  border-radius: 18px 18px 6px 6px;
+  border-radius: clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px) 6px 6px;
   background: linear-gradient(180deg, #2a2433 0%, #17121f 100%);
   box-shadow:
     inset 0 0 0 1px rgb(255 255 255 / 0.08),
@@ -145,7 +146,7 @@
 
 .laptop__base {
   position: relative;
-  height: 16px;
+  height: clamp(10px, 1.5vw, 16px);
   margin: 0 -7%;
   border-radius: 2px 2px 16px 16px;
   background: linear-gradient(180deg, #f0eef4 0%, #d4d0dc 45%, #a9a4b4 100%);
@@ -177,6 +178,7 @@
   font-family: var(--font-sans);
   color: var(--ky-ink);
   background: linear-gradient(180deg, var(--ky-white) 0%, #f8f6fc 100%);
+  min-width: 0;
 }
 
 .ls-nav {
@@ -424,6 +426,7 @@
   box-shadow:
     0 0 0 1px rgb(23 18 31 / 0.06),
     0 2cqi 3cqi -2cqi rgb(23 18 31 / 0.2);
+  min-width: 0;
 }
 
 .ls-card > i {
@@ -468,6 +471,7 @@
 
 .ls-dash {
   padding: 2.6cqi 3.4cqi 4.6cqi;
+  min-width: 0;
 }
 
 .ls-stats {
@@ -1085,8 +1089,7 @@
 /* smaller, centred laptop on phones and small tablets */
 @media (max-width: 767px) {
   .laptop {
-    width: 88%;
-    margin-inline: auto;
+    width: 85%;
   }
   .laptop__lid {
     border-radius: 12px 12px 4px 4px;
@@ -1109,7 +1112,7 @@
 .qe__points[role="list"] {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 22px;
+  gap: 8px clamp(1rem, 2.5vw, 1.5rem);
   margin-top: var(--s-2);
 }
 
@@ -1124,6 +1127,7 @@
 
 .qe__points svg {
   color: var(--qe-accent);
+  flex-shrink: 0;
 }
 
 .qe__live {
@@ -1132,6 +1136,7 @@
   border-radius: 50%;
   background: var(--ky-success);
   box-shadow: 0 0 0 4px rgb(22 160 107 / 0.15);
+  flex-shrink: 0;
 }
 
 .qe__needs {
@@ -1204,7 +1209,7 @@
 
 .pf-stack {
   position: relative;
-  width: min(100%, 520px);
+  width: min(100%, clamp(320px, 40vw, 540px));
   aspect-ratio: 1 / 0.92;
   margin-inline: auto;
 }
@@ -1214,9 +1219,9 @@
   width: 54%;
   margin: 0;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: clamp(10px, 1.5vw, 16px);
   background: var(--ky-white);
-  box-shadow: 0 40px 70px -30px rgb(0 0 0 / 0.7);
+  box-shadow: 0 clamp(20px, 3vw, 40px) clamp(40px, 5vw, 70px) -30px rgb(0 0 0 / 0.7);
   animation: pfFloat 8s ease-in-out infinite alternate;
 }
 
@@ -1261,7 +1266,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
+  padding: clamp(6px, 1.5vw, 12px) clamp(10px, 2vw, 16px);
   border-radius: 999px;
   background: rgb(255 255 255 / 0.96);
   box-shadow: 0 20px 40px -18px rgb(0 0 0 / 0.6);
@@ -1276,6 +1281,7 @@
   height: 8px;
   border-radius: 50%;
   background: var(--ky-success);
+  flex-shrink: 0;
 }
 
 .pf-stack__badge--a {
@@ -1470,13 +1476,9 @@
   background: var(--c);
 }
 
-/* a little smaller everywhere */
-.laptop {
-  width: min(92%, 560px);
-}
-
-@media (max-width: 767px) {
+/* Ultra-wide screens: let the laptop scale up nicely */
+@media (min-width: 1680px) {
   .laptop {
-    width: 78%;
+    width: clamp(42rem, 45vw, 52rem);
   }
 }

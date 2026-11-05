@@ -125,6 +125,7 @@
   position: relative;
   display: grid;
   gap: var(--s-4);
+  min-width: 0;
 }
 
 .cta__kicker {
@@ -140,6 +141,7 @@
   line-height: var(--lh-h2);
   letter-spacing: var(--ls-h2);
   max-width: 16ch;
+  text-wrap: balance;
 }
 
 /* the narrowest phones: a touch smaller, so two lines still fit */
@@ -163,6 +165,7 @@
   display: grid;
   gap: var(--s-4);
   margin-top: var(--s-2);
+  min-width: 0;
 }
 
 @media (min-width: 960px) {
@@ -176,6 +179,7 @@
   max-width: 46ch;
   font-size: var(--fs-lead);
   line-height: var(--lh-body);
+  text-wrap: pretty;
 }
 
 .cta__actions {
@@ -195,6 +199,7 @@
   font-size: var(--fs-button);
   background: var(--ky-ink);
   color: var(--ky-white);
+  white-space: nowrap;
 }
 
 .cta__button > span:first-child {
@@ -230,6 +235,7 @@
   min-height: 44px;
   font-weight: 700;
   border-bottom: 2px solid var(--ky-ink);
+  white-space: nowrap;
 }
 
 /* Wide screens: the button sits in the centre of the light circle with the
@@ -308,6 +314,7 @@
   line-height: var(--lh-title);
   letter-spacing: var(--ls-title);
   color: var(--ky-white);
+  text-wrap: balance;
 }
 
 .footer__mail {
@@ -320,6 +327,7 @@
   color: rgb(255 255 255 / 0.82);
   background: linear-gradient(currentColor, currentColor) 0 calc(100% - 8px) / 100% 1px no-repeat;
   transition: color var(--dur-fast) var(--ease-out);
+  word-break: break-all;
 }
 
 .footer__mail:hover {
@@ -329,6 +337,7 @@
 .footer__mail svg {
   color: var(--ky-cyan);
   transition: transform 300ms var(--ease-out);
+  flex-shrink: 0;
 }
 
 .footer__mail:hover svg {
@@ -348,6 +357,7 @@
   font-weight: 700;
   font-size: var(--fs-button);
   transition: background-color 300ms var(--ease-out);
+  white-space: nowrap;
 }
 
 @media (min-width: 960px) {
@@ -365,6 +375,7 @@
   background: var(--ky-violet);
   color: var(--ky-white);
   transition: transform 400ms var(--ease-out);
+  flex-shrink: 0;
 }
 
 .footer__cta:hover {
@@ -421,6 +432,7 @@
   font-size: var(--fs-small);
   line-height: 1.6;
   color: var(--text-on-dark-muted);
+  text-wrap: pretty;
 }
 
 .footer__h {
@@ -453,6 +465,7 @@
 
 .footer__col a svg {
   color: rgb(255 255 255 / 0.5);
+  flex-shrink: 0;
 }
 
 /* Follow column: a small brand mark before each network */
@@ -515,6 +528,8 @@
   user-select: none;
   /* clip exactly at the hairline, so letters appear to rise out of it */
   clip-path: inset(-0.4em 0 0.138em 0);
+  max-width: 100vw;
+  overflow: hidden;
 }
 
 .footer__word {
@@ -650,6 +665,10 @@
     width: 100%;
     min-height: 52px;
     color: rgb(255 255 255 / 0.86);
+    padding-inline: 4px;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   /* full name stays for screen readers, the short one is what fits */
@@ -672,7 +691,7 @@
 
   .footer__base > .t-meta {
     /* both lines end well before the WhatsApp button */
-    max-width: calc(100% - 72px);
+    max-width: calc(100% - 56px);
     line-height: 1.8;
   }
 
@@ -681,7 +700,7 @@
      its end, about midway between the place line and WhatsApp */
   .footer__end {
     gap: 12px;
-    width: calc(100% - 86px);
+    width: calc(100% - 72px);
     max-width: none;
   }
   .footer__end .footer__totop {

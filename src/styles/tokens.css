@@ -65,30 +65,30 @@
   --font-mono: "JetBrains Mono", "SFMono-Regular", "Consolas", "Menlo", monospace;
 
   /*
-    Type roles (mobile -> desktop). Libre Baskerville for display roles,
+    Type roles (mobile -> desktop -> ultrawide). Libre Baskerville for display roles,
     DM Sans for everything functional, JetBrains Mono for metadata.
-      display   homepage statement only        44 -> 88
-      h1        page titles                     40 -> 64
-      h2        section titles                  32 -> 44
-      title     index/list item titles          24 -> 32
-      quote     statements and pull quotes      24 -> 36
-      h3        card and step titles            20 -> 24
-      h4        small headings                  18 -> 20
-      lead      intro paragraphs                17 -> 19
-      body      paragraphs                      16 -> 17
+      display   homepage statement only        44 -> 88 -> 104
+      h1        page titles                     40 -> 64 -> 72
+      h2        section titles                  32 -> 44 -> 48
+      title     index/list item titles          24 -> 32 -> 36
+      quote     statements and pull quotes      24 -> 36 -> 40
+      h3        card and step titles            20 -> 24 -> 26
+      h4        small headings                  18 -> 20 -> 22
+      lead      intro paragraphs                17 -> 19 -> 20
+      body      paragraphs                      16 -> 17 -> 18
       small     secondary text                  14
       meta      mono labels and indices         13 / 12
       button    buttons and CTAs                16 / 15
   */
-  --fs-display: clamp(2.75rem, 0.75rem + 5.6vw, 5.5rem);
-  --fs-h1: clamp(2.5rem, 1.6rem + 2.6vw, 4rem);
-  --fs-h2: clamp(2rem, 1.55rem + 1.3vw, 2.75rem);
-  --fs-title: clamp(1.5rem, 1.3rem + 0.6vw, 2rem);
-  --fs-quote: clamp(1.5rem, 1.15rem + 1.1vw, 2.25rem);
-  --fs-h3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
-  --fs-h4: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);
-  --fs-lead: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
-  --fs-body: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
+  --fs-display: clamp(2.75rem, 0.5rem + 6vw, 6.5rem);
+  --fs-h1: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+  --fs-h2: clamp(2rem, 1.5rem + 1.5vw, 3rem);
+  --fs-title: clamp(1.5rem, 1.25rem + 0.75vw, 2.25rem);
+  --fs-quote: clamp(1.5rem, 1.1rem + 1.25vw, 2.5rem);
+  --fs-h3: clamp(1.25rem, 1.15rem + 0.5vw, 1.625rem);
+  --fs-h4: clamp(1.125rem, 1.08rem + 0.25vw, 1.375rem);
+  --fs-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --fs-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
   --fs-ui: 0.9375rem; /* navigation, lists and form UI */
   --fs-small: 0.875rem;
   --fs-meta: 0.8125rem;
@@ -96,7 +96,7 @@
   --fs-button: 1rem;
   --fs-button-sm: 0.9375rem;
   /* decorative numerals and glyphs (never carry content on their own) */
-  --fs-numeral: clamp(5rem, 3rem + 5vw, 8rem);
+  --fs-numeral: clamp(5rem, 2.5rem + 6vw, 10rem);
   --fs-glyph: 4rem;
 
   --lh-display: 1.02;
@@ -133,19 +133,19 @@
   --s-16: 8rem; /* 128 */
 
   /* Vertical rhythm roles */
-  --section-y: clamp(4rem, 2.6rem + 4vw, 6rem); /* 64 -> 96 */
-  --section-y-sm: clamp(3rem, 2.2rem + 2.4vw, 4.5rem); /* 48 -> 72 */
+  --section-y: clamp(4rem, 2rem + 5vw, 8rem); /* 64 -> 96 -> 128 */
+  --section-y-sm: clamp(3rem, 2rem + 3vw, 6rem); /* 48 -> 72 -> 96 */
   --space-heading: var(--s-3); /* kicker/heading to text */
-  --space-block: clamp(2.5rem, 2rem + 1.6vw, 3.5rem); /* section head to its content */
-  --hero-pt: calc(var(--header-h) + clamp(2.5rem, 1.6rem + 2.8vw, 4.5rem));
-  --hero-pb: clamp(3rem, 2.2rem + 2.4vw, 4.5rem);
+  --space-block: clamp(2.5rem, 1.5rem + 2.5vw, 4.5rem); /* section head to its content */
+  --hero-pt: calc(var(--header-h) + clamp(2.5rem, 1.5rem + 3.5vw, 5.5rem));
+  --hero-pb: clamp(3rem, 2rem + 3vw, 6rem);
 
   /* ---------- Layout ---------- */
   --container: 75rem; /* 1200: main composition */
   --container-wide: 90rem; /* 1440: image-led rows */
   --container-narrow: 47.5rem; /* 760: reading */
-  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
-  --grid-gap: clamp(1rem, 0.6rem + 1.2vw, 1.5rem);
+  --gutter: clamp(1rem, 0.5rem + 3vw, 4rem);
+  --grid-gap: clamp(1rem, 0.5rem + 1.5vw, 2.5rem);
   --header-h: 76px;
 
   /* ---------- Components ---------- */
@@ -162,7 +162,7 @@
   --icon-sm: 16px;
   --icon-md: 20px;
   --control-h: 50px;
-  --card-pad: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+  --card-pad: clamp(1.5rem, 1rem + 2vw, 3.5rem);
 
   /* ---------- Image roles (aspect ratios) ---------- */
   --ratio-browser: 16 / 10; /* website screenshots in a browser frame */
@@ -186,4 +186,14 @@
   --z-header: 50;
   --z-menu: 80;
   --z-loader: 200;
+}
+
+/* Ultra-wide screens: gracefully expand the container widths so the site 
+   doesn't feel too small on 4K or 5K monitors. */
+@media (min-width: 1600px) {
+  :root {
+    --container: 85rem; /* 1360px */
+    --container-wide: 100rem; /* 1600px */
+    --container-narrow: 55rem; /* 880px */
+  }
 }
