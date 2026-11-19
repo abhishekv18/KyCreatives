@@ -293,7 +293,7 @@
 .pf-card__shot img {
   display: block;
   width: 100%;
-  aspect-ratio: var(--ratio-project);
+  aspect-ratio: var(--ratio-square);
   object-fit: cover;
   object-position: top;
   transition: transform 900ms var(--ease-out);

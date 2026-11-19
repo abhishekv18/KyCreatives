@@ -484,7 +484,7 @@
   flex-direction: column;
   justify-content: center;
   gap: clamp(1rem, 3vw, 2rem);
-  padding-block: clamp(2rem, 4vw, 4rem) clamp(3rem, 6vw, 6rem);
+  padding-block: clamp(2rem, 3vw, 3rem) clamp(2.5rem, 4vw, 4rem);
   overflow: hidden;
   background: var(--ky-cloud);
   --zig: clamp(24px, 6svh, 64px);
@@ -876,7 +876,7 @@
 }
 
 .aquote {
-  padding-bottom: calc(var(--section-y) + 32px);
+  padding-bottom: var(--section-y);
   background: var(--ky-white);
 }
 

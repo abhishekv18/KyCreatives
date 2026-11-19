@@ -70,12 +70,12 @@ export const services = [
         a: "Yes, when the project needs it. We set up a content system your team can use and show you how.",
       },
       {
-        q: "Do you work with clients outside India?",
+        q: "Do you work with clients in other countries?",
         a: "Yes. We work with businesses across time zones and plan calls and reviews around your working hours.",
       },
     ],
     cta: "Tell us what the website or app needs to do.",
-    related: ["maacubs", "property-box", "pinkdinosaur", "brandgap"],
+    related: ["property-box", "pinkdinosaur", "brandgap", "maacubs"],
   },
   {
     slug: "d2c",
@@ -148,7 +148,7 @@ export const services = [
       },
     ],
     cta: "Tell us about your brand and what you sell.",
-    related: ["thedecorshed", "rugsandroses", "thelabelbysiya", "vibhadesigns", "dudle", "ramysprofessional", "petsway", "notahoax"],
+    related: ["thedecorshed", "ramysprofessional", "vibhadesigns", "thelabelbysiya", "rugsandroses", "dudle", "petsway", "notahoax"],
   },
   {
     slug: "mobile-apps",

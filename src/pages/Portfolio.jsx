@@ -7,14 +7,17 @@ import PartnersStrip from "../components/ui/PartnersStrip";
 import QuickEnquiry from "../components/ui/QuickEnquiry";
 import ContactCTA from "../components/ui/ContactCTA";
 import { Glow, Pattern } from "../components/art/Art";
-import { projects, projectBySlug, GROUPS, shotSrc } from "../data/projects";
+import { projects as allProjects, projectBySlug, GROUPS, shotSrc } from "../data/projects";
 import { company } from "../data/site";
+
+// MaaCubs is shown elsewhere on the site, not in this grid
+const projects = allProjects.filter((p) => p.slug !== "maacubs");
 
 const domainOf = (url) => url.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/$/, "");
 
 /*
   Every website in the portfolio, in the studio's own order (the KY Creatives
-  Linktree, with BrandGap last), as tall cards with a browser bar and a link to
+  Linktree, with BrandGap and MaaCubs at the end), as tall cards with a browser bar and a link to
   the live site.
   A row of filters narrows the grid by kind of website; the enquiry form
   closes the page.
@@ -22,7 +25,7 @@ const domainOf = (url) => url.replace(/^https?:\/\//, "").replace(/^www\./, "").
 /* Hero centrepiece: three live client sites fanned like proofs on a desk,
    with a few plain facts floating beside them. */
 function HeroStack() {
-  const picks = ["rugsandroses", "maacubs", "thedecorshed"].map((s) => projectBySlug[s]);
+  const picks = ["rugsandroses", "thedecorshed", "ramysprofessional"].map((s) => projectBySlug[s]);
   return (
     <div className="pf-stack" aria-hidden="true">
       {picks.map((p, i) => (
@@ -36,11 +39,9 @@ function HeroStack() {
           <img src={shotSrc(p.slug, "portfolio").src.replace(".webp", "-sm.webp")} alt="" width="640" height="800" />
         </figure>
       ))}
-      <span className="pf-stack__badge pf-stack__badge--a">Live client websites</span>
       <span className="pf-stack__badge pf-stack__badge--b">
-        <i /> India · UK · UAE
+        <i /> Clients worldwide
       </span>
-      <span className="pf-stack__badge pf-stack__badge--c">Since {company.foundedYear}</span>
     </div>
   );
 }
@@ -49,7 +50,7 @@ export default function Portfolio() {
   usePageMeta({
     title: "Portfolio",
     description:
-      "Websites designed and built by KY Creatives: D2C stores, business websites, news platforms and non-profits for clients in India and abroad.",
+      "Websites designed and built by KY Creatives: D2C stores, business websites, news platforms and non-profits for clients worldwide.",
   });
   const [filter, setFilter] = useState("all");
   // the grid changes height when filtered, so scroll positions are re-measured
@@ -57,6 +58,8 @@ export default function Portfolio() {
     const id = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(id);
   }, [filter]);
+  // every card stays mounted and the filter only hides the others, so each
+  // card keeps the scroll reveal it was given when the page loaded
   const shown = filter === "all" ? projects : projects.filter((p) => p.group === filter);
   const groups = GROUPS.filter((g) => projects.some((p) => p.group === g.id));
   const shownLabel = groups.find((g) => g.id === filter)?.label || "All websites";
@@ -80,11 +83,11 @@ export default function Portfolio() {
       >
         <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.3">
           <li>
-            <span>Since</span>
-            {company.foundedYear}
+            <span>Clients</span>
+            Worldwide
           </li>
           <li>
-            <span>Studio</span>
+            <span>Office</span>
             {company.address.short}
           </li>
           <li>
@@ -120,10 +123,11 @@ export default function Portfolio() {
           </div>
 
           <ol role="list" className="pf__grid">
-            {shown.map((p, i) => {
+            {projects.map((p, n) => {
               const tall = shotSrc(p.slug, "portfolio");
+              const i = shown.indexOf(p);
               return (
-                <li key={p.slug} className="pf-card" data-reveal="rise" data-delay={(i % 3) * 0.08}>
+                <li key={p.slug} className="pf-card" hidden={i < 0} data-reveal="rise" data-delay={(n % 3) * 0.08}>
                   <a className="pf-card__shot" href={p.liveUrl} target="_blank" rel="noopener noreferrer">
                     <span className="pf-card__bar" aria-hidden="true">
                       <i />
@@ -136,7 +140,7 @@ export default function Portfolio() {
                       srcSet={tall.srcSet}
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
                       alt={`${p.name} website`}
-                      loading={i >= 3 ? "lazy" : "eager"}
+                      loading={n >= 3 ? "lazy" : "eager"}
                       width="720"
                       height="900"
                     />

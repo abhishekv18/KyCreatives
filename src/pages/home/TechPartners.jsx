@@ -1,11 +1,9 @@
-import { useState } from "react";
-import { Pause, Play } from "lucide-react";
 import SplitHeading from "../../components/ui/SplitHeading";
 
 /*
   The platforms the studio builds on, as a slow, continuous slider of
-  full-colour logos on white cards. Hover, focus or the Pause button stops
-  it; with reduced motion it becomes a still, wrapping set.
+  full-colour logos on white cards that keeps moving; with reduced motion it
+  becomes a still, wrapping set.
 */
 const PARTNERS = [
   { name: "Shopify", role: "Storefronts", file: "shopify" },
@@ -31,12 +29,11 @@ function Card({ p, hidden }) {
 }
 
 export default function TechPartners() {
-  const [paused, setPaused] = useState(false);
   return (
     <section className="tps" data-tone="light" aria-labelledby="tps-title">
       <div className="container tps__head">
+        <p className="kicker kicker--dusk t-meta">Our technology partners</p>
         <div>
-          <p className="kicker kicker--dusk t-meta">Our technology partners</p>
           <div id="tps-title">
             <SplitHeading as="h2" className="tps__title" lines={["Built on platforms", "the world trusts."]} />
           </div>
@@ -45,19 +42,10 @@ export default function TechPartners() {
           <p className="t-muted">
             Hosting, checkout, payments and growth tools we build with every day, chosen for speed, security and scale.
           </p>
-          <div className="tps__meta">
-            <span className="tps__count">
-              <b>{PARTNERS.length}</b> partner platforms
-            </span>
-            <button type="button" className="partners__toggle" aria-pressed={paused} onClick={() => setPaused((v) => !v)}>
-              {paused ? <Play size={14} strokeWidth={2} aria-hidden="true" /> : <Pause size={14} strokeWidth={2} aria-hidden="true" />}
-              {paused ? "Play" : "Pause"}
-            </button>
-          </div>
         </div>
       </div>
 
-      <div className={`tps__rail ${paused ? "is-paused" : ""}`}>
+      <div className="tps__rail">
         <ul role="list" className="tps__track" aria-label="Technology partner logos">
           {PARTNERS.map((p) => (
             <Card key={p.name} p={p} />

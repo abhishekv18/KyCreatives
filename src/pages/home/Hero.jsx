@@ -6,16 +6,15 @@ import { gsap, whenReady, prefersReducedMotion } from "../../lib/motion";
 import { company } from "../../data/site";
 import { projectBySlug } from "../../data/projects";
 
-const CAPS = ["Software", "Web apps", "Mobile apps", "D2C websites"];
 
 // The wall behind the headline: real client sites from the portfolio, five
 // columns of three. Phones show the first three columns only.
 const WALL = [
-  ["maacubs", "thedecorshed", "rugsandroses"],
-  ["thelabelbysiya", "vibhadesigns", "dudle"],
-  ["ramysprofessional", "petsway", "shabdmailnews"],
-  ["shivangikaur", "abhinaybuilders", "property-box"],
-  ["pinkdinosaur", "couponvolume", "brandgap"],
+  ["thedecorshed", "ramysprofessional", "vibhadesigns"],
+  ["thelabelbysiya", "rugsandroses", "dudle"],
+  ["petsway", "shabdmailnews", "shivangikaur"],
+  ["abhinaybuilders", "property-box", "pinkdinosaur"],
+  ["couponvolume", "brandgap", "maacubs"],
 ].map((col) => col.map((slug) => projectBySlug[slug]).filter(Boolean));
 
 /*
@@ -156,8 +155,8 @@ export default function Hero() {
 
           <p className="hero__sub hero__fade">Design-led software, web and mobile apps.</p>
           <p className="hero__lead hero__fade">
-            We design and build websites, apps and online stores for businesses around the world, with a special focus
-            on D2C brands that need a store that sells.
+            We design and build software, mobile applications and online e-commerce stores for businesses around the
+            world, with a special focus on D2C brands that need a store that sells.
           </p>
           <div className="hero__actions hero__fade">
             <Link to="/contact" className="btn btn--primary">
@@ -170,15 +169,6 @@ export default function Hero() {
             </a>
           </div>
         </div>
-
-        <ol role="list" className="hero__caps hero__fade">
-          {CAPS.map((c, i) => (
-            <li key={c}>
-              <span className="t-meta">{String(i + 1).padStart(2, "0")}</span>
-              {c}
-            </li>
-          ))}
-        </ol>
       </div>
     </section>
   );

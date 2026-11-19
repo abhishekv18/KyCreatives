@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Pause, Play } from "lucide-react";
 import SplitHeading from "../../components/ui/SplitHeading";
 import { partners } from "../../data/partners";
 
@@ -32,11 +30,10 @@ function Card({ p, hidden }) {
 /*
   Client logos as a slow two-row slider. Every mark sits on an identical
   white card, so very different logos read as one
-  set. Rows drift in opposite directions; hover, focus or the Pause button
-  stops them, and with reduced motion they become a still, wrapping grid.
+  set. Rows drift in opposite directions without stopping; with reduced
+  motion they become a still, wrapping grid.
 */
 export default function Partners() {
-  const [paused, setPaused] = useState(false);
   const half = Math.ceil(partners.length / 2);
   const rows = [partners.slice(0, half), partners.slice(half)];
 
@@ -49,19 +46,10 @@ export default function Partners() {
         </div>
         <div className="partners__side" data-reveal="up">
           <p className="t-muted">D2C brands, companies, news platforms and non-profits whose websites we have designed and built.</p>
-          <button
-            type="button"
-            className="partners__toggle"
-            aria-pressed={paused}
-            onClick={() => setPaused((v) => !v)}
-          >
-            {paused ? <Play size={14} strokeWidth={2} aria-hidden="true" /> : <Pause size={14} strokeWidth={2} aria-hidden="true" />}
-            {paused ? "Play" : "Pause"} logos
-          </button>
         </div>
       </div>
 
-      <div className={`marquee ${paused ? "is-paused" : ""}`}>
+      <div className="marquee">
         {rows.map((row, r) => (
           <div key={r} className={`marquee__row ${r ? "marquee__row--rev" : ""}`}>
             <ul role="list" className="marquee__track" aria-label={r ? undefined : "Partner logos"}>

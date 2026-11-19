@@ -76,7 +76,7 @@ function HeroVisual() {
               <strong>D2C</strong>Focus
             </span>
             <span>
-              <strong>India</strong>Studio
+              <strong>Global</strong>Clients
             </span>
           </div>
           <ul className="ahero__list">
@@ -113,7 +113,7 @@ const FIGURES = [
   [`${new Date().getFullYear() - company.foundedYear}+`, "Years building for the web"],
   ["1", "Team for design and build"],
   [String(services.length), "Services under one roof"],
-  ["3", "Countries: India, UK, UAE"],
+  ["24h", "First reply on business days"],
 ];
 
 // The kinds of website in the portfolio.
@@ -249,7 +249,7 @@ export default function About() {
   usePageMeta({
     title: "About the studio",
     description:
-      "KY Creatives is a design-led studio in Gurugram, India, building software, web apps and mobile apps for businesses worldwide since 2017.",
+      "KY Creatives is a design-led company in Gurugram building software, web apps and mobile apps for businesses worldwide since 2019.",
   });
   const quote = testimonials[1];
 
@@ -292,19 +292,18 @@ export default function About() {
               Our story
             </h2>
             <p className="astory__where t-meta" data-reveal="fade">
-              Based in {company.address.short}. Working with clients in India, the UK and the UAE.
+              Based in {company.address.short}. Working with clients worldwide.
             </p>
           </div>
           <div className="astory__body">
             <p className="astory__big" data-reveal="up">
-              We started in {company.foundedYear} as a web design and development team in Gurugram, India.
+              We started in {company.foundedYear} as a web design and development team in Gurugram.
             </p>
             <div className="astory__cols prose" data-reveal="up" data-delay="0.1">
               <p>
                 Since then we have worked with customers of every size, from a single retailer to multinational
                 companies, on their websites, applications and marketing. Our portfolio spans online stores, company
-                websites, portals, news platforms and non-profits, including work for businesses in the United Kingdom
-                and the UAE.
+                websites, portals, news platforms and non-profits, for clients at home and overseas.
               </p>
               <p>
                 Today our work covers software, web apps and mobile apps as well as websites. Our focus is D2C brands
@@ -335,8 +334,8 @@ export default function About() {
       <section className="ways section on-dark grain" data-tone="dark" aria-labelledby="ways-title">
         <div className="container">
           <div className="intro intro--split">
+            <p className="kicker kicker--aqua t-meta">How we work with you</p>
             <div className="intro">
-              <p className="kicker kicker--aqua t-meta">How we work with you</p>
               <div id="ways-title">
                 <SplitHeading className="about__h" lines={["Partners,", "not vendors."]} />
               </div>

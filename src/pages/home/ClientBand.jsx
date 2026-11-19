@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { projects } from "../../data/projects";
-import { company } from "../../data/site";
 import { gsap, prefersReducedMotion } from "../../lib/motion";
 
 function Row({ items, cls }) {
@@ -42,11 +41,9 @@ export default function ClientBand() {
 
   return (
     <section className="band" ref={ref} data-tone="light" aria-labelledby="band-title">
-      <div className="container band__head">
-        <h2 id="band-title" className="t-meta">
-          Websites we have designed and built, since {company.foundedYear}
-        </h2>
-      </div>
+      <h2 id="band-title" className="sr-only">
+        Websites we have designed and built
+      </h2>
       <Row items={names.slice(0, Math.ceil(names.length / 2))} cls="band__row--a" />
       <Row items={names.slice(Math.ceil(names.length / 2))} cls="band__row--b" />
     </section>

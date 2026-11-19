@@ -527,7 +527,7 @@ export default function Contact() {
   usePageMeta({
     title: "Contact and start a project",
     description:
-      "Tell KY Creatives about your project. Email info@kycreatives.com or call +91 76697 50672. Studio in Gurugram, India, working with clients worldwide.",
+      "Tell KY Creatives about your project. Email info@kycreatives.com or call +91 76697 50672. Office in Gurugram, working with clients worldwide.",
   });
 
   return (
@@ -557,8 +557,7 @@ export default function Contact() {
         </div>
         <p className="phero__note t-meta" data-reveal="up" data-delay="0.35">
           <span>First reply within 24 hours</span>
-          <span>India, the UK and the UAE</span>
-          <span>Since {company.foundedYear}</span>
+          <span>Clients worldwide</span>
         </p>
       </PageHero>
 
@@ -582,8 +581,8 @@ export default function Contact() {
                   <dd>{company.foundedYear}</dd>
                 </div>
                 <div>
-                  <dt>Countries we work in</dt>
-                  <dd>3</dd>
+                  <dt>Team for design and build</dt>
+                  <dd>1</dd>
                 </div>
               </dl>
             </div>

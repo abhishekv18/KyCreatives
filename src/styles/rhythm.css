@@ -1,0 +1,64 @@
+/* =========================================================
+   RHYTHM: one alignment for every section head and every
+   two-column section, loaded last so it settles the layout
+   site-wide.
+   ========================================================= */
+
+/* Split heads: a label on its own row, the heading on the left and its
+   paragraph starting right after it, both sides on the same top line. */
+@media (min-width: 960px) {
+  :is(.tps__head, .work__head, .svcx__head, .reviews__head, .partners__head, .mkp__head, .offer__head, .cmp__head, .rwork__head, .intro--split) {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    row-gap: var(--s-2);
+    align-items: start;
+  }
+  :is(.tps__head, .work__head, .svcx__head, .reviews__head, .partners__head, .mkp__head, .offer__head, .cmp__head, .rwork__head, .intro--split) > .kicker {
+    grid-column: 1 / -1;
+  }
+  :is(.tps__head, .work__head, .svcx__head, .reviews__head, .partners__head, .mkp__head, .offer__head, .cmp__head, .rwork__head, .intro--split) > :has(h2) {
+    grid-column: 1 / span 7;
+  }
+  :is(.tps__head, .work__head, .svcx__head, .reviews__head, .partners__head, .mkp__head, .offer__head, .cmp__head, .rwork__head, .intro--split) > :not(.kicker):not(:has(h2)) {
+    grid-column: 8 / span 5;
+    max-width: 46ch;
+    /* level with the cap height of the heading's first line */
+    margin-top: 0.55em;
+  }
+}
+
+/* Two-column sections: the title block on the left, its content one column
+   closer than before so the two read as one composition. */
+@media (min-width: 960px) {
+  :is(.proc__grid, .essence__grid, .acap__grid, .deliv__grid, .sfaq__grid, .prom__grid) {
+    column-gap: var(--grid-gap);
+  }
+  :is(.proc__intro, .essence__intro, .acap__intro, .deliv__intro, .sfaq__intro, .prom__intro) {
+    grid-column: 1 / span 5;
+  }
+  :is(.proc__steps, .essence__list, .acap__list, .deliv__list, .prom__cols),
+  .sfaq__grid > div:last-child {
+    grid-column: 6 / span 7;
+    /* an outer margin, so each list keeps its own padding (the process timeline) */
+    margin-left: var(--s-5);
+  }
+}
+
+/* The same step from every split head down to the content it introduces */
+:is(.tps__head, .work__head, .svcx__head, .reviews__head, .partners__head, .mkp__head, .offer__head, .cmp__head, .rwork__head, .intro--split) + * {
+  margin-top: var(--space-block);
+}
+
+/* Consultation sections: the intro and the form card start together; the
+   label sits at the card's top edge so the two headings share one line */
+@media (min-width: 960px) {
+  .qe__grid {
+    align-items: start;
+  }
+  /* the card's padding and the heading's size grow at different rates, so a
+     small width-based nudge keeps the two headings on exactly one line */
+  .qe__intro {
+    margin-top: clamp(-12px, 2.8vw - 37.6px, 20px);
+  }
+}

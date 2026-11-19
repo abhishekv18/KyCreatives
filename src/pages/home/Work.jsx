@@ -16,9 +16,9 @@ import { gsap, prefersReducedMotion } from "../../lib/motion";
 // Five websites from the portfolio, each panel set on that
 // site's own brand colour. `dark` marks colours that need white text.
 const FEATURED = [
-  { slug: "maacubs", bg: "#6b46c8", dark: true, phone: "m-maacubs" },
   { slug: "thedecorshed", bg: "#e8683b", phone: "m-thedecorshed" },
-  { slug: "rugsandroses", bg: "#5a2121", dark: true, phone: "m-rugsandroses" },
+  { slug: "ramysprofessional", bg: "#d9c3a5", phone: "m-ramysprofessional" },
+  { slug: "vibhadesigns", bg: "#2f3b6b", dark: true, phone: "m-vibhadesigns" },
   { slug: "thelabelbysiya", bg: "#b9876a", phone: "m-thelabelbysiya" },
   { slug: "brandgap", bg: "#f1e4dc", phone: "m-brandgap" },
 ];
@@ -149,11 +149,11 @@ function ProjectIndex({ items }) {
           {items.map((p) => (
             <img
               key={p.slug}
-              src={p.image}
+              src={shotSrc(p.slug, "wide").src.replace(".webp", "-sm.webp")}
               alt=""
               loading="lazy"
-              width="520"
-              height="650"
+              width="720"
+              height="450"
               className={active === p.slug ? "is-on" : ""}
             />
           ))}

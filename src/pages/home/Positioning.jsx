@@ -25,8 +25,8 @@ const PILLARS = [
     title: "Global by default",
     note: "Standards for every time zone",
     body: "Delivery, communication and standards built for clients across time zones.",
-    figure: "3",
-    proof: "countries we have shipped for: India, the UK and the UAE",
+    figure: "Worldwide",
+    proof: "clients across time zones, served by one team",
   },
 ];
 
@@ -52,7 +52,7 @@ export default function Positioning() {
             <p className="pos__facts t-meta">
               <span>Since {company.foundedYear}</span>
               <span>D2C focus</span>
-              <span>India · UK · UAE</span>
+              <span>Clients worldwide</span>
             </p>
           </div>
           <div className="pos__body">

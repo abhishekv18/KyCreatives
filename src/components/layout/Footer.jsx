@@ -85,8 +85,8 @@ export default function Footer() {
           <div className="footer__brand">
             <Logo size={26} />
             <p>
-              A design-led studio building software, web apps and mobile apps for businesses worldwide, with a special
-              focus on D2C brands.
+              A design-led company building software, web apps and mobile apps for businesses worldwide since{" "}
+              {company.foundedYear}, with a special focus on D2C brands.
             </p>
           </div>
 
@@ -180,7 +180,6 @@ export default function Footer() {
           ))}
         </ul>
         <div className="footer__end">
-          <p className="t-meta footer__place">Gurugram, India · Since {company.foundedYear}</p>
           <button type="button" className="footer__totop" onClick={backToTop} aria-label="Back to top">
             <span className="footer__totop-label t-meta" aria-hidden="true">
               Back to top

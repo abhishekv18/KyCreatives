@@ -4,11 +4,12 @@ import Toast from "./Toast";
 import LaptopSlides from "./LaptopSlides";
 import { WEB3FORMS_KEY, ENQUIRY_EMAIL, sendEnquiry } from "../../lib/enquiry";
 
-const EMPTY = { name: "", email: "", phone: "", message: "" };
-const NEEDS = ["Website", "Online store", "Mobile app", "Portal", "Marketing", "Branding"];
+const EMPTY = { name: "", email: "", phone: "", message: "", other: "" };
+const NEEDS = ["Website", "Online store", "Mobile application", "Customised software", "Marketing", "Branding", "Other"];
 
-function validate(v) {
+function validate(v, needs) {
   const e = {};
+  if (needs.includes("Other") && !v.other.trim()) e.other = "Tell us what you need.";
   if (!v.name.trim()) e.name = "Enter your name.";
   if (!v.email.trim()) e.email = "Enter your email address.";
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email.trim())) e.email = "Check the email address.";
@@ -47,13 +48,13 @@ export default function QuickEnquiry({
   const set = (k) => (e) => {
     const next = { ...values, [k]: e.target.value };
     setValues(next);
-    if (tried) setErrors(validate(next));
+    if (tried) setErrors(validate(next, needs));
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setTried(true);
-    const errs = validate(values);
+    const errs = validate(values, needs);
     setErrors(errs);
     if (Object.keys(errs).length) {
       document.getElementById(id(Object.keys(errs)[0]))?.focus();
@@ -76,7 +77,7 @@ export default function QuickEnquiry({
         email: v.email.trim(),
         phone: v.phone.trim(),
         page: source,
-        interested_in: needs.join(", ") || "Not specified",
+        interested_in: needs.map((n) => (n === "Other" ? `Other: ${v.other.trim()}` : n)).join(", ") || "Not specified",
         message: v.message.trim() || "No message given",
       });
       setValues(EMPTY);
@@ -171,6 +172,8 @@ export default function QuickEnquiry({
               ))}
             </div>
           </fieldset>
+          {needs.includes("Other") &&
+            field("other", "What else do you need?", { input: { placeholder: "For example, a booking system or a dashboard" } })}
           {field("name", "Name", { input: { autoComplete: "name" } })}
           <div className="qe__row">
             {field("email", "Email", { input: { type: "email", autoComplete: "email", inputMode: "email" } })}

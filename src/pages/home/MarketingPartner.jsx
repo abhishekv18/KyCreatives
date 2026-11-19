@@ -17,8 +17,8 @@ export default function MarketingPartner() {
     <section className="mkp" data-tone="light" aria-labelledby="mkp-title">
       <div className="container">
         <div className="mkp__head">
+          <p className="kicker kicker--dusk t-meta">Our marketing partner</p>
           <div>
-            <p className="kicker kicker--dusk t-meta">Our marketing partner</p>
             <div id="mkp-title">
               <SplitHeading as="h2" className="mkp__title" lines={["The marketing behind", "the launch."]} />
             </div>

@@ -14,8 +14,9 @@ import ContactCTA from "../components/ui/ContactCTA";
 
 /*
   Colour rhythm of the homepage, as chapters of rising intensity:
-  Ink hero -> Cloud band and studio -> Ink work -> Cloud services with
-  colour stages -> Violet process -> Cloud quotes -> Flame CTA -> Ink footer.
+  Ink hero -> White studio sheet with the client names -> partners and Ink work
+  -> Cloud services with colour stages -> Violet process -> Cloud quotes and
+  principles -> Flame CTA -> Ink footer.
 */
 export default function Home() {
   usePageMeta({
@@ -30,15 +31,15 @@ export default function Home() {
       <div className="opening">
         <Hero />
         <Manifesto />
+        <ClientBand />
       </div>
-      <ClientBand />
-      <Positioning />
       <TechPartners />
       <Work />
       <ServicesIndex />
       <Process />
       <Testimonials />
       <Partners />
+      <Positioning />
       <MarketingPartner />
       <ContactCTA />
     </>

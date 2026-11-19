@@ -588,7 +588,12 @@
 .footer__end {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: var(--s-3);
+  /* stays at the right even when the row wraps, clear of the WhatsApp
+     button that floats over this corner */
+  margin-left: auto;
+  margin-right: 72px;
 }
 
 /* Back to top: a small label and a round arrow at the end of the base row */
@@ -705,9 +710,6 @@
   }
   .footer__end .footer__totop {
     margin-left: auto;
-  }
-  .footer__end .footer__place {
-    max-width: none;
   }
   .footer__totop-label {
     display: none;

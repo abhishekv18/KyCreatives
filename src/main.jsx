@@ -21,8 +21,15 @@ import "./styles/services.css";
 import "./styles/portfolio.css";
 import "./styles/laptop.css";
 import "./styles/tech.css";
+import "./styles/rhythm.css";
 
 import App from "./App";
+
+// A refresh always opens at the top of the page, rather than where the
+// browser last left it; links to an #anchor still land on their section.
+if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
+if (!window.location.hash) window.scrollTo(0, 0);
+window.addEventListener("beforeunload", () => window.scrollTo(0, 0));
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

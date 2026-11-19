@@ -42,8 +42,8 @@ export function ServiceHero({ service, aside, art, theme = "cloud", focus = fals
 const ENQUIRY = {
   "web-apps-websites": { tone: "violet", theme: "web", interest: "Website" },
   d2c: { tone: "flame", theme: "d2c", interest: "Online store" },
-  "mobile-apps": { tone: "violet", theme: "mobile", interest: "Mobile app" },
-  portals: { tone: "cobalt", theme: "portals", interest: "Portal" },
+  "mobile-apps": { tone: "violet", theme: "mobile", interest: "Mobile application" },
+  portals: { tone: "cobalt", theme: "portals", interest: "Customised software" },
   marketing: { tone: "orange", theme: "marketing", interest: "Marketing" },
   "design-graphics": { tone: "cyan", theme: "design", interest: "Branding" },
 };
@@ -146,7 +146,7 @@ export function RelatedWork({ slugs, title = ["Work in this area"], lead }) {
           {slugs.map((slug, i) => {
             const p = projectBySlug[slug];
             return (
-              <li key={slug} className={`rwork__item rwork__item--${(i % 3) + 1}`} data-reveal="rise">
+              <li key={slug} className={`rwork__item rwork__item--${(i % 3) + 1} rwork__item--${slug}`} data-reveal="rise">
                 <figure>
                   <div className="rwork__img">
                     <img src={p.image} alt={`${p.name} website`} loading="lazy" width="520" height="650" />

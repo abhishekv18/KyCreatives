@@ -4,7 +4,7 @@ import { gsap, prefersReducedMotion } from "../../lib/motion";
 
 /*
   What a marketing partner does, drawn: one campaign pulled apart into its three
-  layers. Creative (the ads, on a storyboard), Media (the channel plan) and Growth
+  layers. Creative (a row of social ads), Media (the campaigns running, each with its spend) and Growth
   (the columns and curve it all answers to), stacked in isometric on the Ink panel. The layers
   start closed together and open out as the figure arrives; reduced motion shows
   them open. A drawing rather than a chart, so it carries no figures.
@@ -40,61 +40,102 @@ function Plate({ fill, stroke = LINE_SOFT }) {
   return <rect width={W} height={H} rx={7} fill={fill} stroke={stroke} strokeWidth={1} vectorEffect="non-scaling-stroke" />;
 }
 
+// three social ads in a row: the image, a caption and the reactions under each
+const POSTS = [16, 110, 204];
+
+function Reactions({ x }) {
+  return (
+    <g fill="none" stroke={LINE} strokeWidth={1} vectorEffect="non-scaling-stroke">
+      <path d={`M${x + 6} ${136} c-3 -4 -8 -1 -5 3 l5 5 l5 -5 c3 -4 -2 -7 -5 -3z`} fill={MAGENTA} stroke="none" />
+      <circle cx={x + 22} cy={138} r={4.5} />
+      <path d={`M${x + 34} ${141} l9 -6 l-9 -3z`} />
+    </g>
+  );
+}
+
 function CreativeLayer({ uid }) {
   return (
     <>
       <Plate fill="#1d1628" />
-      {/* a storyboard: one finished frame, one sketched, one in progress */}
-      <rect x={16} y={16} width={76} height={96} rx={4} fill={`url(#${uid}-flame)`} />
-      <circle cx={54} cy={56} r={19} fill={CLOUD} opacity={0.92} />
-      <circle cx={54} cy={56} r={9} fill={ORANGE} />
-      <rect x={26} y={88} width={56} height={5} rx={2.5} fill={INK} />
-      <rect x={26} y={98} width={34} height={5} rx={2.5} fill={INK} opacity={0.55} />
-
-      <rect x={112} y={16} width={76} height={96} rx={4} {...hair} />
-      <path d="M112 16 L188 112 M188 16 L112 112" {...soft} />
-
-      <rect x={208} y={16} width={76} height={96} rx={4} fill={VIOLET} />
-      <path d="M220 32 H272 M220 44 H258 M220 56 H266" stroke={CLOUD} strokeWidth={1.2} opacity={0.75} vectorEffect="non-scaling-stroke" />
-      <rect x={220} y={86} width={36} height={14} rx={7} fill={CLOUD} />
-
-      {/* the line that runs with them */}
-      <path d="M16 134 H170 M16 148 H128" {...hair} />
-      <rect x={16} y={162} width={58} height={18} rx={9} fill="none" stroke={ORANGE} strokeWidth={1.1} vectorEffect="non-scaling-stroke" />
-      <rect x={208} y={132} width={76} height={48} rx={3} {...soft} />
-      <path d="M216 170 L232 152 L244 162 L256 146 L276 170" {...soft} />
+      {POSTS.map((x) => (
+        <g key={x}>
+          <rect x={x} y={14} width={80} height={140} rx={5} fill="#271f35" stroke={LINE_SOFT} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+          <circle cx={x + 10} cy={24} r={4} fill={LINE_SOFT} />
+          <rect x={x + 18} y={22} width={30} height={4} rx={2} fill={LINE_SOFT} />
+        </g>
+      ))}
+      {/* a product shot */}
+      <rect x={20} y={32} width={72} height={78} rx={3} fill={`url(#${uid}-flame)`} />
+      <circle cx={56} cy={68} r={18} fill={CLOUD} opacity={0.92} />
+      <circle cx={56} cy={68} r={8} fill={ORANGE} />
+      {/* a video ad */}
+      <rect x={114} y={32} width={72} height={78} rx={3} fill={VIOLET} />
+      <circle cx={150} cy={71} r={13} fill="rgb(246 243 251 / 0.22)" />
+      <path d="M146 64 L157 71 L146 78 Z" fill={CLOUD} />
+      {/* a headline ad */}
+      <rect x={208} y={32} width={72} height={78} rx={3} fill={CLOUD} />
+      <rect x={216} y={44} width={50} height={7} rx={2} fill={INK} />
+      <rect x={216} y={56} width={36} height={7} rx={2} fill={INK} />
+      <rect x={216} y={90} width={34} height={11} rx={5.5} fill={COBALT} />
+      {POSTS.map((x) => (
+        <g key={`c${x}`}>
+          <rect x={x + 4} y={116} width={52} height={4} rx={2} fill={LINE_SOFT} />
+          <Reactions x={x + 4} />
+        </g>
+      ))}
       {/* a measured edge: the drawing's dimension line */}
       <path d="M16 197 H284 M16 194 V200 M284 194 V200" fill="none" stroke={ORANGE} strokeWidth={0.9} vectorEffect="non-scaling-stroke" />
     </>
   );
 }
 
-// A media plan: each row a channel, each bar a flight of that campaign
-const PLAN = [
-  [0, 50, VIOLET],
-  [34, 120, COBALT],
-  [70, 64, CYAN],
-  [18, 96, VIOLET],
-  [104, 96, COBALT],
-  [52, 148, CYAN],
+// a campaign manager: each row a live campaign, its channel, its spend and a switch
+const CAMPAIGNS = [
+  { y: 50, color: VIOLET, icon: "play", fill: 0.82 },
+  { y: 102, color: COBALT, icon: "search", fill: 0.6 },
+  { y: 154, color: CYAN, icon: "post", fill: 0.72 },
 ];
+
+function ChannelIcon({ kind, x, y }) {
+  const stroke = { fill: "none", stroke: CLOUD, strokeWidth: 1.4, vectorEffect: "non-scaling-stroke", strokeLinecap: "round" };
+  if (kind === "play") return <path d={`M${x - 3} ${y - 5} L${x + 5} ${y} L${x - 3} ${y + 5} Z`} fill={CLOUD} />;
+  if (kind === "search")
+    return (
+      <g {...stroke}>
+        <circle cx={x - 1.5} cy={y - 1.5} r={4.5} />
+        <path d={`M${x + 2} ${y + 2} L${x + 6} ${y + 6}`} />
+      </g>
+    );
+  return (
+    <g {...stroke}>
+      <rect x={x - 6} y={y - 6} width={12} height={12} rx={3} />
+      <circle cx={x} cy={y} r={3} />
+    </g>
+  );
+}
 
 function MediaLayer() {
   return (
     <>
       <Plate fill="#272033" />
-      <path d="M0 24 H300" {...soft} />
+      <path d="M0 26 H300" {...soft} />
       {[14, 26, 38].map((x, i) => (
-        <circle key={x} cx={x} cy={12} r={3} fill={i ? LINE_SOFT : ORANGE} />
+        <circle key={x} cx={x} cy={13} r={3} fill={i ? LINE_SOFT : ORANGE} />
       ))}
-      <path d="M52 24 V210" {...soft} />
-      {[101, 150, 199, 248].map((x) => (
-        <path key={x} d={`M${x} 24 V210`} {...soft} strokeDasharray="2 5" />
-      ))}
-      {PLAN.map(([x, w, color], i) => (
-        <g key={i}>
-          <rect x={16} y={39 + i * 28} width={24} height={5} rx={2.5} fill="rgb(246 243 251 / 0.22)" />
-          <rect x={60 + x} y={35 + i * 28} width={w} height={12} rx={6} fill={color} opacity={0.92} />
+      <rect x={226} y={7} width={58} height={13} rx={6.5} fill={`url(#glayers-cta)`} />
+      {CAMPAIGNS.map(({ y, color, icon, fill }) => (
+        <g key={y}>
+          <rect x={14} y={y} width={272} height={40} rx={7} fill="#30283f" stroke={LINE_SOFT} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+          <rect x={24} y={y + 8} width={24} height={24} rx={6} fill={color} />
+          <ChannelIcon kind={icon} x={36} y={y + 20} />
+          <rect x={58} y={y + 12} width={56} height={5} rx={2.5} fill="rgb(246 243 251 / 0.7)" />
+          <rect x={58} y={y + 23} width={36} height={4} rx={2} fill={LINE_SOFT} />
+          {/* spend against budget */}
+          <rect x={128} y={y + 17} width={100} height={6} rx={3} fill="rgb(246 243 251 / 0.12)" />
+          <rect x={128} y={y + 17} width={100 * fill} height={6} rx={3} fill={color} />
+          {/* the campaign is on */}
+          <rect x={244} y={y + 13} width={28} height={14} rx={7} fill={ORANGE} />
+          <circle cx={265} cy={y + 20} r={5} fill={CLOUD} />
         </g>
       ))}
     </>
@@ -176,6 +217,10 @@ function Stack({ uid }) {
           <stop offset="0%" stopColor={VIOLET} stopOpacity={0.36} />
           <stop offset="100%" stopColor={VIOLET} stopOpacity={0} />
         </radialGradient>
+        <linearGradient id="glayers-cta" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor={MAGENTA} />
+          <stop offset="100%" stopColor={ORANGE} />
+        </linearGradient>
         <linearGradient id={`${uid}-flame`} x1="0" y1="1" x2="1" y2="0">
           <stop offset="0%" stopColor={MAGENTA} />
           <stop offset="100%" stopColor={ORANGE} />

@@ -105,9 +105,9 @@ export default function WebAppsWebsites() {
       />
       <Compare />
       <RelatedWork
-        slugs={["maacubs", "shabdmailnews", "shivangikaur", "abhinaybuilders", "property-box", "pinkdinosaur", "couponvolume", "bigbrothervisa", "brandgap"]}
+        slugs={["thelabelbysiya", "shabdmailnews", "shivangikaur", "abhinaybuilders", "property-box", "pinkdinosaur", "couponvolume", "bigbrothervisa", "brandgap"]}
         title={["Built for very", "different businesses."]}
-        lead="Healthcare, marketing, news, coaching, property, real estate, staffing, deals and visas, for clients in India and abroad."
+        lead="Fashion, news, coaching, property, real estate, staffing, deals, visas and marketing, for clients worldwide."
       />
       <Deliverables items={service.deliverables} tone="cyan" />
       <ServiceFaq faqs={service.faqs} />

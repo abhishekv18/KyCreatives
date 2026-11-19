@@ -141,7 +141,7 @@ export default function LoadingScreen() {
           <div className="loader__bar" ref={barRef} />
         </div>
         <div className="loader__labels t-meta">
-          <span>Design-led studio · Est. 2017</span>
+          <span>Design-led software company</span>
           <span ref={pctRef}>0%</span>
         </div>
       </div>

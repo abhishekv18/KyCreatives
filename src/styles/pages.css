@@ -303,47 +303,6 @@
 }
 
 /* Thin capability strip at the foot of the screen */
-.hero__caps {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid rgb(255 255 255 / 0.14);
-}
-
-.hero__caps li {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: clamp(6px, 1.5vw, 10px);
-  padding: clamp(10px, 2vw, 16px) clamp(4px, 1vw, 8px) 4px;
-  font-weight: 500;
-  font-size: var(--fs-ui);
-  color: rgb(255 255 255 / 0.86);
-}
-
-.hero__caps li + li {
-  border-left: 1px solid rgb(255 255 255 / 0.1);
-}
-
-.hero__caps .t-meta {
-  font-size: var(--fs-meta-sm);
-  color: var(--ky-cyan);
-}
-
-@media (max-width: 767px) {
-  .hero__caps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .hero__caps li:nth-child(3) {
-    border-left: 0;
-  }
-  .hero__caps li:nth-child(n + 3) {
-    border-top: 1px solid rgb(255 255 255 / 0.1);
-  }
-  .hero__caps li {
-    padding: 12px 6px;
-  }
-}
-
 @media (max-width: 399px) {
   .hero__actions .btn {
     width: 100%;
@@ -357,7 +316,14 @@
   border-radius: 32px 32px 0 0;
   background: var(--ky-white);
   box-shadow: 0 -24px 48px -36px rgb(23 18 31 / 0.14);
-  padding-block: var(--section-y);
+  padding-block: var(--section-y) var(--s-8);
+}
+
+/* the client names run on the same white sheet, straight after the statement */
+.opening .band {
+  z-index: 1;
+  padding-top: 0;
+  background: var(--ky-white);
 }
 
 .manifesto__inner {
@@ -376,10 +342,6 @@
     padding-top: 0.9em;
   }
   .manifesto__text {
-    grid-column: 3 / span 9;
-    min-width: 0;
-  }
-  .manifesto__sign {
     grid-column: 3 / span 9;
     min-width: 0;
   }
@@ -403,7 +365,6 @@
 
 .manifesto__text {
   font-family: var(--font-display);
-  /* same width as the rule and sign-off below it */
   max-width: none;
   font-size: clamp(1.3125rem, 1.1rem + 0.9vw, 2rem);
   line-height: var(--lh-quote);
@@ -421,20 +382,6 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}
-
-.manifesto__sign {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px clamp(1rem, 3vw, 2rem);
-  padding-top: var(--s-3);
-  border-top: 1px solid var(--line);
-  font-size: var(--fs-meta-sm);
-  color: var(--ky-slate);
-}
-
-.manifesto__sign span:first-child {
-  color: var(--ky-ink);
 }
 
 /* Sections after the opening sit above the sticky hero */
@@ -534,16 +481,13 @@
    POSITIONING (Cloud)
    ========================================================= */
 .pos {
-  padding-block: var(--s-8) var(--section-y);
+  padding-block: var(--section-y);
   background: var(--ky-cloud);
 }
 
 @media (max-width: 767px) {
   .band {
     padding-bottom: var(--s-4);
-  }
-  .pos {
-    padding-top: var(--s-4);
   }
 }
 
@@ -1243,9 +1187,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: clamp(200px, 20vw, 300px);
-  aspect-ratio: var(--ratio-project);
-  margin: -170px 0 0 30px;
+  width: clamp(280px, 26vw, 400px);
+  aspect-ratio: var(--ratio-browser);
+  margin: -130px 0 0 30px;
   border-radius: 14px;
   overflow: hidden;
   pointer-events: none;
@@ -1824,7 +1768,9 @@
 .proc__big {
   font-family: var(--font-display);
   font-size: var(--fs-numeral);
-  line-height: 0.8;
+  line-height: 1.08;
+  margin-bottom: -0.16em;
+  padding-right: 0.06em;
   letter-spacing: -0.06em;
   background: linear-gradient(170deg, var(--ky-orange), var(--ky-magenta));
   -webkit-background-clip: text;
@@ -2007,32 +1953,184 @@ html:not(.motion-ok) .proc__step > div {
 }
 
 .reviews__sources {
+  max-width: 40ch;
+}
+
+/* one white bar above the cards: the average rating, then the two platforms */
+.reviews__bar {
+  display: grid;
+  gap: var(--s-3);
+  margin-top: var(--space-block);
+  padding: clamp(18px, 2.4vw, 26px) clamp(18px, 2.8vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--ky-white);
+  box-shadow: 0 24px 48px -40px rgb(23 18 31 / 0.35);
+}
+
+.reviews__score {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.reviews__score strong {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 2rem + 2vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ky-ink);
+}
+
+.reviews__score > span {
   display: grid;
   gap: 6px;
 }
 
-.reviews__links {
-  display: flex;
-  gap: 4px clamp(1rem, 3vw, 1.5rem);
-  flex-wrap: wrap;
+.reviews__score-note {
+  font-size: var(--fs-small);
+  color: var(--ky-slate);
 }
 
-.reviews__links a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  font-weight: 700;
+.reviews__badges {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* small phones: the badges stay whole, arrow included */
+@media (max-width: 479px) {
+  .tbadge {
+    padding: 12px;
+  }
+  .tbadge__head {
+    gap: 6px;
+    font-size: 0.9375rem;
+  }
+  .tbadge__logo {
+    width: 18px;
+    height: 18px;
+  }
+  .tbadge .stars {
+    gap: 2px;
+  }
+  .tbadge .stars i {
+    width: 14px;
+    height: 14px;
+  }
+  .tbadge .stars--tp i {
+    width: 16px;
+    height: 16px;
+  }
+  .tbadge .stars--tp svg {
+    width: 11px;
+    height: 11px;
+  }
+  /* the whole badge is the link, so the arrow can go where space is tight */
+  .tbadge__arrow {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .reviews__bar {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--s-5);
+  }
+  .reviews__badges {
+    grid-template-columns: repeat(2, minmax(0, 260px));
+    justify-content: end;
+  }
+}
+
+.tbadge {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--ky-white);
   color: var(--ky-ink);
-  border-bottom: 1px solid var(--line-strong);
   transition:
-    color var(--dur-fast) var(--ease-out),
-    border-color var(--dur-fast) var(--ease-out);
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
 }
 
-.reviews__links a:hover {
+.tbadge:hover {
+  border-color: rgb(123 77 217 / 0.35);
+  box-shadow: 0 18px 36px -24px rgb(23 18 31 / 0.35);
+  transform: translateY(-2px);
+}
+
+.tbadge__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 1.0625rem;
+}
+
+.tbadge__head b {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.tbadge__logo {
+  flex: none;
+  width: 22px;
+  height: 22px;
+}
+
+.tbadge__arrow {
+  margin-left: auto;
+  color: var(--ky-slate);
+  transition: transform 300ms var(--ease-out);
+}
+
+.tbadge:hover .tbadge__arrow {
+  transform: translate(2px, -2px);
   color: var(--ky-violet);
-  border-color: var(--ky-violet);
+}
+
+.tbadge__note {
+  font-size: var(--fs-small);
+  color: var(--ky-slate);
+}
+
+/* five stars: gold by default, Trustpilot's green squares in its badge */
+.stars {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.stars i {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  color: #f5b301;
+}
+
+.stars svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.stars--tp i {
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+  background: #00b67a;
+  color: var(--ky-white);
+}
+
+.stars--tp svg {
+  width: 13px;
+  height: 13px;
 }
 
 /* Review cards: a row on wide screens, a snapping swipe rail on phones */
@@ -2041,7 +2139,7 @@ html:not(.motion-ok) .proc__step > div {
   grid-auto-flow: column;
   grid-auto-columns: min(86%, 380px);
   gap: var(--s-2);
-  margin: var(--s-8) calc(var(--gutter) * -1) 0;
+  margin: var(--s-4) calc(var(--gutter) * -1) 0;
   padding: 4px var(--gutter) var(--s-3);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -2105,26 +2203,24 @@ html:not(.motion-ok) .proc__step > div {
 
 .rcard__top {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: var(--s-2);
-  font-size: var(--fs-meta-sm);
-  color: var(--ky-slate);
 }
 
-.rcard__top span:first-child {
-  color: var(--ky-violet);
-}
-
-/* a large, faint quote mark set into the card */
+/* a quote mark set in a soft violet chip */
 .rcard__glyph {
-  position: absolute;
-  right: calc(var(--card-pad) - 4px);
-  bottom: calc(var(--card-pad) + 40px);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgb(123 77 217 / 0.1);
   font-family: var(--font-display);
-  font-size: clamp(4rem, 10vw, 7rem);
+  font-size: 2.25rem;
   line-height: 1;
-  color: rgb(123 77 217 / 0.1);
-  pointer-events: none;
+  padding-top: 0.38em;
+  color: var(--ky-violet);
 }
 
 .rcard .rq__quote {
@@ -2133,8 +2229,8 @@ html:not(.motion-ok) .proc__step > div {
 
 .rcard .rq__quote p {
   font-family: var(--font-display);
-  font-size: var(--fs-h4);
-  line-height: 1.6;
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  line-height: 1.65;
   letter-spacing: -0.005em;
   color: var(--ky-ink);
 }
@@ -2152,14 +2248,15 @@ html:not(.motion-ok) .proc__step > div {
   display: grid;
   place-items: center;
   flex: none;
-  width: clamp(32px, 6vw, 42px);
-  height: clamp(32px, 6vw, 42px);
-  border-radius: 12px;
-  background: var(--ky-cloud);
-  border: 1px solid var(--line);
-  font-family: var(--font-display);
-  font-size: 0.9375rem;
-  color: var(--ky-violet);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--grad-dusk-v);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ky-white);
 }
 
 .rcard__who {
@@ -2185,7 +2282,7 @@ html:not(.motion-ok) .proc__step > div {
 }
 
 .rq__co {
-  font-size: var(--fs-meta-sm);
+  font-size: var(--fs-small);
   color: var(--ky-slate);
 }
 
@@ -2203,27 +2300,6 @@ html:not(.motion-ok) .proc__step > div {
   display: grid;
   gap: var(--s-2);
   justify-items: start;
-}
-
-.partners__toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 40px;
-  padding: 0 clamp(10px, 2vw, 14px);
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  font-size: var(--fs-meta);
-  font-weight: 500;
-  color: var(--ky-ink);
-  transition:
-    background-color var(--dur-fast) var(--ease-out),
-    border-color var(--dur-fast) var(--ease-out);
-}
-
-.partners__toggle:hover {
-  background: var(--ky-cloud);
-  border-color: var(--ky-ink);
 }
 
 .marquee {
@@ -2262,11 +2338,6 @@ html:not(.motion-ok) .proc__step > div {
   }
 }
 
-.marquee:hover .marquee__track,
-.marquee:focus-within .marquee__track,
-.marquee.is-paused .marquee__track {
-  animation-play-state: paused;
-}
 
 /* Identical white cards: the logos' own white backgrounds disappear into them */
 .pcard {
@@ -2375,8 +2446,5 @@ html:not(.motion-ok) .proc__step > div {
       width: min(228px, calc((100% - 4 * var(--grid-gap)) / 5));
       padding-inline: 14px;
     }
-  }
-  .partners__toggle {
-    display: none;
   }
 }

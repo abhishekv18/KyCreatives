@@ -133,12 +133,12 @@
   --s-16: 8rem; /* 128 */
 
   /* Vertical rhythm roles */
-  --section-y: clamp(4rem, 2rem + 5vw, 8rem); /* 64 -> 96 -> 128 */
-  --section-y-sm: clamp(3rem, 2rem + 3vw, 6rem); /* 48 -> 72 -> 96 */
+  --section-y: clamp(3.5rem, 2.5rem + 2.6vw, 5.5rem); /* 56 -> 77 -> 88 */
+  --section-y-sm: clamp(2.5rem, 2rem + 1.6vw, 4rem); /* 40 -> 55 -> 64 */
   --space-heading: var(--s-3); /* kicker/heading to text */
-  --space-block: clamp(2.5rem, 1.5rem + 2.5vw, 4.5rem); /* section head to its content */
-  --hero-pt: calc(var(--header-h) + clamp(2.5rem, 1.5rem + 3.5vw, 5.5rem));
-  --hero-pb: clamp(3rem, 2rem + 3vw, 6rem);
+  --space-block: clamp(2rem, 1.5rem + 1.4vw, 3rem); /* section head to its content */
+  --hero-pt: calc(var(--header-h) + clamp(2rem, 1.2rem + 2.4vw, 4rem));
+  --hero-pb: clamp(2.5rem, 1.8rem + 2vw, 4.5rem);
 
   /* ---------- Layout ---------- */
   --container: 75rem; /* 1200: main composition */

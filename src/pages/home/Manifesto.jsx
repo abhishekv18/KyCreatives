@@ -10,14 +10,12 @@ import { gsap, prefersReducedMotion } from "../../lib/motion";
 */
 const STATEMENT = [
   ["We", "are"],
-  ["designers", "and", "engineers", "in", "one", "team."],
-  ["We", "build", "software,", "web", "apps", "and", "mobile", "apps"],
-  ["for", "businesses", "around", "the", "world,"],
-  ["and", "websites", "that", "help"],
-  ["D2C", "brands", "launch", "faster."],
+  ["designers", "and", "engineers", "in", "one", "team,"],
+  ["turning", "ideas", "into", "products", "people", "enjoy", "using"],
+  ["and", "businesses", "can", "grow", "on."],
 ];
 const ACCENT = new Set(["designers", "engineers"]);
-const FLAME = new Set(["D2C"]);
+const FLAME = new Set(["grow"]);
 
 export default function Manifesto() {
   const ref = useRef(null);
@@ -46,7 +44,7 @@ export default function Manifesto() {
       <div className="container manifesto__inner">
         <h2 id="manifesto-title" className="manifesto__label t-meta">
           <span className="manifesto__rule" aria-hidden="true" />
-          The studio
+          Who we are
         </h2>
         <p className="manifesto__text">
           {STATEMENT.flat().map((w) => {
@@ -58,11 +56,6 @@ export default function Manifesto() {
               </span>
             );
           })}
-        </p>
-        <p className="manifesto__sign t-meta">
-          <span>KY Creatives</span>
-          <span>Gurugram, India</span>
-          <span>Working worldwide since 2017</span>
         </p>
       </div>
     </section>

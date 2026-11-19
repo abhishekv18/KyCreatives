@@ -279,8 +279,9 @@
 .site-header__toggle {
   display: inline-grid;
   place-items: center;
-  width: clamp(2.25rem, 4vw, 2.625rem);
-  height: clamp(2.25rem, 4vw, 2.625rem);
+  /* never under 40px, a comfortable touch target on the smallest phones */
+  width: clamp(2.5rem, 4vw, 2.625rem);
+  height: clamp(2.5rem, 4vw, 2.625rem);
   border-radius: clamp(10px, 1.5vw, 12px);
   border: 1px solid var(--h-line);
   background: rgb(255 255 255 / 0.6);
@@ -669,8 +670,8 @@
 .mnav__close {
   display: inline-grid;
   place-items: center;
-  width: clamp(2.25rem, 4vw, 2.625rem);
-  height: clamp(2.25rem, 4vw, 2.625rem);
+  width: clamp(2.5rem, 4vw, 2.625rem);
+  height: clamp(2.5rem, 4vw, 2.625rem);
   border-radius: clamp(10px, 1.5vw, 12px);
   border: 1px solid var(--ink-line);
   background: rgb(255 255 255 / 0.06);
@@ -1089,6 +1090,37 @@ main:focus {
 .wa__icon svg {
   width: clamp(1.25rem, 2vw, 1.375rem);
   height: clamp(1.25rem, 2vw, 1.375rem);
+}
+
+/* A soft green glow behind the disc that slowly breathes */
+.wa__icon::after {
+  content: "";
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(37 211 102 / 0.42) 0%, rgb(37 211 102 / 0.14) 45%, transparent 70%);
+  filter: blur(4px);
+  z-index: -2;
+  animation: waGlow 3.6s ease-in-out infinite;
+}
+
+@keyframes waGlow {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa__icon::after {
+    animation: none;
+    opacity: 0.85;
+  }
 }
 
 /* A soft ring around the disc, widening gently on hover */
