@@ -62,6 +62,11 @@ export function Glow({ className = "" }) {
   Column guides: fine vertical hairlines on the page's own grid, fading out
   toward the edges. A quiet, structural texture for colour-field heroes.
 */
+/* Concentric rings centred behind a hero's centrepiece, fading out. */
+export function Orbits({ className = "" }) {
+  return <div className={`art-orbits ${className}`} />;
+}
+
 export function Guides({ className = "", tone = "light" }) {
   return <div className={`art-guides art-guides--${tone} ${className}`} />;
 }

@@ -1,0 +1,633 @@
+/* =========================================================
+   APPLICATIONS AND SOFTWARE portfolio
+   ========================================================= */
+
+/* ---------- phone frame: a slim titanium edge around the screen ---------- */
+.aphone {
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 390 / 812;
+  /* percentages, not container units: a frame cannot size itself from cqi */
+  padding: 1.7%;
+  border-radius: 13% / 6.25%;
+  background: linear-gradient(145deg, #3a3346 0%, #17121f 45%, #2b2535 100%);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.16),
+    0 1px 2px rgb(23 18 31 / 0.2),
+    0 30px 60px -28px rgb(23 18 31 / 0.55);
+}
+
+.aphone__screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 11.4cqi;
+  background: var(--ky-white);
+}
+
+.aphone__screen img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* ---------- hero: MaaCubs up front, two phones tucked behind ---------- */
+.ahphones {
+  position: relative;
+  width: min(100%, 540px);
+  aspect-ratio: 1 / 0.9;
+  margin-inline: auto;
+  /* room for the captions set beneath the phones */
+  margin-bottom: 64px;
+}
+
+/* on Ink the frame turns near-black with a bright hairline rim, so the
+   bezel reads as thin as on the light bands below */
+.ahphones .aphone {
+  background: #0d0a12;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.28),
+    0 40px 80px -30px rgb(0 0 0 / 0.75);
+}
+
+.ahphones__p {
+  position: absolute;
+  bottom: 4%;
+  animation: ahFloat 8s ease-in-out infinite;
+}
+
+.ahphones__p--1 {
+  left: 30%;
+  z-index: 3;
+  width: 40%;
+  bottom: 0;
+}
+
+.ahphones__p--2,
+.ahphones__p--3 {
+  width: 32%;
+}
+
+/* the two behind sit a step darker, tucked under the front phone */
+.ahphones__p--2 .aphone__screen,
+.ahphones__p--3 .aphone__screen {
+  filter: brightness(0.82) saturate(0.95);
+}
+
+.ahphones__p--2 {
+  left: 6%;
+  z-index: 2;
+  animation-delay: -2.6s;
+}
+
+.ahphones__p--3 {
+  right: 6%;
+  z-index: 1;
+  animation-delay: -5.2s;
+}
+
+/* a soft floor under the group */
+.ahphones::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -2%;
+  height: 8%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(123 77 217 / 0.45), transparent);
+  filter: blur(10px);
+  z-index: 0;
+}
+
+/* small captions naming each app */
+.ahphones__tag {
+  position: absolute;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px 7px 8px;
+  border-radius: 99px;
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: 0 12px 30px -12px rgb(0 0 0 / 0.6);
+  font-size: var(--fs-meta-sm);
+  font-weight: 700;
+  color: var(--ky-ink);
+  white-space: nowrap;
+}
+
+.ahphones__tag i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+.ahphones__tag span {
+  font-weight: 400;
+  color: var(--ky-slate);
+}
+
+.ahphones__tag--a {
+  right: calc(50% + 6px);
+  bottom: -64px;
+}
+
+.ahphones__tag--b {
+  left: calc(50% + 6px);
+  bottom: -64px;
+}
+
+@keyframes ahFloat {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+/* ---------- intro band ---------- */
+.aintro {
+  padding-block: var(--section-y-sm) 0;
+  background: var(--ky-cloud);
+}
+
+.aintro__inner {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.aintro__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+}
+
+.aintro__lead {
+  max-width: 46ch;
+  color: var(--text-muted);
+}
+
+@media (min-width: 960px) {
+  .aintro__inner {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    align-items: start;
+  }
+  .aintro__title {
+    grid-column: 1 / span 7;
+  }
+  .aintro__lead {
+    grid-column: 8 / span 5;
+    margin-top: 0.55em;
+  }
+}
+
+/* ---------- one app per band ---------- */
+.acase {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--section-y);
+  background: var(--ky-cloud);
+}
+
+.acase--b {
+  background: var(--ky-white);
+}
+
+.acase__head {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.acase__index {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ky-slate);
+}
+
+.acase__index span {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  padding-inline: 8px;
+  border-radius: 99px;
+  background: var(--app);
+  color: var(--ky-white);
+  font-family: var(--font-sans);
+  font-weight: 700;
+}
+
+.acase__name {
+  margin-top: var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  color: var(--ky-ink);
+}
+
+.acase__sector {
+  margin-top: 6px;
+  font-size: var(--fs-lead);
+  font-weight: 500;
+  color: var(--app);
+}
+
+.acase__summary {
+  max-width: 50ch;
+  color: var(--text-muted);
+}
+
+.acase__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-4);
+  margin-top: var(--s-3);
+}
+
+.acase__chips[role="list"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.acase__chips li {
+  padding: 6px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  font-size: var(--fs-small);
+  color: var(--ky-ink);
+}
+
+.acase__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--app);
+  border-bottom: 1px solid color-mix(in srgb, var(--app) 35%, transparent);
+}
+
+.acase__link svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+.acase__link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+@media (min-width: 960px) {
+  .acase__head {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    align-items: end;
+  }
+  .acase__id {
+    grid-column: 1 / span 6;
+  }
+  .acase__about {
+    grid-column: 7 / span 6;
+  }
+}
+
+/* every screen, side by side, on a tinted stage */
+.acase__rail {
+  position: relative;
+  margin-top: var(--space-block);
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+  overflow: hidden;
+  background:
+    radial-gradient(60% 80% at 50% 50%, color-mix(in srgb, var(--app) 14%, transparent), transparent 70%),
+    var(--app-tint);
+}
+
+.acase__phones[role="list"] {
+  display: flex;
+  justify-content: center;
+  gap: clamp(14px, 2vw, 28px);
+  padding-inline: var(--gutter);
+}
+
+.acase__phones li {
+  flex: none;
+  width: clamp(150px, 15vw, 220px);
+}
+
+.acase__phones li:nth-child(even) {
+  margin-top: clamp(20px, 3vw, 40px);
+}
+
+.acase__phones .aphone {
+  transition: transform 500ms var(--ease-out);
+}
+
+.acase__phones li:hover .aphone {
+  transform: translateY(-8px);
+}
+
+/* phones: the row scrolls sideways, one screen snapping at a time */
+@media (max-width: 899px) {
+  .acase__phones[role="list"] {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 8px;
+  }
+  .acase__phones::-webkit-scrollbar {
+    display: none;
+  }
+  .acase__phones li {
+    width: 180px;
+    scroll-snap-align: center;
+  }
+}
+
+.acase__built[role="list"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 0 var(--grid-gap);
+  margin-top: var(--space-block);
+  border-top: 1px solid var(--line-strong);
+}
+
+.acase__built li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-block: 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  color: var(--ky-ink);
+}
+
+.acase__built svg {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  padding: 5px;
+  border-radius: 50%;
+  background: var(--app-tint);
+  color: var(--app);
+}
+
+/* ---------- product design frames ---------- */
+.adesign {
+  padding-block: var(--section-y);
+  background: var(--ky-ink);
+  color: var(--text-on-dark);
+}
+
+.adesign__head {
+  display: grid;
+  gap: var(--s-2);
+  max-width: 46rem;
+}
+
+.adesign__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+}
+
+.adesign__lead {
+  color: var(--text-on-dark-muted);
+}
+
+.adesign__frames[role="list"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--grid-gap);
+  margin-top: var(--space-block);
+}
+
+.adesign__frame img {
+  width: 100%;
+  border-radius: var(--radius-card);
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ahphones__p {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   WEBSITES portfolio: featured stores, one at a time
+   ========================================================= */
+.fsites {
+  padding-block: var(--section-y) 0;
+  background: var(--ky-cloud);
+}
+
+.fsites__grid {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.fsites__title {
+  margin-top: var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+}
+
+.fsites__title span {
+  color: var(--ky-violet);
+}
+
+.fsites__tabs[role="list"] {
+  display: grid;
+  margin-top: var(--s-4);
+  border-top: 1px solid var(--line-strong);
+}
+
+.fsites__tabs button {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px 14px;
+  width: 100%;
+  padding: 16px 0 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  opacity: 0.55;
+  transition: opacity 400ms var(--ease-out);
+}
+
+.fsites__tabs button:hover,
+.fsites__tabs button.is-on {
+  opacity: 1;
+}
+
+.fsites__n {
+  grid-row: 1 / span 2;
+  padding-top: 0.4em;
+  color: var(--ky-violet);
+}
+
+.fsites__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  color: var(--ky-ink);
+}
+
+.fsites__sector {
+  font-size: var(--fs-small);
+  color: var(--ky-slate);
+}
+
+/* the playing tab fills a thin line along its foot */
+.fsites__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  overflow: hidden;
+}
+
+.fsites__tabs button.is-on .fsites__bar i {
+  display: block;
+  height: 100%;
+  background: var(--grad-dusk);
+  transform-origin: left;
+  animation: fsFill var(--hold) linear forwards;
+}
+
+.fsites__bar.is-still i {
+  animation: none !important;
+  transform: none;
+}
+
+@keyframes fsFill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.fsites__window {
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--ky-white);
+  box-shadow:
+    0 0 0 1px rgb(23 18 31 / 0.06),
+    0 50px 90px -50px rgb(23 18 31 / 0.5);
+}
+
+.fsites__bar-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding-inline: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.fsites__bar-top i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(23 18 31 / 0.15);
+}
+
+.fsites__bar-top span {
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta-sm);
+  color: var(--ky-slate);
+}
+
+.fsites__shots {
+  position: relative;
+  aspect-ratio: 16 / 10;
+}
+
+.fsites__shots img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  opacity: 0;
+  scale: 1.03;
+  transition:
+    opacity 800ms var(--ease-out),
+    scale 1400ms var(--ease-out);
+}
+
+.fsites__shots img.is-on {
+  opacity: 1;
+  scale: 1;
+}
+
+.fsites__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px var(--s-3);
+  margin-top: var(--s-2);
+}
+
+.fsites__caption p {
+  max-width: 52ch;
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+
+.fsites__caption a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  font-weight: 700;
+  color: var(--ky-violet);
+}
+
+@media (min-width: 960px) {
+  .fsites__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    align-items: start;
+  }
+  .fsites__side {
+    grid-column: 1 / span 4;
+  }
+  .fsites__stage {
+    grid-column: 5 / span 8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fsites__shots img {
+    transition: none;
+  }
+}
+
+/* Hero phones: a hairline bezel, just enough to read as a device */
+.ahphones .aphone {
+  padding: 0.9%;
+  border-radius: 12% / 5.8%;
+}
+
+.ahphones .aphone .aphone__screen {
+  border-radius: 10.8cqi;
+}

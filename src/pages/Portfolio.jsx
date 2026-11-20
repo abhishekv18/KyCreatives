@@ -5,6 +5,7 @@ import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
 import PartnersStrip from "../components/ui/PartnersStrip";
 import QuickEnquiry from "../components/ui/QuickEnquiry";
+import FeaturedSites from "../components/ui/FeaturedSites";
 import ContactCTA from "../components/ui/ContactCTA";
 import { Glow, Pattern } from "../components/art/Art";
 import { projects as allProjects, projectBySlug, GROUPS, shotSrc } from "../data/projects";
@@ -48,7 +49,7 @@ function HeroStack() {
 
 export default function Portfolio() {
   usePageMeta({
-    title: "Portfolio",
+    title: "Websites and E-commerce stores",
     description:
       "Websites designed and built by KY Creatives: D2C stores, business websites, news platforms and non-profits for clients worldwide.",
   });
@@ -68,9 +69,9 @@ export default function Portfolio() {
     <>
       <PageHero
         theme="ink"
-        kicker="Portfolio"
+        kicker="Portfolio / Websites and E-commerce stores"
         kickerTone="aqua"
-        lines={["Every website,", "in one place."]}
+        lines={["Websites built", "to do real work."]}
         lead="Online stores, company websites, news platforms and non-profits, designed and built by the same team. Each one is a live site you can visit."
         art={
           <>
@@ -96,6 +97,8 @@ export default function Portfolio() {
           </li>
         </ul>
       </PageHero>
+
+      <FeaturedSites slugs={["thedecorshed", "ramysprofessional", "vibhadesigns"]} />
 
       <section className="pf" data-tone="light" aria-labelledby="pf-title">
         <div className="container">

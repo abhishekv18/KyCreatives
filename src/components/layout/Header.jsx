@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, X, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ChevronDown, X, ArrowRight, ArrowUpRight, Globe, Smartphone } from "lucide-react";
 import Logo from "../ui/Logo";
 import { services } from "../../data/services";
 import { company } from "../../data/site";
@@ -109,17 +109,47 @@ const MENU_TONE = {
   "design-graphics": "magenta",
 };
 
-function ServicesMenu() {
+const PORTFOLIO_LINKS = [
+  {
+    key: "websites",
+    path: "/portfolio",
+    name: "Websites and E-commerce stores",
+    short: "Online stores, company websites and platforms, live to visit.",
+    Icon: Globe,
+    hue: "violet",
+  },
+  {
+    key: "apps",
+    path: "/portfolio/apps",
+    name: "Applications and Software",
+    short: "Mobile apps and product design, screen by screen.",
+    Icon: Smartphone,
+    hue: "cobalt",
+  },
+];
+
+const SERVICE_LINKS = services.map((s) => ({
+  key: s.slug,
+  path: s.path,
+  name: s.name,
+  short: s.short,
+  Icon: serviceIcons[s.slug],
+  hue: MENU_TONE[s.slug],
+  focus: s.slug === "d2c",
+}));
+
+/** A header dropdown: the services list, and the two portfolios. */
+function NavMenu({ id, label, base, items, kicker, aside, compact = false }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
   const btnRef = useRef(null);
   const closeTimer = useRef();
   const location = useLocation();
-  const active = location.pathname.startsWith("/services");
+  const active = location.pathname.startsWith(base);
 
-  const items = () => Array.from(wrapRef.current?.querySelectorAll(".svc-menu__link") || []);
+  const linkEls = () => Array.from(wrapRef.current?.querySelectorAll(".svc-menu__link") || []);
   const focusItem = (i) => {
-    const list = items();
+    const list = linkEls();
     if (!list.length) return;
     list[(i + list.length) % list.length].focus();
   };
@@ -149,7 +179,7 @@ function ServicesMenu() {
   };
 
   const onPanelKey = (e) => {
-    const list = items();
+    const list = linkEls();
     const i = list.indexOf(document.activeElement);
     if (i === -1) return;
     const map = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
@@ -176,7 +206,7 @@ function ServicesMenu() {
 
   return (
     <div
-      className={`svc ${open ? "is-open" : ""}`}
+      className={`svc ${compact ? "svc--compact" : ""} ${open ? "is-open" : ""}`}
       ref={wrapRef}
       onKeyDown={onWrapKey}
       onMouseEnter={() => {
@@ -196,55 +226,57 @@ function ServicesMenu() {
         ref={btnRef}
         className={`nav__link svc__btn ${active ? "is-active" : ""}`}
         aria-expanded={open}
-        aria-controls="services-menu"
+        aria-controls={id}
         onClick={() => setOpen((o) => !o)}
         onKeyDown={onButtonKey}
       >
-        Services
+        {label}
         <ChevronDown size={16} strokeWidth={1.75} aria-hidden="true" className="svc__chev" />
       </button>
-      <div id="services-menu" className="svc-menu" hidden={!open} onKeyDown={onPanelKey}>
+      <div id={id} className="svc-menu" hidden={!open} onKeyDown={onPanelKey}>
         <div className="svc-menu__inner">
           <div className="svc-menu__main">
-            <p className="svc-menu__kicker t-meta">Services</p>
+            <p className="svc-menu__kicker t-meta">{kicker}</p>
             <ul role="list" className="svc-menu__grid">
-              {services.map((s) => {
-                const Icon = serviceIcons[s.slug];
-                return (
-                  <li key={s.slug}>
-                    <Link
-                      className={`svc-menu__link ${location.pathname === s.path ? "is-current" : ""}`}
-                      data-hue={MENU_TONE[s.slug]}
-                      to={s.path}
-                      onClick={() => setOpen(false)}
-                    >
-                      <span className="svc-menu__icon" aria-hidden="true">
-                        <Icon size={18} strokeWidth={1.6} />
+              {items.map(({ key, path, name, short, Icon, hue, focus, preview }) => (
+                <li key={key}>
+                  <Link
+                    className={`svc-menu__link ${preview ? "svc-menu__link--card" : ""} ${location.pathname === path ? "is-current" : ""}`}
+                    data-hue={hue}
+                    to={path}
+                    onClick={() => setOpen(false)}
+                  >
+                    {preview && (
+                      <span className={`svc-menu__preview svc-menu__preview--${key}`} aria-hidden="true">
+                        <img src={preview} alt="" loading="lazy" decoding="async" />
                       </span>
-                      <span className="svc-menu__text">
-                        <span className="svc-menu__name">
-                          {s.name}
-                          {s.slug === "d2c" && <span className="svc-menu__focus t-meta">Focus</span>}
-                        </span>
-                        <span className="svc-menu__desc">{s.short}</span>
+                    )}
+                    <span className="svc-menu__icon" aria-hidden="true">
+                      <Icon size={18} strokeWidth={1.6} />
+                    </span>
+                    <span className="svc-menu__text">
+                      <span className="svc-menu__name">
+                        {name}
+                        {focus && <span className="svc-menu__focus t-meta">Focus</span>}
                       </span>
-                      <ArrowUpRight className="svc-menu__go" size={16} strokeWidth={1.75} aria-hidden="true" />
-                    </Link>
-                  </li>
-                );
-              })}
+                      <span className="svc-menu__desc">{short}</span>
+                    </span>
+                    <ArrowUpRight className="svc-menu__go" size={16} strokeWidth={1.75} aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="svc-menu__side">
-            <p className="svc-menu__kicker t-meta">Not sure where to start?</p>
-            <p className="svc-menu__lede">Tell us the problem. We will suggest the right mix.</p>
-            <Link to="/contact" className="svc-menu__cta" onClick={() => setOpen(false)}>
-              <span>Start a project</span>
+            <p className="svc-menu__kicker t-meta">{aside.kicker}</p>
+            <p className="svc-menu__lede">{aside.lede}</p>
+            <Link to={aside.to || "/contact"} className="svc-menu__cta" onClick={() => setOpen(false)}>
+              <span>{aside.cta || "Start a project"}</span>
               <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
             </Link>
             <p className="svc-menu__note t-meta">
               <span aria-hidden="true" className="svc-menu__dot" />
-              First reply within 24 hours
+              {aside.note || "First reply within 24 hours"}
             </p>
           </div>
         </div>
@@ -307,7 +339,8 @@ function MobileMenu({ open, onClose }) {
           {[
             ["/", "Home", true],
             ["/about", "About"],
-            ["/portfolio", "Portfolio"],
+            ["/portfolio", "Websites", true],
+            ["/portfolio/apps", "Applications"],
             ["/contact", "Contact"],
           ].map(([to, label, end], i) => (
             <li key={to} style={{ "--i": i }}>
@@ -324,7 +357,7 @@ function MobileMenu({ open, onClose }) {
           {services.map((s, i) => {
             const Icon = serviceIcons[s.slug];
             return (
-              <li key={s.slug} style={{ "--i": i + 3 }}>
+              <li key={s.slug} style={{ "--i": i + 5 }}>
                 <NavLink to={s.path} onClick={onClose} data-hue={MENU_TONE[s.slug]}>
                   <span className="mnav__svc-icon" aria-hidden="true">
                     <Icon size={16} strokeWidth={1.6} />
@@ -398,12 +431,30 @@ export default function Header() {
                 </NavLink>
               </li>
               <li>
-                <ServicesMenu />
+                <NavMenu
+                  id="services-menu"
+                  label="Services"
+                  base="/services"
+                  items={SERVICE_LINKS}
+                  kicker="Services"
+                  aside={{ kicker: "Not sure where to start?", lede: "Tell us the problem. We will suggest the right mix." }}
+                />
               </li>
               <li>
-                <NavLink to="/portfolio" className="nav__link">
-                  Portfolio
-                </NavLink>
+                <NavMenu
+                  id="portfolio-menu"
+                  label="Portfolio"
+                  base="/portfolio"
+                  items={PORTFOLIO_LINKS}
+                  kicker="Portfolio"
+                  aside={{
+                    kicker: "Live work",
+                    lede: "Every site is live to visit, every app is in use.",
+                    cta: "Start a similar project",
+                    note: "Stores, platforms and Android apps",
+                  }}
+                  compact
+                />
               </li>
               <li>
                 <NavLink to="/contact" className="nav__link">

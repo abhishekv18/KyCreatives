@@ -87,3 +87,56 @@
     font-size: 19.4px;
   }
 }
+
+/* The Portfolio dropdown: the Services layout and dark side card, sized
+   for two entries */
+.svc--compact .svc-menu {
+  width: min(48rem, calc(100vw - 2 * var(--island-edge, 16px)));
+}
+
+.svc--compact .svc-menu__inner {
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+}
+
+.svc--compact .svc-menu__grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Orbits: fine rings behind a hero centrepiece, fading toward the copy */
+.art-orbits {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* the same strength as the Contact hero's rings */
+  background: repeating-radial-gradient(circle at 74% 50%, rgb(228 219 255 / 0.16) 0 1.5px, transparent 1.5px 72px);
+  -webkit-mask-image: radial-gradient(ellipse 60% 75% at 74% 50%, #000 25%, transparent 75%);
+  mask-image: radial-gradient(ellipse 60% 75% at 74% 50%, #000 25%, transparent 75%);
+}
+
+/* Portfolio dropdown: the side card is as tall as the two links, no taller */
+.svc--compact .svc-menu__inner {
+  align-items: stretch;
+}
+
+.svc--compact .svc-menu__side {
+  gap: 10px;
+  justify-content: space-between;
+  padding-block: 1.25rem;
+}
+
+.svc--compact .svc-menu__lede {
+  font-size: 1.1875rem;
+}
+
+.svc--compact .svc-menu__main {
+  padding-bottom: 0.75rem;
+}
+
+/* Portfolio dropdown: a compact button that sits inside the card's width */
+.svc--compact .svc-menu__cta {
+  align-self: flex-start;
+  gap: 12px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: var(--fs-small);
+}

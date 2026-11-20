@@ -764,7 +764,7 @@
 /* on Ink the guides sit a step brighter and fade later, level with the
    patterns behind the other page heroes */
 .art-guides--dark {
-  --g-line: rgb(255 255 255 / 0.11);
+  --g-line: rgb(255 255 255 / 0.06);
   -webkit-mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, #000 35%, transparent 85%);
   mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, #000 35%, transparent 85%);
 }
