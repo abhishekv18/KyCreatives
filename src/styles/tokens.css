@@ -146,8 +146,8 @@
   --container: 75rem; /* 1200: main composition */
   --container-wide: 90rem; /* 1440: image-led rows */
   --container-narrow: 47.5rem; /* 760: reading */
-  --gutter: clamp(1rem, 0.5rem + 3vw, 4rem);
-  --grid-gap: clamp(1rem, 0.5rem + 1.5vw, 2.5rem);
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --grid-gap: clamp(1rem, 0.6rem + 1.2vw, 1.5rem);
   --header-h: 76px;
 
   /* ---------- Components ---------- */
@@ -164,7 +164,7 @@
   --icon-sm: 16px;
   --icon-md: 20px;
   --control-h: 50px;
-  --card-pad: clamp(1.5rem, 1rem + 2vw, 3.5rem);
+  --card-pad: clamp(1.25rem, 0.9rem + 1.4vw, 2.25rem);
 
   /* ---------- Image roles (aspect ratios) ---------- */
   --ratio-browser: 16 / 10; /* website screenshots in a browser frame */

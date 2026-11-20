@@ -1005,7 +1005,7 @@
    A compact, ruled index: modest serif names, quiet columns, and a soft
    hover (a faint tint and a Violet edge) rather than a filled block. */
 .work-index {
-  margin-top: var(--s-12);
+  margin-top: var(--section-y);
 }
 
 .work-index__head {
@@ -1840,7 +1840,7 @@ html:not(.motion-ok) .proc__fill {
 
 .proc__ol {
   display: grid;
-  gap: clamp(3rem, 2rem + 4vw, 6rem);
+  gap: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
 }
 
 .proc__step {

@@ -1525,7 +1525,7 @@
     padding-bottom: calc(var(--section-y) + 14px);
   }
   .cnext__list[role="list"] {
-    margin-top: calc(var(--s-5) + var(--s-5));
+    margin-top: var(--space-block);
   }
 }
 

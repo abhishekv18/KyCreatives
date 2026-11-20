@@ -72,3 +72,18 @@
 .pf {
   padding-top: var(--section-y-sm);
 }
+
+/* Very large screens: the whole layout grows a little, so a 2560px display
+   reads like a 1440px one instead of a small column in a sea of space.
+   Everything sized in rem (type, spacing, the container) scales together. */
+@media (min-width: 1800px) {
+  html {
+    font-size: calc(16px + (100vw - 1800px) * 0.0045);
+  }
+}
+
+@media (min-width: 2560px) {
+  html {
+    font-size: 19.4px;
+  }
+}
