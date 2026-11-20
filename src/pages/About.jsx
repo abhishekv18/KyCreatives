@@ -275,12 +275,12 @@ export default function About() {
             {company.foundedYear}
           </li>
           <li>
-            <span>Studio</span>
+            <span>Office</span>
             {company.address.short}
           </li>
           <li>
-            <span>Focus</span>
-            D2C brands
+            <span>Delivery</span>
+            Design to launch
           </li>
         </ul>
       </PageHero>

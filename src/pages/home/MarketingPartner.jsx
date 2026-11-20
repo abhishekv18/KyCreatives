@@ -24,7 +24,7 @@ export default function MarketingPartner() {
             </div>
           </div>
           <p className="mkp__side t-muted" data-reveal="up">
-            We build the website and BrandGap brings the right people to it, so launch day is only the start.
+            We build the software and technology, and BrandGap brings the right people to it, so launch day is only the start.
           </p>
         </div>
 

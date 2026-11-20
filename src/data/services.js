@@ -19,7 +19,7 @@ export const services = [
         "Business websites, landing pages, custom web applications, SaaS interfaces and dashboards, designed and built by KY Creatives.",
     },
     hero: {
-      lines: ["From a five-page website", "to a working product."],
+      lines: ["From a few-page website", "to a working product."],
       lead: "We design and build websites and web applications that explain your business clearly, load fast and stay easy to change after launch.",
     },
     offerings: [

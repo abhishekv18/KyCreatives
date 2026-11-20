@@ -2,6 +2,7 @@ import { useCallback, useId, useRef, useState } from "react";
 import { AlertCircle, Send, ShieldCheck, Check } from "lucide-react";
 import Toast from "./Toast";
 import LaptopSlides from "./LaptopSlides";
+import { Qmark } from "./SplitHeading";
 import { WEB3FORMS_KEY, ENQUIRY_EMAIL, sendEnquiry } from "../../lib/enquiry";
 
 const EMPTY = { name: "", email: "", phone: "", message: "", other: "" };
@@ -136,9 +137,11 @@ export default function QuickEnquiry({
         <div className="qe__intro">
           <p className="kicker t-meta">{kicker}</p>
           <h2 id={id("title")} className="qe__title">
-            {lines[0]}
+            <Qmark text={lines[0]} />
             <br />
-            <span>{lines[1]}</span>
+            <span>
+              <Qmark text={lines[1]} />
+            </span>
           </h2>
           <p className="qe__lead">{lead}</p>
           <LaptopSlides theme={theme} />
@@ -177,7 +180,7 @@ export default function QuickEnquiry({
           {field("name", "Name", { input: { autoComplete: "name" } })}
           <div className="qe__row">
             {field("email", "Email", { input: { type: "email", autoComplete: "email", inputMode: "email" } })}
-            {field("phone", "Phone", { input: { type: "tel", autoComplete: "tel", inputMode: "tel", placeholder: "+91 98765 43210" } })}
+            {field("phone", "Phone", { input: { type: "tel", autoComplete: "tel", inputMode: "tel", placeholder: "+1 202 555 0143" } })}
           </div>
           {field("message", "Message", { optional: true, placeholder: "What would you like to build or improve?" })}
           <button

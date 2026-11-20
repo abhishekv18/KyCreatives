@@ -200,12 +200,39 @@
 }
 
 .qe__live {
-  width: 7px;
-  height: 7px;
+  position: relative;
+  width: 8px;
+  height: 8px;
+  margin: 0 6px 0 4px;
   border-radius: 50%;
   background: var(--ky-success);
-  box-shadow: 0 0 0 4px rgb(22 160 107 / 0.15);
   flex-shrink: 0;
+}
+
+.qe__live::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--ky-success);
+  animation: livePulse 1.8s var(--ease-out) infinite;
+}
+
+@keyframes livePulse {
+  0% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qe__live::after {
+    animation-duration: 3.6s;
+  }
 }
 
 .qe__needs {

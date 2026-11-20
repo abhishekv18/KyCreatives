@@ -62,3 +62,13 @@
     margin-top: clamp(-12px, 2.8vw - 37.6px, 20px);
   }
 }
+
+/* a closing "?" in a display heading keeps a hair of space from the last letter */
+.qmark {
+  margin-left: 0.07em;
+}
+
+/* the portfolio grid follows its hero closely: the filters are the page's next step */
+.pf {
+  padding-top: var(--section-y-sm);
+}

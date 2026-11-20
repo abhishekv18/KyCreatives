@@ -35,7 +35,7 @@ function ReachCard() {
   }, []);
   const ways = [
     { icon: Mail, label: "Email", value: company.email, href: `mailto:${company.email}` },
-    { icon: MessageCircle, label: "WhatsApp", value: "Message the studio", href: company.whatsapp, external: true },
+    { icon: MessageCircle, label: "WhatsApp", value: "Message us", href: company.whatsapp, external: true },
     { icon: Phone, label: "Call", value: company.phoneDisplay, href: company.phoneHref },
   ];
   return (
@@ -108,7 +108,7 @@ function validate(v) {
   const phone = v.phone.trim();
   const digits = phone.replace(/\D/g, "").length;
   if (phone && (!/^[+\d\s().-]+$/.test(phone) || digits < 7 || digits > 15))
-    e.phone = "Check the phone number. Include the country code, for example +91 98765 43210.";
+    e.phone = "Check the phone number. Include the country code, for example +1 202 555 0143.";
   if (!v.services.length) e.services = "Choose at least one service, or Not sure yet.";
   if (!v.details.trim()) e.details = "Tell us a little about the project.";
   return e;
@@ -347,7 +347,7 @@ function EnquiryForm() {
 
       <fieldset className="form__set">
         <legend className="form__legend">
-          <span className="t-meta">01</span> About you
+          About you
         </legend>
       <div className="form__row">
         <Field id={id("name")} label="Name" error={errors.name}>
@@ -393,7 +393,7 @@ function EnquiryForm() {
             type="tel"
             autoComplete="tel"
             inputMode="tel"
-            placeholder="+91 98765 43210"
+            placeholder="+1 202 555 0143"
             value={values.phone}
             onChange={set("phone")}
             aria-invalid={!!errors.phone}
@@ -405,7 +405,7 @@ function EnquiryForm() {
 
       <fieldset className="form__set">
         <legend className="form__legend">
-          <span className="t-meta">02</span> Your project
+          Your project
         </legend>
       <fieldset className={`field choice ${errors.services ? "has-error" : ""}`}>
         <legend className="field__label choice__legend" id={`${id("services")}-label`}>
@@ -490,10 +490,10 @@ function EnquiryForm() {
         <div className="form__note" id={`${base}-note`}>
           <Info size={16} strokeWidth={1.75} aria-hidden="true" />
           {WEB3FORMS_KEY ? (
-            <p>Your enquiry goes straight to {ENQUIRY_EMAIL}. We reply within 24 hours on business days.</p>
+            <p>Your enquiry goes straight to us. We reply within 24 hours on business days.</p>
           ) : (
             <p>
-              Nothing is sent from this page. Continue opens your email app with a message to {ENQUIRY_EMAIL}, ready to
+              Nothing is sent from this page. Continue opens your email app with a message to us, ready to
               review and send.
             </p>
           )}
@@ -552,7 +552,7 @@ export default function Contact() {
             Start the enquiry
           </Button>
           <Button href={`mailto:${company.email}`} variant="ghost">
-            Email the studio
+            Email us
           </Button>
         </div>
         <p className="phero__note t-meta" data-reveal="up" data-delay="0.35">
@@ -579,10 +579,6 @@ export default function Contact() {
                 <div>
                   <dt>Building for the web since</dt>
                   <dd>{company.foundedYear}</dd>
-                </div>
-                <div>
-                  <dt>Team for design and build</dt>
-                  <dd>1</dd>
                 </div>
               </dl>
             </div>

@@ -31,20 +31,24 @@ function HeroVisual() {
 const COMPARE = [
   {
     title: "You probably need a website",
-    tone: "cloud",
+    tone: "ink",
     points: [
-      "You want to explain your business and bring in enquiries",
-      "Most visitors read, compare and contact you",
-      "Your team updates pages, posts and products",
+      "Customers look you up before they call or visit",
+      "You need to be found on Google, Maps and AI search",
+      "You want more enquiries and quote requests",
+      "Most visitors arrive on their phone",
+      "The same questions about prices, hours and services keep coming",
     ],
   },
   {
     title: "You probably need a web app",
-    tone: "ink",
+    tone: "cloud",
     points: [
-      "People log in to do a task, not just read",
-      "Data is created, changed and shared by users",
-      "It replaces a manual process or a spreadsheet",
+      "Your team runs on spreadsheets and copy-paste",
+      "Customers should book, pay or order without calling",
+      "Clients log in to check status, orders or documents",
+      "Your tools don't talk to each other",
+      "You want to grow without adding admin staff",
     ],
   },
 ];

@@ -91,8 +91,8 @@ export default function Portfolio() {
             {company.address.short}
           </li>
           <li>
-            <span>Focus</span>
-            D2C brands
+            <span>Delivery</span>
+            Design to launch
           </li>
         </ul>
       </PageHero>

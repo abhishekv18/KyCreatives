@@ -6,7 +6,7 @@ export const company = {
   tagline: "What we create is business.",
   descriptor: "Design led software, web and mobile apps.",
   boilerplate:
-    "KY Creatives is a design led studio that builds software, web apps and mobile apps for businesses around the world. We have a special focus on D2C brands, designing and building websites that help them launch faster and grow with fewer limits.",
+    "KY Creatives is a design-led company building software, web apps and mobile applications for businesses around the world. Our focus is D2C brands, with online stores designed and built to launch faster and sell well.",
   foundedYear: 2019,
   email: "info@kycreatives.com",
   phoneDisplay: "+91 76697 50672",
