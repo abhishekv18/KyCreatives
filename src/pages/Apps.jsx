@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { ArrowUpRight, Check } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
@@ -54,10 +54,36 @@ function HeroPhones() {
 */
 function AppCase({ app, index }) {
   const ref = useRef(null);
+  const rowRef = useRef(null);
+
+  // Phones: the swipe row steps to the next screen every few seconds and
+  // loops; a touch pauses it until the visitor leaves it alone again.
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row || prefersReducedMotion()) return;
+    const narrow = window.matchMedia("(max-width: 899px)");
+    let held = 0;
+    const hold = () => (held = Date.now());
+    row.addEventListener("pointerdown", hold, { passive: true });
+    row.addEventListener("wheel", hold, { passive: true });
+    const id = setInterval(() => {
+      if (!narrow.matches || Date.now() - held < 6000) return;
+      const r = row.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      const step = row.firstElementChild ? row.firstElementChild.getBoundingClientRect().width + 16 : 200;
+      const atEnd = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
+      row.scrollTo({ left: atEnd ? 0 : row.scrollLeft + step, behavior: "smooth" });
+    }, 2600);
+    return () => {
+      clearInterval(id);
+      row.removeEventListener("pointerdown", hold);
+      row.removeEventListener("wheel", hold);
+    };
+  }, []);
 
   useGSAP(
     () => {
-      if (prefersReducedMotion()) return;
+      if (prefersReducedMotion() || window.matchMedia("(max-width: 899px)").matches) return;
       gsap.fromTo(
         ".acase__phones",
         { xPercent: 3 },
@@ -106,7 +132,7 @@ function AppCase({ app, index }) {
       </div>
 
       <div className="acase__rail">
-        <ul role="list" className="acase__phones" data-stagger="" aria-label={`${app.name} screens`}>
+        <ul role="list" className="acase__phones" ref={rowRef} data-stagger="" aria-label={`${app.name} screens`}>
           {app.screens.map((src, k) => (
             <li key={src}>
               <Phone src={src} alt={`${app.name} app, screen ${k + 1}`} />

@@ -631,3 +631,31 @@
 .ahphones .aphone .aphone__screen {
   border-radius: 10.8cqi;
 }
+
+/* Phones and small tablets: the group fills the width, the front phone about
+   the size of the About hero's */
+@media (max-width: 599px) {
+  .ahphones {
+    width: 100%;
+    max-width: 420px;
+  }
+  .ahphones__p--1 {
+    left: 26%;
+    width: 48%;
+  }
+  .ahphones__p--2,
+  .ahphones__p--3 {
+    width: 36%;
+  }
+  .ahphones__p--2 {
+    left: 0;
+  }
+  .ahphones__p--3 {
+    right: 0;
+  }
+  /* tall enough for the front phone, with clear space above it */
+  .ahphones {
+    aspect-ratio: 1 / 1.06;
+    margin-top: var(--s-2);
+  }
+}

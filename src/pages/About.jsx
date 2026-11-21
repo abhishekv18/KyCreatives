@@ -96,6 +96,25 @@ function HeroVisual() {
               </li>
             ))}
           </ul>
+          <div className="ahero__more">
+            <div className="ahero__work">
+              <p className="ahero__sub">
+                <span>Recent work</span>
+                <span>See all</span>
+              </p>
+              <div className="ahero__thumbs">
+                {["rugsandroses", "thedecorshed", "thelabelbysiya"].map((s) => (
+                  <img key={s} src={`/images/work/${s}-wide-sm.webp`} alt="" loading="lazy" decoding="async" />
+                ))}
+              </div>
+            </div>
+            <div className="ahero__rate">
+              <span className="ahero__stars">★★★★★</span>
+              <span>
+                <b>5.0</b> client rating
+              </span>
+            </div>
+          </div>
           <span className="ahero__cta">
             Start a project <ArrowRight size={13} strokeWidth={2} />
           </span>

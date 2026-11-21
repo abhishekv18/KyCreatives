@@ -238,7 +238,7 @@
   left: 50%;
   width: clamp(64px, 20vw, 84px);
   height: clamp(16px, 4vw, 22px);
-  margin-left: clamp(-32px, -10vw, -42px);
+  transform: translateX(-50%);
   border-radius: clamp(16px, 5vw, 20px);
   background: var(--ky-ink);
   z-index: 2;

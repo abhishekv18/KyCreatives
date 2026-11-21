@@ -114,6 +114,7 @@ const PORTFOLIO_LINKS = [
     key: "websites",
     path: "/portfolio",
     name: "Websites and E-commerce stores",
+    short_name: "Websites & Stores",
     short: "Online stores, company websites and platforms, live to visit.",
     Icon: Globe,
     hue: "violet",
@@ -122,6 +123,7 @@ const PORTFOLIO_LINKS = [
     key: "apps",
     path: "/portfolio/apps",
     name: "Applications and Software",
+    short_name: "Apps & Software",
     short: "Mobile apps and product design, screen by screen.",
     Icon: Smartphone,
     hue: "cobalt",
@@ -339,8 +341,6 @@ function MobileMenu({ open, onClose }) {
           {[
             ["/", "Home", true],
             ["/about", "About"],
-            ["/portfolio", "Websites", true],
-            ["/portfolio/apps", "Applications"],
             ["/contact", "Contact"],
           ].map(([to, label, end], i) => (
             <li key={to} style={{ "--i": i }}>
@@ -357,7 +357,7 @@ function MobileMenu({ open, onClose }) {
           {services.map((s, i) => {
             const Icon = serviceIcons[s.slug];
             return (
-              <li key={s.slug} style={{ "--i": i + 5 }}>
+              <li key={s.slug} style={{ "--i": i + 3 }}>
                 <NavLink to={s.path} onClick={onClose} data-hue={MENU_TONE[s.slug]}>
                   <span className="mnav__svc-icon" aria-hidden="true">
                     <Icon size={16} strokeWidth={1.6} />
@@ -367,6 +367,20 @@ function MobileMenu({ open, onClose }) {
               </li>
             );
           })}
+        </ul>
+
+        <p className="mnav__label t-meta">Portfolio</p>
+        <ul role="list" className="mnav__svc">
+          {PORTFOLIO_LINKS.map(({ key, path, short_name, Icon, hue }, i) => (
+            <li key={key} style={{ "--i": i + 9 }}>
+              <NavLink to={path} end onClick={onClose} data-hue={hue}>
+                <span className="mnav__svc-icon" aria-hidden="true">
+                  <Icon size={16} strokeWidth={1.6} />
+                </span>
+                <span>{short_name}</span>
+              </NavLink>
+            </li>
+          ))}
         </ul>
 
         <div className="mnav__foot">

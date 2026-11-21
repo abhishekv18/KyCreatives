@@ -103,14 +103,37 @@
 }
 
 /* Orbits: fine rings behind a hero centrepiece, fading toward the copy */
+/* App tiles: a grid of outlined app icons, one in each few lit in the brand
+   colours, drifting slowly upward. Sized in px so it reads the same on a phone
+   and a large display; fades out behind the copy. */
 .art-orbits {
   position: absolute;
-  inset: 0;
+  inset: -96px 0 0;
   pointer-events: none;
-  /* the same strength as the Contact hero's rings */
-  background: repeating-radial-gradient(circle at 74% 50%, rgb(228 219 255 / 0.16) 0 1.5px, transparent 1.5px 72px);
-  -webkit-mask-image: radial-gradient(ellipse 60% 75% at 74% 50%, #000 25%, transparent 75%);
-  mask-image: radial-gradient(ellipse 60% 75% at 74% 50%, #000 25%, transparent 75%);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192'%3E%3Cg fill='none' stroke-width='1.25'%3E%3Crect x='14' y='14' width='68' height='68' rx='18' stroke='%23E4DBFF' stroke-opacity='.16'/%3E%3Crect x='110' y='14' width='68' height='68' rx='18' stroke='%23E4DBFF' stroke-opacity='.16'/%3E%3Crect x='14' y='110' width='68' height='68' rx='18' stroke='%23E4DBFF' stroke-opacity='.16'/%3E%3Crect x='110' y='110' width='68' height='68' rx='18' stroke='%236FE3F5' stroke-opacity='.3'/%3E%3C/g%3E%3Ccircle cx='48' cy='48' r='3' fill='%23A98AEA' fill-opacity='.35'/%3E%3C/svg%3E");
+  background-size: 96px 96px;
+  -webkit-mask-image: radial-gradient(ellipse 65% 80% at 76% 50%, #000 20%, transparent 72%);
+  mask-image: radial-gradient(ellipse 65% 80% at 76% 50%, #000 20%, transparent 72%);
+  animation: tilesDrift 24s linear infinite;
+}
+
+@keyframes tilesDrift {
+  to {
+    transform: translateY(96px);
+  }
+}
+
+@media (max-width: 959px) {
+  .art-orbits {
+    -webkit-mask-image: radial-gradient(ellipse 90% 55% at 50% 72%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 90% 55% at 50% 72%, #000 20%, transparent 75%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-orbits {
+    animation: none;
+  }
 }
 
 /* Portfolio dropdown: the side card is as tall as the two links, no taller */
@@ -139,4 +162,125 @@
   padding: 9px 14px;
   border-radius: 10px;
   font-size: var(--fs-small);
+}
+
+/* Phone menu: the Portfolio group gets the same space above it as Services */
+.mnav__svc + .mnav__label {
+  margin-top: var(--s-4);
+}
+
+/* About hero phone: a smaller camera island, centred over the status bar */
+.ahero__phone .mock-phone__notch {
+  width: clamp(52px, 26%, 64px);
+  height: clamp(14px, 3.2vw, 17px);
+}
+
+/* Desktop heroes: the About phone, the Mobile apps phones and the Marketing
+   campaign set sized to the Applications hero, so every hero visual sits at
+   one scale beside its title. Zoom keeps each mock's inner layout intact. */
+@media (min-width: 960px) {
+  .ahero__phone {
+    zoom: 0.8;
+  }
+  .app-hero .mock-phone {
+    zoom: 0.78;
+  }
+  .mkt-hero > div {
+    zoom: 0.86;
+  }
+  /* Contact: the quick-reach card a touch smaller */
+  .reach {
+    zoom: 0.93;
+  }
+}
+
+/* About hero phone: recent work and a rating fill the screen's lower half.
+   They show only when the screen is tall enough, so a small phone stays clean. */
+.ahero__screen {
+  container-type: size;
+}
+
+.ahero__more {
+  display: none;
+  gap: 10px;
+}
+
+@container (min-height: 470px) {
+  .ahero__more {
+    display: grid;
+  }
+}
+
+.ahero__work {
+  display: grid;
+  gap: 7px;
+  padding-top: 9px;
+  border-top: 1px solid var(--m-line);
+}
+
+.ahero__sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ky-slate);
+}
+
+.ahero__sub span + span {
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ky-violet);
+}
+
+.ahero__thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.ahero__thumbs img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px var(--m-line);
+}
+
+.ahero__rate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--ky-cloud);
+  font-size: 10.5px;
+  color: var(--ky-slate);
+}
+
+.ahero__rate b {
+  font-weight: 600;
+  color: var(--ky-ink);
+}
+
+.ahero__stars {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #f5a524;
+}
+
+/* a narrow phone screen (small phones): tighter type so the button stays in view */
+@container (max-width: 220px) {
+  .ahero__title {
+    font-size: 17px;
+  }
+  .ahero__list li {
+    padding: 5px 0;
+  }
+  .ahero__list i {
+    width: 24px;
+    height: 24px;
+  }
 }
