@@ -12,6 +12,7 @@ const pages = {
   Contact: () => import("./pages/Contact"),
   Portfolio: () => import("./pages/Portfolio"),
   Apps: () => import("./pages/Apps"),
+  Partners: () => import("./pages/Partners"),
   D2C: () => import("./pages/services/D2C"),
   WebAppsWebsites: () => import("./pages/services/WebAppsWebsites"),
   MobileApps: () => import("./pages/services/MobileApps"),
@@ -27,6 +28,7 @@ const About = lazy(pages.About);
 const Contact = lazy(pages.Contact);
 const Portfolio = lazy(pages.Portfolio);
 const Apps = lazy(pages.Apps);
+const Partners = lazy(pages.Partners);
 const D2C = lazy(pages.D2C);
 const WebAppsWebsites = lazy(pages.WebAppsWebsites);
 const MobileApps = lazy(pages.MobileApps);
@@ -53,6 +55,7 @@ const router = createBrowserRouter([
       { path: "/contact", element: <Contact /> },
       { path: "/portfolio", element: <Portfolio /> },
       { path: "/portfolio/apps", element: <Apps /> },
+      { path: "/partners", element: <Partners /> },
       
       { path: "/services/web-apps-websites", element: <WebAppsWebsites /> },
       { path: "/services/d2c", element: <D2C /> },

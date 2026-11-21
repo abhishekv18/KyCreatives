@@ -73,6 +73,16 @@
   padding-top: var(--section-y-sm);
 }
 
+/* Laptops: the whole layout scales with the screen, so a 13 or 14 inch
+   laptop gets a proportionate site rather than the same type, spacing and
+   menus as a large monitor. 14px at 1024px, rising evenly to 16px at 1600px.
+   Below 960px (tablets and phones) the base stays 16px for readability. */
+@media (min-width: 960px) and (max-width: 1599.98px) {
+  html {
+    font-size: clamp(14px, calc(14px + (100vw - 1024px) * 0.003472), 16px);
+  }
+}
+
 /* Very large screens: the whole layout grows a little, so a 2560px display
    reads like a 1440px one instead of a small column in a sea of space.
    Everything sized in rem (type, spacing, the container) scales together. */
@@ -185,9 +195,6 @@
   .app-hero .mock-phone {
     zoom: 0.78;
   }
-  .mkt-hero > div {
-    zoom: 0.86;
-  }
   /* Contact: the quick-reach card a touch smaller */
   .reach {
     zoom: 0.93;
@@ -283,4 +290,80 @@
     width: 24px;
     height: 24px;
   }
+}
+
+/* Services dropdown: a set width like the Portfolio one, so the six services
+   sit close together instead of spreading across the whole page */
+.svc:not(.svc--compact) .svc-menu {
+  width: min(62rem, calc(100vw - 2 * var(--island-edge, 16px)));
+}
+
+.svc:not(.svc--compact) .svc-menu__inner {
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.svc:not(.svc--compact) .svc-menu__main {
+  padding-bottom: 0.75rem;
+}
+
+.svc:not(.svc--compact) .svc-menu__link {
+  padding: 0.625rem 0.75rem;
+}
+
+.svc:not(.svc--compact) .svc-menu__side {
+  gap: 10px;
+  padding-block: 1.25rem;
+}
+
+.svc:not(.svc--compact) .svc-menu__lede {
+  font-size: 1.1875rem;
+}
+
+.svc:not(.svc--compact) .svc-menu__cta {
+  align-self: flex-start;
+  gap: 12px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: var(--fs-small);
+}
+
+/* dropdown side card: one supporting line under the heading, set off by a rule */
+.svc-menu__sub {
+  padding-top: 12px;
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.68);
+}
+
+/* Marketing hero: the three campaign pieces sit closer, so the set (and the
+   hero) is shorter; the search result stops short of the story card */
+.mkt-hero .cset {
+  aspect-ratio: 1 / 0.9;
+}
+
+.mkt-hero .cset__post {
+  top: 3%;
+  width: 55%;
+}
+
+.mkt-hero .cset__story {
+  width: 40%;
+  z-index: 1;
+}
+
+.mkt-hero .cset__serp {
+  left: 0;
+  width: 58%;
+  z-index: 2;
+}
+
+/* Control heights in rem, so buttons and fields scale with the laptop base
+   size above (identical to the old px values at 16px) */
+:root {
+  --btn-h: 3.25rem;
+  --btn-h-sm: 2.75rem;
+  --btn-h-lg: 3.5rem;
+  --control-h: 3.125rem;
 }

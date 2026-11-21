@@ -103,6 +103,9 @@ export default function Footer() {
                 <Link to="/portfolio">Portfolio</Link>
               </li>
               <li>
+                <Link to="/partners">Partners</Link>
+              </li>
+              <li>
                 <Link to="/contact">Contact</Link>
               </li>
             </ul>

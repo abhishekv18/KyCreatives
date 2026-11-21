@@ -272,6 +272,7 @@ function NavMenu({ id, label, base, items, kicker, aside, compact = false }) {
           <div className="svc-menu__side">
             <p className="svc-menu__kicker t-meta">{aside.kicker}</p>
             <p className="svc-menu__lede">{aside.lede}</p>
+            {aside.sub && <p className="svc-menu__sub">{aside.sub}</p>}
             <Link to={aside.to || "/contact"} className="svc-menu__cta" onClick={() => setOpen(false)}>
               <span>{aside.cta || "Start a project"}</span>
               <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
@@ -339,8 +340,8 @@ function MobileMenu({ open, onClose }) {
         <p className="mnav__label t-meta">Menu</p>
         <ul role="list" className="mnav__main">
           {[
-            ["/", "Home", true],
             ["/about", "About"],
+            ["/partners", "Partners"],
             ["/contact", "Contact"],
           ].map(([to, label, end], i) => (
             <li key={to} style={{ "--i": i }}>
@@ -451,7 +452,9 @@ export default function Header() {
                   base="/services"
                   items={SERVICE_LINKS}
                   kicker="Services"
-                  aside={{ kicker: "Not sure where to start?", lede: "Tell us the problem. We will suggest the right mix." }}
+                  aside={{ kicker: "Not sure where to start?", lede: "Tell us the problem. We will suggest the right mix.",
+                    sub: "Most projects combine two or three of these, planned and built by one team.",
+                  }}
                 />
               </li>
               <li>
@@ -469,6 +472,11 @@ export default function Header() {
                   }}
                   compact
                 />
+              </li>
+              <li>
+                <NavLink to="/partners" className="nav__link">
+                  Partners
+                </NavLink>
               </li>
               <li>
                 <NavLink to="/contact" className="nav__link">

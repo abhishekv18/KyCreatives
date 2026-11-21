@@ -22,6 +22,7 @@ import "./styles/portfolio.css";
 import "./styles/laptop.css";
 import "./styles/tech.css";
 import "./styles/apps.css";
+import "./styles/partners.css";
 import "./styles/rhythm.css";
 
 import App from "./App";
