@@ -367,3 +367,25 @@
   --btn-h-lg: 3.5rem;
   --control-h: 3.125rem;
 }
+
+/* Closing band on phones: the button fills the width, so a longer label
+   ("Apply to become a partner") fits as neatly as "Start a project" */
+@media (max-width: 599px) {
+  .cta__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+  .cta__button {
+    width: 100%;
+    max-width: 100%;
+  }
+  .cta__button > span:first-child {
+    flex: 1;
+    min-width: 0;
+    white-space: normal;
+  }
+  .cta__mail {
+    align-self: flex-start;
+  }
+}

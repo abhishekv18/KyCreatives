@@ -96,10 +96,25 @@ function EarnCard() {
           </strong>
         </div>
       </div>
-      <figcaption className="pstate__cap t-meta">
-        <i /> Example project
-      </figcaption>
     </figure>
+  );
+}
+
+/* A small pill that drifts gently to and fro, pointing the way to a section */
+function MovingTag({ href, tone = "light", children }) {
+  const inner = (
+    <>
+      <span className="ptag__dot" aria-hidden="true" />
+      <span>{children}</span>
+      {href && <ArrowRight size={14} strokeWidth={2} aria-hidden="true" />}
+    </>
+  );
+  return href ? (
+    <a href={href} className={`ptag ptag--${tone}`}>
+      {inner}
+    </a>
+  ) : (
+    <p className={`ptag ptag--${tone}`}>{inner}</p>
   );
 }
 
@@ -146,7 +161,7 @@ function Calculator() {
     <section id="calculator" className="calc section" data-tone="dark" aria-labelledby="calc-title">
       <div className="container">
         <div className="calc__head">
-          <p className="kicker kicker--aqua t-meta">Earnings calculator</p>
+          <MovingTag tone="dark">Earnings calculator</MovingTag>
           <SplitHeading as="h2" className="calc__title" lines={["See what a month", "could look like."]} />
           <p className="calc__lead" data-reveal="up">
             Move the numbers to match a month you have in mind. The tier is set by how many eligible projects close in the calendar month, and applies to each of them.
@@ -239,7 +254,7 @@ function Calculator() {
           </div>
 
           <div className="calc__out" aria-live="polite">
-            <p className="calc__out-label t-meta">Commission this month</p>
+            <p className="calc__out-label">Earnings this month</p>
             <p className="calc__big">{usd(r.month)}</p>
             <dl className="calc__lines">
               <div>
@@ -264,7 +279,7 @@ function Calculator() {
               )}
             </dl>
             <p className="calc__note">
-              Illustrative only, not a forecast or a guarantee. Commission is calculated on eligible net project revenue.
+              Illustrative only, not a forecast or a guarantee. <span className="calc__hl">Earnings</span> are calculated on eligible net project revenue.
             </p>
             <Button href="#apply" variant="light">
               Apply to become a partner
@@ -567,9 +582,8 @@ export default function Partners() {
             Calculate your earnings
           </Button>
         </div>
-        <p className="pearn t-meta" data-reveal="up" data-delay="0.4">
-          <span className="pearn__dot" aria-hidden="true" />
-          Earn up to 10% to 15% per project in USD
+        <p className="pearn" data-reveal="up" data-delay="0.4">
+          Earn up to <strong>10% to 15%</strong> per project, in USD.
         </p>
       </PageHero>
 
@@ -577,12 +591,12 @@ export default function Partners() {
       <section className="ptiers section" data-tone="light" aria-labelledby="tiers-title">
         <div className="container">
           <div className="offer__head">
-            <p className="kicker t-meta">Commission</p>
+            <MovingTag href="#calculator">How you earn?</MovingTag>
             <div id="tiers-title">
-              <SplitHeading className="offer__title" lines={["The more you close,", "the more each one earns."]} />
+              <SplitHeading className="offer__title" lines={["The more you find,", "the more each one earns."]} />
             </div>
             <p className="t-muted" data-reveal="up">
-              Your rate is set by the number of eligible projects that close in a calendar month, and applies to every one of them. It is paid on eligible net project revenue received.
+              Your rate is set by the number of leads you bring to us and we close in a calendar month, and you earn on the net project value.
             </p>
           </div>
           <ol role="list" className="ptiers__list" data-stagger="">
@@ -603,7 +617,28 @@ export default function Partners() {
       {/* 3. Earnings calculator */}
       <Calculator />
 
-      {/* 4. Why KY Creatives */}
+      {/* 4. How it works */}
+      <section className="psteps section" data-tone="light" aria-labelledby="steps-title">
+        <div className="container">
+          <div className="offer__head">
+            <p className="kicker t-meta">How it works</p>
+            <div id="steps-title">
+              <SplitHeading className="offer__title" lines={["A simple path,", "from first call to commission."]} />
+            </div>
+          </div>
+          <ol role="list" className="psteps__list" data-stagger="">
+            {STEPS.map(([t, d], i) => (
+              <li key={t} className={i === STEPS.length - 1 ? "is-last" : ""}>
+                <span className="psteps__n">{i + 1}</span>
+                <h3 className="psteps__t">{t}</h3>
+                <p className="psteps__d">{d}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 5. Why KY Creatives */}
       <section className="pwhy section" data-tone="light" aria-labelledby="why-title">
         <div className="container">
           <div className="offer__head">
@@ -633,7 +668,7 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* 5. What you'll represent */}
+      {/* 6. What you'll represent */}
       <section className="prep section" data-tone="dark" aria-labelledby="rep-title">
         <div className="container">
           <div className="offer__head">
@@ -648,27 +683,6 @@ export default function Partners() {
                 <span className="prep__n t-meta">{String(i + 1).padStart(2, "0")}</span>
                 <span className="prep__t">{t}</span>
                 <span className="prep__d">{d}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* 6. How it works */}
-      <section className="psteps section" data-tone="light" aria-labelledby="steps-title">
-        <div className="container">
-          <div className="offer__head">
-            <p className="kicker t-meta">How it works</p>
-            <div id="steps-title">
-              <SplitHeading className="offer__title" lines={["A simple path,", "from first call to commission."]} />
-            </div>
-          </div>
-          <ol role="list" className="psteps__list" data-stagger="">
-            {STEPS.map(([t, d], i) => (
-              <li key={t} className={i === STEPS.length - 1 ? "is-last" : ""}>
-                <span className="psteps__n">{i + 1}</span>
-                <h3 className="psteps__t">{t}</h3>
-                <p className="psteps__d">{d}</p>
               </li>
             ))}
           </ol>
@@ -749,7 +763,7 @@ export default function Partners() {
             <div className="pfit__facts" data-reveal="up">
               <div className="pfit__fact">
                 <p className="pfit__label t-meta">You are based in</p>
-                <p className="pfit__value">India</p>
+                <p className="pfit__value">India and Nigeria</p>
               </div>
               <div className="pfit__fact">
                 <p className="pfit__label t-meta">The clients you reach</p>

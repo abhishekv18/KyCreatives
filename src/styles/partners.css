@@ -1584,3 +1584,203 @@
 .pnext__mail a {
   color: var(--ky-violet);
 }
+
+/* ---------- Hero: the earning line, set in the site's own type ---------- */
+.phero--partners .pearn {
+  display: block;
+  margin-top: var(--s-4);
+  padding: var(--s-3) 0 0;
+  border: 0;
+  border-top: 1px solid var(--ink-line);
+  border-radius: 0;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--text-on-dark-muted);
+}
+
+.phero--partners .pearn strong {
+  font-family: var(--font-display);
+  font-size: 1.15em;
+  font-weight: 400;
+  color: var(--ky-white);
+}
+
+/* ---------- Moving section tags ---------- */
+.ptag {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  padding: 8px 14px 8px 12px;
+  border-radius: 999px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  animation: ptagDrift 2.6s var(--ease-in-out) infinite alternate;
+  grid-column: 1 / -1;
+}
+
+a.ptag {
+  transition:
+    background-color 250ms var(--ease-out),
+    color 250ms var(--ease-out);
+}
+
+a.ptag:hover {
+  animation-play-state: paused;
+}
+
+.ptag--light {
+  background: var(--ky-white);
+  color: var(--ky-ink);
+  box-shadow:
+    inset 0 0 0 1px var(--line-strong),
+    0 10px 24px -14px rgb(91 69 196 / 0.45);
+}
+
+a.ptag--light:hover {
+  background: var(--ky-violet);
+  color: var(--ky-white);
+}
+
+.ptag--dark {
+  background: rgb(255 255 255 / 0.06);
+  color: var(--ky-white);
+  box-shadow: inset 0 0 0 1px var(--ink-line);
+}
+
+.ptag__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--grad-flame);
+}
+
+.ptag--dark .ptag__dot {
+  background: var(--ky-cyan);
+}
+
+@keyframes ptagDrift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 10px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ptag {
+    animation: none;
+  }
+}
+
+/* the tag sits on the label row of a split head, like the kicker it replaces */
+.offer__head > .ptag.ptag {
+  grid-column: 1 / -1;
+  max-width: none;
+  margin-top: 0;
+}
+
+/* Calculator result: the label in the site's sans, on a soft highlight */
+.calc__out .calc__out-label {
+  justify-self: start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgb(123 77 217 / 0.1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--ky-violet);
+}
+
+.calc__hl {
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgb(123 77 217 / 0.1);
+  font-weight: 600;
+  color: var(--ky-violet);
+}
+
+/* Why KY Creatives: facts and link sit close to each other */
+
+.pwhy .pwhy__facts li {
+  padding-block: var(--s-3);
+}
+
+.pwhy__more {
+  margin-top: var(--s-3);
+}
+
+/* Phones and tablets: the globe rises behind the headline, where it shows */
+@media (max-width: 959px) {
+  .phero--partners .phero__art .pp-globe {
+    top: -6%;
+    bottom: auto;
+    right: -38%;
+    width: min(120vw, 720px);
+    translate: none;
+    color: rgb(228 219 255 / 0.18);
+  }
+}
+
+/* =========================================================
+   AUDIT: type on the site's shared scale, as on the other
+   inner pages (card titles in the display face at --fs-title,
+   sans titles at weight 500, all running text at --fs-body)
+   ========================================================= */
+.ptier__note,
+.ptier__eg,
+.psteps__d,
+.pwhy__facts span,
+.ppay__list p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+.psteps__t {
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.proles__h,
+.prew__list h3,
+.pfit__value {
+  font-size: var(--fs-title);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-title);
+}
+
+.pfit__list li {
+  font-size: var(--fs-h4);
+  line-height: 1.5;
+}
+
+.pterms__list div,
+.calc__lines div,
+.pnext__t {
+  font-size: var(--fs-ui);
+}
+
+.pnext__t b {
+  font-weight: 500;
+}
+
+.pwhy__facts span {
+  max-width: 36ch;
+}
+
+/* Calculator: the two controls share the panel's height evenly, each one
+   centred in its half, so the panel matches the result card without a gap */
+@media (min-width: 960px) {
+  .calc__inputs {
+    grid-auto-rows: 1fr;
+    align-content: stretch;
+  }
+  .calc__inputs > .calc__field {
+    align-content: center;
+  }
+}

@@ -46,8 +46,8 @@ export const FIT = [
   "You are comfortable starting conversations with businesses you have not met.",
   "You understand what a business needs before you suggest a solution.",
   "You communicate confidently in English, written and spoken.",
-  "You want to build an international client pipeline of your own.",
-  "You can work independently and keep your own pipeline moving.",
+  "Lead generation or building a client pipeline is your cup of tea.",
+  "You can reach out to them and keep your own pipeline moving.",
 ];
 
 export const FAQS = [
@@ -57,7 +57,7 @@ export const FAQS = [
   },
   {
     q: "Where can partners be based?",
-    a: "The founding cohort is open to professionals based in India.",
+    a: "The founding cohort is open to professionals based in India and Nigeria.",
   },
   {
     q: "Which clients will I target?",
@@ -95,7 +95,7 @@ export const FAQS = [
 
 export const MARKETS = ["United States", "United Kingdom", "Canada", "Australia", "UAE", "Western Europe"];
 
-export const BACKGROUNDS = ["Sales", "Business development", "Consulting", "Agency", "Freelance networks"];
+export const BACKGROUNDS = ["Lead generation", "Outreach", "Sales", "Business development", "Consulting", "Agency", "Freelance networks"];
 
 // Key terms beside the FAQ: only what is stated in the FAQ answers
 export const TERMS = [
