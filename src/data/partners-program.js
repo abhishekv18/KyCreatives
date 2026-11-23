@@ -11,7 +11,8 @@ export const TIERS = [
 /** The tier for a number of projects closed in one calendar month. */
 export const tierFor = (n) => TIERS.find((t) => n >= t.min && n <= t.max) || TIERS[0];
 
-// Proposed recurring commission on maintenance or retainer fees
+// Recurring commission on maintenance fees: not published. The calculator
+// option that uses it stays hidden (SHOW_MAINTENANCE in Partners.jsx).
 export const RECURRING = { rate: 0.05, months: 12 };
 
 export const REPRESENT = [
@@ -25,23 +26,15 @@ export const REPRESENT = [
 export const STEPS = [
   ["Find the right business", "Spot a company that needs a website, app or software, and start the conversation."],
   ["Register the lead", "Send us the company's details so the opportunity is recorded under your name."],
-  ["Qualify the need", "Confirm with the client what they want to build, the timeline and the budget range."],
   ["Book a discovery meeting", "Bring the client to a call with our team. You stay on the call."],
-  ["Build the proposal with our team", "We scope the work, estimate it and write the proposal with you."],
   ["Support the close", "You keep the relationship moving; we answer the technical questions."],
-  ["Earn as client payments arrive", "Your commission is calculated on each eligible payment the client makes."],
+  ["Earn your commission", "10% to 15% of the eligible project value, by your monthly tier, paid in USD."],
 ];
 
 export const ROLES = {
   you: ["Prospecting and outreach", "Qualifying the client's need", "Booking discovery meetings", "Staying close to the client through the close"],
   us: ["Technical discovery", "Estimates and scoping", "Written proposals", "Design, development and delivery", "Ongoing client support"],
 };
-
-export const PAYMENT = [
-  ["Tied to cleared payments", "Commission is earned when the client's payment for an eligible project has cleared, not when the contract is signed."],
-  ["A statement every month", "Each month you receive a statement listing every eligible payment received and the commission it earned."],
-  ["Paid in a set window", "Commission is paid out within the payment window set in your partner agreement, by bank transfer."],
-];
 
 export const REWARDS = [
   ["Quarterly recognition", "The partners who bring in the most eligible business each quarter are recognised across the team."],
@@ -54,40 +47,70 @@ export const FIT = [
   "You understand what a business needs before you suggest a solution.",
   "You communicate confidently in English, written and spoken.",
   "You want to build an international client pipeline of your own.",
-  "Experience in sales, business development, consulting or an agency helps.",
+  "You can work independently and keep your own pipeline moving.",
 ];
 
 export const FAQS = [
   {
-    q: "Do I need a technical background?",
-    a: "No. You find and develop the opportunity; our team leads technical discovery, scoping, estimates and the proposal. It helps to understand the difference between a website, a web app and a mobile app, and we brief you on that when you join.",
+    q: "Is this a salaried job?",
+    a: "No. It is an independent, commission-based partnership. There is no fixed salary or guaranteed income.",
   },
   {
-    q: "What counts as eligible net project revenue?",
-    a: "The amount the client pays us for the project's design and development work, after taxes, payment fees, refunds and third-party costs passed through to the client (such as paid plugins, hosting or ad spend). The partner agreement sets out the full list.",
+    q: "Where can partners be based?",
+    a: "The founding cohort is open to professionals based in India.",
   },
   {
-    q: "How is my tier worked out?",
-    a: "By the number of eligible projects that close in one calendar month. One project earns 10%, two earn 12% and three or more earn 15%, and the month's tier applies to each of those projects.",
+    q: "Which clients will I target?",
+    a: "Businesses in the US, UK, Canada, Australia, the UAE and Western Europe.",
   },
   {
-    q: "When do I get paid?",
-    a: "Commission follows the client's payments. When a payment for an eligible project clears, the commission on it appears on that month's statement and is paid within the payment window in your agreement.",
+    q: "Do I need technical skills?",
+    a: "No. You need to understand what a business needs and communicate confidently. Our team handles technical discovery, scoping, estimates and delivery.",
   },
   {
-    q: "What if a client pays in instalments?",
-    a: "You earn on each instalment as it clears, at the tier the project closed at. If a client stops paying, commission stops on the unpaid part.",
+    q: "How much can I earn?",
+    a: "It depends on how many projects close in a month and their eligible value: 10% for one project, 12% for two and 15% for three or more. Earnings are not guaranteed.",
   },
   {
-    q: "Is there a fee to join, or a target I must hit?",
-    a: "There is no fee to join. There are no penalties for a quiet month, though we review the founding cohort regularly to keep it active.",
+    q: "How are my leads protected?",
+    a: "Each lead we accept is registered to you for 12 months, subject to activity, verification and duplicate-lead rules.",
   },
   {
-    q: "Can I work from any country?",
-    a: "Yes. The program is built for partners who can reach businesses internationally. You need to be able to receive international bank transfers.",
+    q: "Can I work with other companies?",
+    a: "Yes. The partnership is non-exclusive, as long as there is no conflict of interest or misuse of confidential information.",
   },
   {
-    q: "How many partners are you accepting?",
-    a: "Six to seven for the founding cohort. Applications are reviewed in the order they arrive, and the cohort closes when it is full.",
+    q: "Are meeting bonuses paid?",
+    a: "Yes. A $25 bonus is paid for each qualified first meeting that the client attends and accepts, up to a monthly cap.",
   },
+  {
+    q: "Can I become a full-time employee?",
+    a: "High-performing partners may be considered after three to six months if a suitable role is open. It is not guaranteed and involves a separate selection process.",
+  },
+  {
+    q: "Is there a joining fee?",
+    a: "No. There is no application or joining fee.",
+  },
+];
+
+export const MARKETS = ["United States", "United Kingdom", "Canada", "Australia", "UAE", "Western Europe"];
+
+export const BACKGROUNDS = ["Sales", "Business development", "Consulting", "Agency", "Freelance networks"];
+
+// Key terms beside the FAQ: only what is stated in the FAQ answers
+export const TERMS = [
+  ["Commission", "10% to 15% per project"],
+  ["Paid in", "USD"],
+  ["Lead protection", "12 months"],
+  ["Meeting bonus", "$25 per qualified first meeting"],
+  ["Arrangement", "Independent, non-exclusive"],
+  ["Joining fee", "None"],
+];
+
+// What happens after an application is sent
+export const NEXT = [
+  ["Send your application", "About three minutes. No fee, no obligation."],
+  ["Hear back within 24 hours", "We read every application ourselves."],
+  ["A 30-minute call", "Meet the team and talk through your markets and network."],
+  ["Onboarding", "Your partner agreement, the services you will represent and how to register leads."],
 ];

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { gsap, prefersReducedMotion } from "../../lib/motion";
 import { getLenis } from "../../lib/smooth";
@@ -33,8 +33,29 @@ function backToTop() {
   3. Wordmark: "KY Creatives" set very large in a faint tint, as a signature.
   4. Base: copyright, legal links and location.
 */
+// The footer's invitation, phrased for the page it closes
+const INVITES = {
+  default: { kicker: "Have a project in mind?", line: "Let’s build what’s next, together.", cta: "Start a project", to: "/contact" },
+  "/about": { kicker: "Work with the team", line: "Meet the people who will build it.", cta: "Start a project", to: "/contact" },
+  "/contact": { kicker: "Prefer a quick chat?", line: "Message us. We reply within a day.", cta: "Fill in the enquiry", to: "/contact#enquiry" },
+  "/portfolio": { kicker: "Like what you see?", line: "Your website could be the next one here.", cta: "Start your website", to: "/contact" },
+  "/portfolio/apps": { kicker: "Have an app in mind?", line: "Let’s put it on your customers’ phones.", cta: "Start your app", to: "/contact" },
+  "/partners": { kicker: "Questions before you apply?", line: "Talk to us about partnering.", cta: "Apply now", to: "/partners#apply" },
+  "/services/web-apps-websites": { kicker: "Need a website or web app?", line: "Let’s build one that’s fast and easy to grow.", cta: "Start your project", to: "/contact" },
+  "/services/d2c": { kicker: "Selling direct?", line: "Let’s build a store that sells.", cta: "Start your store", to: "/contact" },
+  "/services/mobile-apps": { kicker: "Planning an app?", line: "Let’s earn a place on the home screen.", cta: "Start your app", to: "/contact" },
+  "/services/portals": { kicker: "Outgrown spreadsheets?", line: "Let’s build the tool your team needs.", cta: "Start your portal", to: "/contact" },
+  "/services/marketing": { kicker: "Ready to grow?", line: "Let’s plan campaigns you can measure.", cta: "Plan your campaign", to: "/contact" },
+  "/services/design-graphics": { kicker: "Need a stronger brand?", line: "Let’s design an identity people remember.", cta: "Start your brand", to: "/contact" },
+  "/privacy-policy": { kicker: "Questions about your data?", line: "Ask us. We’ll answer plainly.", cta: "Contact us", to: "/contact" },
+  "/terms-and-conditions": { kicker: "Questions about these terms?", line: "Ask us before you start.", cta: "Contact us", to: "/contact" },
+  "/refunds-and-cancellation": { kicker: "Questions about a refund?", line: "Talk to us. We’ll sort it out.", cta: "Contact us", to: "/contact" },
+};
+
 export default function Footer() {
   const markRef = useRef(null);
+  const { pathname } = useLocation();
+  const invite = INVITES[pathname.replace(/\/$/, "")] || INVITES.default;
 
   // The wordmark rises out of the hairline as one piece as the footer
   // scrolls into view, tied to scroll so it sinks back on the way up.
@@ -66,19 +87,29 @@ export default function Footer() {
       <div className="container">
         <div className="footer__invite">
           <div className="footer__invite-copy">
-            <p className="footer__kicker t-meta">Have a project in mind?</p>
-            <p className="footer__line">Let&rsquo;s build what&rsquo;s next, together.</p>
+            <p className="footer__kicker t-meta">{invite.kicker}</p>
+            <p className="footer__line">{invite.line}</p>
             <a className="footer__mail" href={`mailto:${company.email}`}>
               {company.email}
               <ArrowUpRight size={18} strokeWidth={1.75} aria-hidden="true" />
             </a>
           </div>
-          <Link to="/contact" className="footer__cta">
-            <span>Start a project</span>
-            <span className="footer__cta-icon" aria-hidden="true">
-              <ArrowRight size={18} strokeWidth={2} />
-            </span>
-          </Link>
+          {/* a same-page target (#apply) is a plain anchor, so the page scrolls to it */}
+          {invite.to.startsWith(pathname + "#") ? (
+            <a href={invite.to.slice(pathname.length)} className="footer__cta">
+              <span>{invite.cta}</span>
+              <span className="footer__cta-icon" aria-hidden="true">
+                <ArrowRight size={18} strokeWidth={2} />
+              </span>
+            </a>
+          ) : (
+            <Link to={invite.to} className="footer__cta">
+              <span>{invite.cta}</span>
+              <span className="footer__cta-icon" aria-hidden="true">
+                <ArrowRight size={18} strokeWidth={2} />
+              </span>
+            </Link>
+          )}
         </div>
 
         <div className="footer__grid">

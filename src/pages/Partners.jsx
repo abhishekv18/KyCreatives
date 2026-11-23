@@ -8,11 +8,10 @@ import Button from "../components/ui/Button";
 import Faq from "../components/ui/Faq";
 import Toast from "../components/ui/Toast";
 import PartnersStrip from "../components/ui/PartnersStrip";
+import ContactCTA from "../components/ui/ContactCTA";
 import { Glow } from "../components/art/Art";
 import { company } from "../data/site";
-import { projects } from "../data/projects";
-import { apps } from "../data/apps";
-import { TIERS, tierFor, RECURRING, REPRESENT, STEPS, ROLES, PAYMENT, REWARDS, FIT, FAQS } from "../data/partners-program";
+import { TIERS, tierFor, RECURRING, REPRESENT, STEPS, ROLES, REWARDS, FIT, FAQS, MARKETS, BACKGROUNDS, TERMS, NEXT } from "../data/partners-program";
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
@@ -47,53 +46,58 @@ function Globe() {
   );
 }
 
-/* Hero centrepiece: a partner's monthly commission statement, as a document */
-function Statement() {
-  const rows = [
-    ["Retail brand, online store", 6000],
-    ["Clinic, booking web app", 8000],
-    ["Logistics, Android app", 5000],
-  ];
-  const total = rows.reduce((s, [, v]) => s + v, 0);
-  const t = tierFor(rows.length);
+/* Hero centrepiece: how a partner earns, in three plain steps on one card */
+function EarnCard() {
+  const value = 8000;
+  const lo = value * TIERS[0].rate;
+  const hi = value * TIERS[TIERS.length - 1].rate;
   return (
     <figure className="pstate" data-reveal="up">
       <div className="pstate__card">
         <div className="pstate__head">
           <div>
-            <p className="pstate__kicker">Commission statement</p>
-            <p className="pstate__month">March, founding partner</p>
+            <p className="pstate__kicker">How a partner earns</p>
+            <p className="pstate__month">One introduction, one commission.</p>
           </div>
           <img src="/brand/ky-flame-icon.png" alt="" width="32" height="32" />
         </div>
-        <ul role="list" className="pstate__rows">
-          {rows.map(([name, v]) => (
-            <li key={name}>
-              <span>{name}</span>
-              <span>{usd(v)}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="pstate__tier">
-          <span>
-            {rows.length} projects closed <b>Tier {pct(t.rate)}</b>
-          </span>
-          <span className="pstate__bar" aria-hidden="true">
-            {TIERS.map((x) => (
-              <i key={x.label} className={x === t ? "is-on" : ""} />
-            ))}
-          </span>
-        </div>
+        <ol role="list" className="pflow">
+          <li>
+            <span className="pflow__n">1</span>
+            <span className="pflow__t">
+              <b>You introduce a business</b>
+              A retail brand that needs an online store
+            </span>
+          </li>
+          <li>
+            <span className="pflow__n">2</span>
+            <span className="pflow__t">
+              <b>We build and deliver it</b>
+              Scoped, designed, built and launched by our team
+            </span>
+            <span className="pflow__chip">{usd(value)} project</span>
+          </li>
+          <li>
+            <span className="pflow__n pflow__n--on">3</span>
+            <span className="pflow__t">
+              <b>You earn your commission</b>
+              10% to 15% of the project value, in USD
+            </span>
+          </li>
+        </ol>
         <div className="pstate__total">
-          <span>Commission on {usd(total)} collected</span>
-          <strong>{usd(total * t.rate)}</strong>
+          <span>
+            Your commission
+            <br />
+            at {pct(TIERS[0].rate)} to {pct(TIERS[TIERS.length - 1].rate)}
+          </span>
+          <strong>
+            {usd(lo)}&ndash;{usd(hi)}
+          </strong>
         </div>
-        <p className="pstate__paid">
-          <Check size={13} strokeWidth={2.25} aria-hidden="true" /> Paid on cleared client payments
-        </p>
       </div>
       <figcaption className="pstate__cap t-meta">
-        <i /> Illustrative statement
+        <i /> Example project
       </figcaption>
     </figure>
   );
@@ -115,6 +119,10 @@ function Stepper({ id, value, min, max, onChange }) {
     </div>
   );
 }
+
+// The maintenance-plan option is hidden until the recurring commission is
+// approved; set to true to show it again.
+const SHOW_MAINTENANCE = false;
 
 function Calculator() {
   const base = useId();
@@ -152,14 +160,21 @@ function Calculator() {
                 Projects closed this month
               </label>
               <Stepper id={`${base}-count`} value={count} min={1} max={8} onChange={setCount} />
-              <ol role="list" className="calc__tiers" aria-label="Commission tiers">
+              <ul role="list" className="calc__tiers" aria-label="Choose a commission tier">
                 {TIERS.map((t) => (
-                  <li key={t.label} className={t === r.t ? "is-on" : ""}>
-                    <b>{pct(t.rate)}</b>
-                    <span>{t.label}</span>
+                  <li key={t.label}>
+                    <button
+                      type="button"
+                      className={t === r.t ? "is-on" : ""}
+                      aria-pressed={t === r.t}
+                      onClick={() => setCount(t === r.t ? count : t.min)}
+                    >
+                      <b>{pct(t.rate)}</b>
+                      <span>{t.label}</span>
+                    </button>
                   </li>
                 ))}
-              </ol>
+              </ul>
             </div>
 
             <div className="calc__field">
@@ -187,6 +202,7 @@ function Calculator() {
               </div>
             </div>
 
+            {SHOW_MAINTENANCE && (
             <div className="calc__field">
               <label className="calc__switch">
                 <input type="checkbox" checked={care} onChange={(e) => setCare(e.target.checked)} />
@@ -219,6 +235,7 @@ function Calculator() {
                 </div>
               )}
             </div>
+            )}
           </div>
 
           <div className="calc__out" aria-live="polite">
@@ -247,7 +264,7 @@ function Calculator() {
               )}
             </dl>
             <p className="calc__note">
-              Illustrative only, not a forecast or a guarantee. Commission is paid on eligible net project revenue once the client's payment has cleared.
+              Illustrative only, not a forecast or a guarantee. Commission is calculated on eligible net project revenue.
             </p>
             <Button href="#apply" variant="light">
               Apply to become a partner
@@ -270,8 +287,12 @@ function validate(v) {
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email.trim())) e.email = "Check the email address. It should look like name@company.com.";
   if (!v.country.trim()) e.country = "Enter the country you work from.";
   const digits = v.phone.replace(/\D/g, "").length;
-  if (v.phone.trim() && (!/^[+\d\s().-]+$/.test(v.phone.trim()) || digits < 7 || digits > 15))
+  if (!v.phone.trim()) e.phone = "Enter a phone or WhatsApp number, with the country code.";
+  else if (!/^[+\d\s().-]+$/.test(v.phone.trim()) || digits < 7 || digits > 15)
     e.phone = "Check the number. Include the country code, for example +1 202 555 0143.";
+  if (!v.linkedin.trim()) e.linkedin = "Enter your LinkedIn profile link.";
+  else if (!/linkedin\.com\/.+/i.test(v.linkedin.trim()))
+    e.linkedin = "Check the link. It should look like linkedin.com/in/yourname.";
   if (!v.experience) e.experience = "Choose your years of experience.";
   if (!v.about.trim()) e.about = "Tell us a little about the businesses you can reach.";
   return e;
@@ -305,8 +326,8 @@ function Apply() {
       `Name: ${v.name.trim()}`,
       `Email: ${v.email.trim()}`,
       `Country: ${v.country.trim()}`,
-      v.phone.trim() ? `Phone or WhatsApp: ${v.phone.trim()}` : null,
-      v.linkedin.trim() ? `LinkedIn: ${v.linkedin.trim()}` : null,
+      `Phone or WhatsApp: ${v.phone.trim()}`,
+      `LinkedIn: ${v.linkedin.trim()}`,
       `Experience: ${v.experience}`,
     ]
       .filter((l) => l !== null)
@@ -391,19 +412,22 @@ function Apply() {
           <p className="kicker t-meta">Apply</p>
           <SplitHeading as="h2" className="papply__title" lines={["Apply to become", "a founding partner."]} />
           <p className="t-muted" data-reveal="up">
-            We read every application ourselves and reply within five business days. If it looks like a fit, the next step is a 30-minute call with our team.
+            Tell us about your sales experience, the markets you know and the opportunities you can create. We read every application ourselves.
           </p>
-          <ul role="list" className="papply__facts t-meta" data-reveal="up">
-            <li>
-              <span>Cohort</span>6 to 7 partners
-            </li>
-            <li>
-              <span>Fee to join</span>None
-            </li>
-            <li>
-              <span>Reply</span>Within 5 business days
-            </li>
-          </ul>
+          <ol role="list" className="pnext" data-reveal="up">
+            {NEXT.map(([t, d], i) => (
+              <li key={t}>
+                <span className="pnext__n">{String(i + 1).padStart(2, "0")}</span>
+                <span className="pnext__t">
+                  <b>{t}</b>
+                  {d}
+                </span>
+              </li>
+            ))}
+          </ol>
+          <p className="pnext__mail t-meta" data-reveal="up">
+            Questions first? <a href={`mailto:${company.email}`}>{company.email}</a>
+          </p>
         </div>
 
         <div className="papply__card" data-reveal="up">
@@ -413,7 +437,7 @@ function Apply() {
               <h3 className="t-h3">{status === "done" ? "Application received" : "Your email draft is ready"}</h3>
               <p>
                 {status === "done"
-                  ? `Thank you, ${v.name.trim().split(/\s+/)[0]}. We will reply to ${v.email.trim()} within five business days.`
+                  ? `Thank you, ${v.name.trim().split(/\s+/)[0]}. We will reply to ${v.email.trim()} within 24 hours.`
                   : `Your email app should have opened with the application filled in. Press send to reach us at ${ENQUIRY_EMAIL}.`}
               </p>
               {status === "drafted" && (
@@ -455,9 +479,9 @@ function Apply() {
               </div>
               <div className="form__row">
                 {field("country", "Country you work from", { autoComplete: "country-name" })}
-                {field("phone", "Phone or WhatsApp", { type: "tel", autoComplete: "tel", inputMode: "tel", placeholder: "+1 202 555 0143" }, true)}
+                {field("phone", "Phone or WhatsApp", { type: "tel", autoComplete: "tel", inputMode: "tel", placeholder: "+1 202 555 0143" })}
               </div>
-              {field("linkedin", "LinkedIn profile", { type: "url", inputMode: "url", placeholder: "linkedin.com/in/yourname" }, true)}
+              {field("linkedin", "LinkedIn profile", { type: "url", inputMode: "url", placeholder: "linkedin.com/in/yourname" })}
 
               <fieldset className={`field ${errors.experience ? "has-error" : ""}`}>
                 <legend className="field__label">Experience in sales or business development</legend>
@@ -527,14 +551,14 @@ export default function Partners() {
         kicker="Founding Partner Program / International"
         kickerTone="aqua"
         lines={["Build global relationships.", "Earn on the business", "you create."]}
-        lead="Join KY Creatives as a founding partner. Bring international businesses the websites, apps and custom software they need, backed by a team that helps you scope, pitch and deliver."
+        lead="Join KY Creatives as a founding partner. Bring international businesses the websites, apps and custom software they need. Built, backed and completely handled by us."
         art={
           <>
             <Glow />
             <Globe />
           </>
         }
-        aside={<Statement />}
+        aside={<EarnCard />}
         className="phero--partners"
       >
         <div className="phero__actions" data-reveal="up" data-delay="0.3">
@@ -543,65 +567,62 @@ export default function Partners() {
             Calculate your earnings
           </Button>
         </div>
-        <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.4">
-          <li>
-            <span>Commission</span>10% to 15%
-          </li>
-          <li>
-            <span>Paid on</span>Cleared payments
-          </li>
-          <li>
-            <span>Cohort</span>6 to 7 partners
-          </li>
-        </ul>
+        <p className="pearn t-meta" data-reveal="up" data-delay="0.4">
+          <span className="pearn__dot" aria-hidden="true" />
+          Earn up to 10% to 15% per project in USD
+        </p>
       </PageHero>
 
-      {/* 2. Founding cohort */}
-      <section className="pcohort section" data-tone="light" aria-labelledby="cohort-title">
-        <div className="container pcohort__grid">
-          <p className="pcohort__num" aria-hidden="true" data-reveal="up">
-            6<span>–</span>7
-          </p>
-          <div className="pcohort__copy">
-            <p className="kicker t-meta">The founding cohort</p>
-            <div id="cohort-title">
-              <SplitHeading as="h2" className="pcohort__title" lines={["Six to seven partners", "for our first growth cohort."]} />
+      {/* 2. Commission tiers */}
+      <section className="ptiers section" data-tone="light" aria-labelledby="tiers-title">
+        <div className="container">
+          <div className="offer__head">
+            <p className="kicker t-meta">Commission</p>
+            <div id="tiers-title">
+              <SplitHeading className="offer__title" lines={["The more you close,", "the more each one earns."]} />
             </div>
-            <p className="t-lead" data-reveal="up">
-              We are looking for people who can build relationships, create opportunities and own a pipeline. The cohort closes when it is full.
+            <p className="t-muted" data-reveal="up">
+              Your rate is set by the number of eligible projects that close in a calendar month, and applies to every one of them. It is paid on eligible net project revenue received.
             </p>
           </div>
+          <ol role="list" className="ptiers__list" data-stagger="">
+            {TIERS.map((t, i) => (
+              <li key={t.label} className={`ptier ptier--${i + 1}`}>
+                <span className="ptier__label t-meta">{t.label} a month</span>
+                <span className="ptier__rate">{pct(t.rate)}</span>
+                <span className="ptier__note">{t.note}</span>
+                <span className="ptier__eg">
+                  On a {usd(5000)} project: <b>{usd(5000 * t.rate)}</b>
+                </span>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      {/* 3. Why KY Creatives */}
+      {/* 3. Earnings calculator */}
+      <Calculator />
+
+      {/* 4. Why KY Creatives */}
       <section className="pwhy section" data-tone="light" aria-labelledby="why-title">
         <div className="container">
           <div className="offer__head">
             <p className="kicker t-meta">Why KY Creatives</p>
             <div id="why-title">
-              <SplitHeading className="offer__title" lines={["You find the opportunity.", "We build what it needs."]} />
+              <SplitHeading className="offer__title" lines={["You find the opportunity.", "We build, handle and deliver", "what it needs."]} />
             </div>
             <p className="t-muted" data-reveal="up">
               Our management and development team supports discovery, technical scoping, proposals and delivery, so you are never pitching technical work alone.
             </p>
           </div>
-          <ul role="list" className="pwhy__facts" data-stagger="">
+          <ul role="list" className="pwhy__facts pwhy__facts--two" data-stagger="">
             <li>
               <b>{company.foundedYear}</b>
               <span>Building since, {years} years of client work</span>
             </li>
             <li>
-              <b>{projects.length}+</b>
-              <span>Live websites and stores in our portfolio</span>
-            </li>
-            <li>
-              <b>{apps.length}</b>
-              <span>Mobile apps in use, designed and built in-house</span>
-            </li>
-            <li>
-              <b>5.0</b>
-              <span>Client rating on Google and Trustpilot</span>
+              <b>1000+</b>
+              <span>Projects completed by our team around the globe</span>
             </li>
           </ul>
           <p className="pwhy__more" data-reveal="up">
@@ -612,7 +633,7 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* 4. What you'll represent */}
+      {/* 5. What you'll represent */}
       <section className="prep section" data-tone="dark" aria-labelledby="rep-title">
         <div className="container">
           <div className="offer__head">
@@ -633,7 +654,7 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* 5. How it works */}
+      {/* 6. How it works */}
       <section className="psteps section" data-tone="light" aria-labelledby="steps-title">
         <div className="container">
           <div className="offer__head">
@@ -654,7 +675,7 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* 6. Your role vs our role */}
+      {/* 7. Your role vs our role */}
       <section className="proles section" data-tone="light" aria-labelledby="roles-title">
         <div className="container">
           <div className="offer__head">
@@ -693,101 +714,8 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* 7. Commission tiers + 8. examples */}
-      <section className="ptiers section" data-tone="light" aria-labelledby="tiers-title">
-        <div className="container">
-          <div className="offer__head">
-            <p className="kicker t-meta">Commission</p>
-            <div id="tiers-title">
-              <SplitHeading className="offer__title" lines={["The more you close,", "the more each one earns."]} />
-            </div>
-            <p className="t-muted" data-reveal="up">
-              Your rate is set by the number of eligible projects that close in a calendar month, and applies to every one of them. It is paid on eligible net project revenue received.
-            </p>
-          </div>
-          <ol role="list" className="ptiers__list" data-stagger="">
-            {TIERS.map((t, i) => (
-              <li key={t.label} className={`ptier ptier--${i + 1}`}>
-                <span className="ptier__label t-meta">{t.label} a month</span>
-                <span className="ptier__rate">{pct(t.rate)}</span>
-                <span className="ptier__note">{t.note}</span>
-                <span className="ptier__eg">
-                  On a {usd(5000)} project: <b>{usd(5000 * t.rate)}</b>
-                </span>
-              </li>
-            ))}
-          </ol>
 
-          <div className="ptable" data-reveal="up">
-            <table>
-              <caption className="ptable__cap t-meta">Illustrative commission per project, by collected value</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Collected project value</th>
-                  {TIERS.map((t) => (
-                    <th scope="col" key={t.label}>
-                      {pct(t.rate)} tier
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[3000, 5000, 8000].map((val) => (
-                  <tr key={val}>
-                    <th scope="row">{usd(val)}</th>
-                    {TIERS.map((t) => (
-                      <td key={t.label}>{usd(val * t.rate)}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <p className="ptable__note">
-              Examples are illustrative, not typical or guaranteed earnings. Eligible net project revenue excludes taxes, payment fees, refunds and third-party costs passed through to the client.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <Calculator />
-
-      {/* 9. Recurring income + 10. Payment clarity */}
-      <section className="ppay section" data-tone="light" aria-labelledby="pay-title">
-        <div className="container">
-          <div className="offer__head">
-            <p className="kicker t-meta">Payments</p>
-            <div id="pay-title">
-              <SplitHeading className="offer__title" lines={["Know when you are paid,", "and for how long."]} />
-            </div>
-          </div>
-          <div className="ppay__grid">
-            <div className="ppay__recur" data-reveal="up">
-              <span className="ppay__tag t-meta">Proposed</span>
-              <p className="ppay__big">
-                {pct(RECURRING.rate)}
-                <small>for up to {RECURRING.months} months</small>
-              </p>
-              <p className="ppay__lead">Recurring income on eligible maintenance or retainer fees from clients you source.</p>
-              <p className="ppay__eg">
-                A client on a {usd(500)} monthly plan earns you {usd(500 * RECURRING.rate)} a month, up to {usd(500 * RECURRING.rate * RECURRING.months)} over the year.
-              </p>
-            </div>
-            <ul role="list" className="ppay__list" data-stagger="">
-              {PAYMENT.map(([t, d], i) => (
-                <li key={t}>
-                  <span className="ppay__n t-meta">{String(i + 1).padStart(2, "0")}</span>
-                  <div>
-                    <h3>{t}</h3>
-                    <p>{d}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* 11. Rewards & progression */}
+      {/* 8. Rewards & progression */}
       <section className="prew section" data-tone="dark" aria-labelledby="rew-title">
         <div className="container">
           <div className="offer__head">
@@ -810,13 +738,35 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* 12. Who should apply */}
+      {/* 9. Who should apply */}
       <section className="pfit section" data-tone="light" aria-labelledby="fit-title">
         <div className="container pfit__grid">
           <div className="pfit__intro">
             <p className="kicker t-meta">Who should apply</p>
             <div id="fit-title">
               <SplitHeading as="h2" className="pfit__title" lines={["This is for you", "if you can say yes."]} />
+            </div>
+            <div className="pfit__facts" data-reveal="up">
+              <div className="pfit__fact">
+                <p className="pfit__label t-meta">You are based in</p>
+                <p className="pfit__value">India</p>
+              </div>
+              <div className="pfit__fact">
+                <p className="pfit__label t-meta">The clients you reach</p>
+                <ul role="list" className="pfit__chips">
+                  {MARKETS.map((m) => (
+                    <li key={m}>{m}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="pfit__fact">
+                <p className="pfit__label t-meta">Experience that helps</p>
+                <ul role="list" className="pfit__chips pfit__chips--soft">
+                  {BACKGROUNDS.map((m) => (
+                    <li key={m}>{m}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
           <ul role="list" className="pfit__list" data-stagger="">
@@ -832,7 +782,7 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* 13. FAQ */}
+      {/* 10. FAQ */}
       <section className="sfaq section" data-tone="light" aria-labelledby="pfaq-title">
         <div className="container sfaq__grid">
           <div className="sfaq__intro">
@@ -846,6 +796,17 @@ export default function Partners() {
                 Ask us directly
               </Link>
             </p>
+            <div className="pterms" data-reveal="up">
+              <p className="pterms__head t-meta">The program at a glance</p>
+              <dl className="pterms__list">
+                {TERMS.map(([k, val]) => (
+                  <div key={k}>
+                    <dt>{k}</dt>
+                    <dd>{val}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
           <div data-reveal="up">
             <Faq items={FAQS} />
@@ -855,6 +816,13 @@ export default function Partners() {
 
       <Apply />
       <PartnersStrip />
+      <ContactCTA
+        kicker="Next step / Become a partner"
+        lines={["Bring the client.", "We’ll build the rest."]}
+        lead="Apply in about three minutes. We read every application ourselves and reply within 24 hours, with a call to talk it through if it looks like a fit."
+        cta="Apply to become a partner"
+        to="#apply"
+      />
     </>
   );
 }

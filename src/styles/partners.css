@@ -748,8 +748,12 @@
   gap: 6px;
 }
 
-.calc__tiers li {
+.calc__tiers button {
   display: grid;
+  width: 100%;
+  justify-items: start;
+  text-align: left;
+  cursor: pointer;
   gap: 2px;
   padding: 10px 12px;
   border-radius: 12px;
@@ -768,7 +772,17 @@
   color: var(--ky-white);
 }
 
-.calc__tiers li.is-on {
+.calc__tiers button:hover:not(.is-on) {
+  border-color: rgb(255 255 255 / 0.32);
+  color: var(--ky-white);
+}
+
+.calc__tiers button:focus-visible {
+  outline: 2px solid var(--ky-cyan);
+  outline-offset: 2px;
+}
+
+.calc__tiers button.is-on {
   border-color: transparent;
   background: var(--grad-dusk);
   color: rgb(255 255 255 / 0.85);
@@ -1300,4 +1314,273 @@
 .papply fieldset.field legend {
   margin-bottom: 10px;
   padding: 0;
+}
+
+/* ---------- Hero: earning line and the how-you-earn card ---------- */
+.pearn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: var(--s-4);
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--ink-line);
+  background: rgb(255 255 255 / 0.04);
+  font-size: var(--fs-small);
+  color: var(--ky-white);
+}
+
+.pearn__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ky-cyan);
+  box-shadow: 0 0 0 4px rgb(111 227 245 / 0.18);
+}
+
+.pflow[role="list"] {
+  position: relative;
+  display: grid;
+  gap: 0;
+  padding: 6px 0 14px;
+}
+
+/* the line joining the three steps */
+.pflow::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 26px;
+  bottom: 34px;
+  width: 1px;
+  background: var(--line-strong);
+}
+
+.pflow li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 4px 14px;
+  padding: 12px 0;
+}
+
+.pflow__n {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--ky-white);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ky-violet);
+}
+
+.pflow__n--on {
+  border-color: transparent;
+  background: var(--grad-dusk);
+  color: var(--ky-white);
+}
+
+.pflow__t {
+  display: grid;
+  gap: 2px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--ky-slate);
+}
+
+.pflow__t b {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--ky-ink);
+}
+
+.pflow__chip {
+  grid-column: 2;
+  justify-self: start;
+  margin-top: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgb(123 77 217 / 0.1);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ky-violet);
+  font-variant-numeric: tabular-nums;
+}
+
+.pstate__total span {
+  line-height: 1.45;
+}
+
+/* ---------- Why KY: two facts side by side ---------- */
+@media (min-width: 960px) {
+  .pwhy__facts--two[role="list"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pwhy__facts--two span {
+  max-width: 30ch;
+}
+
+/* How it works: five steps, one row on wide screens */
+@media (min-width: 1100px) {
+  .psteps__list[role="list"] {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Who should apply: base, markets, backgrounds ---------- */
+.pfit__facts {
+  display: grid;
+  margin-top: var(--s-3);
+  border-top: 1px solid var(--line-strong);
+}
+
+.pfit__fact {
+  display: grid;
+  gap: 10px;
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.pfit__label {
+  color: var(--text-muted);
+}
+
+.pfit__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+}
+
+.pfit__chips[role="list"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pfit__chips li {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--ky-ink);
+  color: var(--ky-white);
+  font-size: var(--fs-small);
+}
+
+.pfit__chips--soft li {
+  background: var(--ky-white);
+  color: var(--ky-ink);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+/* ---------- FAQ: the program at a glance ---------- */
+.pterms {
+  margin-top: var(--s-4);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--radius-card);
+  background: var(--ky-ink);
+  color: var(--ky-white);
+}
+
+.pterms__head {
+  padding-bottom: var(--s-2);
+  color: var(--ky-cyan);
+}
+
+.pterms__list div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding: 12px 0;
+  border-top: 1px solid var(--ink-line);
+  font-size: var(--fs-small);
+}
+
+.pterms__list dt {
+  color: var(--text-on-dark-muted);
+}
+
+.pterms__list dd {
+  font-weight: 600;
+  text-align: right;
+}
+
+@media (min-width: 960px) {
+  .sfaq .sfaq__intro:has(.pterms) {
+    align-self: start;
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-4));
+  }
+}
+
+/* ---------- Apply: what happens next ---------- */
+.pnext[role="list"] {
+  position: relative;
+  display: grid;
+  margin-top: var(--s-3);
+}
+
+.pnext::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 30px;
+  bottom: 30px;
+  width: 1px;
+  background: var(--line-strong);
+}
+
+.pnext li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: var(--s-2);
+  padding: 14px 0;
+}
+
+.pnext__n {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ky-white);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta-sm);
+  color: var(--ky-violet);
+}
+
+.pnext li:last-child .pnext__n {
+  background: var(--grad-dusk);
+  box-shadow: none;
+  color: var(--ky-white);
+}
+
+.pnext__t {
+  display: grid;
+  gap: 3px;
+  padding-top: 6px;
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+
+.pnext__t b {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--ky-ink);
+}
+
+.pnext__mail {
+  margin-top: var(--s-2);
+  color: var(--text-muted);
+}
+
+.pnext__mail a {
+  color: var(--ky-violet);
 }
