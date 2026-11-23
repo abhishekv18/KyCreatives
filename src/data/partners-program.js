@@ -48,6 +48,8 @@ export const FIT = [
   "You communicate confidently in English, written and spoken.",
   "Lead generation or building a client pipeline is your cup of tea.",
   "You can reach out to them and keep your own pipeline moving.",
+  "You know business owners or decision-makers, or can get in front of them.",
+  "You follow up consistently and manage your own time.",
 ];
 
 export const FAQS = [
@@ -114,3 +116,21 @@ export const NEXT = [
   ["A 30-minute call", "Meet the team and talk through your markets and network."],
   ["Onboarding", "Your partner agreement, the services you will represent and how to register leads."],
 ];
+
+// The founding cohort: shown as a sliding sequence on the Partners page
+export const COHORT = {
+  seats: 8,
+  rate: 0.15,
+  months: 12,
+  profile: [
+    ["Network and reach", 0.86],
+    ["Sales experience", 0.72],
+    ["Market knowledge", 0.8],
+    ["Communication", 0.92],
+  ],
+  benefits: [
+    "Recognition and rewards as a founding partner",
+    "Early access to new partnership models and tiers",
+    "A dedicated support team for your leads",
+  ],
+};

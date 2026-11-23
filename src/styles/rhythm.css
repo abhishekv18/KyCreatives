@@ -389,3 +389,105 @@
     align-self: flex-start;
   }
 }
+
+/* Footer base: the copyright and "Back to top" a size up, easier to read */
+.footer__base .t-meta,
+.footer__totop-label {
+  font-size: var(--fs-small);
+}
+
+.footer__totop-icon {
+  width: 38px;
+  height: 38px;
+}
+
+/* Partners page: the header button is "Apply now", violet with a soft glow
+   that breathes slowly, on light and dark headers alike */
+.site-header__cta.site-header__cta--apply,
+.tone-dark .site-header__cta.site-header__cta--apply {
+  background: var(--ky-violet);
+  color: var(--ky-white);
+  animation: applyGlow 2.8s var(--ease-in-out) infinite;
+}
+
+.site-header__cta--apply .site-header__cta-icon {
+  background: rgb(255 255 255 / 0.18);
+  color: var(--ky-white);
+}
+
+.site-header__cta.site-header__cta--apply:hover,
+.tone-dark .site-header__cta.site-header__cta--apply:hover {
+  background: #6a3fd0;
+  animation-play-state: paused;
+  box-shadow:
+    0 0 0 4px rgb(123 77 217 / 0.22),
+    0 10px 30px -6px rgb(123 77 217 / 0.75);
+}
+
+.site-header__cta--apply:hover .site-header__cta-icon {
+  background: var(--ky-white);
+  color: var(--ky-violet);
+  transform: translateY(2px);
+}
+
+@keyframes applyGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgb(123 77 217 / 0),
+      0 8px 22px -8px rgb(123 77 217 / 0.55);
+  }
+  50% {
+    box-shadow:
+      0 0 0 5px rgb(123 77 217 / 0.18),
+      0 10px 30px -6px rgb(123 77 217 / 0.8);
+  }
+}
+
+.mnav__cta.mnav__cta--apply {
+  background: var(--ky-violet);
+  color: var(--ky-white);
+  box-shadow: 0 12px 30px -10px rgb(123 77 217 / 0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__cta--apply {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   One typeface family for labels and numbers: the monospace
+   meta face is retired; small labels, step numbers, figures
+   and captions use DM Sans with even-width figures, as the
+   rest of the site does.
+   ========================================================= */
+:root {
+  --font-mono: var(--font-sans);
+}
+
+.t-meta {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* small uppercase labels: a touch more tracking reads cleaner in a sans */
+.footer__h,
+.pfc__kicker,
+.pask__kicker,
+.pstate__kicker,
+.phead-note__k {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+/* numbered markers (01, 02 ... step circles, indexes) keep figures even */
+[class*="__n "],
+[class$="__n"],
+[class*="__num"],
+[class*="__index"],
+[class*="__count"] {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}

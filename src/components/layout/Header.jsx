@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, X, ArrowRight, ArrowUpRight, Globe, Smartphone } from "lucide-react";
+import { ChevronDown, X, ArrowRight, ArrowUpRight, ArrowDown, Globe, Smartphone } from "lucide-react";
 import Logo from "../ui/Logo";
 import { services } from "../../data/services";
 import { company } from "../../data/site";
 import { serviceIcons } from "../ui/serviceIcons";
-import { lockScroll } from "../../lib/smooth";
+import { lockScroll, getLenis } from "../../lib/smooth";
 import { whenReady } from "../../lib/motion";
 
 /*
@@ -288,7 +288,24 @@ function NavMenu({ id, label, base, items, kicker, aside, compact = false }) {
   );
 }
 
+/* Partners page: the header's call to action is the application form */
+const isPartners = (pathname) => pathname.replace(/\/$/, "") === "/partners";
+
+function goToApply(e, before) {
+  e.preventDefault();
+  before?.();
+  // after the phone menu has closed and unlocked scrolling
+  setTimeout(() => {
+    const el = document.getElementById("apply");
+    if (!el) return;
+    const lenis = getLenis();
+    if (lenis) lenis.scrollTo(el, { offset: -24 });
+    else el.scrollIntoView({ behavior: "smooth" });
+  }, before ? 380 : 0);
+}
+
 function MobileMenu({ open, onClose }) {
+  const { pathname } = useLocation();
   const panelRef = useRef(null);
 
   useEffect(() => {
@@ -385,10 +402,17 @@ function MobileMenu({ open, onClose }) {
         </ul>
 
         <div className="mnav__foot">
-          <Link to="/contact" className="btn btn--light mnav__cta" onClick={onClose}>
-            <span>Start a project</span>
-            <ArrowUpRight className="btn__icon" size={18} strokeWidth={1.75} aria-hidden="true" />
-          </Link>
+          {isPartners(pathname) ? (
+            <a href="#apply" className="btn btn--light mnav__cta mnav__cta--apply" onClick={(e) => goToApply(e, onClose)}>
+              <span>Apply now</span>
+              <ArrowDown className="btn__icon" size={18} strokeWidth={1.75} aria-hidden="true" />
+            </a>
+          ) : (
+            <Link to="/contact" className="btn btn--light mnav__cta" onClick={onClose}>
+              <span>Start a project</span>
+              <ArrowUpRight className="btn__icon" size={18} strokeWidth={1.75} aria-hidden="true" />
+            </Link>
+          )}
           <div className="mnav__contact">
             <a href={`mailto:${company.email}`}>{company.email}</a>
             <a href={company.phoneHref}>{company.phoneDisplay}</a>
@@ -487,12 +511,21 @@ export default function Header() {
             </ul>
           </nav>
           <div className="site-header__actions">
-            <Link to="/contact" className="site-header__cta">
-              <span>Start a project</span>
-              <span className="site-header__cta-icon" aria-hidden="true">
-                <ArrowUpRight size={16} strokeWidth={2} />
-              </span>
-            </Link>
+            {isPartners(location.pathname) ? (
+              <a href="#apply" className="site-header__cta site-header__cta--apply" onClick={(e) => goToApply(e)}>
+                <span>Apply now</span>
+                <span className="site-header__cta-icon" aria-hidden="true">
+                  <ArrowDown size={16} strokeWidth={2} />
+                </span>
+              </a>
+            ) : (
+              <Link to="/contact" className="site-header__cta">
+                <span>Start a project</span>
+                <span className="site-header__cta-icon" aria-hidden="true">
+                  <ArrowUpRight size={16} strokeWidth={2} />
+                </span>
+              </Link>
+            )}
             <button
               ref={toggleRef}
               className="site-header__toggle"

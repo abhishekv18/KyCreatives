@@ -1,6 +1,10 @@
-import { useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useGSAP } from "@gsap/react";
+import { gsap, prefersReducedMotion } from "../lib/motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Minus, Plus, AlertCircle, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Check, Minus, Plus, AlertCircle, CheckCircle2, X, Send } from "lucide-react";
+import { lockScroll } from "../lib/smooth";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
 import SplitHeading from "../components/ui/SplitHeading";
@@ -11,7 +15,7 @@ import PartnersStrip from "../components/ui/PartnersStrip";
 import ContactCTA from "../components/ui/ContactCTA";
 import { Glow } from "../components/art/Art";
 import { company } from "../data/site";
-import { TIERS, tierFor, RECURRING, REPRESENT, STEPS, ROLES, REWARDS, FIT, FAQS, MARKETS, BACKGROUNDS, TERMS, NEXT } from "../data/partners-program";
+import { TIERS, tierFor, RECURRING, REPRESENT, STEPS, ROLES, REWARDS, FIT, FAQS, MARKETS, BACKGROUNDS, TERMS, NEXT, COHORT } from "../data/partners-program";
 
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
@@ -46,57 +50,180 @@ function Globe() {
   );
 }
 
-/* Hero centrepiece: how a partner earns, in three plain steps on one card */
-function EarnCard() {
-  const value = 8000;
-  const lo = value * TIERS[0].rate;
-  const hi = value * TIERS[TIERS.length - 1].rate;
+/*
+  Founding cohort: the details open in the hero as a card. As the page
+  scrolls, the card shrinks and travels to the bottom-left corner, where it
+  becomes a small pill that stays with the visitor down the page. Hovering
+  (or tapping) the pill opens the details again.
+*/
+const COHORT_POINTS = [
+  ["Only 8 founding partners", "The cohort is capped at 8 and closes when it is full."],
+  ["Selected on profile strength", "Each seat is offered on the strength of the applicant’s profile."],
+  ["A flat 15% for 12 months", "The top rate on every project, regardless of how many you bring."],
+  ["Founding partner benefits", "Recognition and rewards, early access to new partnership models and tiers, and a dedicated support team for your leads."],
+];
+
+function CohortPoints() {
   return (
-    <figure className="pstate" data-reveal="up">
-      <div className="pstate__card">
-        <div className="pstate__head">
-          <div>
-            <p className="pstate__kicker">How a partner earns</p>
-            <p className="pstate__month">One introduction, one commission.</p>
-          </div>
-          <img src="/brand/ky-flame-icon.png" alt="" width="32" height="32" />
-        </div>
-        <ol role="list" className="pflow">
-          <li>
-            <span className="pflow__n">1</span>
-            <span className="pflow__t">
-              <b>You introduce a business</b>
-              A retail brand that needs an online store
-            </span>
-          </li>
-          <li>
-            <span className="pflow__n">2</span>
-            <span className="pflow__t">
-              <b>We build and deliver it</b>
-              Scoped, designed, built and launched by our team
-            </span>
-            <span className="pflow__chip">{usd(value)} project</span>
-          </li>
-          <li>
-            <span className="pflow__n pflow__n--on">3</span>
-            <span className="pflow__t">
-              <b>You earn your commission</b>
-              10% to 15% of the project value, in USD
-            </span>
-          </li>
-        </ol>
-        <div className="pstate__total">
-          <span>
-            Your commission
-            <br />
-            at {pct(TIERS[0].rate)} to {pct(TIERS[TIERS.length - 1].rate)}
+    <ol role="list" className="pfc__points">
+      {COHORT_POINTS.map(([t, d], i) => (
+        <li key={t}>
+          <span className="pfc__n">{String(i + 1).padStart(2, "0")}</span>
+          <span className="pfc__t">
+            <b>{t}</b>
+            {d}
           </span>
-          <strong>
-            {usd(lo)}&ndash;{usd(hi)}
-          </strong>
-        </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+function CohortSeats() {
+  return (
+    <span className="pfc__seats" aria-hidden="true">
+      {Array.from({ length: COHORT.seats }, (_, i) => (
+        <i key={i} />
+      ))}
+    </span>
+  );
+}
+
+const canHover = () => window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+function Cohort() {
+  const cardRef = useRef(null);
+  const pillRef = useRef(null);
+  const [docked, setDocked] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  // reduced motion: the pill simply appears once the hero has scrolled away
+  // (otherwise it docks from the card's own journey, below)
+  useEffect(() => {
+    const hero = cardRef.current?.closest(".phero");
+    if (!hero || !prefersReducedMotion()) return;
+    const io = new IntersectionObserver(([e]) => setDocked(e.intersectionRatio < 0.12), { threshold: [0, 0.12, 0.3] });
+    io.observe(hero);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!docked) setOpen(false);
+  }, [docked]);
+
+  // the card shrinks and travels to where the pill sits. Wide screens start
+  // as the hero begins to scroll; phones start once the card reaches the top,
+  // so it can be read first.
+  useGSAP(() => {
+    if (prefersReducedMotion()) return;
+    const card = cardRef.current;
+    const hero = card.closest(".phero");
+    const absTop = () => card.getBoundingClientRect().top - (gsap.getProperty(card, "y") || 0) + window.scrollY;
+    const build = (startAt, length, startStr) => {
+      const target = () => {
+        const pill = pillRef.current.getBoundingClientRect();
+        const x0 = gsap.getProperty(card, "x") || 0;
+        const r = card.getBoundingClientRect();
+        const cx = r.left - x0 + r.width / 2;
+        const cyAbs = absTop() + r.height / 2;
+        const end = startAt() + length();
+        return { x: pill.left + pill.width / 2 - cx, y: pill.top + pill.height / 2 - (cyAbs - end) };
+      };
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: startStr.trigger,
+            start: startStr.start,
+            end: () => "+=" + length(),
+            scrub: 0.5,
+            invalidateOnRefresh: true,
+            // the pill takes over just as the card arrives in the corner
+            onUpdate: (self) => setDocked(self.progress > 0.86),
+            onLeave: () => setDocked(true),
+            onLeaveBack: () => setDocked(false),
+          },
+        })
+        .to(card, { x: () => target().x, y: () => target().y, ease: "none", duration: 1 }, 0)
+        .to(card, { scale: 0.16, ease: "power1.in", duration: 1 }, 0)
+        .to(card, { opacity: 0, ease: "power1.in", duration: 0.3 }, 0.62);
+    };
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 960px)", () =>
+      build(
+        () => hero.offsetTop,
+        () => hero.offsetHeight * 0.85,
+        { trigger: hero, start: "top top" }
+      )
+    );
+    mm.add("(max-width: 959px)", () =>
+      build(
+        () => absTop() - 72,
+        () => card.offsetHeight * 0.9,
+        { trigger: card, start: "top 72px" }
+      )
+    );
+    return () => mm.revert();
+  });
+
+  const pill = (
+    <div
+      ref={pillRef}
+      className={`pfc-pill ${docked ? "is-docked" : ""} ${open ? "is-open" : ""}`}
+      onMouseEnter={() => canHover() && setOpen(true)}
+      onMouseLeave={() => canHover() && setOpen(false)}
+    >
+      <div className="pfc-pill__panel" id="pfc-panel" role="region" aria-label="Founding cohort details" hidden={!open}>
+        <p className="pfc__kicker">Founding cohort</p>
+        <p className="pfc__title">
+          {COHORT.seats} seats. A flat {Math.round(COHORT.rate * 100)}%.
+        </p>
+        <CohortPoints />
+        <a className="pfc-pill__apply" href="#apply" onClick={() => setOpen(false)}>
+          Apply for a seat <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
+        </a>
       </div>
-    </figure>
+      <button
+        type="button"
+        className="pfc-pill__btn"
+        aria-expanded={open}
+        aria-controls="pfc-panel"
+        tabIndex={docked ? 0 : -1}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span className="pfc-pill__dot" aria-hidden="true" />
+        <span className="pfc-pill__text">
+          <b>Founding cohort</b>
+          <small>
+            {COHORT.seats} seats &middot; flat {Math.round(COHORT.rate * 100)}%
+          </small>
+        </span>
+        <Plus className="pfc-pill__icon" size={16} strokeWidth={2} aria-hidden="true" />
+      </button>
+    </div>
+  );
+
+  return (
+    <>
+      <figure className="pfc" ref={cardRef}>
+        <div className="pfc__card">
+          <div className="pfc__head">
+            <div>
+              <p className="pfc__kicker">Founding cohort</p>
+              <p className="pfc__title">
+                {COHORT.seats} seats. A flat {Math.round(COHORT.rate * 100)}%.
+              </p>
+            </div>
+            <img src="/brand/ky-flame-icon.png" alt="" width="34" height="34" />
+          </div>
+          <CohortPoints />
+          <div className="pfc__foot">
+            <CohortSeats />
+            <span>Applications open</span>
+          </div>
+        </div>
+      </figure>
+      {typeof document !== "undefined" && createPortal(pill, document.body)}
+    </>
   );
 }
 
@@ -104,7 +231,6 @@ function EarnCard() {
 function MovingTag({ href, tone = "light", children }) {
   const inner = (
     <>
-      <span className="ptag__dot" aria-hidden="true" />
       <span>{children}</span>
       {href && <ArrowRight size={14} strokeWidth={2} aria-hidden="true" />}
     </>
@@ -160,12 +286,19 @@ function Calculator() {
   return (
     <section id="calculator" className="calc section" data-tone="dark" aria-labelledby="calc-title">
       <div className="container">
-        <div className="calc__head">
+        <div className="calc__head offer__head">
           <MovingTag tone="dark">Earnings calculator</MovingTag>
-          <SplitHeading as="h2" className="calc__title" lines={["See what a month", "could look like."]} />
-          <p className="calc__lead" data-reveal="up">
-            Move the numbers to match a month you have in mind. The tier is set by how many eligible projects close in the calendar month, and applies to each of them.
-          </p>
+          <div id="calc-title">
+            <SplitHeading as="h2" className="calc__title" lines={["See what a month", "could look like."]} />
+          </div>
+          <div className="phead-side" data-reveal="up">
+            <p className="calc__lead">
+              Move the numbers to match a month you have in mind. The tier is set by how many eligible projects close in the calendar month, and applies to each of them.
+            </p>
+            <p className="phead-note phead-note--dark">
+              <span className="phead-note__k">Founding partners</span>A flat {Math.round(COHORT.rate * 100)}% on every project for their first {COHORT.months} months.
+            </p>
+          </div>
         </div>
 
         <div className="calc__grid" data-reveal="up">
@@ -288,6 +421,211 @@ function Calculator() {
         </div>
       </div>
     </section>
+  );
+}
+
+/*
+  "Ask us directly": a small form in a dialog, so a question can be sent
+  without leaving the page. Native <dialog>: focus stays inside, Esc closes.
+*/
+const ASK_EMPTY = { name: "", email: "", question: "" };
+
+function AskDialog({ open, onClose }) {
+  const ref = useRef(null);
+  const base = useId();
+  const id = (k) => `${base}-${k}`;
+  const [v, setV] = useState(ASK_EMPTY);
+  const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | drafted | failed
+  const botRef = useRef(null);
+
+  useEffect(() => {
+    const d = ref.current;
+    if (!d) return;
+    if (open && !d.open) {
+      d.showModal();
+      lockScroll(true);
+    } else if (!open && d.open) {
+      d.close();
+    }
+  }, [open]);
+
+  const close = () => {
+    lockScroll(false);
+    onClose();
+    setTimeout(() => {
+      setStatus("idle");
+      setErrors({});
+    }, 300);
+  };
+
+  const check = (x) => {
+    const e = {};
+    if (!x.name.trim()) e.name = "Enter your name.";
+    if (!x.email.trim()) e.email = "Enter your email so we can reply.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(x.email.trim())) e.email = "Check the email address.";
+    if (!x.question.trim()) e.question = "Write your question.";
+    return e;
+  };
+
+  const set = (k) => (e) => {
+    const next = { ...v, [k]: e.target.value };
+    setV(next);
+    if (Object.keys(errors).length) setErrors(check(next));
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    const errs = check(v);
+    setErrors(errs);
+    if (Object.keys(errs).length) {
+      requestAnimationFrame(() => ref.current?.querySelector('[aria-invalid="true"]')?.focus());
+      return;
+    }
+    const subject = `Partner program question from ${v.name.trim()}`;
+    const body = `${v.question.trim()}\n\n---\nName: ${v.name.trim()}\nEmail: ${v.email.trim()}`;
+    const href = `mailto:${ENQUIRY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    if (!WEB3FORMS_KEY) {
+      window.location.assign(href);
+      setStatus("drafted");
+      return;
+    }
+    setStatus("sending");
+    try {
+      const res = await fetch(WEB3FORMS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject,
+          from_name: "KY Creatives website",
+          replyto: v.email.trim(),
+          botcheck: botRef.current?.checked || false,
+          name: v.name.trim(),
+          email: v.email.trim(),
+          message: v.question.trim(),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) throw new Error("failed");
+      setStatus("sent");
+      setV(ASK_EMPTY);
+    } catch {
+      setStatus("failed");
+    }
+  };
+
+  const err = (k) =>
+    errors[k] && (
+      <p id={`${id(k)}-error`} className="field__error">
+        <AlertCircle size={16} strokeWidth={1.75} aria-hidden="true" />
+        {errors[k]}
+      </p>
+    );
+
+  return (
+    <dialog
+      ref={ref}
+      className="pask"
+      aria-labelledby={id("title")}
+      onCancel={(e) => {
+        e.preventDefault();
+        close();
+      }}
+      onClick={(e) => {
+        if (e.target === ref.current) close();
+      }}
+    >
+      <div className="pask__card">
+        <div className="pask__head">
+          <div>
+            <p className="pask__kicker">Partner program</p>
+            <h2 id={id("title")} className="pask__title">
+              Ask us directly
+            </h2>
+          </div>
+          <button type="button" className="pask__close" onClick={close} aria-label="Close">
+            <X size={20} strokeWidth={1.75} aria-hidden="true" />
+          </button>
+        </div>
+
+        {status === "sent" || status === "drafted" ? (
+          <div className="pask__done" role="status">
+            <CheckCircle2 size={30} strokeWidth={1.5} aria-hidden="true" />
+            <p className="pask__done-title">{status === "sent" ? "Question sent" : "Your email draft is ready"}</p>
+            <p>
+              {status === "sent"
+                ? "Thank you. We reply within 24 hours."
+                : `Your email app should have opened with the question filled in. Press send to reach us at ${ENQUIRY_EMAIL}.`}
+            </p>
+            <button type="button" className="btn btn--primary" onClick={close}>
+              <span>Done</span>
+            </button>
+          </div>
+        ) : (
+          <form className="pask__form" onSubmit={submit} noValidate>
+            <p className="pask__lead">A question about the program, the terms or the cohort? We reply within 24 hours.</p>
+            <input ref={botRef} type="checkbox" name="botcheck" className="form__trap" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+            <div className="pask__row">
+              <div className={`field ${errors.name ? "has-error" : ""}`}>
+                <label htmlFor={id("name")} className="field__label">
+                  Name
+                </label>
+                <input
+                  id={id("name")}
+                  autoComplete="name"
+                  value={v.name}
+                  onChange={set("name")}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? `${id("name")}-error` : undefined}
+                />
+                {err("name")}
+              </div>
+              <div className={`field ${errors.email ? "has-error" : ""}`}>
+                <label htmlFor={id("email")} className="field__label">
+                  Email
+                </label>
+                <input
+                  id={id("email")}
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  value={v.email}
+                  onChange={set("email")}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? `${id("email")}-error` : undefined}
+                />
+                {err("email")}
+              </div>
+            </div>
+            <div className={`field ${errors.question ? "has-error" : ""}`}>
+              <label htmlFor={id("question")} className="field__label">
+                Your question
+              </label>
+              <textarea
+                id={id("question")}
+                rows={3}
+                value={v.question}
+                onChange={set("question")}
+                aria-invalid={!!errors.question}
+                aria-describedby={errors.question ? `${id("question")}-error` : undefined}
+              />
+              {err("question")}
+            </div>
+            {status === "failed" && (
+              <p className="field__error" role="alert">
+                <AlertCircle size={16} strokeWidth={1.75} aria-hidden="true" />
+                Not sent. Try again, or email {ENQUIRY_EMAIL}.
+              </p>
+            )}
+            <button className="btn btn--primary pask__send" type="submit" disabled={status === "sending"}>
+              <span>{status === "sending" ? "Sending" : "Send question"}</span>
+              <Send className="btn__icon" size={17} strokeWidth={1.75} aria-hidden="true" />
+            </button>
+          </form>
+        )}
+      </div>
+    </dialog>
   );
 }
 
@@ -424,7 +762,7 @@ function Apply() {
     <section id="apply" className="papply section" data-tone="light" aria-labelledby="apply-title">
       <div className="container papply__grid">
         <div className="papply__intro">
-          <p className="kicker t-meta">Apply</p>
+          <p className="kicker pbadge t-meta">Apply</p>
           <SplitHeading as="h2" className="papply__title" lines={["Apply to become", "a founding partner."]} />
           <p className="t-muted" data-reveal="up">
             Tell us about your sales experience, the markets you know and the opportunities you can create. We read every application ourselves.
@@ -472,7 +810,6 @@ function Apply() {
               <input ref={botRef} type="checkbox" name="botcheck" className="form__trap" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               <div className="form__head">
                 <p className="form__title">Partner application</p>
-                <p className="form__meta t-meta">Takes about 3 minutes</p>
               </div>
               {tried && errorList.length > 0 && (
                 <div className="form-errors" ref={summaryRef} tabIndex={-1} role="alert">
@@ -558,6 +895,7 @@ export default function Partners() {
   });
 
   const years = new Date().getFullYear() - company.foundedYear;
+  const [ask, setAsk] = useState(false);
 
   return (
     <>
@@ -573,7 +911,7 @@ export default function Partners() {
             <Globe />
           </>
         }
-        aside={<EarnCard />}
+        aside={<Cohort />}
         className="phero--partners"
       >
         <div className="phero__actions" data-reveal="up" data-delay="0.3">
@@ -621,9 +959,22 @@ export default function Partners() {
       <section className="psteps section" data-tone="light" aria-labelledby="steps-title">
         <div className="container">
           <div className="offer__head">
-            <p className="kicker t-meta">How it works</p>
+            <p className="kicker pbadge t-meta">How it works</p>
             <div id="steps-title">
               <SplitHeading className="offer__title" lines={["A simple path,", "from first call to commission."]} />
+            </div>
+            <div className="phead-side" data-reveal="up">
+              <p className="t-muted">
+                You bring the opportunity and stay close to the client. We take on everything technical, from the first discovery call to delivery.
+              </p>
+              <ul role="list" className="phead-facts t-meta">
+                <li>
+                  <b>{STEPS.length}</b> steps
+                </li>
+                <li>
+                  <b>0</b> technical work on your side
+                </li>
+              </ul>
             </div>
           </div>
           <ol role="list" className="psteps__list" data-stagger="">
@@ -642,7 +993,7 @@ export default function Partners() {
       <section className="pwhy section" data-tone="light" aria-labelledby="why-title">
         <div className="container">
           <div className="offer__head">
-            <p className="kicker t-meta">Why KY Creatives</p>
+            <p className="kicker pbadge t-meta">Why KY Creatives</p>
             <div id="why-title">
               <SplitHeading className="offer__title" lines={["You find the opportunity.", "We build, handle and deliver", "what it needs."]} />
             </div>
@@ -672,9 +1023,17 @@ export default function Partners() {
       <section className="prep section" data-tone="dark" aria-labelledby="rep-title">
         <div className="container">
           <div className="offer__head">
-            <p className="kicker kicker--aqua t-meta">What you will represent</p>
+            <p className="kicker pbadge t-meta">What you will represent</p>
             <div id="rep-title">
               <SplitHeading className="offer__title" lines={["Five things businesses", "always need built."]} />
+            </div>
+            <div className="phead-side" data-reveal="up">
+              <p className="prep__lead">
+                Every project is designed, built and supported by our in-house team, so you can offer the full range with confidence.
+              </p>
+              <Link to="/portfolio" className="phead-link">
+                See the work behind it <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+              </Link>
             </div>
           </div>
           <ol role="list" className="prep__list" data-stagger="">
@@ -693,7 +1052,7 @@ export default function Partners() {
       <section className="proles section" data-tone="light" aria-labelledby="roles-title">
         <div className="container">
           <div className="offer__head">
-            <p className="kicker t-meta">Your role and ours</p>
+            <p className="kicker pbadge t-meta">Your role and ours</p>
             <div id="roles-title">
               <SplitHeading className="offer__title" lines={["Clear roles,", "so nobody guesses."]} />
             </div>
@@ -733,7 +1092,7 @@ export default function Partners() {
       <section className="prew section" data-tone="dark" aria-labelledby="rew-title">
         <div className="container">
           <div className="offer__head">
-            <p className="kicker kicker--aqua t-meta">Rewards and progression</p>
+            <p className="kicker pbadge pbadge--on-violet t-meta">Rewards and progression</p>
             <div id="rew-title">
               <SplitHeading className="offer__title" lines={["Recognition that grows", "with what you build."]} />
             </div>
@@ -756,7 +1115,7 @@ export default function Partners() {
       <section className="pfit section" data-tone="light" aria-labelledby="fit-title">
         <div className="container pfit__grid">
           <div className="pfit__intro">
-            <p className="kicker t-meta">Who should apply</p>
+            <p className="kicker pbadge t-meta">Who should apply</p>
             <div id="fit-title">
               <SplitHeading as="h2" className="pfit__title" lines={["This is for you", "if you can say yes."]} />
             </div>
@@ -800,15 +1159,15 @@ export default function Partners() {
       <section className="sfaq section" data-tone="light" aria-labelledby="pfaq-title">
         <div className="container sfaq__grid">
           <div className="sfaq__intro">
-            <p className="kicker t-meta">Questions</p>
+            <p className="kicker pbadge t-meta">Questions</p>
             <h2 id="pfaq-title" className="sfaq__title" data-reveal="up">
               Before you apply
             </h2>
             <p className="t-muted" data-reveal="up">
               Something else on your mind?{" "}
-              <Link to="/contact" className="link-u">
+              <button type="button" className="link-u pask__open" onClick={() => setAsk(true)} aria-haspopup="dialog">
                 Ask us directly
-              </Link>
+              </button>
             </p>
             <div className="pterms" data-reveal="up">
               <p className="pterms__head t-meta">The program at a glance</p>
@@ -828,6 +1187,7 @@ export default function Partners() {
         </div>
       </section>
 
+      <AskDialog open={ask} onClose={() => setAsk(false)} />
       <Apply />
       <PartnersStrip />
       <ContactCTA
