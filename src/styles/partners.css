@@ -2492,3 +2492,38 @@ p.ptag {
 .pask__done-title {
   font-size: var(--fs-title);
 }
+
+/* the highlighted word in the calculator note: violet and semi-bold, no chip */
+.calc__hl {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  font-weight: 600;
+  color: var(--ky-violet);
+}
+
+/* hero card: kept on its own layer while it travels */
+.pfc {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* the pill lands: it grows out of the corner as the card arrives */
+.pfc-pill {
+  transform-origin: left bottom;
+  scale: 0.72;
+  transition:
+    opacity 420ms var(--ease-out),
+    translate 520ms cubic-bezier(0.2, 0.9, 0.25, 1.15),
+    scale 520ms cubic-bezier(0.2, 0.9, 0.25, 1.15),
+    visibility 0s linear 420ms;
+}
+
+.pfc-pill.is-docked {
+  scale: 1;
+  transition:
+    opacity 420ms var(--ease-out),
+    translate 520ms cubic-bezier(0.2, 0.9, 0.25, 1.15),
+    scale 520ms cubic-bezier(0.2, 0.9, 0.25, 1.15),
+    visibility 0s;
+}

@@ -111,7 +111,7 @@ export const TERMS = [
 
 // What happens after an application is sent
 export const NEXT = [
-  ["Send your application", "About three minutes. No fee, no obligation."],
+  ["Send your application", "No fee, no obligation."],
   ["Hear back within 24 hours", "We read every application ourselves."],
   ["A 30-minute call", "Meet the team and talk through your markets and network."],
   ["Onboarding", "Your partner agreement, the services you will represent and how to register leads."],

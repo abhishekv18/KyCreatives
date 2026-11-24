@@ -135,17 +135,17 @@ function Cohort() {
             trigger: startStr.trigger,
             start: startStr.start,
             end: () => "+=" + length(),
-            scrub: 0.5,
+            scrub: 0.9,
             invalidateOnRefresh: true,
             // the pill takes over just as the card arrives in the corner
-            onUpdate: (self) => setDocked(self.progress > 0.86),
+            onUpdate: (self) => setDocked(self.progress > 0.8),
             onLeave: () => setDocked(true),
             onLeaveBack: () => setDocked(false),
           },
         })
-        .to(card, { x: () => target().x, y: () => target().y, ease: "none", duration: 1 }, 0)
-        .to(card, { scale: 0.16, ease: "power1.in", duration: 1 }, 0)
-        .to(card, { opacity: 0, ease: "power1.in", duration: 0.3 }, 0.62);
+        .to(card, { x: () => target().x, y: () => target().y, ease: "none", duration: 1, force3D: true }, 0)
+        .to(card, { scale: 0.18, ease: "power2.inOut", duration: 1 }, 0)
+        .to(card, { opacity: 0, ease: "power1.inOut", duration: 0.45 }, 0.4);
     };
     const mm = gsap.matchMedia();
     mm.add("(min-width: 960px)", () =>
@@ -158,7 +158,7 @@ function Cohort() {
     mm.add("(max-width: 959px)", () =>
       build(
         () => absTop() - 72,
-        () => card.offsetHeight * 0.9,
+        () => card.offsetHeight * 0.75,
         { trigger: card, start: "top 72px" }
       )
     );
@@ -412,7 +412,7 @@ function Calculator() {
               )}
             </dl>
             <p className="calc__note">
-              Illustrative only, not a forecast or a guarantee. <span className="calc__hl">Earnings</span> are calculated on eligible net project revenue.
+              Illustrative only, not a forecast or a guarantee. <strong className="calc__hl">Earnings</strong> are calculated on eligible net project revenue.
             </p>
             <Button href="#apply" variant="light">
               Apply to become a partner
@@ -1106,7 +1106,7 @@ export default function Partners() {
             ))}
           </ul>
           <p className="prew__note" data-reveal="up">
-            Rewards and roles depend on eligibility set out in the partner agreement and are not guaranteed.
+            Rewards and roles depend on eligibility set out in the partner agreement.
           </p>
         </div>
       </section>
@@ -1193,7 +1193,7 @@ export default function Partners() {
       <ContactCTA
         kicker="Next step / Become a partner"
         lines={["Bring the client.", "We’ll build the rest."]}
-        lead="Apply in about three minutes. We read every application ourselves and reply within 24 hours, with a call to talk it through if it looks like a fit."
+        lead="Apply now. We read every application ourselves and reply within 24 hours, with a call to talk it through if it looks like a fit."
         cta="Apply to become a partner"
         to="#apply"
       />

@@ -491,3 +491,23 @@
   font-variant-numeric: tabular-nums;
   font-weight: 500;
 }
+
+/* =========================================================
+   RESPONSIVE AUDIT: touch targets on phones and small tablets
+   (at least 44px tall, the comfortable size for a fingertip)
+   ========================================================= */
+@media (max-width: 699px) {
+  .footer__col ul {
+    gap: 0;
+  }
+  .footer__col a {
+    min-height: 44px;
+  }
+  .calc__range {
+    height: 44px;
+  }
+  .phead-link {
+    min-height: 44px;
+    padding-bottom: 0;
+  }
+}
