@@ -64,7 +64,7 @@ function ReachCard() {
           </li>
         ))}
       </ul>
-      <p className="reach__foot">We aim to reply within 24 hours on business days.</p>
+      <p className="reach__foot">We reply within 24 hours.</p>
     </div>
   );
 }
@@ -72,7 +72,7 @@ function ReachCard() {
 const NEXT = [
   {
     title: "We read and reply",
-    body: "Within 24 hours on business days, with questions about your goals rather than a sales script.",
+    body: "Within 24 hours, with questions about your goals rather than a sales script.",
   },
   {
     title: "A first conversation",
@@ -246,7 +246,7 @@ function EnquiryForm() {
         id: Date.now(),
         tone: "success",
         title: "Enquiry sent",
-        text: `Thank you, ${first}. We will reply to ${v.email.trim()} within 24 hours on business days.`,
+        text: `Thank you, ${first}. We will reply to ${v.email.trim()} within 24 hours.`,
       });
     } catch {
       setStatus("idle");
@@ -490,7 +490,7 @@ function EnquiryForm() {
         <div className="form__note" id={`${base}-note`}>
           <Info size={16} strokeWidth={1.75} aria-hidden="true" />
           {WEB3FORMS_KEY ? (
-            <p>Your enquiry goes straight to us. We reply within 24 hours on business days.</p>
+            <p>Your enquiry goes straight to us. We reply within 24 hours.</p>
           ) : (
             <p>
               Nothing is sent from this page. Continue opens your email app with a message to us, ready to
@@ -568,12 +568,11 @@ export default function Contact() {
               <p className="kicker kicker--dusk t-meta">Project enquiry</p>
               <h2 className="contact__title">Prefer to write it down?</h2>
               <p className="t-muted">
-                Tell us a little about the business and what you want to build. We reply within 24 hours on business
-                days, usually with a few questions.
+                Tell us a little about the business and what you want to build. We reply within 24 hours, usually with a few questions.
               </p>
               <dl className="contact__facts">
                 <div>
-                  <dt>First reply on business days</dt>
+                  <dt>First reply</dt>
                   <dd>24h</dd>
                 </div>
                 <div>
@@ -683,6 +682,10 @@ export default function Contact() {
             <h2 id="cnext-title" className="cnext__title">
               From first message to a clear plan.
             </h2>
+            <p className="cnext__lead" data-reveal="up">
+              No sales script and no chasing. Your message reaches the people who will plan and build the work, and you get a
+              straight answer on what it takes.
+            </p>
             <p className="cnext__promise" data-reveal="up">
               <span className="cta__rings cnext__halo" aria-hidden="true">
                 <i />
@@ -690,7 +693,7 @@ export default function Contact() {
                 <i />
               </span>
               <strong>24h</strong>
-              <span>First reply, on business days</span>
+              <span>First reply</span>
             </p>
           </div>
           <ol role="list" className="cnext__list" data-stagger="">

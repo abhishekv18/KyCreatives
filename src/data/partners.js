@@ -10,16 +10,15 @@ export const partners = [
   { name: "Ramy's Professional", image: logo("ramysprofessional") },
   { name: "Vibha Designs", image: logo("vibhadesigns") },
   { name: "The Label by Siya", image: logo("thelabelbysiya") },
-  // the live logo is white on a carpet texture, unreadable at card size
-  { name: "Rugs & Roses", wordmark: { text: "Rugs & Roses", color: "#7a2b2b", serif: true } },
+  // the live logo is white, so it sits on a deep rose tile
+  { name: "Rugs & Roses", image: logo("rugsandroses") },
   { name: "Dudle Fashion", image: logo("dudle") },
   { name: "Pets Way", image: logo("petsway") },
   { name: "Shabdmail News", image: logo("shabdmailnews") },
   { name: "Coach Shivangi Kaur", image: logo("shivangikaur") },
   { name: "Abhinay Builders", image: logo("abhinaybuilders") },
   { name: "Property Box", image: logo("property-box") },
-  // the live site's logo image does not load, so the name is set as a wordmark
-  { name: "Pink Dinosaur", wordmark: { text: "Pink Dinosaur", color: "#e8457a" } },
+  { name: "Pink Dinosaur", image: logo("pinkdinosaur") },
   { name: "Coupon Volume", image: logo("couponvolume") },
   { name: "Sarv Dharam Sewa Sangh", image: logo("sarvdharamsewasangh") },
   { name: "Big Brother Visa", image: logo("bigbrothervisa") },

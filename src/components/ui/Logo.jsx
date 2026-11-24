@@ -1,21 +1,13 @@
 import { Link } from "react-router-dom";
 
 /**
- * KY Creatives logo: the official flame mark with the wordmark set as live
- * text in the brand serif. "KY" carries the Flame gradient and "Creatives"
- * takes the surrounding text colour, so the logo stays sharp at any size and
- * reads clearly on light, dark and colour fields without a backing plate.
- * `size` is the wordmark's font size in px; the mark scales with it.
+ * KY Creatives logo: the original artwork (flame mark with the gradient
+ * wordmark), as used on kycreatives.com. `size` sets its scale: the logo
+ * is drawn at about 1.75x that height.
  */
 export default function Logo({ size = 22, linked = true, onClick, className = "" }) {
-  const inner = (
-    <>
-      <img className="logo__mark" src="/brand/ky-flame.png" width="245" height="358" alt="" decoding="async" />
-      <span className="logo__word" aria-hidden="true">
-        <b>KY</b> Creatives
-      </span>
-    </>
-  );
+  // the original KY Creatives logo: flame mark and gradient wordmark
+  const inner = <img className="logo__img" src="/brand/ky-creatives-logo.png" width="285" height="79" alt="" decoding="async" />;
   const style = { "--logo-size": `${size}px` };
   if (!linked)
     return (

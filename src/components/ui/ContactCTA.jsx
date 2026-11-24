@@ -10,7 +10,7 @@ import { company } from "../../data/site";
  */
 export default function ContactCTA({
   lines = ["Tell us what you want", "to build next."],
-  lead = "Share a few lines about your business and the problem to solve. We aim to reply within 24 hours on business days, with questions rather than a sales script.",
+  lead = "Share a few lines about your business and the problem to solve. We reply within 24 hours, with questions rather than a sales script.",
   kicker = "Next step / Start a project",
   cta = "Start a project",
   to = "/contact",

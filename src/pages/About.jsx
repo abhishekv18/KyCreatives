@@ -129,10 +129,10 @@ function HeroVisual() {
 
 // Figures for the "What we do" column, all derived from the site's own data.
 const FIGURES = [
-  [`${new Date().getFullYear() - company.foundedYear}+`, "Years building for the web"],
-  ["1", "Team for design and build"],
-  [String(services.length), "Services under one roof"],
-  ["24h", "First reply on business days"],
+  [`${new Date().getFullYear() - company.foundedYear}+`, "Years designing and building"],
+  ["1000+", "Projects delivered by our team"],
+  ["100%", "In-house design and engineering"],
+  ["24h", "First reply to every enquiry"],
 ];
 
 // The kinds of website in the portfolio.
@@ -290,16 +290,16 @@ export default function About() {
       >
         <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.3">
           <li>
-            <span>Founded</span>
-            {company.foundedYear}
+            <span>Projects delivered</span>
+            1000+
           </li>
           <li>
-            <span>Office</span>
-            {company.address.short}
+            <span>What we build</span>
+            Websites, stores and apps
           </li>
           <li>
-            <span>Delivery</span>
-            Design to launch
+            <span>First reply</span>
+            Within 24 hours
           </li>
         </ul>
       </PageHero>
@@ -381,7 +381,7 @@ export default function About() {
           <div className="intro acap__intro">
             <p className="kicker kicker--dusk t-meta">What we do</p>
             <div id="acap-title">
-              <SplitHeading className="about__h" lines={["Design, engineering", "and growth, in one place."]} />
+              <SplitHeading className="about__h" lines={["Design and engineering,", "in one place."]} />
             </div>
             <p className="t-muted" data-reveal="up">
               Each service has its own page with what is included and how a project runs.

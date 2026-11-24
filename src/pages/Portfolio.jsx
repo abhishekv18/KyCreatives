@@ -84,16 +84,16 @@ export default function Portfolio() {
       >
         <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.3">
           <li>
-            <span>Clients</span>
-            Worldwide
+            <span>Live sites</span>
+            {projects.length}+ to visit
           </li>
           <li>
-            <span>Office</span>
-            {company.address.short}
+            <span>Industries</span>
+            Retail, media, non-profit
           </li>
           <li>
-            <span>Delivery</span>
-            Design to launch
+            <span>Built on</span>
+            Shopify and custom code
           </li>
         </ul>
       </PageHero>
@@ -172,7 +172,7 @@ export default function Portfolio() {
         source="Portfolio"
         kicker="Start your project"
         lines={["Like what you see?", "Let's build yours."]}
-        lead="Tell us about your business and what you want the website to do. We reply within 24 hours on business days."
+        lead="Tell us about your business and what you want the website to do. We reply within 24 hours."
         theme="portfolio"
       />
       <PartnersStrip />

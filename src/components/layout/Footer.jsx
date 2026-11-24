@@ -3,10 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { gsap, prefersReducedMotion } from "../../lib/motion";
 import { getLenis } from "../../lib/smooth";
-import { ArrowUpRight, ArrowRight, ArrowUp } from "lucide-react";
+import { ArrowUpRight, ArrowRight, ArrowUp, Phone } from "lucide-react";
+import { WhatsAppMark } from "../ui/WhatsAppButton";
 import Logo from "../ui/Logo";
 import SocialIcon from "../ui/SocialIcon";
-import { services } from "../../data/services";
+import { allServices as services } from "../../data/services";
 import { company, social, legalNav } from "../../data/site";
 
 // Read once when the app loads; the copyright year follows the visitor's clock.
@@ -157,22 +158,29 @@ export default function Footer() {
             <h2 className="footer__h t-meta">Contact</h2>
             <ul role="list">
               <li>
-                <a href={company.phoneHref}>{company.phoneDisplay}</a>
+                <a href={company.phoneHref} className="footer__reach">
+                  <span className="footer__reach-icon" aria-hidden="true">
+                    <Phone size={14} strokeWidth={2} />
+                  </span>
+                  <span>
+                    <span className="sr-only">Call </span>
+                    {company.phoneDisplay}
+                  </span>
+                </a>
               </li>
               <li>
-                <a href={company.whatsapp} target="_blank" rel="noopener noreferrer">
-                  WhatsApp<span className="sr-only"> (opens in a new tab)</span>
+                <a href={company.whatsapp} target="_blank" rel="noopener noreferrer" className="footer__reach footer__reach--wa">
+                  <span className="footer__reach-icon" aria-hidden="true">
+                    <WhatsAppMark />
+                  </span>
+                  <span>
+                    <span className="sr-only">WhatsApp </span>
+                    {company.phoneDisplay}
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </span>
                 </a>
               </li>
             </ul>
-            <address className="footer__address">
-              <a href={company.address.map} target="_blank" rel="noopener noreferrer">
-                {company.address.lines.map((l) => (
-                  <span key={l}>{l}</span>
-                ))}
-                <span className="sr-only"> (opens in Google Maps, new tab)</span>
-              </a>
-            </address>
           </div>
 
           <nav className="footer__col footer__col--social" aria-label="Footer: social">

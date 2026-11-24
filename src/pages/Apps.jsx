@@ -239,7 +239,7 @@ export default function Apps() {
         source="Portfolio: Applications"
         kicker="Start your app"
         lines={["Have an app in mind?", "Let's build it right."]}
-        lead="Tell us who the app is for and what it needs to do. We reply within 24 hours on business days."
+        lead="Tell us who the app is for and what it needs to do. We reply within 24 hours."
         theme="mobile"
         interest="Mobile application"
       />

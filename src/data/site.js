@@ -21,8 +21,8 @@ export const company = {
     short: "Gurugram, Haryana",
     map: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Ninex RMG, Sector 37C, Gurugram, Haryana 122001, India"),
   },
-  // kycreatives.com/contact: "we endeavour to answer all enquiries within 24 hours on business days"
-  responseNote: "We aim to answer every enquiry within 24 hours on business days.",
+  // kycreatives.com/contact: "we endeavour to answer all enquiries within 24 hours"
+  responseNote: "We answer every enquiry within 24 hours.",
 };
 
 export const social = [

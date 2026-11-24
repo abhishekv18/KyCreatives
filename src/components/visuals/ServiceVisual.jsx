@@ -36,7 +36,7 @@ export default function ServiceVisual({ slug, compact = false }) {
       return (
         <div className="sv sv--mobile">
           <Arcs />
-          <ShotPhone src="/images/apps/maacubs-1.webp" alt="MaaCubs app on a phone" className="mock-phone--bar" />
+          <ShotPhone src="/images/apps/maacubs-2.webp" alt="MaaCubs app on a phone, choosing a care journey" className="mock-phone--bar" />
           <p className="sv__cap t-meta">Live client app, MaaCubs</p>
         </div>
       );

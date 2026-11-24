@@ -3,7 +3,7 @@ import { company } from "../../data/site";
 import { whenReady } from "../../lib/motion";
 
 /* The WhatsApp mark, kept recognisable so visitors know exactly where it leads. */
-function WhatsAppMark() {
+export function WhatsAppMark() {
   return (
     <svg viewBox="0 0 32 32" width="20" height="20" aria-hidden="true" focusable="false">
       <path

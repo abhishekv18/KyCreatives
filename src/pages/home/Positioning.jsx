@@ -1,4 +1,4 @@
-import { ArrowRight, Gauge, ShoppingBag, Globe2 } from "lucide-react";
+import { ArrowRight, Gauge, ShoppingBag, LifeBuoy } from "lucide-react";
 import { Link } from "react-router-dom";
 import SplitHeading from "../../components/ui/SplitHeading";
 import { company } from "../../data/site";
@@ -21,11 +21,11 @@ const PROMISES = [
     commit: "Product, cart and checkout as one journey",
   },
   {
-    Icon: Globe2,
-    title: "Global by default",
-    lead: "Wherever you are, we work to your clock.",
-    body: "Clear updates, shared milestones and standards that hold up in any market, across every time zone.",
-    commit: "One point of contact, start to finish",
+    Icon: LifeBuoy,
+    title: "Here after launch",
+    lead: "We stay on after your site goes live.",
+    body: "Fixes, updates and improvements once you launch, so your website or app keeps working as the business grows.",
+    commit: "Care and maintenance plans available",
   },
 ];
 

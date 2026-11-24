@@ -6,7 +6,7 @@ import { Qmark } from "./SplitHeading";
 import { WEB3FORMS_KEY, ENQUIRY_EMAIL, sendEnquiry } from "../../lib/enquiry";
 
 const EMPTY = { name: "", email: "", phone: "", message: "", other: "" };
-const NEEDS = ["Website", "Online store", "Mobile application", "Customised software", "Marketing", "Branding", "Other"];
+const NEEDS = ["Website", "Online store", "Mobile application", "Customised software", "Other"];
 
 function validate(v, needs) {
   const e = {};
@@ -29,7 +29,7 @@ export default function QuickEnquiry({
   source,
   kicker = "Free consultation",
   lines = ["Let's start your", "business online today."],
-  lead = "Tell us a little about what you need. We reply within 24 hours on business days, with honest advice and a clear next step.",
+  lead = "Tell us a little about what you need. We reply within 24 hours, with honest advice and a clear next step.",
   theme = "web",
   interest,
   tone = "violet",
@@ -89,7 +89,7 @@ export default function QuickEnquiry({
         id: Date.now(),
         tone: "success",
         title: "Request sent",
-        text: `Thank you, ${v.name.trim().split(/\s+/)[0]}. We will be in touch within 24 hours on business days.`,
+        text: `Thank you, ${v.name.trim().split(/\s+/)[0]}. We will be in touch within 24 hours.`,
       });
     } catch {
       setToast({

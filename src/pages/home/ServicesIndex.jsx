@@ -58,11 +58,11 @@ export default function ServicesIndex() {
         <div className="svcx__head">
           <p className="kicker kicker--dusk t-meta">Services</p>
           <div id="svcx-title">
-            <SplitHeading as="h2" className="svcx__title" lines={["Six ways", "we can help."]} />
+            <SplitHeading as="h2" className="svcx__title" lines={["Four ways", "we can help."]} />
           </div>
           <p className="t-lead" data-reveal="up">
-            One team for strategy, design, engineering and growth. Start with the one you need now; the rest are there
-            when you are ready.
+            Websites, online stores, mobile apps and custom software, designed and engineered by one team. Start with the one
+            you need now; the rest are there when you are ready.
           </p>
         </div>
 

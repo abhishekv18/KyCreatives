@@ -3,7 +3,10 @@
 // brand positioning. Anything that depends on a project's platform or scope is
 // marked `scoped: true` so the page can say so plainly instead of promising it.
 
-export const services = [
+// Every service the studio offers. Marketing and Design & Graphics are not
+// promoted across the site for now: they stay in the footer, keep their
+// pages, and are delivered with BrandGap.
+export const allServices = [
   {
     slug: "web-apps-websites",
     path: "/services/web-apps-websites",
@@ -421,7 +424,12 @@ export const services = [
   },
 ];
 
-export const serviceBySlug = Object.fromEntries(services.map((s) => [s.slug, s]));
+export const HIDDEN_SERVICES = ["marketing", "design-graphics"];
+
+// The services promoted in menus, lists and forms
+export const services = allServices.filter((s) => !HIDDEN_SERVICES.includes(s.slug));
+
+export const serviceBySlug = Object.fromEntries(allServices.map((s) => [s.slug, s]));
 
 // The five stages every project moves through.
 export const process = [

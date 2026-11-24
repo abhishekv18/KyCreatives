@@ -813,3 +813,63 @@
   top: 31%;
   height: 16%;
 }
+
+/* Contact, "What happens next": a line of copy fills the middle column */
+.cnext__lead {
+  max-width: 40ch;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgb(23 18 31 / 0.78);
+}
+
+@media (min-width: 960px) {
+  .cnext__head {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) auto;
+    column-gap: var(--s-6);
+  }
+  .cnext__lead {
+    align-self: end;
+  }
+}
+
+/* Footer contact: phone and WhatsApp, each with its icon before the number */
+.footer__reach {
+  gap: 10px;
+}
+
+.footer__reach-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.08);
+  color: var(--ky-white);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.footer__reach-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.footer__reach--wa .footer__reach-icon {
+  background: #25d366;
+}
+
+.footer__reach:hover .footer__reach-icon {
+  background: var(--ky-violet);
+}
+
+.footer__reach--wa:hover .footer__reach-icon {
+  background: #1fb457;
+}
+
+/* the original logo image, sized from --logo-size */
+.logo__img {
+  display: block;
+  width: auto;
+  height: calc(var(--logo-size, 22px) * 1.75);
+  flex: none;
+}
