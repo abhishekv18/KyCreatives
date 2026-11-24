@@ -1,97 +1,91 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Gauge, ShoppingBag, Globe2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SplitHeading from "../../components/ui/SplitHeading";
 import { company } from "../../data/site";
 
-// The three positioning pillars come straight from the brand guidelines. Each
-// is set as a ruled row and backed by one plain fact, so the principle reads
-// as evidence, not a slogan.
-const PILLARS = [
+// Three principles from the brand guidelines, each written as what it means
+// for the client, with one concrete commitment that backs it up.
+const PROMISES = [
   {
+    Icon: Gauge,
     title: "Built to perform",
-    note: "Fast, stable, made to scale",
-    body: "Fast, stable software, web apps and mobile apps, engineered to scale as your business grows.",
-    figure: "One team",
-    proof: "designs and builds every screen, from first sketch to launch",
+    lead: "Your site loads fast and stays up.",
+    body: "We engineer for speed, stability and growth from day one, so your website or app keeps pace as the business grows.",
+    commit: "Tested on real devices before launch",
   },
   {
-    title: "D2C websites",
-    note: "Stores built to sell",
-    body: "Our focus area. Brand-led storefronts built for conversion, retention and repeat purchase.",
-    figure: "Our focus",
-    proof: "storefronts and brand sites for businesses that sell online",
+    Icon: ShoppingBag,
+    title: "Made to sell",
+    lead: "Your store is designed around the sale.",
+    body: "Every page is planned for conversion, retention and repeat purchase, on Shopify or custom code.",
+    commit: "Product, cart and checkout as one journey",
   },
   {
+    Icon: Globe2,
     title: "Global by default",
-    note: "Standards for every time zone",
-    body: "Delivery, communication and standards built for clients across time zones.",
-    figure: "Worldwide",
-    proof: "clients across time zones, served by one team",
+    lead: "Wherever you are, we work to your clock.",
+    body: "Clear updates, shared milestones and standards that hold up in any market, across every time zone.",
+    commit: "One point of contact, start to finish",
   },
 ];
 
 export default function Positioning() {
+  const years = new Date().getFullYear() - company.foundedYear;
   return (
-    <section className="pos" data-tone="light" aria-labelledby="pos-title">
+    <section className="pos2" data-tone="light" aria-labelledby="pos-title">
       <div className="container">
-        <div className="pos__head">
+        <div className="pos2__head">
           <div>
             <p className="kicker t-meta">How we think</p>
-            <div id="pos-title" className="pos__statement">
-              <SplitHeading as="h2" lines={["Three things", "we build on."]} />
+            <div id="pos-title">
+              <SplitHeading as="h2" className="pos2__title" lines={["Three promises", "behind every project."]} />
             </div>
-            <ol role="list" className="pos__index">
-              {PILLARS.map(({ title, note }, i) => (
-                <li key={title}>
-                  <span className="t-meta">{String(i + 1).padStart(2, "0")}</span>
-                  {title}
-                  <span className="pos__index-note">{note}</span>
-                </li>
-              ))}
-            </ol>
-            <p className="pos__facts t-meta">
-              <span>Since {company.foundedYear}</span>
-              <span>D2C focus</span>
-              <span>Clients worldwide</span>
-            </p>
           </div>
-          <div className="pos__body">
+          <div className="pos2__intro">
             <p className="t-lead" data-reveal="up">
-              The same three principles shape every project, from a single landing page to a full platform.
+              Design decides how a product feels. Engineering decides whether it holds up. We do both in one team, so nothing is lost
+              between the idea and the launch.
             </p>
-            <p className="t-muted" data-reveal="up" data-delay="0.08">
-              Design decides how a product feels. Engineering decides whether it holds up. We do both in the same room,
-              so nothing is lost in a handover and every screen we design is one we know how to ship.
-            </p>
-            <ul role="list" className="pos__means" data-reveal="up" data-delay="0.1">
-              <li>One team from first sketch to launch</li>
-              <li>No handover between design and build</li>
-              <li>Every screen designed to ship</li>
-            </ul>
-            <Link to="/about" className="link-u" data-reveal="up" data-delay="0.12">
-              More about the studio
-              <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
-            </Link>
           </div>
         </div>
 
-        <ol role="list" className="pos__rows">
-          {PILLARS.map(({ title, body, figure, proof }, i) => (
-            <li key={title} className="pos__row" data-reveal="up">
-              <span className="pos__n t-meta" aria-hidden="true">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div className="pos__main">
-                <h3 className="pos__row-title">{title}</h3>
-                <p>{body}</p>
+        <ol role="list" className="pos2__grid" data-stagger="">
+          {PROMISES.map(({ Icon, title, lead, body, commit }, i) => (
+            <li key={title} className="pos2__card">
+              <div className="pos2__top">
+                <span className="pos2__icon" aria-hidden="true">
+                  <Icon size={22} strokeWidth={1.6} />
+                </span>
+                <span className="pos2__n">{String(i + 1).padStart(2, "0")}</span>
               </div>
-              <p className="pos__proof">
-                <strong>{figure}</strong>
-                <span>{proof}</span>
-              </p>
+              <h3 className="pos2__name">{title}</h3>
+              <p className="pos2__lead">{lead}</p>
+              <p className="pos2__body">{body}</p>
+              <p className="pos2__commit">{commit}</p>
             </li>
           ))}
         </ol>
+
+        <div className="pos2__band" data-reveal="up">
+          <p className="pos2__band-text">
+            One team from first sketch to launch, <span>since {company.foundedYear}.</span>
+          </p>
+          <ul role="list" className="pos2__stats">
+            <li>
+              <b>{years}+</b> years
+            </li>
+            <li>
+              <b>1000+</b> projects
+            </li>
+            <li>
+              <b>Worldwide</b> clients
+            </li>
+          </ul>
+          <Link to="/about" className="pos2__link">
+            More about the studio
+            <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </section>
   );

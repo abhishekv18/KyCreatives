@@ -2527,3 +2527,13 @@ p.ptag {
     scale 520ms cubic-bezier(0.2, 0.9, 0.25, 1.15),
     visibility 0s;
 }
+
+/* badges may wrap on very narrow phones rather than widen the column */
+.kicker.pbadge,
+.phero--partners .phero__copy > .kicker {
+  width: fit-content;
+  max-width: 100%;
+  white-space: normal;
+  text-wrap: balance;
+  line-height: 1.35;
+}

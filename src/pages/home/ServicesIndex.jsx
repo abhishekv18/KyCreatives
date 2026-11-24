@@ -84,7 +84,6 @@ export default function ServicesIndex() {
                     </span>
                     <span className="svcx__name">
                       {s.name}
-                      {s.slug === "d2c" && <span className="svcx__focus t-meta">Focus area</span>}
                     </span>
                     <span className="svcx__desc">{s.index}</span>
                     <span className="svcx__go" aria-hidden="true">

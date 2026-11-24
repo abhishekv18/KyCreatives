@@ -171,7 +171,10 @@ function ProjectIndex({ items }) {
 export default function Work() {
   const ref = useRef(null);
   const featuredSlugs = FEATURED.map((f) => f.slug);
-  const rest = projects.filter((p) => !featuredSlugs.includes(p.slug));
+  // Rugs & Roses closes the list
+  const rest = projects
+    .filter((p) => !featuredSlugs.includes(p.slug))
+    .sort((a, b) => (a.slug === "rugsandroses") - (b.slug === "rugsandroses"));
 
   // Stacking: while the next panel slides over, the current one recedes.
   useGSAP(

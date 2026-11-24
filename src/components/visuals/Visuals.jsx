@@ -66,6 +66,18 @@ export function StorefrontMock() {
   );
 }
 
+/* A phone showing a real screenshot of a live app or store */
+export function ShotPhone({ src, alt = "", className = "" }) {
+  return (
+    <div className={`mock mock-phone mock-phone--shot ${className}`}>
+      <div className="mock-phone__notch" aria-hidden="true" />
+      <div className="mock-phone__screen">
+        <img src={src} alt={alt} width="390" height="844" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  );
+}
+
 /* A phone with an app home screen */
 export function PhoneMock({ variant = "home" }) {
   return (

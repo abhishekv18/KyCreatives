@@ -1574,3 +1574,33 @@
   width: 100%;
   height: 100%;
 }
+/* A phone with a real screenshot: the image fills the screen edge to edge */
+.mock-phone--shot .mock-phone__screen {
+  display: block;
+  padding: 0;
+  background: var(--ky-white);
+}
+
+.mock-phone--shot .mock-phone__screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* the island sits over the screenshot's status bar */
+.mock-phone--shot .mock-phone__notch {
+  z-index: 3;
+}
+
+/* a screenshot without its own status bar: a slim bar keeps the island clear */
+.mock-phone--bar .mock-phone__screen {
+  padding-top: 11%;
+  background: var(--ky-white);
+}
+
+.mock-phone--bar .mock-phone__screen img {
+  height: auto;
+  min-height: 100%;
+}

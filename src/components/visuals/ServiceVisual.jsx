@@ -1,6 +1,6 @@
 import BrowserFrame from "../ui/BrowserFrame";
 import { Arcs, Blueprint } from "../art/Art";
-import { PhoneMock, PortalMock, CampaignSet, IdentitySet, DashboardMock, ConceptLabel } from "./Visuals";
+import { ShotPhone, PortalMock, CampaignSet, IdentitySet, DashboardMock, ConceptLabel } from "./Visuals";
 import { shotSrc } from "../../data/projects";
 
 /**
@@ -12,11 +12,9 @@ export default function ServiceVisual({ slug, compact = false }) {
     case "d2c":
       return (
         <div className="sv sv--d2c">
-          <PhoneMock variant="product" />
-          <PhoneMock variant="cart" />
-          <p className="sv__cap">
-            <ConceptLabel tone="dark">Concept store screens</ConceptLabel>
-          </p>
+          <ShotPhone src="/images/work/m-dudle-home.webp" alt="Dudle store on a phone, home page" />
+          <ShotPhone src="/images/work/m-dudle-product.webp" alt="Dudle store on a phone, product page" />
+          <p className="sv__cap t-meta">Live client store, dudle.in</p>
         </div>
       );
     case "web-apps-websites": {
@@ -38,10 +36,8 @@ export default function ServiceVisual({ slug, compact = false }) {
       return (
         <div className="sv sv--mobile">
           <Arcs />
-          <PhoneMock />
-          <p className="sv__cap">
-            <ConceptLabel tone="dark">Concept screen</ConceptLabel>
-          </p>
+          <ShotPhone src="/images/apps/maacubs-1.webp" alt="MaaCubs app on a phone" className="mock-phone--bar" />
+          <p className="sv__cap t-meta">Live client app, MaaCubs</p>
         </div>
       );
     case "portals":
