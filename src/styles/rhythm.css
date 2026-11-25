@@ -1417,3 +1417,176 @@
 .mock-phone--shot .mock-phone__screen::before {
   top: 4.6%;
 }
+
+/* =========================================================
+   ONE PHONE DESIGN, FINAL: a solid black frame with no grey or
+   metallic rim, the Dynamic Island, and a soft drop shadow.
+   Applies to every phone on every page.
+   ========================================================= */
+.mock-phone,
+.ahero__phone.mock-phone,
+.aphone,
+.ahphones .aphone,
+.app-hero .mock-phone,
+.d2c-phones .mock-phone {
+  background: #0b0a10;
+  box-shadow: 0 34px 64px -28px rgb(23 18 31 / 0.55);
+}
+
+/* phones on dark grounds: the shadow alone, darker, so no edge is drawn */
+.ahphones .aphone,
+.phero.on-dark .mock-phone,
+.ahero__phone.mock-phone {
+  box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.75);
+}
+
+/* the realistic iPhone: same solid black frame, no titanium band */
+.iphone__frame {
+  padding: 0;
+  background: #0b0a10;
+  box-shadow: none;
+  border-radius: 15.5cqi;
+}
+
+.iphone__bezel {
+  padding: 2.2cqi;
+  background: #0b0a10;
+}
+
+.iphone__btn {
+  display: none;
+}
+
+.iphone__device {
+  filter: drop-shadow(0 26px 34px rgb(23 18 31 / 0.4));
+}
+
+/* =========================================================
+   PRODUCTION PASS: one calmer type scale and a tighter
+   vertical rhythm, site-wide. Every heading, lead, figure
+   and section gap reads from these tokens, so the whole site
+   steps down together and stays consistent at every width.
+   ========================================================= */
+:root {
+  /* type: about 10% smaller headings, slightly smaller body */
+  --fs-display: clamp(2.5rem, 0.9rem + 4.6vw, 4.75rem);
+  --fs-h1: clamp(2.25rem, 1.5rem + 2.1vw, 3.5rem);
+  --fs-h2: clamp(1.75rem, 1.4rem + 1.1vw, 2.4rem);
+  --fs-title: clamp(1.25rem, 1.12rem + 0.5vw, 1.625rem);
+  --fs-quote: clamp(1.375rem, 1.1rem + 0.9vw, 2rem);
+  --fs-h3: clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem);
+  --fs-h4: clamp(1.0625rem, 1.03rem + 0.15vw, 1.1875rem);
+  --fs-lead: clamp(1.03rem, 0.98rem + 0.2vw, 1.125rem);
+  --fs-body: clamp(0.98rem, 0.95rem + 0.1vw, 1.03rem);
+  --fs-numeral: clamp(4.25rem, 2.8rem + 4.2vw, 6.75rem);
+  --fs-stat: clamp(2rem, 1.6rem + 1.3vw, 2.875rem);
+
+  /* spacing: about 12% less air between and inside sections */
+  --section-y: clamp(3rem, 2.2rem + 2.2vw, 4.75rem);
+  --section-y-sm: clamp(2.25rem, 1.8rem + 1.3vw, 3.5rem);
+  --space-block: clamp(1.75rem, 1.35rem + 1.1vw, 2.5rem);
+  --hero-pt: calc(var(--header-h) + clamp(1.75rem, 1rem + 2vw, 3.25rem));
+  --hero-pb: clamp(2.25rem, 1.6rem + 1.7vw, 3.75rem);
+}
+
+/* Home client-name band: on the calmer scale with the headings */
+.band__name {
+  font-size: clamp(1.6rem, 1rem + 2.6vw, 3.25rem);
+}
+
+/* Type, final balance: a step up from the production pass, about halfway
+   back toward the original scale, at every screen size */
+:root {
+  --fs-display: clamp(2.625rem, 0.85rem + 5.1vw, 5.125rem);
+  --fs-h1: clamp(2.375rem, 1.55rem + 2.35vw, 3.75rem);
+  --fs-h2: clamp(1.875rem, 1.48rem + 1.2vw, 2.6rem);
+  --fs-title: clamp(1.3125rem, 1.16rem + 0.55vw, 1.75rem);
+  --fs-quote: clamp(1.4375rem, 1.12rem + 1vw, 2.125rem);
+  --fs-h3: clamp(1.21875rem, 1.12rem + 0.4vw, 1.4375rem);
+  --fs-h4: clamp(1.09375rem, 1.05rem + 0.18vw, 1.21875rem);
+  --fs-lead: clamp(1.05rem, 0.99rem + 0.22vw, 1.15625rem);
+  --fs-body: clamp(1rem, 0.96rem + 0.11vw, 1.046875rem);
+  --fs-numeral: clamp(4.625rem, 2.9rem + 4.6vw, 7.375rem);
+  --fs-stat: clamp(2.125rem, 1.65rem + 1.45vw, 3.0625rem);
+}
+
+.band__name {
+  font-size: clamp(1.7rem, 1.05rem + 2.85vw, 3.55rem);
+}
+
+/* Contact, "What happens next": in step with the closing CTA bands. The
+   heading matches the CTA title, the intro the CTA lead; the step cards
+   and the 24h card sit a size below so the heading leads clearly. */
+.cnx__lead {
+  font-size: var(--fs-lead);
+}
+
+.cnx__h {
+  font-size: var(--fs-h4);
+  line-height: 1.3;
+}
+
+.cnx__card {
+  gap: 4px;
+  padding: clamp(0.875rem, 2vw, 1.1rem) clamp(1rem, 2.4vw, 1.4rem);
+  border-radius: 16px;
+}
+
+.cnx__card p {
+  font-size: var(--fs-small);
+}
+
+.cnx__steps[role="list"] {
+  gap: 12px;
+}
+
+.cnx__step {
+  grid-template-columns: 40px minmax(0, 1fr);
+}
+
+.cnx__num {
+  width: 40px;
+  height: 40px;
+  font-size: 0.9375rem;
+  box-shadow: 0 0 0 5px rgb(255 255 255 / 0.22);
+}
+
+.cnx__steps::before {
+  left: 19px;
+}
+
+.cnx__promise {
+  gap: var(--s-2);
+  padding: 10px 18px 10px 10px;
+  border-radius: 16px;
+}
+
+.cnx__promise strong {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  font-size: 1.3rem;
+}
+
+.cnx__promise b {
+  font-size: var(--fs-small);
+}
+
+.cnx__promise span {
+  font-size: var(--fs-meta);
+}
+
+@media (max-width: 479px) {
+  .cnx__step {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .cnx__num {
+    width: 36px;
+    height: 36px;
+    font-size: 0.875rem;
+  }
+  .cnx__steps::before {
+    left: 17px;
+  }
+}
