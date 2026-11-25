@@ -1596,7 +1596,7 @@
 
 /* a screenshot without its own status bar: a slim bar keeps the island clear */
 .mock-phone--bar .mock-phone__screen {
-  padding-top: 11%;
+  padding-top: 19%;
   background: var(--ky-white);
 }
 
