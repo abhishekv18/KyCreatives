@@ -49,6 +49,29 @@ export default function Layout() {
     return () => stopSmoothScroll();
   }, []);
 
+  // Images: once the page has painted, the rest of its images download
+  // quietly in the background, so they are ready before they scroll into
+  // view (lazy images in sliding strips otherwise wait until on screen).
+  useEffect(() => {
+    let cancelled = false;
+    const warm = () => {
+      if (cancelled) return;
+      document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
+        img.loading = "eager";
+        img.decoding = "async";
+      });
+    };
+    const start = () => {
+      if ("requestIdleCallback" in window) window.requestIdleCallback(warm, { timeout: 1500 });
+      else setTimeout(warm, 600);
+    };
+    const t = setTimeout(start, 400);
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }, [pathname]);
+
   // New route: start at the top (or at the requested anchor), then re-measure triggers.
   useLayoutEffect(() => {
     if (hash) {

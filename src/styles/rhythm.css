@@ -1195,3 +1195,225 @@
 .cnext.cnx {
   padding-bottom: calc(var(--section-y) + 32px);
 }
+
+/* =========================================================
+   ONE PHONE, SITE-WIDE: every phone mockup is drawn as a
+   current iPhone with a thin black bezel, a fine metal rim
+   and a Dynamic Island, like the reference.
+   ========================================================= */
+
+/* 1. Realistic iPhone (Home work panels): slimmer band and bezel */
+.iphone__frame {
+  padding: 0.9cqi;
+  border-radius: 15.5cqi;
+}
+
+.iphone__bezel {
+  padding: 1.5cqi;
+  border-radius: 14.6cqi;
+}
+
+.iphone__screen {
+  border-radius: 13.1cqi;
+}
+
+/* 2. Drawn and screenshot mockups (service visuals, heroes, About phone) */
+.mock-phone {
+  padding: 2.4%;
+  border-radius: 15% / 7.4%;
+  background: #050506;
+  box-shadow:
+    0 0 0 1.5px #8d9096,
+    0 0 0 2.5px #2c2e33,
+    inset 0 0 0 1px rgb(255 255 255 / 0.08),
+    0 40px 70px -30px rgb(23 18 31 / 0.55);
+}
+
+.mock-phone .mock-phone__screen {
+  border-radius: 12.6% / 5.9%;
+}
+
+.mock-phone .mock-phone__notch,
+.ahero__phone .mock-phone__notch {
+  top: 3.6%;
+  left: 50%;
+  width: 29%;
+  height: 3.3%;
+  margin: 0;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #000;
+  z-index: 4;
+}
+
+/* 3. App screenshots (Applications page and its hero) */
+.aphone,
+.ahphones .aphone {
+  padding: 1.5%;
+  border-radius: 14% / 6.6%;
+  background: #050506;
+  box-shadow:
+    0 0 0 1.5px #8d9096,
+    0 0 0 2.5px #2c2e33,
+    inset 0 0 0 1px rgb(255 255 255 / 0.08),
+    0 36px 70px -30px rgb(0 0 0 / 0.6);
+}
+
+.aphone__screen {
+  border-radius: 12.4cqi;
+}
+
+/* the Dynamic Island over each screenshot */
+.aphone::after {
+  content: "";
+  position: absolute;
+  top: 2.6%;
+  left: 50%;
+  width: 28%;
+  height: 3.2%;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: #000;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Bezel thickness in px: percentage padding follows the parent's width,
+   which made phones in wide columns look heavy. A fixed slim bezel keeps
+   every phone like the Home iPhone (about 2.4% of a 160-250px device). */
+.mock-phone,
+.ahero__phone.mock-phone,
+.svcx__stage .sv--mobile .mock-phone,
+.svcx__inline .sv--mobile .mock-phone,
+.sv--mobile .mock-phone {
+  padding: 5px;
+}
+
+.aphone,
+.ahphones .aphone {
+  padding: 4px;
+}
+
+@media (min-width: 1600px) {
+  .mock-phone,
+  .ahero__phone.mock-phone,
+  .sv--mobile .mock-phone {
+    padding: 6px;
+  }
+  .aphone,
+  .ahphones .aphone {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 599px) {
+  .ahphones .aphone {
+    padding: 3px;
+  }
+}
+
+/* =========================================================
+   Screenshot phones: a real status bar (time, signal, battery)
+   holds the Dynamic Island, and the screenshot starts below it,
+   so the island never covers a logo, search bar or header
+   ========================================================= */
+
+/* app pages (.aphone is a size container: cqi = phone width) */
+.aphone__screen {
+  background: #fff;
+}
+
+.aphone__screen img {
+  top: 13.5cqi;
+  height: calc(100% - 13.5cqi);
+}
+
+.aphone__screen::before,
+.aphone__screen::after {
+  position: absolute;
+  top: 4.2cqi;
+  z-index: 2;
+  font-family: var(--font-sans);
+  font-size: 3.6cqi;
+  font-weight: 600;
+  line-height: 1;
+  color: #000;
+}
+
+.aphone__screen::before {
+  content: "9:41";
+  left: 8.5cqi;
+}
+
+/* signal and battery, drawn as one small glyph */
+.aphone__screen::after {
+  content: "";
+  right: 7cqi;
+  width: 13cqi;
+  height: 3.4cqi;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 14'%3E%3Cg fill='%23000'%3E%3Crect x='0' y='9' width='3' height='4' rx='.8'/%3E%3Crect x='5' y='6.5' width='3' height='6.5' rx='.8'/%3E%3Crect x='10' y='4' width='3' height='9' rx='.8'/%3E%3Crect x='15' y='1' width='3' height='12' rx='.8'/%3E%3Crect x='31' y='1.5' width='18' height='11' rx='3' fill='none' stroke='%23000' stroke-opacity='.4' stroke-width='1.2'/%3E%3Crect x='33' y='3.5' width='12' height='7' rx='1.6'/%3E%3Crect x='50' y='5' width='1.6' height='4' rx='.8' fill-opacity='.4'/%3E%3C/g%3E%3C/svg%3E") right center / contain no-repeat;
+}
+
+.aphone::after {
+  top: calc(4px + 3.3cqi);
+  height: 7.2cqi;
+  width: 27%;
+}
+
+@media (max-width: 599px) {
+  .ahphones .aphone::after {
+    top: calc(3px + 3.3cqi);
+  }
+}
+
+/* shot phones on the home page (Dudle, MaaCubs) */
+.mock-phone--shot .mock-phone__screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-top: 15%;
+  background: #fff;
+}
+
+.mock-phone--shot.mock-phone--bar .mock-phone__screen {
+  padding-top: 19%;
+}
+
+.mock-phone--shot .mock-phone__screen img {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+}
+
+.mock-phone--shot .mock-phone__screen::before {
+  content: "9:41";
+  position: absolute;
+  top: 5.6%;
+  left: 9%;
+  font-family: var(--font-sans);
+  font-size: clamp(8px, 4.2%, 12px);
+  font-weight: 600;
+  color: #000;
+}
+
+.mock-phone--shot .mock-phone__notch {
+  top: 3.6%;
+}
+
+.mock-phone--shot .mock-phone__screen {
+  padding-top: 18%;
+}
+
+.mock-phone--shot .mock-phone__screen::after {
+  content: "";
+  position: absolute;
+  top: 5.4%;
+  right: 8%;
+  width: 14%;
+  height: 3.6%;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 14'%3E%3Cg fill='%23000'%3E%3Crect x='0' y='9' width='3' height='4' rx='.8'/%3E%3Crect x='5' y='6.5' width='3' height='6.5' rx='.8'/%3E%3Crect x='10' y='4' width='3' height='9' rx='.8'/%3E%3Crect x='15' y='1' width='3' height='12' rx='.8'/%3E%3Crect x='31' y='1.5' width='18' height='11' rx='3' fill='none' stroke='%23000' stroke-opacity='.4' stroke-width='1.2'/%3E%3Crect x='33' y='3.5' width='12' height='7' rx='1.6'/%3E%3Crect x='50' y='5' width='1.6' height='4' rx='.8' fill-opacity='.4'/%3E%3C/g%3E%3C/svg%3E") right center / contain no-repeat;
+}
+
+.mock-phone--shot .mock-phone__screen::before {
+  top: 4.6%;
+}
