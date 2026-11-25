@@ -325,7 +325,6 @@ function EnquiryForm() {
       />
       <div className="form__head">
         <p className="form__title">Project enquiry</p>
-        <p className="form__meta t-meta">Takes about 2 minutes</p>
       </div>
       {submitted && errorList.length > 0 && (
         <div className="form-errors" ref={summaryRef} tabIndex={-1} role="alert">
@@ -670,38 +669,40 @@ export default function Contact() {
       </section>
 
       <PartnersStrip />
-      <section className="cnext section grain" data-tone="color" aria-labelledby="cnext-title">
+      <section className="cnext cnx section grain" data-tone="color" aria-labelledby="cnext-title">
         <div className="cta__rings cnext__rings" aria-hidden="true">
           <i />
           <i />
           <i />
         </div>
-        <div className="container">
-          <div className="cnext__head">
+        <div className="container cnx__grid">
+          <div className="cnx__intro">
             <p className="kicker kicker--ink t-meta">What happens next</p>
-            <h2 id="cnext-title" className="cnext__title">
+            <h2 id="cnext-title" className="cnx__title">
               From first message to a clear plan.
             </h2>
-            <p className="cnext__lead" data-reveal="up">
+            <p className="cnx__lead" data-reveal="up">
               No sales script and no chasing. Your message reaches the people who will plan and build the work, and you get a
               straight answer on what it takes.
             </p>
-            <p className="cnext__promise" data-reveal="up">
-              <span className="cta__rings cnext__halo" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-              </span>
+            <div className="cnx__promise" data-reveal="up">
               <strong>24h</strong>
-              <span>First reply</span>
-            </p>
+              <span>
+                <b>First reply, guaranteed</b>
+                From the team that will do the work
+              </span>
+            </div>
           </div>
-          <ol role="list" className="cnext__list" data-stagger="">
+          <ol role="list" className="cnx__steps" data-stagger="">
             {NEXT.map((n, i) => (
-              <li key={n.title} className={`cnext__step cnext__step--${i}`}>
-                <span className="cnext__num t-meta">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="cnext__h">{n.title}</h3>
-                <p>{n.body}</p>
+              <li key={n.title} className="cnx__step">
+                <span className="cnx__num" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="cnx__card">
+                  <h3 className="cnx__h">{n.title}</h3>
+                  <p>{n.body}</p>
+                </div>
               </li>
             ))}
           </ol>

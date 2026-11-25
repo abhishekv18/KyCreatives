@@ -153,25 +153,31 @@ const STRIP = projects.slice(0, 10).map((p) => p.slug);
 */
 function WorkStrip() {
   const ref = useRef(null);
+  // Pinned only on landscape screens; portrait screens (phones, phones in
+  // desktop mode, portrait tablets) get a swipeable row sized to the content.
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
-      const track = ref.current.querySelector(".astrip__track");
-      const viewport = ref.current.querySelector(".astrip__viewport");
-      const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
-      gsap.to(track, {
-        x: () => -distance(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top top",
-          end: () => "+=" + distance(),
-          pin: true,
-          anticipatePin: 1,
-          scrub: 0.6,
-          invalidateOnRefresh: true,
-        },
+      const mm = gsap.matchMedia();
+      mm.add("(orientation: landscape) and (min-width: 768px)", () => {
+        const track = ref.current.querySelector(".astrip__track");
+        const viewport = ref.current.querySelector(".astrip__viewport");
+        const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
+        gsap.to(track, {
+          x: () => -distance(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top top",
+            end: () => "+=" + distance(),
+            pin: true,
+            anticipatePin: 1,
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          },
+        });
       });
+      return () => mm.revert();
     },
     { scope: ref }
   );
@@ -405,6 +411,18 @@ export default function About() {
                 </Link>
               </li>
             ))}
+            <li className="acap__help" data-reveal="up">
+              <div>
+                <p className="acap__help-title">Not sure which one you need?</p>
+                <p className="acap__help-text">
+                  Tell us what the business needs to do. We will suggest the right mix and reply within 24 hours.
+                </p>
+              </div>
+              <Link to="/contact" className="acap__help-btn">
+                Talk to us
+                <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" />
+              </Link>
+            </li>
           </ul>
         </div>
       </section>

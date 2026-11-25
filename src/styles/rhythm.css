@@ -873,3 +873,325 @@
   height: calc(var(--logo-size, 22px) * 1.75);
   flex: none;
 }
+
+/* Services dropdown (four services): the rows share the panel's height, so
+   the list and the dark card end together with no empty band */
+.svc:not(.svc--compact) .svc-menu__main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding-bottom: 1rem;
+}
+
+.svc:not(.svc--compact) .svc-menu__grid {
+  grid-auto-rows: 1fr;
+  align-content: stretch;
+  row-gap: 6px;
+}
+
+.svc:not(.svc--compact) .svc-menu__link {
+  align-items: center;
+  padding-block: 0.875rem;
+}
+
+.svc:not(.svc--compact) .svc-menu__side {
+  gap: 8px;
+  padding-block: 1.125rem;
+}
+
+/* About, "What we do": a closing card under the four services, so the list
+   ends level with the figures on the left */
+.acap__help {
+  display: grid;
+  gap: var(--s-3);
+  align-items: center;
+  margin-top: var(--s-4);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border-radius: var(--radius-card);
+  background: var(--ky-ink);
+  color: var(--ky-white);
+}
+
+@media (min-width: 640px) {
+  .acap__help {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+.acap__help-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+}
+
+.acap__help-text {
+  margin-top: 6px;
+  max-width: 44ch;
+  font-size: var(--fs-small);
+  color: var(--text-on-dark-muted);
+}
+
+.acap__help-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: var(--ky-white);
+  color: var(--ky-ink);
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    background-color 250ms var(--ease-out),
+    gap 250ms var(--ease-out);
+}
+
+.acap__help-btn:hover {
+  background: var(--ky-cyan);
+  gap: 14px;
+}
+
+@media (min-width: 960px) {
+  .acap__grid {
+    align-items: stretch;
+  }
+  .acap__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+  .acap__intro .acap__figs {
+    margin-top: auto;
+  }
+  .acap__help {
+    margin-top: var(--s-3);
+  }
+}
+
+@media (min-width: 960px) {
+  .acap__grid > .acap__intro {
+    align-self: stretch;
+    position: static;
+  }
+}
+
+/* =========================================================
+   About, "Selected work" on portrait screens (phones, phones in
+   desktop mode, portrait tablets): no pin, no screen-high band;
+   a swipeable row of larger cards sized to the content
+   ========================================================= */
+@media (orientation: portrait), (max-width: 767px) {
+  .astrip {
+    min-height: 0;
+    padding-block: var(--section-y-sm);
+  }
+  .astrip__viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .astrip__viewport::-webkit-scrollbar {
+    display: none;
+  }
+  .astrip__track[role="list"] {
+    transform: none !important;
+  }
+  .astrip__item {
+    width: min(78vw, 360px);
+    scroll-snap-align: start;
+    scroll-margin-left: var(--gutter);
+  }
+}
+
+@media (orientation: portrait) and (min-width: 640px) {
+  .astrip__item {
+    width: clamp(280px, 40vw, 520px);
+  }
+}
+
+/* D2C hero: the three store phones scale with the column on smaller
+   desktops, so the outer phones are never cut by the hero edge */
+@media (min-width: 960px) and (max-width: 1279px) {
+  .d2c-phones .mock-phone {
+    zoom: 0.56;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 959px) {
+  .d2c-phones .mock-phone {
+    zoom: 0.62;
+  }
+}
+
+/* =========================================================
+   Contact, "What happens next": intro on the left, the three
+   steps as numbered cards on a timeline on the right
+   ========================================================= */
+.cnx .cnx__grid {
+  position: relative;
+  display: grid;
+  gap: var(--s-6);
+}
+
+@media (min-width: 960px) {
+  .cnx .cnx__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    column-gap: clamp(3rem, 6vw, 6rem);
+    align-items: center;
+  }
+}
+
+.cnx__intro {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+.cnx__title {
+  max-width: 14ch;
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  color: var(--ky-ink);
+  text-wrap: balance;
+}
+
+.cnx__lead {
+  max-width: 42ch;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgb(23 18 31 / 0.78);
+}
+
+.cnx__promise {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-1);
+  padding: 14px 22px 14px 14px;
+  border-radius: 18px;
+  background: var(--ky-ink);
+  color: var(--ky-white);
+  box-shadow: 0 24px 50px -24px rgb(23 18 31 / 0.6);
+}
+
+.cnx__promise strong {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: var(--grad-flame);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--ky-white);
+}
+
+.cnx__promise span {
+  display: grid;
+  gap: 2px;
+  font-size: var(--fs-small);
+  color: var(--text-on-dark-muted);
+}
+
+.cnx__promise b {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--ky-white);
+}
+
+/* steps */
+.cnx__steps[role="list"] {
+  position: relative;
+  display: grid;
+  gap: 14px;
+}
+
+/* the line joining the three numbers */
+.cnx__steps::before {
+  content: "";
+  position: absolute;
+  left: 23px;
+  top: 40px;
+  bottom: 40px;
+  width: 2px;
+  border-radius: 2px;
+  background: rgb(23 18 31 / 0.18);
+}
+
+.cnx__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: var(--s-2);
+  align-items: center;
+}
+
+.cnx__num {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ky-ink);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--ky-white);
+  box-shadow: 0 0 0 6px rgb(255 255 255 / 0.22);
+}
+
+.cnx__card {
+  display: grid;
+  gap: 6px;
+  padding: clamp(1rem, 2.4vw, 1.35rem) clamp(1.1rem, 2.6vw, 1.6rem);
+  border-radius: 18px;
+  background: rgb(255 255 255 / 0.82);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.6) inset,
+    0 24px 50px -30px rgb(23 18 31 / 0.45);
+}
+
+.cnx__h {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  font-weight: 400;
+  color: var(--ky-ink);
+}
+
+.cnx__card p {
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* the older band layout pieces no longer used here */
+.cnx .cnext__halo {
+  display: none;
+}
+
+@media (max-width: 479px) {
+  .cnx__step {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .cnx__num {
+    width: 40px;
+    height: 40px;
+    font-size: 0.95rem;
+  }
+  .cnx__steps::before {
+    left: 19px;
+  }
+}
+
+.cnext.cnx {
+  padding-bottom: calc(var(--section-y) + 32px);
+}
