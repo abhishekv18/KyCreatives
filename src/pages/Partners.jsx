@@ -886,7 +886,6 @@ export default function Partners() {
     <>
       <PageHero
         theme="ink"
-        kicker="Founding Partner Program / International"
         kickerTone="aqua"
         lines={["Build global relationships.", "Earn on the business", "you create."]}
         lead="Join KY Creatives as a founding partner. Bring international businesses the websites, apps and custom software they need. Built, backed and completely handled by us."
@@ -916,7 +915,7 @@ export default function Partners() {
           <div className="offer__head">
             <MovingTag href="#calculator">How you earn?</MovingTag>
             <div id="tiers-title">
-              <SplitHeading className="offer__title" lines={["The more you find,", "the more each one earns."]} />
+              <SplitHeading className="offer__title" lines={["The more leads you find,", "the more you earn."]} />
             </div>
             <p className="t-muted" data-reveal="up">
               Your rate is set by the number of leads you bring to us and we close in a calendar month, and you earn on the net project value.
@@ -954,7 +953,7 @@ export default function Partners() {
               </p>
               <ul role="list" className="phead-facts t-meta">
                 <li>
-                  <b>{STEPS.length}</b> steps
+                  <b>{STEPS.length - 1}</b> steps
                 </li>
                 <li>
                   <b>0</b> technical work on your side
