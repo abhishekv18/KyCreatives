@@ -1790,3 +1790,138 @@
 .shero .art-grid {
   opacity: 1;
 }
+
+/* =========================================================
+   ONE STATUS BAR, EVERY PHONE: the Applications page phone is
+   the reference. Island 27% of the phone's width, 6.9% tall,
+   its top 5.2% down; clock 3.5%; signal and battery on the
+   right. All sized from the phone's own width (cqi), so every
+   phone matches at any size.
+   ========================================================= */
+
+/* drawn and screenshot mockups */
+.mock-phone {
+  container-type: inline-size;
+}
+
+.mock-phone .mock-phone__notch,
+.ahero__phone .mock-phone__notch,
+.mock-phone--shot .mock-phone__notch {
+  top: 5.2cqi;
+  width: 27cqi;
+  height: 6.9cqi;
+}
+
+.mock-phone .mock-phone__screen {
+  padding-top: 0;
+}
+
+/* the status row is the height of the bar, so content starts below it */
+.mock-phone .mock-phone__status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: calc(17.3cqi - 10px);
+  margin: 0 -1cqi;
+  padding: 0 5cqi 0 6cqi;
+  font-family: var(--font-sans);
+  font-size: 3.5cqi;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: #000;
+}
+
+.mock-phone .mock-phone__status span:last-child {
+  width: 13cqi;
+  height: 3.4cqi;
+  font-size: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 14'%3E%3Cg fill='%23000'%3E%3Crect x='0' y='9' width='3' height='4' rx='.8'/%3E%3Crect x='5' y='6.5' width='3' height='6.5' rx='.8'/%3E%3Crect x='10' y='4' width='3' height='9' rx='.8'/%3E%3Crect x='15' y='1' width='3' height='12' rx='.8'/%3E%3Crect x='31' y='1.5' width='18' height='11' rx='3' fill='none' stroke='%23000' stroke-opacity='.4' stroke-width='1.2'/%3E%3Crect x='33' y='3.5' width='12' height='7' rx='1.6'/%3E%3Crect x='50' y='5' width='1.6' height='4' rx='.8' fill-opacity='.4'/%3E%3C/g%3E%3C/svg%3E") right center / contain no-repeat;
+}
+
+/* screenshot phones: clock and icons in the same places, screenshot below */
+.mock-phone--shot .mock-phone__screen,
+.mock-phone--shot.mock-phone--bar .mock-phone__screen {
+  padding-top: 13.5cqi;
+}
+
+.mock-phone--shot .mock-phone__screen::before {
+  top: calc(8.65cqi - 5px);
+  left: calc(8.5cqi - 5px);
+  translate: 0 -50%;
+  font-size: 3.5cqi;
+}
+
+.mock-phone--shot .mock-phone__screen::after {
+  top: calc(8.65cqi - 5px);
+  right: calc(7cqi - 5px);
+  width: 13cqi;
+  height: 3.4cqi;
+  translate: 0 -50%;
+}
+
+/* realistic iPhone (Home work panels, case studies) */
+.iphone__status {
+  height: 12.9cqi;
+  padding: 0 6.5cqi 0 7cqi;
+}
+
+.iphone__island {
+  top: 3cqi;
+  width: 27cqi;
+  height: 6.9cqi;
+}
+
+.iphone__time {
+  font-size: 3.5cqi;
+}
+
+.iphone__icons svg {
+  width: 3.8cqi;
+}
+
+.iphone__battery {
+  width: 6.2cqi;
+  height: 3cqi;
+}
+
+/* the realistic iPhone matches the reference exactly: signal and battery
+   only, a plain island */
+.iphone__icons svg:nth-of-type(2) {
+  display: none;
+}
+
+.iphone__island::after {
+  display: none;
+}
+
+/* Home services: the visual panel is exactly as tall as the four-service
+   list beside it, at every desktop width */
+@media (min-width: 960px) {
+  .svcx__grid {
+    align-items: stretch;
+  }
+  .svcx__stage-wrap {
+    align-self: stretch;
+  }
+  .svcx__stage {
+    position: relative;
+    top: 0;
+    height: 100%;
+    aspect-ratio: auto;
+    max-height: none;
+  }
+}
+
+/* Form problems are reported in a toast: the in-form error text and summary
+   are hidden, and a field with a problem keeps its red outline */
+.form .field__error,
+.qe__card .field__error,
+.pask .field__error,
+.form .form-errors {
+  display: none;
+}
+
+/* the toast inside the open "Ask us directly" dialog sits above it */
+.pask .toast {
+  position: fixed;
+}

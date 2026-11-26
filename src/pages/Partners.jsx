@@ -10,7 +10,7 @@ import PageHero from "../components/ui/PageHero";
 import SplitHeading from "../components/ui/SplitHeading";
 import Button from "../components/ui/Button";
 import Faq from "../components/ui/Faq";
-import Toast from "../components/ui/Toast";
+import Toast, { formErrorToast } from "../components/ui/Toast";
 import PartnersStrip from "../components/ui/PartnersStrip";
 import ContactCTA from "../components/ui/ContactCTA";
 import { Glow } from "../components/art/Art";
@@ -435,6 +435,7 @@ function AskDialog({ open, onClose }) {
   const [v, setV] = useState(ASK_EMPTY);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | sending | sent | drafted | failed
+  const [toast, setToast] = useState(null);
   const botRef = useRef(null);
 
   useEffect(() => {
@@ -477,6 +478,7 @@ function AskDialog({ open, onClose }) {
     const errs = check(v);
     setErrors(errs);
     if (Object.keys(errs).length) {
+      setToast(formErrorToast(errs));
       requestAnimationFrame(() => ref.current?.querySelector('[aria-invalid="true"]')?.focus());
       return;
     }
@@ -492,9 +494,11 @@ function AskDialog({ open, onClose }) {
         message: v.question.trim(),
       });
       setStatus("sent");
+      setToast({ id: Date.now(), tone: "success", title: "Question sent", text: "We will reply within 24 hours." });
       setV(ASK_EMPTY);
     } catch {
       setStatus("failed");
+      setToast({ id: Date.now(), tone: "error", title: "Your question was not sent", text: `Please try again, or email ${ENQUIRY_EMAIL}.` });
     }
   };
 
@@ -520,6 +524,7 @@ function AskDialog({ open, onClose }) {
       }}
     >
       <div className="pask__card">
+        <Toast toast={toast} onClose={() => setToast(null)} container={ref.current} />
         <div className="pask__head">
           <div>
             <p className="pask__kicker">Partner program</p>
@@ -538,7 +543,7 @@ function AskDialog({ open, onClose }) {
             <p className="pask__done-title">{status === "sent" ? "Question sent" : "Your email draft is ready"}</p>
             <p>
               {status === "sent"
-                ? "Thank you. We have emailed you a confirmation and will reply within 24 hours."
+                ? "Thank you. We will reply within 24 hours."
                 : `Your email app should have opened with the question filled in. Press send to reach us at ${ENQUIRY_EMAIL}.`}
             </p>
             <button type="button" className="btn btn--primary" onClick={close}>
@@ -557,6 +562,7 @@ function AskDialog({ open, onClose }) {
                 <input
                   id={id("name")}
                   autoComplete="name"
+                  placeholder="John Cena"
                   value={v.name}
                   onChange={set("name")}
                   aria-invalid={!!errors.name}
@@ -677,7 +683,8 @@ function Apply() {
     const errs = validate(v);
     setErrors(errs);
     if (Object.keys(errs).length) {
-      requestAnimationFrame(() => summaryRef.current?.focus());
+      setToast(formErrorToast(errs));
+      requestAnimationFrame(() => document.getElementById(id(Object.keys(errs)[0]))?.focus());
       return;
     }
     const d = draft();
@@ -696,6 +703,7 @@ function Apply() {
         experience: v.experience,
       });
       setStatus("done");
+      setToast({ id: Date.now(), tone: "success", title: "Application received", text: "We will reply within 24 hours." });
     } catch {
       setStatus("idle");
       setToast({
@@ -762,11 +770,12 @@ function Apply() {
         <div className="papply__card" data-reveal="up">
           {status === "done" || status === "drafted" ? (
             <div className="form-result" role="status">
+              <Toast toast={toast} onClose={() => setToast(null)} />
               <CheckCircle2 size={28} strokeWidth={1.5} aria-hidden="true" className="form-result__icon" />
               <h3 className="t-h3">{status === "done" ? "Application received" : "Your email draft is ready"}</h3>
               <p>
                 {status === "done"
-                  ? `Thank you, ${v.name.trim().split(/\s+/)[0]}. We have emailed a confirmation to ${v.email.trim()} and will reply within 24 hours.`
+                  ? `Thank you, ${v.name.trim().split(/\s+/)[0]}. We will reply to ${v.email.trim()} within 24 hours.`
                   : `Your email app should have opened with the application filled in. Press send to reach us at ${ENQUIRY_EMAIL}.`}
               </p>
               {status === "drafted" && (
@@ -802,7 +811,7 @@ function Apply() {
                 </div>
               )}
               <div className="form__row">
-                {field("name", "Name", { autoComplete: "name" })}
+                {field("name", "Name", { autoComplete: "name", placeholder: "John Cena" })}
                 {field("email", "Email", { type: "email", autoComplete: "email", inputMode: "email" })}
               </div>
               <div className="form__row">

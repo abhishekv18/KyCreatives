@@ -1,6 +1,6 @@
 import { useCallback, useId, useRef, useState } from "react";
 import { AlertCircle, Send, ShieldCheck, Check } from "lucide-react";
-import Toast from "./Toast";
+import Toast, { formErrorToast } from "./Toast";
 import LaptopSlides from "./LaptopSlides";
 import { Qmark } from "./SplitHeading";
 import { ENQUIRY_EMAIL, sendEnquiry } from "../../lib/enquiry";
@@ -58,6 +58,7 @@ export default function QuickEnquiry({
     const errs = validate(values, needs);
     setErrors(errs);
     if (Object.keys(errs).length) {
+      setToast(formErrorToast(errs));
       document.getElementById(id(Object.keys(errs)[0]))?.focus();
       return;
     }
@@ -85,7 +86,7 @@ export default function QuickEnquiry({
         id: Date.now(),
         tone: "success",
         title: "Request sent",
-        text: `Thank you, ${v.name.trim().split(/\s+/)[0]}. We have emailed you a confirmation and will reply within 24 hours.`,
+        text: `Thank you, ${v.name.trim().split(/\s+/)[0]}. We will reply within 24 hours.`,
       });
     } catch {
       setToast({
@@ -173,7 +174,7 @@ export default function QuickEnquiry({
           </fieldset>
           {needs.includes("Other") &&
             field("other", "What else do you need?", { input: { placeholder: "For example, a booking system or a dashboard" } })}
-          {field("name", "Name", { input: { autoComplete: "name" } })}
+          {field("name", "Name", { input: { autoComplete: "name", placeholder: "John Cena" } })}
           <div className="qe__row">
             {field("email", "Email", { input: { type: "email", autoComplete: "email", inputMode: "email" } })}
             {field("phone", "Phone", { input: { type: "tel", autoComplete: "tel", inputMode: "tel", placeholder: "+1 202 555 0143" } })}

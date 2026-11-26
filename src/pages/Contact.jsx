@@ -9,7 +9,7 @@ import { services } from "../data/services";
 import { serviceIcons } from "../components/ui/serviceIcons";
 import SocialIcon from "../components/ui/SocialIcon";
 import { company, social, reviewLinks } from "../data/site";
-import Toast from "../components/ui/Toast";
+import Toast, { formErrorToast } from "../components/ui/Toast";
 
 import { ENQUIRY_EMAIL, sendEnquiry } from "../lib/enquiry";
 
@@ -184,7 +184,8 @@ function EnquiryForm() {
     const errs = validate(values);
     setErrors(errs);
     if (Object.keys(errs).length) {
-      requestAnimationFrame(() => summaryRef.current?.focus());
+      setToast(formErrorToast(errs));
+      requestAnimationFrame(() => document.getElementById(id(Object.keys(errs)[0]))?.focus());
       return;
     }
     send(buildEmail(values));
@@ -215,6 +216,7 @@ function EnquiryForm() {
       setErrors({});
       setSubmitted(false);
       setStatus("sent");
+      setToast({ id: Date.now(), tone: "success", title: "Enquiry sent", text: "Thank you. We will reply within 24 hours." });
       requestAnimationFrame(() => resultRef.current?.focus());
     } catch (err) {
       setStatus("idle");
@@ -234,10 +236,11 @@ function EnquiryForm() {
   if (status === "sent" && draft) {
     return (
       <div className="form-result" ref={resultRef} tabIndex={-1} role="status">
+        <Toast toast={toast} onClose={closeToast} />
         <CheckCircle2 size={28} strokeWidth={1.5} aria-hidden="true" className="form-result__icon" />
         <h2 className="t-h3">Thank you, {draft.name}. Your enquiry is with us.</h2>
         <p>
-          We have sent a confirmation to <strong>{draft.email}</strong> and will reply within 24 hours.
+          We will reply to <strong>{draft.email}</strong> within 24 hours.
         </p>
         <p className="t-muted">If it is urgent, call or WhatsApp us on {company.phoneDisplay}.</p>
         <div className="form-result__actions">
@@ -299,6 +302,7 @@ function EnquiryForm() {
             id={id("name")}
             name="name"
             autoComplete="name"
+            placeholder="John Cena"
             value={values.name}
             onChange={set("name")}
             aria-invalid={!!errors.name}
@@ -433,7 +437,7 @@ function EnquiryForm() {
       <div className="form__foot">
         <div className="form__note" id={`${base}-note`}>
           <Info size={16} strokeWidth={1.75} aria-hidden="true" />
-          <p>Your enquiry goes straight to our team, and we email you a confirmation. We reply within 24 hours.</p>
+          <p>Your enquiry goes straight to our team. We reply within 24 hours.</p>
         </div>
         <button
           type="submit"
