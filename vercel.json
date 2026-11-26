@@ -1,3 +1,35 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/services/d2c",
+      "destination": "/services/ecommerce-development",
+      "permanent": true
+    },
+    {
+      "source": "/services/mobile-apps",
+      "destination": "/services/mobile-app-development",
+      "permanent": true
+    },
+    {
+      "source": "/services/portals",
+      "destination": "/services/custom-software-development",
+      "permanent": true
+    },
+    {
+      "source": "/services/custom-software",
+      "destination": "/services/custom-software-development",
+      "permanent": true
+    },
+    {
+      "source": "/services/web-apps-websites",
+      "destination": "/services/website-development",
+      "permanent": true
+    }
+  ]
 }

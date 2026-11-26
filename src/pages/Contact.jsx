@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { Mail, Phone, MessageCircle, MapPin, Info, CheckCircle2, AlertCircle, Copy, Check, ArrowUpRight, HelpCircle, Send } from "lucide-react";
+import { Mail, Phone, MessageCircle, MapPin, Info, CheckCircle2, AlertCircle, Check, ArrowUpRight, HelpCircle, Send } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
 import PartnersStrip from "../components/ui/PartnersStrip";
@@ -11,14 +11,7 @@ import SocialIcon from "../components/ui/SocialIcon";
 import { company, social, reviewLinks } from "../data/site";
 import Toast from "../components/ui/Toast";
 
-/* Web3Forms delivers enquiries to the studio inbox. The access key is public by
-   design (it only allows sending to the inbox it was issued for) and lives in
-   .env.local as VITE_WEB3FORMS_KEY. Without a key the form falls back to
-   drafting the message in the visitor's own email app. */
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
-const WEB3FORMS_URL = "https://api.web3forms.com/submit";
-// The inbox that receives enquiries; the form's notes and email fallbacks use it.
-const ENQUIRY_EMAIL = "kycreatives66@gmail.com";
+import { ENQUIRY_EMAIL, sendEnquiry } from "../lib/enquiry";
 
 const NOT_SURE = "Not sure yet";
 const SERVICE_OPTIONS = [...services.map((s) => s.name), NOT_SURE];
@@ -44,7 +37,7 @@ function ReachCard() {
         <p className="reach__title">Quickest ways to reach us</p>
         <p className="reach__time t-meta">
           <span className="reach__dot" aria-hidden="true" />
-          Gurugram <strong>{now}</strong> IST
+          Mathura <strong>{now}</strong> IST
         </p>
       </div>
       <ul role="list" className="reach__list">
@@ -162,12 +155,11 @@ function EnquiryForm() {
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [status, setStatus] = useState("idle"); // idle | sending | opening | opened
+  const [status, setStatus] = useState("idle"); // idle | sending | sent
   const [toast, setToast] = useState(null);
   const closeToast = useCallback(() => setToast(null), []);
   const botRef = useRef(null);
   const [draft, setDraft] = useState(null);
-  const [copied, setCopied] = useState(false);
   const summaryRef = useRef(null);
   const resultRef = useRef(null);
 
@@ -195,104 +187,60 @@ function EnquiryForm() {
       requestAnimationFrame(() => summaryRef.current?.focus());
       return;
     }
-    const d = buildEmail(values);
-    if (WEB3FORMS_KEY) {
-      send(d);
-      return;
-    }
-    setDraft(d);
-    setStatus("opening");
-    // Hand the message to the visitor's email app. Nothing is sent from this site.
-    window.location.assign(d.href);
-    setTimeout(() => {
-      setStatus("opened");
-      requestAnimationFrame(() => resultRef.current?.focus());
-    }, 600);
+    send(buildEmail(values));
   };
 
-  // Sends the enquiry through Web3Forms; on success the form clears and a toast
-  // confirms it, on failure nothing is lost and the visitor can email instead.
+  // Sends the enquiry to /api/contact. On success the form is replaced by a
+  // confirmation on the page; on failure nothing is lost and the visitor can
+  // try again or email us.
   const send = async (d) => {
     setStatus("sending");
     setToast(null);
     const v = values;
     try {
-      const res = await fetch(WEB3FORMS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: d.subject,
-          from_name: "KY Creatives website",
-          replyto: v.email.trim(),
-          botcheck: botRef.current?.checked || false,
-          name: v.name.trim(),
-          email: v.email.trim(),
-          company: v.company.trim() || "Not given",
-          phone: v.phone.trim() || "Not given",
-          services: v.services.join(", "),
-          budget: v.budget.trim() || "Not given",
-          message: v.details.trim(),
-        }),
+      await sendEnquiry({
+        kind: "enquiry",
+        subject: d.subject,
+        botcheck: botRef.current?.checked || false,
+        name: v.name.trim(),
+        email: v.email.trim(),
+        phone: v.phone.trim(),
+        message: v.details.trim(),
+        company: v.company.trim(),
+        services: v.services.join(", "),
+        budget: v.budget.trim(),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.success) throw new Error(data.message || "Send failed");
-      const first = v.name.trim().split(/\s+/)[0];
+      setDraft({ name: v.name.trim().split(/\s+/)[0], email: v.email.trim() });
       setValues(EMPTY);
       setErrors({});
       setSubmitted(false);
+      setStatus("sent");
+      requestAnimationFrame(() => resultRef.current?.focus());
+    } catch (err) {
       setStatus("idle");
-      setToast({
-        id: Date.now(),
-        tone: "success",
-        title: "Enquiry sent",
-        text: `Thank you, ${first}. We will reply to ${v.email.trim()} within 24 hours.`,
-      });
-    } catch {
-      setStatus("idle");
+      if (err.fields) setErrors((e) => ({ ...e, ...err.fields }));
       setToast({
         id: Date.now(),
         tone: "error",
         title: "Your enquiry was not sent",
         text: "Something went wrong on the way. Your answers are still in the form, so you can try again.",
-        action: { label: `Or email ${ENQUIRY_EMAIL}`, href: d.href },
+        action: { label: `Or email ${ENQUIRY_EMAIL}`, href: `mailto:${ENQUIRY_EMAIL}` },
       });
-    }
-  };
-
-  const copy = async () => {
-    if (!draft) return;
-    try {
-      await navigator.clipboard.writeText(`To: ${ENQUIRY_EMAIL}\nSubject: ${draft.subject}\n\n${draft.body}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch {
-      setCopied(false);
     }
   };
 
   const errorList = Object.entries(errors);
 
-  if (status === "opened" && draft) {
+  if (status === "sent" && draft) {
     return (
       <div className="form-result" ref={resultRef} tabIndex={-1} role="status">
         <CheckCircle2 size={28} strokeWidth={1.5} aria-hidden="true" className="form-result__icon" />
-        <h2 className="t-h3">Your email draft is ready</h2>
+        <h2 className="t-h3">Thank you, {draft.name}. Your enquiry is with us.</h2>
         <p>
-          Your email app should have opened with the message filled in. <strong>Nothing has been sent yet.</strong>{" "}
-          Press send in your email app to reach us at {ENQUIRY_EMAIL}.
+          We have sent a confirmation to <strong>{draft.email}</strong> and will reply within 24 hours.
         </p>
-        <p className="t-muted">
-          If no email app opened, copy the message and send it from any email account, or write to us directly.
-        </p>
+        <p className="t-muted">If it is urgent, call or WhatsApp us on {company.phoneDisplay}.</p>
         <div className="form-result__actions">
-          <button className="btn btn--primary" onClick={copy}>
-            {copied ? <Check size={18} aria-hidden="true" /> : <Copy size={18} strokeWidth={1.75} aria-hidden="true" />}
-            <span>{copied ? "Message copied" : "Copy message"}</span>
-          </button>
-          <a className="btn btn--ghost" href={draft.href}>
-            Open email app again
-          </a>
           <button
             className="link-u"
             onClick={() => {
@@ -300,12 +248,9 @@ function EnquiryForm() {
               setDraft(null);
             }}
           >
-            Edit the enquiry
+            Send another enquiry
           </button>
         </div>
-        <span className="sr-only" aria-live="polite">
-          {copied ? "Message copied to clipboard" : ""}
-        </span>
       </div>
     );
   }
@@ -331,7 +276,7 @@ function EnquiryForm() {
           <p>
             <strong>
               {errorList.length === 1 ? "One thing to fix" : `${errorList.length} things to fix`} before{" "}
-              {WEB3FORMS_KEY ? "we can send your enquiry" : "we can draft your email"}:
+              "we can send your enquiry":
             </strong>
           </p>
           <ul>
@@ -488,35 +433,21 @@ function EnquiryForm() {
       <div className="form__foot">
         <div className="form__note" id={`${base}-note`}>
           <Info size={16} strokeWidth={1.75} aria-hidden="true" />
-          {WEB3FORMS_KEY ? (
-            <p>Your enquiry goes straight to us. We reply within 24 hours.</p>
-          ) : (
-            <p>
-              Nothing is sent from this page. Continue opens your email app with a message to us, ready to
-              review and send.
-            </p>
-          )}
+          <p>Your enquiry goes straight to our team, and we email you a confirmation. We reply within 24 hours.</p>
         </div>
-        {WEB3FORMS_KEY ? (
-          <button
-            type="submit"
-            className={`btn btn--primary form__submit ${status === "sending" ? "is-busy" : ""}`}
-            disabled={status === "sending"}
-            aria-busy={status === "sending"}
-          >
-            <span>{status === "sending" ? "Sending" : "Send enquiry"}</span>
-            {status === "sending" ? (
-              <span className="form__spinner" aria-hidden="true" />
-            ) : (
-              <Send size={18} strokeWidth={1.75} aria-hidden="true" className="btn__icon" />
-            )}
-          </button>
-        ) : (
-          <button type="submit" className="btn btn--primary form__submit" disabled={status === "opening"}>
-            <span>{status === "opening" ? "Opening your email app" : "Continue in your email app"}</span>
-            <Mail size={18} strokeWidth={1.75} aria-hidden="true" className="btn__icon" />
-          </button>
-        )}
+        <button
+          type="submit"
+          className={`btn btn--primary form__submit ${status === "sending" ? "is-busy" : ""}`}
+          disabled={status === "sending"}
+          aria-busy={status === "sending"}
+        >
+          <span>{status === "sending" ? "Sending" : "Send enquiry"}</span>
+          {status === "sending" ? (
+            <span className="form__spinner" aria-hidden="true" />
+          ) : (
+            <Send size={18} strokeWidth={1.75} aria-hidden="true" className="btn__icon" />
+          )}
+        </button>
       </div>
     </form>
   );
@@ -526,7 +457,7 @@ export default function Contact() {
   usePageMeta({
     title: "Contact and start a project",
     description:
-      "Tell KY Creatives about your project. Email info@kycreatives.com or call +91 76697 50672. Office in Gurugram, working with clients worldwide.",
+      "Tell KY Creatives about your project. Email contact@kycreatives.com or call +91 76697 50672. Office in Mathura, working with clients worldwide.",
   });
 
   return (
@@ -587,7 +518,7 @@ export default function Contact() {
                   <MapPin size={18} strokeWidth={1.6} />
                 </span>
                 <div>
-                  <p className="scard__label t-meta">Studio</p>
+                  <p className="scard__label t-meta">{company.address.label}</p>
                   <address>
                     <a href={company.address.map} target="_blank" rel="noopener noreferrer" className="contact__map">
                       {company.address.lines.map((l) => (

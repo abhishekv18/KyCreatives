@@ -97,24 +97,24 @@ export default function D2C() {
   useServiceMeta(service);
   return (
     <div className="svcpage svcpage--flame">
-      <ServiceHero service={service} theme="flame" focus aside={<HeroPhones />} />
+      <ServiceHero service={service} theme="flame" aside={<HeroPhones />} />
       <ServiceEnquiry service={service} />
       <RelatedWork
         slugs={service.related}
-        title={["D2C stores", "we have built."]}
+        title={["Online stores", "we have built."]}
         lead="Online stores for decor, rugs, fashion, streetwear, gifts, hair care, pet apparel, crystals and fragrance. Each one is live today."
       />
       <Anatomy />
       <Offerings
         service={service}
-        title={["Everything a D2C store needs,", "from first page to checkout."]}
-        lead="Pick one piece or the whole store. We are honest about what your platform allows, and say so before we quote."
+        title={["Everything an online store needs,", "from first page to delivery."]}
+        lead="For D2C brands, B2B and wholesale buyers and multi-vendor marketplaces. Pick one piece or the whole store; we are clear about what your platform allows before we quote."
       />
       <Deliverables items={service.deliverables} tone="ink" title={["What a store", "project includes"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />
       <PartnersStrip />
-      <ContactCTA lines={["Tell us what", "your brand sells."]} />
+      <ContactCTA lines={["Tell us what", "you want to sell online."]} />
     </div>
   );
 }

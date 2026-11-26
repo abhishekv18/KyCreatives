@@ -3,12 +3,12 @@
 
 export const company = {
   name: "KY Creatives",
-  tagline: "What we create is business.",
-  descriptor: "Design led software, web and mobile apps.",
+  tagline: "We design and build digital solutions for ambitious businesses.",
+  descriptor: "E-commerce, mobile apps and custom software.",
   boilerplate:
-    "KY Creatives is a design-led company building software, web apps and mobile applications for businesses around the world. Our focus is D2C brands, with online stores designed and built to launch faster and sell well.",
+    "KY Creatives designs and develops e-commerce platforms and websites, mobile applications and custom software for businesses worldwide. An international digital development partner, from high-performing online stores to mobile apps and business software.",
   foundedYear: 2019,
-  email: "info@kycreatives.com",
+  email: "contact@kycreatives.com",
   phoneDisplay: "+91 76697 50672",
   phoneHref: "tel:+917669750672",
   // Direct wa.me link with the studio's default greeting (the same text the old
@@ -17,9 +17,12 @@ export const company = {
   whatsapp:
     "https://wa.me/917669750672?text=" + encodeURIComponent("Hi KYCreatives, I have a requirement for a website!"),
   address: {
-    lines: ["Tower A - 114, Ninex RMG", "Sector 37C, Gurugram", "Haryana 122001, India"],
-    short: "Gurugram, Haryana",
-    map: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Ninex RMG, Sector 37C, Gurugram, Haryana 122001, India"),
+    label: "Mathura Office",
+    lines: ["16-212, 58 D, Radha Nagar", "Krishna Nagar, Mathura", "Uttar Pradesh, India"],
+    short: "Mathura, Uttar Pradesh",
+    map:
+      "https://www.google.com/maps/search/?api=1&query=" +
+      encodeURIComponent("16-212, 58 D, Radha Nagar, Krishna Nagar, Mathura, Uttar Pradesh, India"),
   },
   // kycreatives.com/contact: "we endeavour to answer all enquiries within 24 hours"
   responseNote: "We answer every enquiry within 24 hours.",

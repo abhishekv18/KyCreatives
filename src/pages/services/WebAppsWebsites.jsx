@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { serviceBySlug } from "../../data/services";
 import { useServiceMeta } from "../../hooks/usePageMeta";
 import {
@@ -63,7 +64,11 @@ function Compare() {
             <SplitHeading className="offer__title" lines={["Not sure which", "one you need?"]} />
           </div>
           <p className="t-lead" data-reveal="up">
-            Many projects are a bit of both. This is the rule of thumb we use in a first conversation.
+            Many projects are a bit of both. Websites are built here; web applications are part of our{" "}
+            <Link to="/services/custom-software-development" className="link-u">
+              custom software
+            </Link>{" "}
+            service.
           </p>
         </div>
         <div className="cmp__grid">
@@ -104,7 +109,7 @@ export default function WebAppsWebsites() {
       <ServiceEnquiry service={service} />
       <Offerings
         service={service}
-        title={["Websites and web apps,", "designed and engineered together."]}
+        title={["Websites that explain,", "load fast and convert."]}
         lead="The same people design the screens and write the code, so what you approve is what gets built."
       />
       <Compare />

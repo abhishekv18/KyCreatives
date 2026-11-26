@@ -1,5 +1,5 @@
 import { lazy, useEffect } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Home";
 import { whenReady } from "./lib/motion";
@@ -56,11 +56,18 @@ const router = createBrowserRouter([
       { path: "/portfolio", element: <Portfolio /> },
       { path: "/portfolio/apps", element: <Apps /> },
       { path: "/partners", element: <Partners /> },
-      
-      { path: "/services/web-apps-websites", element: <WebAppsWebsites /> },
-      { path: "/services/d2c", element: <D2C /> },
-      { path: "/services/mobile-apps", element: <MobileApps /> },
-      { path: "/services/portals", element: <Portals /> },
+
+      // services, at their new addresses
+      { path: "/services/ecommerce-development", element: <D2C /> },
+      { path: "/services/mobile-app-development", element: <MobileApps /> },
+      { path: "/services/custom-software-development", element: <Portals /> },
+      { path: "/services/website-development", element: <WebAppsWebsites /> },
+      // earlier addresses keep working
+      { path: "/services/d2c", element: <Navigate to="/services/ecommerce-development" replace /> },
+      { path: "/services/mobile-apps", element: <Navigate to="/services/mobile-app-development" replace /> },
+      { path: "/services/portals", element: <Navigate to="/services/custom-software-development" replace /> },
+      { path: "/services/custom-software", element: <Navigate to="/services/custom-software-development" replace /> },
+      { path: "/services/web-apps-websites", element: <Navigate to="/services/website-development" replace /> },
       { path: "/services/marketing", element: <Marketing /> },
       { path: "/services/design-graphics", element: <DesignGraphics /> },
       { path: "/privacy-policy", element: <PrivacyPolicy /> },

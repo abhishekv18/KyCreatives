@@ -6,6 +6,8 @@ import SplitHeading from "../ui/SplitHeading";
 import Faq from "../ui/Faq";
 import { services } from "../../data/services";
 import { projectBySlug } from "../../data/projects";
+import { apps } from "../../data/apps";
+import PhoneFrame from "../ui/PhoneFrame";
 import { serviceIcons } from "../ui/serviceIcons";
 import QuickEnquiry from "../ui/QuickEnquiry";
 
@@ -41,9 +43,9 @@ export function ServiceHero({ service, aside, art, theme = "cloud", focus = fals
 // designed slides on the laptop that match the service.
 const ENQUIRY = {
   "web-apps-websites": { tone: "violet", theme: "web", interest: "Website" },
-  d2c: { tone: "flame", theme: "d2c", interest: "Online store" },
+  d2c: { tone: "flame", theme: "d2c", interest: "E-commerce store" },
   "mobile-apps": { tone: "violet", theme: "mobile", interest: "Mobile application" },
-  portals: { tone: "cobalt", theme: "portals", interest: "Customised software" },
+  portals: { tone: "cobalt", theme: "portals", interest: "Custom software" },
   marketing: { tone: "orange", theme: "marketing", interest: "Marketing" },
   "design-graphics": { tone: "cyan", theme: "design", interest: "Branding" },
 };
@@ -126,6 +128,57 @@ export function Deliverables({ items, title = ["What you receive"], tone = "ink"
 const domainOf = (url) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
 /** Real portfolio projects related to a service, staged on Ink. */
+/** Case studies for apps and software: each app on a phone with its story. */
+export function AppCases({ slugs, title = ["Case studies"], lead }) {
+  const list = slugs.map((s) => apps.find((a) => a.slug === s)).filter(Boolean);
+  if (!list.length) return null;
+  return (
+    <section className="acases section on-dark" data-tone="dark" aria-labelledby="acases-title">
+      <div className="container">
+        <div className="rwork__head">
+          <p className="kicker kicker--aqua t-meta">Case studies</p>
+          <div id="acases-title">
+            <SplitHeading className="rwork__title" lines={title} />
+          </div>
+          {lead && (
+            <p className="rwork__lead" data-reveal="up">
+              {lead}
+            </p>
+          )}
+        </div>
+        <ul role="list" className="acases__list">
+          {list.map((a) => (
+            <li key={a.slug} className="acases__item" data-reveal="up">
+              <div className="acases__phone">
+                <PhoneFrame src={a.screens[a.slug === "maacubs" ? 1 : 0]} alt={`${a.name} app screen`} />
+              </div>
+              <div className="acases__body">
+                <p className="acases__sector t-meta">
+                  {a.kind} / {a.sector}
+                </p>
+                <h3 className="acases__name">{a.name}</h3>
+                <p className="acases__summary">{a.summary}</p>
+                <ul role="list" className="acases__built">
+                  {a.built.map((b) => (
+                    <li key={b}>
+                      <Check size={15} strokeWidth={2} aria-hidden="true" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/portfolio/apps" className="acases__link">
+                  See the full case study
+                  <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 export function RelatedWork({ slugs, title = ["Work in this area"], lead }) {
   if (!slugs?.length) return null;
   return (

@@ -132,7 +132,7 @@ export default function LoadingScreen() {
         />
         <p className="loader__line" aria-hidden="true">
           <span>
-            What we create is <em>business.</em>
+            Digital solutions for <em>ambitious businesses.</em>
           </span>
         </p>
       </div>
@@ -141,7 +141,7 @@ export default function LoadingScreen() {
           <div className="loader__bar" ref={barRef} />
         </div>
         <div className="loader__labels t-meta">
-          <span>Design-led software company</span>
+          <span>E-commerce · Mobile apps · Custom software</span>
           <span ref={pctRef}>0%</span>
         </div>
       </div>

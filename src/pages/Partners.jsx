@@ -17,9 +17,7 @@ import { Glow } from "../components/art/Art";
 import { company } from "../data/site";
 import { TIERS, tierFor, RECURRING, REPRESENT, STEPS, ROLES, REWARDS, FIT, FAQS, MARKETS, BACKGROUNDS, TERMS, NEXT, COHORT } from "../data/partners-program";
 
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
-const WEB3FORMS_URL = "https://api.web3forms.com/submit";
-const ENQUIRY_EMAIL = "kycreatives66@gmail.com";
+import { ENQUIRY_EMAIL, sendEnquiry } from "../lib/enquiry";
 
 const usd = (n) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(Math.round(n));
 const pct = (r) => `${Math.round(r * 100)}%`;
@@ -483,31 +481,16 @@ function AskDialog({ open, onClose }) {
       return;
     }
     const subject = `Partner program question from ${v.name.trim()}`;
-    const body = `${v.question.trim()}\n\n---\nName: ${v.name.trim()}\nEmail: ${v.email.trim()}`;
-    const href = `mailto:${ENQUIRY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    if (!WEB3FORMS_KEY) {
-      window.location.assign(href);
-      setStatus("drafted");
-      return;
-    }
     setStatus("sending");
     try {
-      const res = await fetch(WEB3FORMS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject,
-          from_name: "KY Creatives website",
-          replyto: v.email.trim(),
-          botcheck: botRef.current?.checked || false,
-          name: v.name.trim(),
-          email: v.email.trim(),
-          message: v.question.trim(),
-        }),
+      await sendEnquiry({
+        kind: "question",
+        subject,
+        botcheck: botRef.current?.checked || false,
+        name: v.name.trim(),
+        email: v.email.trim(),
+        message: v.question.trim(),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.success) throw new Error("failed");
       setStatus("sent");
       setV(ASK_EMPTY);
     } catch {
@@ -555,7 +538,7 @@ function AskDialog({ open, onClose }) {
             <p className="pask__done-title">{status === "sent" ? "Question sent" : "Your email draft is ready"}</p>
             <p>
               {status === "sent"
-                ? "Thank you. We reply within 24 hours."
+                ? "Thank you. We have emailed you a confirmation and will reply within 24 hours."
                 : `Your email app should have opened with the question filled in. Press send to reach us at ${ENQUIRY_EMAIL}.`}
             </p>
             <button type="button" className="btn btn--primary" onClick={close}>
@@ -698,27 +681,20 @@ function Apply() {
       return;
     }
     const d = draft();
-    if (!WEB3FORMS_KEY) {
-      window.location.assign(d.href);
-      setStatus("drafted");
-      return;
-    }
     setStatus("sending");
     try {
-      const res = await fetch(WEB3FORMS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: d.subject,
-          from_name: "KY Creatives website",
-          replyto: v.email.trim(),
-          botcheck: botRef.current?.checked || false,
-          ...Object.fromEntries(Object.entries(v).map(([k, x]) => [k, x.trim() || "Not given"])),
-        }),
+      await sendEnquiry({
+        kind: "partner",
+        subject: d.subject,
+        botcheck: botRef.current?.checked || false,
+        name: v.name.trim(),
+        email: v.email.trim(),
+        phone: v.phone.trim(),
+        message: v.about.trim(),
+        country: v.country.trim(),
+        linkedin: v.linkedin.trim(),
+        experience: v.experience,
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.success) throw new Error("Send failed");
       setStatus("done");
     } catch {
       setStatus("idle");
@@ -790,7 +766,7 @@ function Apply() {
               <h3 className="t-h3">{status === "done" ? "Application received" : "Your email draft is ready"}</h3>
               <p>
                 {status === "done"
-                  ? `Thank you, ${v.name.trim().split(/\s+/)[0]}. We will reply to ${v.email.trim()} within 24 hours.`
+                  ? `Thank you, ${v.name.trim().split(/\s+/)[0]}. We have emailed a confirmation to ${v.email.trim()} and will reply within 24 hours.`
                   : `Your email app should have opened with the application filled in. Press send to reach us at ${ENQUIRY_EMAIL}.`}
               </p>
               {status === "drafted" && (

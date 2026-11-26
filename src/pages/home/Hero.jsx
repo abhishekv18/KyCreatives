@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { ArrowRight, ArrowDown } from "lucide-react";
 import { gsap, whenReady, prefersReducedMotion } from "../../lib/motion";
-import { company } from "../../data/site";
 import { projectBySlug } from "../../data/projects";
 
 
@@ -117,13 +116,13 @@ export default function Hero() {
               {col.map((p) => (
                 <img
                   key={p.slug}
-                  src={p.image}
+                  src={p.image.replace(".webp", "-sm.webp")}
                   alt=""
-                  width="720"
-                  height="900"
-                  loading="lazy"
+                  width="640"
+                  height="800"
+                  loading={c < 3 ? "eager" : "lazy"}
                   decoding="async"
-                  fetchPriority="low"
+                  fetchPriority={c < 3 ? "auto" : "low"}
                 />
               ))}
             </div>
@@ -142,21 +141,28 @@ export default function Hero() {
           </p> */}
 
 
-          <h1 id="hero-title" className="hero__title" aria-label="What we create is business." data-reveal-manual="">
+          <h1
+            id="hero-title"
+            className="hero__title hero__title--long"
+            aria-label="We design and build digital solutions for ambitious businesses."
+            data-reveal-manual=""
+          >
             <span className="split-line" aria-hidden="true">
-              <span>What we create</span>
+              <span>We design and build</span>
+            </span>
+            <span className="split-line" aria-hidden="true">
+              <span>digital solutions for</span>
             </span>
             <span className="split-line" aria-hidden="true">
               <span>
-                is <em className="hero__word">business.</em>
+                <em className="hero__word">ambitious businesses.</em>
               </span>
             </span>
           </h1>
 
-          <p className="hero__sub hero__fade">Design-led software, web and mobile apps.</p>
           <p className="hero__lead hero__fade">
-            We design and build software, mobile applications and online e-commerce stores for businesses around the
-            world, with a special focus on D2C brands that need a store that sells.
+            From high-performing e-commerce stores to mobile applications and custom software, we turn complex business
+            requirements into digital solutions built to work, scale and grow.
           </p>
           <div className="hero__actions hero__fade">
             <Link to="/contact" className="btn btn--primary">

@@ -42,10 +42,10 @@ const INVITES = {
   "/portfolio": { kicker: "Like what you see?", line: "Your website could be the next one here.", cta: "Start your website", to: "/contact" },
   "/portfolio/apps": { kicker: "Have an app in mind?", line: "Let’s put it on your customers’ phones.", cta: "Start your app", to: "/contact" },
   "/partners": { kicker: "Questions before you apply?", line: "Talk to us about partnering.", cta: "Apply now", to: "/partners#apply" },
-  "/services/web-apps-websites": { kicker: "Need a website or web app?", line: "Let’s build one that’s fast and easy to grow.", cta: "Start your project", to: "/contact" },
-  "/services/d2c": { kicker: "Selling direct?", line: "Let’s build a store that sells.", cta: "Start your store", to: "/contact" },
-  "/services/mobile-apps": { kicker: "Planning an app?", line: "Let’s earn a place on the home screen.", cta: "Start your app", to: "/contact" },
-  "/services/portals": { kicker: "Outgrown spreadsheets?", line: "Let’s build the tool your team needs.", cta: "Start your portal", to: "/contact" },
+  "/services/website-development": { kicker: "Need a website?", line: "Let’s build one that’s fast and easy to update.", cta: "Start your website", to: "/contact" },
+  "/services/ecommerce-development": { kicker: "Selling online?", line: "Let’s build a store customers love to shop.", cta: "Start your store", to: "/contact" },
+  "/services/mobile-app-development": { kicker: "Planning an app?", line: "Let’s build one people use every day.", cta: "Start your app", to: "/contact" },
+  "/services/custom-software-development": { kicker: "Outgrown spreadsheets?", line: "Let’s build software around your business.", cta: "Start your project", to: "/contact" },
   "/services/marketing": { kicker: "Ready to grow?", line: "Let’s plan campaigns you can measure.", cta: "Plan your campaign", to: "/contact" },
   "/services/design-graphics": { kicker: "Need a stronger brand?", line: "Let’s design an identity people remember.", cta: "Start your brand", to: "/contact" },
   "/privacy-policy": { kicker: "Questions about your data?", line: "Ask us. We’ll answer plainly.", cta: "Contact us", to: "/contact" },
@@ -117,8 +117,8 @@ export default function Footer() {
           <div className="footer__brand">
             <Logo size={26} />
             <p>
-              A design-led company building software, web apps and mobile apps for businesses worldwide since{" "}
-              {company.foundedYear}, with a special focus on D2C brands.
+              An international digital development partner, designing and developing e-commerce platforms, mobile
+              applications and custom software for businesses worldwide since {company.foundedYear}.
             </p>
           </div>
 
@@ -132,7 +132,7 @@ export default function Footer() {
                 <Link to="/about">About</Link>
               </li>
               <li>
-                <Link to="/portfolio">Portfolio</Link>
+                <Link to="/portfolio">Our Work</Link>
               </li>
               <li>
                 <Link to="/partners">Partners</Link>

@@ -11,7 +11,7 @@ export function ConceptLabel({ children = "Concept", tone = "light" }) {
   return <span className={`concept-label concept-label--${tone} t-meta`}>{children}</span>;
 }
 
-/* A product detail page for a D2C store */
+/* A product detail page for an online store */
 export function StorefrontMock() {
   return (
     <div className="mock mock-pdp" aria-hidden="true">
@@ -375,10 +375,10 @@ export function CampaignSet() {
             <em>https://kycreatives.com</em>
           </span>
         </div>
-        <p className="cset__title">Design-led software, web and mobile apps | KY Creatives</p>
+        <p className="cset__title">E-commerce, Mobile Apps &amp; Custom Software | KY Creatives</p>
         <p className="cset__desc">
-          A design-led studio building software, web apps and mobile apps for businesses worldwide, with a special focus on
-          D2C brands.
+          KY Creatives designs and develops e-commerce platforms, mobile applications and custom software for businesses
+          worldwide.
         </p>
       </div>
     </div>
@@ -466,7 +466,7 @@ export function IdentitySet() {
           <span className="iset__toggle">
             <i />
           </span>
-          <span className="iset__chip">D2C</span>
+          <span className="iset__chip">E-commerce</span>
           <span className="iset__chip iset__chip--on">Brand</span>
         </span>
       </div>

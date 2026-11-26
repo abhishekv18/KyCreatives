@@ -130,15 +130,23 @@ const PORTFOLIO_LINKS = [
   },
 ];
 
+// The three services in the primary navigation, in this order
 const SERVICE_LINKS = services.map((s) => ({
   key: s.slug,
   path: s.path,
-  name: s.name,
+  name: s.navLabel,
   short: s.short,
   Icon: serviceIcons[s.slug],
   hue: MENU_TONE[s.slug],
-  focus: s.slug === "d2c",
 }));
+
+// after the two dropdowns, in this order on desktop and phone
+const PAGE_LINKS = [
+  ["/partners", "Partners"],
+  ["/about", "About"],
+  ["/contact", "Contact"],
+];
+
 
 /** A header dropdown: the services list, and the two portfolios. */
 function NavMenu({ id, label, base, items, kicker, aside, compact = false }) {
@@ -354,48 +362,49 @@ function MobileMenu({ open, onClose }) {
         </button>
       </div>
       <nav className="mnav__body container" aria-label="Mobile">
-        <p className="mnav__label t-meta">Menu</p>
-        <ul role="list" className="mnav__main">
-          {[
-            ["/about", "About"],
-            ["/partners", "Partners"],
-            ["/contact", "Contact"],
-          ].map(([to, label, end], i) => (
-            <li key={to} style={{ "--i": i }}>
-              <NavLink to={to} end={end} onClick={onClose}>
-                <span>{label}</span>
-                <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />
+        <ul role="list" className="mnav__main mnav__main--home">
+          <li style={{ "--i": 0 }}>
+            <NavLink to="/" end onClick={onClose}>
+              <span>Home</span>
+              <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />
+            </NavLink>
+          </li>
+        </ul>
+
+        <p className="mnav__label t-meta">Services</p>
+        <ul role="list" className="mnav__svc">
+          {SERVICE_LINKS.map(({ key, path, name, Icon, hue }, i) => (
+            <li key={key} style={{ "--i": i }}>
+              <NavLink to={path} onClick={onClose} data-hue={hue}>
+                <span className="mnav__svc-icon" aria-hidden="true">
+                  <Icon size={16} strokeWidth={1.6} />
+                </span>
+                <span>{name}</span>
               </NavLink>
             </li>
           ))}
         </ul>
 
-        <p className="mnav__label t-meta">Services</p>
-        <ul role="list" className="mnav__svc">
-          {services.map((s, i) => {
-            const Icon = serviceIcons[s.slug];
-            return (
-              <li key={s.slug} style={{ "--i": i + 3 }}>
-                <NavLink to={s.path} onClick={onClose} data-hue={MENU_TONE[s.slug]}>
-                  <span className="mnav__svc-icon" aria-hidden="true">
-                    <Icon size={16} strokeWidth={1.6} />
-                  </span>
-                  <span>{s.name}</span>
-                </NavLink>
-              </li>
-            );
-          })}
-        </ul>
-
-        <p className="mnav__label t-meta">Portfolio</p>
+        <p className="mnav__label t-meta">Our Work</p>
         <ul role="list" className="mnav__svc">
           {PORTFOLIO_LINKS.map(({ key, path, short_name, Icon, hue }, i) => (
-            <li key={key} style={{ "--i": i + 9 }}>
+            <li key={key} style={{ "--i": i + 4 }}>
               <NavLink to={path} end onClick={onClose} data-hue={hue}>
                 <span className="mnav__svc-icon" aria-hidden="true">
                   <Icon size={16} strokeWidth={1.6} />
                 </span>
                 <span>{short_name}</span>
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+
+        <ul role="list" className="mnav__main mnav__main--pages">
+          {PAGE_LINKS.map(([to, label], i) => (
+            <li key={to} style={{ "--i": i + 6 }}>
+              <NavLink to={to} onClick={onClose}>
+                <span>{label}</span>
+                <ArrowRight size={18} strokeWidth={1.5} aria-hidden="true" />
               </NavLink>
             </li>
           ))}
@@ -465,18 +474,15 @@ export default function Header() {
                 </NavLink>
               </li> */}
               <li>
-                <NavLink to="/about" className="nav__link">
-                  About
-                </NavLink>
-              </li>
-              <li>
                 <NavMenu
                   id="services-menu"
                   label="Services"
                   base="/services"
                   items={SERVICE_LINKS}
                   kicker="Services"
-                  aside={{ kicker: "Not sure where to start?", lede: "Tell us the problem. We will suggest the right mix.",
+                  aside={{
+                    kicker: "Not sure where to start?",
+                    lede: "Tell us the problem. We will suggest the right mix.",
                     sub: "Most projects combine two or three of these, planned and built by one team.",
                   }}
                 />
@@ -484,10 +490,10 @@ export default function Header() {
               <li>
                 <NavMenu
                   id="portfolio-menu"
-                  label="Portfolio"
+                  label="Our Work"
                   base="/portfolio"
                   items={PORTFOLIO_LINKS}
-                  kicker="Portfolio"
+                  kicker="Our Work"
                   aside={{
                     kicker: "Live work",
                     lede: "Every site is live to visit, every app is in use.",
@@ -497,16 +503,13 @@ export default function Header() {
                   compact
                 />
               </li>
-              <li>
-                <NavLink to="/partners" className="nav__link">
-                  Partners
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" className="nav__link">
-                  Contact
-                </NavLink>
-              </li>
+              {PAGE_LINKS.filter(([to]) => to !== "/contact").map(([to, label]) => (
+                <li key={to}>
+                  <NavLink to={to} className="nav__link">
+                    {label}
+                  </NavLink>
+                </li>
+              ))}
               <li className="nav__indicator" role="presentation" aria-hidden="true" />
             </ul>
           </nav>

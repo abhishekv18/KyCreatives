@@ -21,7 +21,7 @@ export function useServiceMeta(service) {
 /** Sets the document title, description and basic social tags for a route. */
 export function usePageMeta({ title, description }) {
   useEffect(() => {
-    const full = title ? `${title} | ${SITE}` : `${SITE} | Design-led software, web and mobile apps`;
+    const full = title ? `${title} | ${SITE}` : `${SITE} | E-commerce, Mobile Apps & Custom Software`;
     document.title = full;
     if (description) {
       setMeta('meta[name="description"]', "content", description);

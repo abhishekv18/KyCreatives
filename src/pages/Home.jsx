@@ -22,7 +22,7 @@ export default function Home() {
   usePageMeta({
     title: null,
     description:
-      "KY Creatives is a design-led studio building software, web apps and mobile apps for businesses worldwide, with a special focus on D2C brands.",
+      "KY Creatives designs and develops e-commerce platforms, mobile applications and custom software for businesses worldwide. Discuss your next digital project with our team.",
   });
 
   return (

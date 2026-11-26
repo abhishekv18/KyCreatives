@@ -18,8 +18,8 @@ import { projects } from "../data/projects";
 
 // From the brand guidelines: "Brand essence, what we are, in five lines".
 const ESSENCE = [
-  ["What we are", "A design-led studio building software, web apps and mobile apps."],
-  ["Who we serve", "Businesses worldwide, with a special focus on D2C brands that need a standout website."],
+  ["What we are", "An international digital development partner for e-commerce, mobile apps and custom software."],
+  ["Who we serve", "Ambitious businesses worldwide, from online brands to companies that run on their own software."],
   ["Purpose", "To build software that lets businesses grow without limits."],
   ["Promise", "Every product we ship launches fast and scales cleanly."],
 ];
@@ -73,7 +73,7 @@ function HeroVisual() {
               <strong>{company.foundedYear}</strong>Founded
             </span>
             <span>
-              <strong>D2C</strong>Focus
+              <strong>3</strong>Services
             </span>
             <span>
               <strong>Global</strong>Clients
@@ -81,9 +81,9 @@ function HeroVisual() {
           </div>
           <ul className="ahero__list">
             {[
-              [PenTool, "Design", "Brand, UI and UX"],
-              [Code2, "Engineering", "Web and mobile apps"],
-              [TrendingUp, "Growth", "SEO and marketing"],
+              [PenTool, "E-commerce", "Shopify and custom stores"],
+              [Code2, "Mobile apps", "iOS, Android and cross-platform"],
+              [TrendingUp, "Custom software", "CRM, ERP, SaaS and portals"],
             ].map(([Icon, t, d]) => (
               <li key={t}>
                 <i>
@@ -137,7 +137,7 @@ const FIGURES = [
 
 // The kinds of website in the portfolio.
 const KINDS = [
-  ["D2C", "Stores for brands that sell online"],
+  ["E-commerce", "Online stores for brands and B2B"],
   ["Business", "Business and agency websites"],
   ["Platforms", "Platforms and news portals"],
   ["Non-profit", "Non-profits and organisations"],
@@ -274,7 +274,7 @@ export default function About() {
   usePageMeta({
     title: "About the studio",
     description:
-      "KY Creatives is a design-led company in Gurugram building software, web apps and mobile apps for businesses worldwide since 2019.",
+      "KY Creatives is an international digital development partner, based in Mathura, building e-commerce platforms, mobile apps and custom software for businesses worldwide since 2019.",
   });
   const quote = testimonials[1];
 
@@ -322,7 +322,7 @@ export default function About() {
           </div>
           <div className="astory__body">
             <p className="astory__big" data-reveal="up">
-              We started in {company.foundedYear} as a web design and development team in Gurugram.
+              We started in {company.foundedYear} as a web design and development team in India.
             </p>
             <div className="astory__cols prose" data-reveal="up" data-delay="0.1">
               <p>
@@ -331,8 +331,8 @@ export default function About() {
                 websites, portals, news platforms and non-profits, for clients at home and overseas.
               </p>
               <p>
-                Today our work covers software, web apps and mobile apps as well as websites. Our focus is D2C brands
-                that sell online and need a website that does real work for the business.
+                Today we work as an international digital development partner, focused on three things: e-commerce
+                development, mobile application development and custom software development.
               </p>
             </div>
             <div className="astory__kinds">

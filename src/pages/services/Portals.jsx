@@ -8,6 +8,7 @@ import {
   Deliverables,
   ServiceFaq,
   OtherServices,
+  AppCases,
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
@@ -152,13 +153,13 @@ export default function Portals() {
       <RoleMap />
       <Offerings
         service={service}
-        title={["Portals for every side", "of your business."]}
-        lead="Start with the process that costs your team the most time each week. Most portals grow from one well-solved job."
+        title={["Software for every part", "of your business."]}
+        lead="Start with the process that costs your team the most time each week. Most systems grow from one well-solved job."
       />
       <section className="ptypes" data-tone="light" aria-labelledby="ptypes-title">
         <div className="container ptypes__inner">
           <h2 id="ptypes-title" className="ptypes__title" data-reveal="up">
-            Portal types we offer
+            Systems we have delivered
           </h2>
           <ul role="list" className="ptypes__list" data-stagger="">
             {TYPES.map((t, i) => (
@@ -170,6 +171,11 @@ export default function Portals() {
           </ul>
         </div>
       </section>
+      <AppCases
+        slugs={["achievam"]}
+        title={["Software we have", "designed and built."]}
+        lead="A learning platform with test series, instructor and student management, built and run by our team."
+      />
       <Deliverables items={service.deliverables} tone="violet" title={["From process map", "to trained team"]} />
       <ServiceFaq faqs={service.faqs} />
       <OtherServices current={service.slug} />

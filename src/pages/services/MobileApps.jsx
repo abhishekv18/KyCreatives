@@ -7,6 +7,7 @@ import {
   Deliverables,
   ServiceFaq,
   OtherServices,
+  AppCases,
 } from "../../components/service/ServiceBlocks";
 import SplitHeading from "../../components/ui/SplitHeading";
 import ContactCTA from "../../components/ui/ContactCTA";
@@ -100,8 +101,13 @@ export default function MobileApps() {
       <ServiceEnquiry service={service} />
       <Offerings
         service={service}
-        title={["Apps for both stores,", "built to keep improving."]}
+        title={["iOS, Android and cross-platform,", "from idea to app store."]}
         lead="We design every state of every screen: loading, empty, error and offline, not only the happy path."
+      />
+      <AppCases
+        slugs={["maacubs", "achievam"]}
+        title={["Apps we have", "designed and built."]}
+        lead="Live apps in use today, designed and engineered by the same team, from first screens to store release."
       />
       <Approach />
       <Deliverables items={service.deliverables} tone="ink" title={["From first sketch", "to the app stores"]} />

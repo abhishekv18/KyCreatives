@@ -9,7 +9,6 @@ import FeaturedSites from "../components/ui/FeaturedSites";
 import ContactCTA from "../components/ui/ContactCTA";
 import { Glow, Pattern } from "../components/art/Art";
 import { projects as allProjects, projectBySlug, GROUPS, shotSrc } from "../data/projects";
-import { company } from "../data/site";
 
 // MaaCubs is shown elsewhere on the site, not in this grid
 const projects = allProjects.filter((p) => p.slug !== "maacubs");
@@ -51,7 +50,7 @@ export default function Portfolio() {
   usePageMeta({
     title: "Websites and E-commerce stores",
     description:
-      "Websites designed and built by KY Creatives: D2C stores, business websites, news platforms and non-profits for clients worldwide.",
+      "Websites designed and built by KY Creatives: e-commerce stores, business websites, news platforms and non-profits for clients worldwide.",
   });
   const [filter, setFilter] = useState("all");
   // the grid changes height when filtered, so scroll positions are re-measured
@@ -69,7 +68,7 @@ export default function Portfolio() {
     <>
       <PageHero
         theme="ink"
-        kicker="Portfolio / Websites and E-commerce stores"
+        kicker="Our Work / Websites and E-commerce stores"
         kickerTone="aqua"
         lines={["Websites built", "to do real work."]}
         lead="Online stores, company websites, news platforms and non-profits, designed and built by the same team. Each one is a live site you can visit."

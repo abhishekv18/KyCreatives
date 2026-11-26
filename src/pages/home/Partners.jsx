@@ -45,7 +45,7 @@ export default function Partners() {
           <SplitHeading as="h2" className="partners__title" lines={["The businesses", "behind the work."]} />
         </div>
         <div className="partners__side" data-reveal="up">
-          <p className="t-muted">D2C brands, companies, news platforms and non-profits whose websites we have designed and built.</p>
+          <p className="t-muted">E-commerce brands, companies, news platforms and non-profits whose websites we have designed and built.</p>
         </div>
       </div>
 

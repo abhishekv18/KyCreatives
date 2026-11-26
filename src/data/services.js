@@ -9,50 +9,49 @@
 export const allServices = [
   {
     slug: "web-apps-websites",
-    path: "/services/web-apps-websites",
-    name: "Web Apps & Websites",
-    navLabel: "Web Apps & Websites",
-    short: "Websites and web apps that are fast, clear and easy to grow.",
-    index:
-      "Company websites, landing pages and custom web applications, designed and engineered by the same team.",
+    path: "/services/website-development",
+    name: "Website Development",
+    navLabel: "Website",
+    short: "Company websites that are fast, clear and easy to update.",
+    index: "Business websites, landing pages and content-managed sites, designed and engineered by the same team.",
     accent: "dusk",
     meta: {
-      title: "Website and web application development",
+      title: "Website development for businesses",
       description:
-        "Business websites, landing pages, custom web applications, SaaS interfaces and dashboards, designed and built by KY Creatives.",
+        "KY Creatives designs and develops business websites, landing pages and content-managed sites that load fast, rank well and are easy to update.",
     },
     hero: {
-      lines: ["From a few-page website", "to a working product."],
-      lead: "We design and build websites and web applications that explain your business clearly, load fast and stay easy to change after launch.",
+      lines: ["A website that explains", "your business clearly."],
+      lead: "We design and develop company websites and landing pages that load fast, read clearly on every screen and stay easy for your team to update after launch.",
     },
     offerings: [
       {
         title: "Business websites",
-        body: "Corporate and company websites that say what you do in plain words and lead visitors to the next step.",
+        body: "Company websites that say what you do in plain words and lead visitors to the next step.",
       },
       {
         title: "Landing pages",
         body: "Focused pages for one campaign, one product or one audience, ready to connect to your ads and forms.",
       },
       {
-        title: "Custom web applications",
-        body: "Booking systems, marketplaces, learning platforms and internal tools built around your process.",
+        title: "Content-managed websites",
+        body: "WordPress or a headless CMS set up so your team can publish pages, news and case studies without a developer.",
       },
       {
-        title: "SaaS interfaces",
-        body: "Onboarding, settings, billing views and the everyday screens your users return to most.",
+        title: "Website redesign",
+        body: "A clearer structure, a modern design and faster pages, with redirects in place so search rankings carry over.",
       },
       {
-        title: "Dashboards",
-        body: "Views that answer the questions your team asks every day, with data labelled clearly and nothing decorative.",
-      },
-      {
-        title: "Responsive implementation",
+        title: "Responsive build",
         body: "Layouts tested from small phones to wide monitors, with accessible markup and visible focus states.",
       },
       {
-        title: "Integrations and maintainability",
-        body: "Connections to the CRM, payment, email or analytics tools you already use, in code another developer can pick up.",
+        title: "SEO foundations and analytics",
+        body: "Clean page structure, metadata, sitemaps and analytics set up from day one.",
+      },
+      {
+        title: "Integrations",
+        body: "Forms, CRM, email and booking tools connected to the site, in code another developer can pick up.",
         scoped: true,
       },
     ],
@@ -66,72 +65,69 @@ export const allServices = [
     faqs: [
       {
         q: "Which technologies do you use?",
-        a: "Our recent work includes WordPress, Shopify, PHP, Node.js and hand written front ends. We choose the stack per project and explain the reason.",
+        a: "Our recent work includes WordPress, Shopify, PHP, Node.js and hand-written front ends. We choose the stack per project and explain the reason.",
       },
       {
         q: "Can we update the content ourselves?",
-        a: "Yes, when the project needs it. We set up a content system your team can use and show you how.",
+        a: "Yes. We set up a content system your team can use and show you how.",
       },
       {
         q: "Do you work with clients in other countries?",
         a: "Yes. We work with businesses across time zones and plan calls and reviews around your working hours.",
       },
     ],
-    cta: "Tell us what the website or app needs to do.",
-    related: ["property-box", "pinkdinosaur", "brandgap", "maacubs"],
+    cta: "Tell us what the website needs to do.",
+    related: ["property-box", "pinkdinosaur", "brandgap", "abhinaybuilders"],
   },
   {
     slug: "d2c",
-    path: "/services/d2c",
-    name: "D2C Services",
-    navLabel: "D2C Services",
-    short: "Storefronts for brands that sell direct.",
+    path: "/services/ecommerce-development",
+    name: "E-commerce Development",
+    navLabel: "E-commerce",
+    short: "Online stores your customers love to shop.",
     index:
-      "Our focus area. Brand led online stores built for conversion, retention and repeat purchase, on Shopify or custom code.",
+      "Shopify and custom online stores for D2C brands, B2B and wholesale buyers and multi-vendor marketplaces, built to sell and easy to run.",
     accent: "flame",
     meta: {
-      title: "D2C ecommerce websites and Shopify storefronts",
+      title: "E-commerce development: Shopify and custom online stores",
       description:
-        "KY Creatives designs and builds D2C storefronts: Shopify and custom ecommerce, product pages, cart and checkout improvements, and mobile first shopping.",
+        "KY Creatives designs and develops e-commerce stores: Shopify and custom builds, redesign and migration, checkout and payments, shipping automation and conversion optimisation.",
     },
     hero: {
-      lines: ["Stores that make", "buying the easy part."],
-      lead: "D2C is our focus area. We design and build online stores for brands that sell direct, so the product looks right, the page loads fast and checkout gets out of the way.",
+      lines: ["Build an online store", "your customers love to shop."],
+      lead: "We design and develop e-commerce experiences that make shopping easier, streamline operations and help ambitious brands sell online.",
     },
     offerings: [
       {
-        title: "Shopify storefronts",
-        body: "Theme customisation or a fully custom theme, set up around how your catalogue and team actually work.",
+        title: "Shopify development",
+        body: "Theme customisation or a fully custom Shopify theme, set up around how your catalogue and team actually work.",
       },
       {
-        title: "Custom ecommerce builds",
-        body: "When a platform theme is not enough: custom stores and multi-vendor marketplaces with the features your model needs.",
+        title: "Custom e-commerce development",
+        body: "Custom stores for D2C brands, B2B and wholesale ordering, and multi-vendor marketplaces, when a platform theme is not enough.",
       },
       {
-        title: "Product page experience",
-        body: "Clear photography, honest product detail, variant pickers that make sense and the answers buyers look for before they commit.",
+        title: "Store redesign and migration",
+        body: "A redesign of your current store, or a move to a new platform with products, customers, orders and SEO carried across.",
       },
       {
-        title: "Cart and checkout improvements",
-        body: "We review every step between add to cart and order placed, and remove the ones that do not need to be there, within what your platform allows.",
-      },
-      {
-        title: "Mobile-first shopping",
-        body: "Most D2C traffic arrives on a phone. We design for the thumb first, then scale up to the desktop.",
-      },
-      {
-        title: "Payments and integrations",
-        body: "Payment gateway setup, plus shipping, reviews, email and analytics tools chosen to fit your platform.",
+        title: "Checkout and payment integrations",
+        body: "Payment gateways, wallets and a shorter path from cart to order placed, within what your platform allows.",
         scoped: true,
       },
       {
-        title: "Storefront performance",
-        body: "Image handling, script audits and page weight budgets, so the store stays quick as the catalogue grows.",
+        title: "Shipping and order automation",
+        body: "Courier and shipping integrations, order status updates and the routine steps your team should not do by hand.",
+        scoped: true,
+      },
+      {
+        title: "Performance and conversion optimisation",
+        body: "Faster pages, clearer product detail and fewer steps to buy, measured against your store's own numbers.",
       },
     ],
     deliverables: [
-      "Storefront design for home, collection, product, cart and content pages",
-      "Theme or custom build, connected to your products and payments",
+      "Store design for home, collection, product, cart and content pages",
+      "Shopify or custom build, connected to your products and payments",
       "Mobile and desktop testing on real devices",
       "Launch checklist: redirects, metadata, analytics, payment test orders",
       "Handover session so your team can run the store day to day",
@@ -139,58 +135,74 @@ export const allServices = [
     faqs: [
       {
         q: "Do you only work with Shopify?",
-        a: "No. We have built stores on Shopify, WordPress and custom code. We recommend a platform once we understand your catalogue, team and budget.",
+        a: "No. We build on Shopify, WordPress and custom code. We recommend a platform once we understand your catalogue, team and budget.",
       },
       {
-        q: "Can you redesign our existing store?",
-        a: "Yes. We start by reviewing what you have, then tell you what can be kept, what should be rebuilt and why.",
+        q: "Do you build B2B and wholesale stores?",
+        a: "Yes. We build trade ordering with customer-specific pricing and minimum quantities, and multi-vendor marketplaces, scoped to your model.",
+      },
+      {
+        q: "Can you redesign or migrate our existing store?",
+        a: "Yes. We review what you have, tell you what to keep and what to rebuild, and carry products, customers, orders and SEO across.",
       },
       {
         q: "Will you look after the store after launch?",
-        a: "We offer website maintenance plans for updates, backups, security and fixes. We can also keep improving the store with you on a monthly basis.",
+        a: "Yes. We offer maintenance for updates, backups, security and fixes, and can keep improving the store with you each month.",
       },
     ],
-    cta: "Tell us about your brand and what you sell.",
+    cta: "Tell us what you sell and who buys it.",
     related: ["thedecorshed", "ramysprofessional", "vibhadesigns", "thelabelbysiya", "rugsandroses", "dudle", "petsway", "notahoax"],
   },
   {
     slug: "mobile-apps",
-    path: "/services/mobile-apps",
-    name: "Mobile Apps",
-    navLabel: "Mobile Apps",
-    short: "Android and iOS apps people keep on their home screen.",
-    index:
-      "Android and iOS apps, from first screens to store release, with the design and engineering in one team.",
+    path: "/services/mobile-app-development",
+    name: "Mobile App Development",
+    navLabel: "Mobile App",
+    short: "iOS and Android apps people use every day.",
+    index: "iOS, Android and cross-platform apps, from product design to app-store release, with design and engineering in one team.",
     accent: "aqua",
     meta: {
-      title: "Mobile app design and development for Android and iOS",
+      title: "Mobile app development for iOS and Android",
       description:
-        "KY Creatives designs and builds Android and iOS apps: native or cross-platform, mobile UI, integrations, and ongoing improvements after release.",
+        "KY Creatives designs and develops iOS, Android and cross-platform apps: UI/UX, backend and APIs, payments, testing, app-store deployment and ongoing improvements.",
     },
     hero: {
-      lines: ["Apps that earn a place", "on the home screen."],
-      lead: "We design and build Android and iOS apps for businesses that want a direct line to their customers, or a better tool for their own team.",
+      lines: ["From your idea to an app", "people use every day."],
+      lead: "We design and develop mobile applications that connect businesses with customers, simplify operations and bring digital products to life.",
     },
     offerings: [
       {
-        title: "Android and iOS apps",
-        body: "Apps for both stores, designed to feel at home on each platform rather than copied from one to the other.",
+        title: "iOS development",
+        body: "iPhone and iPad apps that follow Apple's guidelines and feel at home on the platform.",
       },
       {
-        title: "Cross-platform development",
-        body: "One codebase for both platforms when it suits the product. We explain the trade-offs before you decide.",
+        title: "Android development",
+        body: "Apps for the wide range of Android phones, tested across screen sizes and OS versions.",
       },
       {
-        title: "Mobile UI design",
-        body: "Clear navigation, readable type, generous touch targets and states for loading, empty and error screens.",
+        title: "Cross-platform applications",
+        body: "One codebase for iOS and Android when it suits the product. We explain the trade-offs before you decide.",
       },
       {
-        title: "Integrations",
-        body: "Logins, payments, notifications, maps and your own back-end services, scoped to what the app needs.",
+        title: "UI/UX and product design",
+        body: "User flows, clear navigation and every state of every screen: loading, empty, error and offline.",
+      },
+      {
+        title: "Backend and API integrations",
+        body: "The APIs and admin tools an app needs, or connections to the systems you already run.",
         scoped: true,
       },
       {
-        title: "Maintenance and improvements",
+        title: "Authentication and payment systems",
+        body: "Secure sign-in, OTP and social logins, and in-app or gateway payments.",
+        scoped: true,
+      },
+      {
+        title: "Testing and app-store deployment",
+        body: "Test builds you can install along the way, then store listings, review and release.",
+      },
+      {
+        title: "Maintenance and feature improvements",
         body: "Updates for new OS versions, fixes, and new features released in small, regular steps.",
       },
     ],
@@ -211,7 +223,7 @@ export const allServices = [
         a: "Yes. We can build the APIs and admin tools an app needs, or connect to systems you already run.",
       },
       {
-        q: "Do you help with app store submission?",
+        q: "Do you help with app-store submission?",
         a: "Yes. We prepare the build and listing material and support you through review, using your developer accounts.",
       },
     ],
@@ -220,46 +232,55 @@ export const allServices = [
   },
   {
     slug: "portals",
-    path: "/services/portals",
-    name: "Portals",
-    navLabel: "Portals",
-    short: "Portals and business tools that match how your team works.",
+    path: "/services/custom-software-development",
+    name: "Custom Software Development",
+    navLabel: "Custom Software",
+    short: "Software built around the way your business works.",
     index:
-      "Customer, vendor and employee portals, CRMs and admin dashboards with the right access for each role.",
+      "Custom business applications, CRM and ERP systems, SaaS products, portals and workflow automation, built around your process.",
     accent: "dusk",
     meta: {
-      title: "Customer, vendor and employee portal development",
+      title: "Custom software development: business apps, CRM, ERP and SaaS",
       description:
-        "KY Creatives builds business portals: customer, vendor and employee portals, admin dashboards, role-based access, sales CRMs and ERP-style tools.",
+        "KY Creatives develops custom software: business applications, CRM and ERP systems, SaaS products, customer and vendor portals, internal tools, workflow automation and API integrations.",
     },
     hero: {
-      lines: ["One place for the work", "that runs your business."],
-      lead: "Portals replace spreadsheets, email threads and repeated phone calls with one secure place where each person sees what they need and does their part.",
+      lines: ["Software built around your business,", "not the other way around."],
+      lead: "We develop custom software, business platforms and web applications that solve operational challenges and support the way your organisation works.",
     },
     offerings: [
       {
-        title: "Customer portals",
-        body: "Let customers place and track orders, download invoices, raise requests and update their details without calling you.",
+        title: "Custom business applications",
+        body: "Web applications built around one process your team runs every day, from booking and quoting to approvals.",
       },
       {
-        title: "Vendor and B2B portals",
-        body: "Give suppliers and trade buyers a shared space for catalogues, purchase orders, pricing tiers and documents.",
+        title: "CRM and ERP systems",
+        body: "Sales pipelines, customer records, inventory, purchasing and reporting in one system shaped to your business.",
       },
       {
-        title: "Employee portals",
-        body: "Leave, attendance, announcements, training and internal documents in one place your team can reach from anywhere.",
+        title: "SaaS product development",
+        body: "Subscription products with onboarding, accounts, billing and the everyday screens your users return to.",
       },
       {
-        title: "Admin dashboards",
-        body: "The control room behind your website or app: content, users, orders and reports in one screen.",
+        title: "Customer, vendor and employee portals",
+        body: "One secure place where each person sees what they need: orders, documents, requests and updates.",
       },
       {
-        title: "Role-based access",
-        body: "Clear permissions so each person sees and changes only what their role allows, with a record of who did what.",
+        title: "Internal management systems",
+        body: "Admin dashboards and back-office tools that replace spreadsheets and email threads.",
       },
       {
-        title: "CRM and ERP-style tools",
-        body: "Sales CRMs, lead capture, online exam systems and travel booking portals built around your process.",
+        title: "Workflow automation",
+        body: "Routine steps such as notifications, approvals and data entry handled by the system, not by hand.",
+      },
+      {
+        title: "API and third-party integrations",
+        body: "Connections to payment, accounting, messaging and the other tools you already use.",
+        scoped: true,
+      },
+      {
+        title: "Cloud deployment and maintenance",
+        body: "Hosting, backups, monitoring and updates on cloud infrastructure, agreed with you before launch.",
       },
     ],
     deliverables: [
@@ -271,16 +292,16 @@ export const allServices = [
     ],
     faqs: [
       {
-        q: "Can the portal connect to the software we already use?",
+        q: "Can the software connect to the tools we already use?",
         a: "Often, yes. We check what your current tools allow during discovery and confirm what can be connected before the build starts.",
       },
       {
         q: "How do you handle sensitive data?",
-        a: "We keep access role-based, store only what the portal needs and agree hosting and backup arrangements with you before launch.",
+        a: "We keep access role-based, store only what the system needs and agree hosting and backup arrangements with you before launch.",
       },
       {
         q: "Can we start small?",
-        a: "Yes. Most portals start with one role and one job done well, then grow from there.",
+        a: "Yes. Most systems start with one process done well, then grow from there.",
       },
     ],
     cta: "Tell us which process you want to move out of spreadsheets.",
@@ -427,7 +448,10 @@ export const allServices = [
 export const HIDDEN_SERVICES = ["marketing", "design-graphics"];
 
 // The services promoted in menus, lists and forms
-export const services = allServices.filter((s) => !HIDDEN_SERVICES.includes(s.slug));
+const ORDER = ["d2c", "mobile-apps", "portals", "web-apps-websites"];
+export const services = allServices
+  .filter((s) => !HIDDEN_SERVICES.includes(s.slug))
+  .sort((a, b) => ORDER.indexOf(a.slug) - ORDER.indexOf(b.slug));
 
 export const serviceBySlug = Object.fromEntries(allServices.map((s) => [s.slug, s]));
 

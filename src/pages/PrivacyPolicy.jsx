@@ -33,13 +33,13 @@ const sections = [
         <dl className="legal__dl">
           <dt>Company</dt>
           <dd>
-            KY Creatives (also &ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;), Tower A - 114, Ninex RMG,
-            Sector 37C, Gurugram, Haryana, India.
+            KY Creatives (also &ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;), 16-212, 58 D, Radha Nagar,
+            Krishna Nagar, Mathura, Uttar Pradesh, India.
           </dd>
           <dt>Cookies</dt>
           <dd>Small files placed on your device by a website, containing details of your browsing on that website.</dd>
           <dt>Country</dt>
-          <dd>Haryana, India.</dd>
+          <dd>Uttar Pradesh, India.</dd>
           <dt>Device</dt>
           <dd>Any device that can access the website, such as a computer, mobile phone or tablet.</dd>
           <dt>Personal data</dt>

@@ -189,7 +189,7 @@ export default function Apps() {
     <>
       <PageHero
         theme="ink"
-        kicker="Portfolio / Applications and Software"
+        kicker="Our Work / Applications and Software"
         kickerTone="aqua"
         lines={["Apps people", "keep on their phone."]}
         lead="Healthcare, learning and everyday services, designed and engineered by the same team. Every screen here is from an app in use."

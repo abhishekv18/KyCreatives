@@ -226,8 +226,8 @@ export function Waves({ className = "" }) {
 /* Blueprint grid: fine lines every 8 units with stronger lines every 64. */
 export function Blueprint({ className = "", tone = "dark" }) {
   const uid = useId().replace(/:/g, "");
-  const line = tone === "dark" ? "rgba(111,227,245,0.10)" : "rgba(23,18,31,0.07)";
-  const major = tone === "dark" ? "rgba(111,227,245,0.20)" : "rgba(23,18,31,0.12)";
+  const line = tone === "dark" ? "rgba(111,227,245,0.16)" : "rgba(23,18,31,0.11)";
+  const major = tone === "dark" ? "rgba(111,227,245,0.30)" : "rgba(23,18,31,0.2)";
   return (
     <svg className={`art-grid ${className}`} aria-hidden="true" focusable="false">
       <defs>

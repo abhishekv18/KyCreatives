@@ -3,10 +3,10 @@ import { AlertCircle, Send, ShieldCheck, Check } from "lucide-react";
 import Toast from "./Toast";
 import LaptopSlides from "./LaptopSlides";
 import { Qmark } from "./SplitHeading";
-import { WEB3FORMS_KEY, ENQUIRY_EMAIL, sendEnquiry } from "../../lib/enquiry";
+import { ENQUIRY_EMAIL, sendEnquiry } from "../../lib/enquiry";
 
 const EMPTY = { name: "", email: "", phone: "", message: "", other: "" };
-const NEEDS = ["Website", "Online store", "Mobile application", "Customised software", "Other"];
+const NEEDS = ["E-commerce store", "Mobile application", "Custom software", "Website", "Other"];
 
 function validate(v, needs) {
   const e = {};
@@ -63,15 +63,11 @@ export default function QuickEnquiry({
     }
     const v = values;
     const subject = `Consultation request: ${source}`;
-    if (!WEB3FORMS_KEY) {
-      const body = `Name: ${v.name}\nEmail: ${v.email}\nPhone: ${v.phone}\n\n${v.message}`;
-      window.location.assign(`mailto:${ENQUIRY_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
-      return;
-    }
     setSending(true);
     setToast(null);
     try {
       await sendEnquiry({
+        kind: "consultation",
         subject,
         botcheck: botRef.current?.checked || false,
         name: v.name.trim(),
@@ -89,7 +85,7 @@ export default function QuickEnquiry({
         id: Date.now(),
         tone: "success",
         title: "Request sent",
-        text: `Thank you, ${v.name.trim().split(/\s+/)[0]}. We will be in touch within 24 hours.`,
+        text: `Thank you, ${v.name.trim().split(/\s+/)[0]}. We have emailed you a confirmation and will reply within 24 hours.`,
       });
     } catch {
       setToast({
