@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { gsap, prefersReducedMotion } from "../../lib/motion";
 import { getLenis } from "../../lib/smooth";
-import { ArrowUpRight, ArrowRight, ArrowUp, Phone } from "lucide-react";
+import { ArrowUpRight, ArrowRight, ArrowUp, Phone, MapPin } from "lucide-react";
 import { WhatsAppMark } from "../ui/WhatsAppButton";
 import Logo from "../ui/Logo";
 import SocialIcon from "../ui/SocialIcon";
@@ -181,6 +181,24 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
+            <address className="footer__addr">
+              <span className="footer__reach-icon footer__addr-icon" aria-hidden="true">
+                <MapPin size={14} strokeWidth={2} />
+              </span>
+              <span className="footer__addr-body">
+                <span className="footer__addr-label">{company.address.label}</span>
+                <span className="footer__addr-lines">
+                  {company.address.lines.map((l) => (
+                    <span key={l}>{l}</span>
+                  ))}
+                </span>
+                <a href={company.address.map} target="_blank" rel="noopener noreferrer" className="footer__addr-map">
+                  Get directions
+                  <ArrowUpRight size={13} strokeWidth={1.75} aria-hidden="true" />
+                  <span className="sr-only"> (opens Google Maps in a new tab)</span>
+                </a>
+              </span>
+            </address>
           </div>
 
           <nav className="footer__col footer__col--social" aria-label="Footer: social">

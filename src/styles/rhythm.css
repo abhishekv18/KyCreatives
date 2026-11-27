@@ -2220,3 +2220,127 @@
   margin-left: 0;
   translate: none;
 }
+
+/* Footer contact: the Mathura office, under phone and WhatsApp */
+.footer__addr {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(255 255 255 / 0.08);
+  font-style: normal;
+}
+
+.footer__addr-icon {
+  margin-top: 1px;
+  background: linear-gradient(135deg, rgb(226 65 143 / 0.9), rgb(123 77 217 / 0.9));
+}
+
+.footer__addr-body {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.footer__addr-label {
+  font-size: var(--fs-meta-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.5);
+  line-height: 1.4;
+}
+
+.footer__addr-lines {
+  display: grid;
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.86);
+}
+
+.footer__col a.footer__addr-map {
+  min-height: 28px;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: var(--fs-small);
+  color: rgb(255 255 255 / 0.6);
+}
+
+.footer__col a.footer__addr-map svg {
+  color: currentColor;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.footer__col a.footer__addr-map:hover {
+  color: var(--ky-white);
+}
+
+.footer__col a.footer__addr-map:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Footer index: the brand gets its own row so the four link columns have room
+   for the long service names and the office address */
+@media (min-width: 960px) {
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+  .footer__col--studio {
+    grid-column: 1 / span 2;
+  }
+  .footer__col--services {
+    grid-column: 3 / span 4;
+  }
+  .footer__col--contact {
+    grid-column: 7 / span 3;
+  }
+  .footer__col--social {
+    grid-column: 10 / span 3;
+  }
+}
+
+@media (min-width: 1280px) {
+  .footer__grid {
+    grid-template-columns: minmax(0, 300px) repeat(4, max-content);
+    justify-content: space-between;
+    column-gap: var(--s-5);
+  }
+  .footer__brand,
+  .footer__col--studio,
+  .footer__col--services,
+  .footer__col--contact,
+  .footer__col--social {
+    grid-column: auto;
+  }
+}
+
+/* Phones and tablets: contact runs full width so the address reads in full */
+@media (max-width: 959.98px) {
+  .footer__col--contact {
+    grid-column: 1 / -1;
+  }
+  .footer__col--contact ul {
+    grid-template-columns: repeat(2, max-content);
+    column-gap: var(--s-4);
+  }
+}
+
+@media (max-width: 359.98px) {
+  .footer__col--contact ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 959.98px) {
+  .footer__col--social {
+    grid-column: 1 / -1;
+  }
+  .footer__col--social ul {
+    grid-template-columns: repeat(2, max-content);
+    column-gap: var(--s-6);
+  }
+  .footer__col--services a {
+    white-space: normal;
+    line-height: 1.35;
+  }
+}
