@@ -3,6 +3,7 @@ import { useGSAP } from "@gsap/react";
 import { ArrowUpRight, Check } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
+import Button from "../components/ui/Button";
 import SplitHeading from "../components/ui/SplitHeading";
 import QuickEnquiry from "../components/ui/QuickEnquiry";
 import PartnersStrip from "../components/ui/PartnersStrip";
@@ -202,23 +203,31 @@ export default function Apps() {
         aside={<HeroPhones />}
         className="phero--apps"
       >
-        <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.3">
+        <div className="phero__actions" data-reveal="up" data-delay="0.3">
+          <Button to="/contact" variant="flame">
+            Start your app
+          </Button>
+          <Button href="#apps" variant="ghost">
+            See the apps
+          </Button>
+        </div>
+        <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.4">
           <li>
-            <span>Platforms</span>
-            Android and iOS
+            <span>Live apps</span>
+            MaaCubs and Achievam
           </li>
           <li>
-            <span>Scope</span>
-            Design to store release
+            <span>Sectors</span>
+            Healthcare and education
           </li>
           <li>
-            <span>Team</span>
-            One, start to finish
+            <span>Delivered</span>
+            Design to app-store release
           </li>
         </ul>
       </PageHero>
 
-      <div className="aintro">
+      <div className="aintro" id="apps">
         <div className="container aintro__inner">
           <SplitHeading as="h2" className="aintro__title" lines={["Real screens,", "from apps in use."]} />
           <p className="aintro__lead" data-reveal="up">

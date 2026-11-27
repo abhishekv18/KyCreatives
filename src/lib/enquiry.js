@@ -14,8 +14,10 @@ export const ENQUIRY_EMAIL = "contact@kycreatives.com";
 
 // Each sheet's Apps Script web app URL (ends in /exec). Paste them here.
 const SHEETS = {
-  contact: "", // Contact form spreadsheet
-  partners: "", // Partners form spreadsheet
+  // Contact form spreadsheet
+  contact: "https://script.google.com/macros/s/AKfycbx5nWhKwM-zfVUZa84_B00yfAEGjtTBt-tpV2qDoCOnLhFpBCJ8cUhAJfopmaUpDPuLbw/exec",
+  // Partners form spreadsheet
+  partners: "https://script.google.com/macros/s/AKfycbzFOPp_l4RWzQqVZMOHou-2kQXt5BndKi_f7CrijGFW3Dqu4JIMNvkKecCyBBXKIaK_/exec",
 };
 // Must match TOKEN in scripts/google-sheets/Code.gs
 const SHEETS_TOKEN = "kyc-forms-2026";

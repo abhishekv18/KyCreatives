@@ -2,22 +2,21 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, markReady, prefersReducedMotion } from "../../lib/motion";
 import { lockScroll } from "../../lib/smooth";
 
-const MIN_MS = 600; // long enough to avoid a flash, short enough not to be a wait
-const MAX_MS = 2200; // hard ceiling: the visitor can never be stuck here
+const MIN_MS = 1700; // long enough for one full pass of light across the logo
+const MAX_MS = 2600; // hard ceiling: the visitor can never be stuck here
 
 /**
- * Light first-load screen: the official logo on a white-to-Cloud field with
- * soft pastel light, a short line and a Flame progress bar. Progress reflects
- * real work: web fonts plus the page's critical images (marked data-critical).
- * On exit the bar travels to the centre and collapses into a point, and the
- * screen dissolves around it. Shown on every full load, never during in-app
- * navigation, and skipped with reduced motion.
+ * "Quiet signature" first-load screen: the KY Creatives logo on white, a soft
+ * violet light passing across it, a hairline that opens from the centre as
+ * the page's fonts and critical images load, and the three services in small
+ * capitals beneath. On exit the full hairline draws back into the centre
+ * and the screen fades away. Shown on every full load, never during in-app navigation, and
+ * skipped with reduced motion.
  */
 export default function LoadingScreen() {
   const [show, setShow] = useState(() => !prefersReducedMotion());
   const rootRef = useRef(null);
-  const barRef = useRef(null);
-  const pctRef = useRef(null);
+  const lineRef = useRef(null);
 
   useEffect(() => {
     if (!show) {
@@ -25,26 +24,22 @@ export default function LoadingScreen() {
       return;
     }
     lockScroll(true);
+    const root = rootRef.current;
     const start = performance.now();
     let finished = false;
     let shown = 0;
 
+    // entrance: logo settles in, services fade up after it
+    gsap.fromTo(root.querySelector(".lsig__logo"), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" });
+    gsap.fromTo(root.querySelector(".lsig__services"), { opacity: 0 }, { opacity: 1, duration: 0.6, delay: 0.35, ease: "power1.out" });
+
     const setProgress = (p) => {
       const target = Math.max(shown, Math.min(1, p));
-      gsap.to(barRef.current, { scaleX: target, duration: 0.5, ease: "power2.out", overwrite: true });
-      const obj = { v: shown };
-      gsap.to(obj, {
-        v: target,
-        duration: 0.5,
-        ease: "power1.out",
-        onUpdate: () => {
-          if (pctRef.current) pctRef.current.textContent = `${Math.round(obj.v * 100)}%`;
-        },
-      });
+      gsap.to(lineRef.current, { scaleX: target, duration: 0.6, ease: "power2.out", overwrite: true });
       shown = target;
     };
 
-    // Work to wait for: fonts + critical images currently in the DOM.
+    // work to wait for: fonts plus the critical images already in the page
     const imgs = Array.from(document.querySelectorAll("img[data-critical]"));
     const tasks = [document.fonts ? document.fonts.ready : Promise.resolve()];
     imgs.forEach((img) => {
@@ -53,54 +48,36 @@ export default function LoadingScreen() {
           ? Promise.resolve()
           : new Promise((res) => {
               img.addEventListener("load", res, { once: true });
-              img.addEventListener("error", res, { once: true }); // a broken image must not block the site
+              img.addEventListener("error", res, { once: true });
             })
       );
     });
     let done = 0;
-    tasks.forEach((t) => t.then(() => setProgress(++done / tasks.length)));
+    setProgress(0.12);
+    tasks.forEach((t) => t.then(() => setProgress(0.12 + (++done / tasks.length) * 0.88)));
 
     const finish = () => {
       if (finished) return;
       finished = true;
       setProgress(1);
-      const root = rootRef.current;
-      const out = () => {
-        lockScroll(false);
-        markReady();
-        setShow(false);
-      };
-      // The progress bar travels to the centre of the screen and collapses into
-      // a single point; the light field then dissolves around it while the
-      // point blooms and fades, handing over to the page.
-      const track = root.querySelector(".loader__track");
-      const dot = root.querySelector(".loader__dot");
-      const r = track.getBoundingClientRect();
-      const dx = window.innerWidth / 2 - (r.left + r.width / 2);
-      const dy = window.innerHeight / 2 - (r.top + r.height / 2);
       gsap
-        .timeline({ delay: 0.1, onComplete: out })
-        .to(root.querySelectorAll(".loader__brand, .loader__labels"), {
-          opacity: 0,
-          y: -12,
-          duration: 0.3,
-          ease: "power2.in",
-          stagger: 0.05,
+        .timeline({
+          delay: 0.25,
+          onComplete: () => {
+            lockScroll(false);
+            setShow(false);
+          },
         })
-        .to(track, { x: dx, y: dy, backgroundColor: "rgba(23,18,31,0)", duration: 0.5, ease: "power3.inOut" }, 0.08)
-        .to(track, { scaleX: 0.02, duration: 0.3, ease: "power3.in" }, 0.38)
-        .fromTo(dot, { scale: 0, opacity: 1 }, { scale: 1, duration: 0.2, ease: "power2.out" }, 0.62)
-        .set(track, { opacity: 0 }, 0.66)
-        .set(root, { pointerEvents: "none" }, 0.68)
-        .call(() => markReady(), null, 0.68)
-        .to(root.querySelector(".loader__lights"), { opacity: 0, duration: 0.3, ease: "power1.out" }, 0.62)
-        .to(root.querySelector(".loader__bg"), { opacity: 0, duration: 0.4, ease: "power1.out" }, 0.68)
-        .to(dot, { opacity: 0, scale: 2.2, duration: 0.45, ease: "power2.out" }, 0.78);
+        // the full line holds a beat, then draws back into the centre
+        .to(root.querySelector(".lsig__rule"), { scaleX: 0, duration: 0.55, ease: "power3.inOut" }, 0.35)
+        .to(root.querySelectorAll(".lsig__logo, .lsig__services"), { opacity: 0, y: -8, duration: 0.45, ease: "power2.in", stagger: 0.05 }, 0.4)
+        .call(() => markReady(), null, 0.75)
+        .set(root, { pointerEvents: "none" }, 0.75)
+        .to(root, { opacity: 0, duration: 0.45, ease: "power1.out" }, 0.8);
     };
 
     const all = Promise.all(tasks).then(() => {
-      const wait = Math.max(0, MIN_MS - (performance.now() - start));
-      setTimeout(finish, wait);
+      setTimeout(finish, Math.max(0, MIN_MS - (performance.now() - start)));
     });
     const ceiling = setTimeout(finish, MAX_MS);
 
@@ -115,37 +92,18 @@ export default function LoadingScreen() {
   if (!show) return null;
 
   return (
-    <div className="loader" ref={rootRef} role="status" aria-live="polite" aria-label="Loading KY Creatives">
-      <div className="loader__bg" aria-hidden="true" />
-      <div className="loader__lights" aria-hidden="true">
-        <i />
-        <i />
-      </div>
-      <div className="loader__brand">
-        <img
-          className="loader__logo"
-          src="/brand/ky-creatives-logo.png"
-          width="285"
-          height="79"
-          alt="KY Creatives"
-          decoding="async"
-        />
-        <p className="loader__line" aria-hidden="true">
-          <span>
-            Digital solutions for <em>ambitious businesses.</em>
-          </span>
+    <div className="lsig" ref={rootRef} role="status" aria-live="polite" aria-label="Loading KY Creatives">
+      <div className="lsig__center">
+        <span className="lsig__logo">
+          <img src="/brand/ky-creatives-logo.png" width="285" height="79" alt="KY Creatives" decoding="async" />
+        </span>
+        <span className="lsig__rule" aria-hidden="true">
+          <i ref={lineRef} />
+        </span>
+        <p className="lsig__services" aria-hidden="true">
+          E-commerce <span>·</span> Mobile apps <span>·</span> Custom software
         </p>
       </div>
-      <div className="loader__meta" aria-hidden="true">
-        <div className="loader__track">
-          <div className="loader__bar" ref={barRef} />
-        </div>
-        <div className="loader__labels t-meta">
-          <span>E-commerce · Mobile apps · Custom software</span>
-          <span ref={pctRef}>0%</span>
-        </div>
-      </div>
-      <span className="loader__dot" aria-hidden="true" />
     </div>
   );
 }

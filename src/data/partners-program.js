@@ -74,16 +74,8 @@ export const FAQS = [
     a: "It depends on how many projects close in a month and their eligible value: 10% for one project, 12% for two and 15% for three or more. Earnings are not guaranteed.",
   },
   {
-    q: "How are my leads protected?",
-    a: "Each lead we accept is registered to you for 12 months, subject to activity, verification and duplicate-lead rules.",
-  },
-  {
     q: "Can I work with other companies?",
     a: "Yes. The partnership is non-exclusive, as long as there is no conflict of interest or misuse of confidential information.",
-  },
-  {
-    q: "Are meeting bonuses paid?",
-    a: "Yes. A $25 bonus is paid for each qualified first meeting that the client attends and accepts, up to a monthly cap.",
   },
   {
     q: "Can I become a full-time employee?",
@@ -103,8 +95,6 @@ export const BACKGROUNDS = ["Lead generation", "Outreach", "Sales", "Business de
 export const TERMS = [
   ["Commission", "10% to 15% per project"],
   ["Paid in", "USD"],
-  ["Lead protection", "12 months"],
-  ["Meeting bonus", "$25 per qualified first meeting"],
   ["Arrangement", "Independent, non-exclusive"],
   ["Joining fee", "None"],
 ];

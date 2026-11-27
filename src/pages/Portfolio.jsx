@@ -3,6 +3,7 @@ import { ScrollTrigger } from "../lib/motion";
 import { ArrowUpRight } from "lucide-react";
 import { usePageMeta } from "../hooks/usePageMeta";
 import PageHero from "../components/ui/PageHero";
+import Button from "../components/ui/Button";
 import PartnersStrip from "../components/ui/PartnersStrip";
 import QuickEnquiry from "../components/ui/QuickEnquiry";
 import FeaturedSites from "../components/ui/FeaturedSites";
@@ -40,7 +41,7 @@ function HeroStack() {
         </figure>
       ))}
       <span className="pf-stack__badge pf-stack__badge--b">
-        <i /> Clients worldwide
+        <i /> Every site is live today
       </span>
     </div>
   );
@@ -81,25 +82,33 @@ export default function Portfolio() {
         aside={<HeroStack />}
         className="phero--portfolio"
       >
-        <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.3">
+        <div className="phero__actions" data-reveal="up" data-delay="0.3">
+          <Button to="/contact" variant="flame">
+            Start your website
+          </Button>
+          <Button href="#all-work" variant="ghost">
+            See all work
+          </Button>
+        </div>
+        <ul role="list" className="afacts t-meta" data-reveal="up" data-delay="0.4">
           <li>
-            <span>Live sites</span>
+            <span>Live projects</span>
             {projects.length}+ to visit
           </li>
           <li>
-            <span>Industries</span>
-            Retail, media, non-profit
+            <span>Sectors</span>
+            Fashion, decor, wellness, media
           </li>
           <li>
-            <span>Built on</span>
-            Shopify and custom code
+            <span>Delivered</span>
+            Design, build and launch
           </li>
         </ul>
       </PageHero>
 
       <FeaturedSites slugs={["thedecorshed", "ramysprofessional", "vibhadesigns"]} />
 
-      <section className="pf" data-tone="light" aria-labelledby="pf-title">
+      <section className="pf" id="all-work" data-tone="light" aria-labelledby="pf-title">
         <div className="container">
           <div className="pf__head">
             <h2 id="pf-title" className="sr-only">
