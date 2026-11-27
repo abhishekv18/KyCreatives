@@ -44,7 +44,7 @@ function RuleSample({ n }) {
   if (n === "01")
     return (
       <span className="bsys__logo">
-        <img src="/brand/ky-creatives-logo.png" alt="" width="285" height="79" loading="lazy" />
+        <img src="/brand/ky-creatives-logo.png" alt="" width="292" height="79" loading="lazy" />
       </span>
     );
   if (n === "02")
@@ -149,7 +149,7 @@ function SystemGallery() {
                 <div className="bsys__frame" aria-hidden="true">
                   <div className="sys__cards">
                     <div className="sys__card sys__card--front">
-                      <img src="/brand/ky-creatives-logo.png" alt="" width="285" height="79" loading="lazy" />
+                      <img src="/brand/ky-creatives-logo.png" alt="" width="292" height="79" loading="lazy" />
                     </div>
                     <div className="sys__card sys__card--back">
                       <strong>Design-led software, web and mobile apps.</strong>

@@ -2173,25 +2173,10 @@
   opacity: 0;
 }
 
-/* Loader, premium touches: a glow behind the flame, a light sweep across the
+/* Loader, premium touches: a light sweep across the
    finished logo (drawn only on the logo's own shape), a curtain exit */
 .lor {
   clip-path: inset(0 0 0 0);
-}
-
-.lor__glow {
-  position: absolute;
-  left: 9.8%;
-  top: 52%;
-  width: 150%;
-  aspect-ratio: 1;
-  translate: 104% -50%;
-  margin-left: -75%;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgb(226 65 143 / 0.22), rgb(123 77 217 / 0.12) 55%, transparent);
-  filter: blur(6px);
-  pointer-events: none;
-  opacity: 0;
 }
 
 .lor__sheen {
@@ -2213,13 +2198,6 @@
   will-change: transform, filter;
 }
 
-/* the glow sits at the centre of the logo, where the flame spins */
-.lor__glow {
-  left: 50%;
-  width: 62%;
-  margin-left: 0;
-  translate: none;
-}
 
 /* Footer contact: the Mathura office, under phone and WhatsApp */
 .footer__addr {
@@ -2343,4 +2321,48 @@
     white-space: normal;
     line-height: 1.35;
   }
+}
+
+/* Loader, refined: plain white ground (no colour wash), and the flame drawn
+   from the full flame artwork, since the logo image crops its left edge */
+.lor {
+  background: #fff;
+}
+
+.lor__flame {
+  background-image: url("/brand/ky-flame.png");
+  background-size: auto 100%;
+  background-position: 100% 50%;
+}
+
+.lor__services span {
+  color: #c9c4d1;
+}
+
+/* The logo image was re-exported at 292 x 79 with the flame and the final "s"
+   whole and a little padding either side; the loader's slices follow it.
+   flame 0-59px, "KY" 59-121px, "Creatives" 121-292px */
+.lor__logo {
+  aspect-ratio: 292 / 79;
+}
+
+.lor__flame {
+  width: 20.205%;
+  background-image: url("/brand/ky-creatives-logo.png");
+  background-size: 494.9% 100%;
+  background-position: 0 0;
+}
+
+.lor__ky {
+  left: 20.205%;
+  width: 21.233%;
+  background-size: 470.97% 100%;
+  background-position: 25.652% 0;
+}
+
+.lor__cr {
+  left: 41.438%;
+  width: 58.562%;
+  background-size: 170.76% 100%;
+  background-position: 100% 0;
 }
