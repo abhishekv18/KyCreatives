@@ -2009,3 +2009,214 @@
   margin: 0 0.4em;
   color: #c4a8ff;
 }
+
+/* =========================================================
+   Loading screen: "orbit and reveal"
+   The logo image is split into the flame (first 19.65% of its
+   width) and the wordmark, so each can move on its own.
+   ========================================================= */
+.lor {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(60% 45% at 50% 42%, rgb(123 77 217 / 0.06), transparent 70%),
+    #fff;
+}
+
+.lor__center {
+  display: grid;
+  justify-items: center;
+  gap: clamp(18px, 2.4vw, 26px);
+}
+
+.lor__logo {
+  --w: clamp(210px, 22vw, 280px);
+  position: relative;
+  width: var(--w);
+  aspect-ratio: 285 / 79;
+}
+
+.lor__flame,
+.lor__word {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-image: url("/brand/ky-creatives-logo.png");
+  background-repeat: no-repeat;
+}
+
+.lor__flame {
+  left: 0;
+  width: 19.65%;
+  background-size: 508.9% 100%;
+  background-position: 0 0;
+  transform-origin: 50% 55%;
+  will-change: transform;
+}
+
+.lor__word {
+  left: 19.65%;
+  width: 80.35%;
+  background-size: 124.45% 100%;
+  background-position: 100% 0;
+  opacity: 0;
+}
+
+/* the ring sits centred on the flame and travels with it */
+.lor__ring {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 190%;
+  height: auto;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  overflow: visible;
+  opacity: 0;
+}
+
+.lor__ring ellipse {
+  fill: none;
+  stroke: #7b4dd9;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.lor__services {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #6b6478;
+  text-align: center;
+  opacity: 0;
+}
+
+.lor__services span {
+  margin: 0 0.45em;
+  color: #c4a8ff;
+}
+
+@media (max-width: 420px) {
+  .lor__services {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+}
+
+/* the orbit: a wider ring with room around the flame */
+.lor__ring {
+  top: 52%;
+  width: 290%;
+}
+
+.lor__ring ellipse {
+  stroke-width: 1.2;
+  stroke: rgb(123 77 217 / 0.85);
+}
+
+.lor__ring {
+  max-width: none;
+}
+
+/* "Spin and split" version (?loader=split): the wordmark in two pieces,
+   "KY" and "Creatives", sliding out from behind the flame */
+.lor__ky,
+.lor__cr {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-image: url("/brand/ky-creatives-logo.png");
+  background-repeat: no-repeat;
+  display: none;
+}
+
+.lor__ky {
+  left: 19.65%;
+  width: 21.75%;
+  background-size: 459.8% 100%;
+  background-position: 25.11% 0;
+}
+
+.lor__cr {
+  left: 41.4%;
+  width: 58.6%;
+  background-size: 170.65% 100%;
+  background-position: 100% 0;
+}
+
+.lor--split .lor__ky,
+.lor--split .lor__cr {
+  display: block;
+  opacity: 0;
+}
+
+.lor--split .lor__word,
+.lor--split .lor__ring {
+  display: none;
+}
+
+/* the flame sits above the pieces it slides over */
+.lor__flame {
+  z-index: 1;
+}
+
+/* spin and split is the loader: its pieces always show */
+.lor__ky,
+.lor__cr {
+  display: block;
+  opacity: 0;
+}
+
+/* Loader, premium touches: a glow behind the flame, a light sweep across the
+   finished logo (drawn only on the logo's own shape), a curtain exit */
+.lor {
+  clip-path: inset(0 0 0 0);
+}
+
+.lor__glow {
+  position: absolute;
+  left: 9.8%;
+  top: 52%;
+  width: 150%;
+  aspect-ratio: 1;
+  translate: 104% -50%;
+  margin-left: -75%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(226 65 143 / 0.22), rgb(123 77 217 / 0.12) 55%, transparent);
+  filter: blur(6px);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.lor__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 0 40%, rgb(255 255 255 / 0.9) 48%, rgb(255 255 255 / 0.95) 50%, rgb(255 255 255 / 0.9) 52%, transparent 60% 100%);
+  background-size: 250% 100%;
+  background-position: 130% 0;
+  -webkit-mask: url("/brand/ky-creatives-logo.png") center / 100% 100% no-repeat;
+  mask: url("/brand/ky-creatives-logo.png") center / 100% 100% no-repeat;
+  mix-blend-mode: soft-light;
+}
+
+.lor__flame,
+.lor__ky,
+.lor__cr {
+  will-change: transform, filter;
+}
+
+/* the glow sits at the centre of the logo, where the flame spins */
+.lor__glow {
+  left: 50%;
+  width: 62%;
+  margin-left: 0;
+  translate: none;
+}
